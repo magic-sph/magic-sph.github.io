@@ -1,0 +1,832 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Support for G_#.TAG files &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../contents.html" />
+    <link rel="up" title="Data visualisation and post-processing" href="../postProc.html" />
+    <link rel="next" title="Support for TO outputs" href="outTO.html" />
+    <link rel="prev" title="Support for the spectra files (kin|mag|u2)_spec_#.TAG" href="spectra.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../install.html">Get it/Run it</a></li>
+    <li><a href="../contribute.html">Contribute!</a></li>
+    <li><a href="../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../index.html">
+      <img src="../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="outTO.html" title="Support for TO outputs"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="spectra.html" title="Support for the spectra files (kin|mag|u2)_spec_#.TAG"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../postProc.html" accesskey="U">Data visualisation and post-processing</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="support-for-g-tag-files">
+<span id="secpythongraphfile"></span><h1>Support for <code class="docutils literal"><span class="pre">G_#.TAG</span></code> files<a class="headerlink" href="#support-for-g-tag-files" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="magic.MagicGraph">
+<em class="property">class </em><code class="descclassname">magic.</code><code class="descname">MagicGraph</code><span class="sig-paren">(</span><em>ivar=None</em>, <em>datadir='.'</em>, <em>format='B'</em>, <em>quiet=True</em>, <em>ave=False</em>, <em>tag=None</em>, <em>precision='Float32'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/graph.html#MagicGraph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicGraph" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class allows to read the 3-D graphic outputs of the MagIC code
+(<a class="reference internal" href="../outputFiles/outGraph.html#secgraphfile"><span>G_#.TAG</span></a> and G_ave.TAG) files. Those are 
+binary unformatted outputs, there are therefore two ways to load them:</p>
+<blockquote>
+<div><ul class="simple">
+<li>If buildLib=True in magic.cfg and the fortran libraries were correctly
+built, then the reader uses a fortran program that is expected to be
+much faster than the pure python routine.</li>
+<li>If buildLib=False, then a pure python program is used to read the G
+files.</li>
+</ul>
+</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Regular G files</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gr</span> <span class="o">=</span> <span class="n">MagicGraph</span><span class="p">(</span><span class="n">ivar</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s">&#39;N0m2a&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c"># shape of vr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">ek</span><span class="p">)</span> <span class="c"># print ekman number</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span> <span class="c"># azimuthal symmetry</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Averaged G file with double precision</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gr</span> <span class="o">=</span> <span class="n">MagicGraph</span><span class="p">(</span><span class="n">ave</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s">&#39;N0m2&#39;</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="s">&#39;Float64&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="magic.MagicGraph.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>ivar=None</em>, <em>datadir='.'</em>, <em>format='B'</em>, <em>quiet=True</em>, <em>ave=False</em>, <em>tag=None</em>, <em>precision='Float32'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/graph.html#MagicGraph.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicGraph.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>format</strong> (<em>str</em>) &#8211; format of binary output: &#8216;n&#8217; (native), &#8216;B&#8217; (big endian)
+or &#8216;l&#8217; (little endian), (default &#8216;B&#8217;)</li>
+<li><strong>ave</strong> (<em>bool</em>) &#8211; when set to True, it tries to find an average G file (G_ave.TAG)</li>
+<li><strong>ivar</strong> (<em>int</em>) &#8211; the number of the G file</li>
+<li><strong>tag</strong> (<em>str</em>) &#8211; extension TAG of the G file. If not specified, the most recent
+G_#.TAG file found in the directory will be selected.</li>
+<li><strong>quiet</strong> (<em>bool</em>) &#8211; when set to True, makes the output silent</li>
+<li><strong>datadir</strong> (<em>str</em>) &#8211; directory of the G file (default is . )</li>
+<li><strong>precision</strong> (<em>str</em>) &#8211; single or double precision (default &#8216;Float32&#8217;)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.MagicGraph.rearangeLat">
+<code class="descname">rearangeLat</code><span class="sig-paren">(</span><em>field</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/graph.html#MagicGraph.rearangeLat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicGraph.rearangeLat" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is used to unfold the colatitudes</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>field</strong> (<em>numpy.ndarray</em>) &#8211; input array with MagIC ordering of colatitudes (i.e.
+successively Northern Hemisphere and Southern 
+Hemisphere)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">an array with the regular ordering of the colatitudes</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="magic.Surf">
+<em class="property">class </em><code class="descclassname">magic.</code><code class="descname">Surf</code><span class="sig-paren">(</span><em>ivar=None</em>, <em>datadir='.'</em>, <em>vort=False</em>, <em>ave=False</em>, <em>tag=None</em>, <em>precision='Float32'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/surf.html#Surf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.Surf" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class allows to display the content of a graphic file
+(<a class="reference internal" href="../outputFiles/outGraph.html#secgraphfile"><span>G_#.TAG</span></a> or G_ave.TAG). It allows to plot
+radial, azimuthal and equatorial cuts as well as phi-averages.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># To read G_1.test</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Surf</span><span class="p">(</span><span class="n">ivar</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ave</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s">&#39;test&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># To read the latest G file in the working directory (double precision)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Surf</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="s">&#39;Float64&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Possible plots</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">equat</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;vr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;vp&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">surf</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;entropy&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;Br&#39;</span><span class="p">,</span> <span class="n">lon_0</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">])</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="magic.Surf.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>ivar=None</em>, <em>datadir='.'</em>, <em>vort=False</em>, <em>ave=False</em>, <em>tag=None</em>, <em>precision='Float32'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/surf.html#Surf.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.Surf.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ivar</strong> (<em>int</em>) &#8211; index of the graphic file</li>
+<li><strong>ave</strong> (<em>bool</em>) &#8211; when set to True, it tries to read a time-averaged graphic file</li>
+<li><strong>tag</strong> (<em>str</em>) &#8211; TAG suffix extension of the graphic file</li>
+<li><strong>vort</strong> (<em>bool</em>) &#8211; a boolean to specify whether one wants to compute the 3-D
+vorticiy components (take care of the memory imprint)</li>
+<li><strong>datadir</strong> (<em>str</em>) &#8211; the working directory</li>
+<li><strong>precision</strong> (<em>str</em>) &#8211; the storage precision of the graphic file (single or
+double precision). Default is &#8216;Float32&#8217; (single)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.Surf.avg">
+<code class="descname">avg</code><span class="sig-paren">(</span><em>field='vphi'</em>, <em>levels=16</em>, <em>cm='RdYlBu_r'</em>, <em>normed=True</em>, <em>vmax=None</em>, <em>vmin=None</em>, <em>cbar=True</em>, <em>tit=True</em>, <em>pol=False</em>, <em>tor=False</em>, <em>mer=False</em>, <em>merLevels=16</em>, <em>polLevels=16</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/surf.html#Surf.avg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.Surf.avg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the azimutal average of a given field.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Surf</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Axisymmetric zonal flows, 65 contour levels</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;vp&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">65</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s">&#39;seismic&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Minimal plot (no cbar, not title)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;Br&#39;</span><span class="p">,</span> <span class="n">tit</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Axisymmetric Bphi + poloidal field lines</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;Bp&#39;</span><span class="p">,</span> <span class="n">pol</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">polLevels</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Omega-effect, contours truncated from -1e3 to 1e3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;omeffect&#39;</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mf">1e3</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>field</strong> (<em>str</em>) &#8211; the field you want to display</li>
+<li><strong>levels</strong> (<em>int</em>) &#8211; the number of levels in the contourf plot</li>
+<li><strong>cm</strong> (<em>str</em>) &#8211; name of the colormap (&#8216;jet&#8217;, &#8216;seismic&#8217;, &#8216;RdYlBu_r&#8217;, etc.)</li>
+<li><strong>tit</strong> (<em>bool</em>) &#8211; display the title of the figure when set to True</li>
+<li><strong>cbar</strong> (<em>bool</em>) &#8211; display the colorbar when set to True</li>
+<li><strong>vmax</strong> (<em>float</em>) &#8211; maximum value of the contour levels</li>
+<li><strong>vmin</strong> (<em>float</em>) &#8211; minimum value of the contour levels</li>
+<li><strong>normed</strong> (<em>bool</em>) &#8211; when set to True, the colormap is centered around zero.
+Default is True, except for entropy/temperature plots.</li>
+<li><strong>pol</strong> (<em>bool</em>) &#8211; diplay the poloidal field lines contours when set to Tru</li>
+<li><strong>mer</strong> (<em>bool</em>) &#8211; display the meridional circulation contours when set to True</li>
+<li><strong>merLevels</strong> (<em>int</em>) &#8211; number of contour levels to display meridional circulation</li>
+<li><strong>polLevels</strong> (<em>int</em>) &#8211; number of contour levels to display poloidal field lines</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.Surf.equat">
+<code class="descname">equat</code><span class="sig-paren">(</span><em>field='vr'</em>, <em>levels=16</em>, <em>cm='RdYlBu_r'</em>, <em>normed=True</em>, <em>vmax=None</em>, <em>vmin=None</em>, <em>cbar=True</em>, <em>tit=True</em>, <em>avg=False</em>, <em>normRad=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/surf.html#Surf.equat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.Surf.equat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the equatorial cut of a given field</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Surf</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Equatorial cut of the z-vorticity, 65 contour levels</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">equat</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;vortz&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">65</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s">&#39;seismic&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Minimal plot (no cbar, not title)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">equat</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;bphi&#39;</span><span class="p">,</span> <span class="n">tit</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Control the limit of the colormap from -1e3 to 1e3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">equat</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;vr&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">33</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Normalise the contour levels radius by radius</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">equat</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;jphi&#39;</span><span class="p">,</span> <span class="n">normRad</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>field</strong> (<em>str</em>) &#8211; the name of the input physical quantity you want to
+display</li>
+<li><strong>avg</strong> (<em>bool</em>) &#8211; when set to True, an additional figure which shows
+the radial profile of the input physical quantity
+(azimuthal average) is also displayed</li>
+<li><strong>normRad</strong> (<em>bool</em>) &#8211; when set to True, the contour levels are normalised
+radius by radius (default is False)</li>
+<li><strong>levels</strong> (<em>int</em>) &#8211; the number of levels in the contour</li>
+<li><strong>cm</strong> (<em>str</em>) &#8211; name of the colormap (&#8216;jet&#8217;, &#8216;seismic&#8217;, &#8216;RdYlBu_r&#8217;, etc.)</li>
+<li><strong>tit</strong> (<em>bool</em>) &#8211; display the title of the figure when set to True</li>
+<li><strong>cbar</strong> (<em>bool</em>) &#8211; display the colorbar when set to True</li>
+<li><strong>vmax</strong> (<em>float</em>) &#8211; maximum value of the contour levels</li>
+<li><strong>vmin</strong> (<em>float</em>) &#8211; minimum value of the contour levels</li>
+<li><strong>normed</strong> (<em>bool</em>) &#8211; when set to True, the colormap is centered around zero.
+Default is True, except for entropy/temperature plots.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.Surf.slice">
+<code class="descname">slice</code><span class="sig-paren">(</span><em>field='Bphi'</em>, <em>lon_0=0.0</em>, <em>levels=12</em>, <em>cm='RdYlBu_r'</em>, <em>normed=True</em>, <em>vmin=None</em>, <em>vmax=None</em>, <em>cbar=True</em>, <em>tit=True</em>, <em>grid=False</em>, <em>nGridLevs=16</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/surf.html#Surf.slice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.Surf.slice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot an azimuthal slice of a given field.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Surf</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># vphi at 0, 30, 60 degrees in longitude</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;vp&#39;</span><span class="p">,</span> <span class="n">lon_0</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">60</span><span class="p">],</span> <span class="n">levels</span><span class="o">=</span><span class="mi">65</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s">&#39;seismic&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Minimal plot (no cbar, not title)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;vp&#39;</span><span class="p">,</span> <span class="n">lon_0</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">tit</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Axisymmetric Bphi + poloidal field lines</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;Bp&#39;</span><span class="p">,</span> <span class="n">pol</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">polLevels</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Omega-effect, contours truncated from -1e3 to 1e3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;omeffect&#39;</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mf">1e3</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>field</strong> (<em>str</em>) &#8211; the field you want to display</li>
+<li><strong>lon_0</strong> (<em>float or list</em>) &#8211; the longitude of the slice in degrees, or a list of longitudes</li>
+<li><strong>levels</strong> (<em>int</em>) &#8211; the number of levels in the contourf plot</li>
+<li><strong>cm</strong> (<em>str</em>) &#8211; name of the colormap (&#8216;jet&#8217;, &#8216;seismic&#8217;, &#8216;RdYlBu_r&#8217;, etc.)</li>
+<li><strong>tit</strong> (<em>bool</em>) &#8211; display the title of the figure when set to True</li>
+<li><strong>cbar</strong> (<em>bool</em>) &#8211; display the colorbar when set to True</li>
+<li><strong>vmax</strong> (<em>float</em>) &#8211; maximum value of the contour levels</li>
+<li><strong>vmin</strong> (<em>float</em>) &#8211; minimum value of the contour levels</li>
+<li><strong>grid</strong> (<em>bool</em>) &#8211; display or hide the grid</li>
+<li><strong>nGridLevs</strong> (<em>int</em>) &#8211; number of grid levels</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.Surf.surf">
+<code class="descname">surf</code><span class="sig-paren">(</span><em>field='Bphi'</em>, <em>proj='hammer'</em>, <em>lon_0=0.0</em>, <em>r=0.85</em>, <em>vmax=None</em>, <em>vmin=None</em>, <em>lat_0=30.0</em>, <em>levels=16</em>, <em>cm='RdYlBu_r'</em>, <em>normed=True</em>, <em>cbar=True</em>, <em>tit=True</em>, <em>lines=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/surf.html#Surf.surf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.Surf.surf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the surface distribution of an input field at a given
+input radius (normalised by the outer boundary radius).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Surf</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Radial flow component at ``r=0.95 r_o``, 65 contour levels</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">surf</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;vr&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">65</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s">&#39;seismic&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Minimal plot (no cbar, not title)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">surf</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;entropyfluct&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">tit</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Control the limit of the colormap from -1e3 to 1e3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">surf</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;vp&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">33</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># If basemap is installed, additional projections are available</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">surf</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;Br&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">proj</span><span class="o">=</span><span class="s">&#39;ortho&#39;</span><span class="p">,</span> <span class="n">lat_0</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">lon_0</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>field</strong> (<em>str</em>) &#8211; the name of the field you want to display</li>
+<li><strong>proj</strong> (<em>str</em>) &#8211; the type of projection. Default is Hammer, in case
+you want to use &#8216;ortho&#8217; or &#8216;moll&#8217;, then Basemap is
+required.</li>
+<li><strong>r</strong> (<em>float</em>) &#8211; the radius at which you want to display the input
+data (in normalised units with the radius of the outer boundary)</li>
+<li><strong>levels</strong> (<em>int</em>) &#8211; the number of levels in the contour</li>
+<li><strong>cm</strong> (<em>str</em>) &#8211; name of the colormap (&#8216;jet&#8217;, &#8216;seismic&#8217;, &#8216;RdYlBu_r&#8217;, etc.)</li>
+<li><strong>tit</strong> (<em>bool</em>) &#8211; display the title of the figure when set to True</li>
+<li><strong>cbar</strong> (<em>bool</em>) &#8211; display the colorbar when set to True</li>
+<li><strong>lines</strong> (<em>bool</em>) &#8211; when set to True, over-plot solid lines to highlight
+the limits between two adjacent contour levels</li>
+<li><strong>vmax</strong> (<em>float</em>) &#8211; maximum value of the contour levels</li>
+<li><strong>vmin</strong> (<em>float</em>) &#8211; minimum value of the contour levels</li>
+<li><strong>normed</strong> (<em>bool</em>) &#8211; when set to True, the colormap is centered around zero.
+Default is True, except for entropy/temperature plots.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="support-for-movie-files-mov-tag">
+<span id="secpythonmoviefiles"></span><h1>Support for movie files <code class="docutils literal"><span class="pre">*_mov.TAG</span></code><a class="headerlink" href="#support-for-movie-files-mov-tag" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="magic.Movie">
+<em class="property">class </em><code class="descclassname">magic.</code><code class="descname">Movie</code><span class="sig-paren">(</span><em>file=None</em>, <em>iplot=True</em>, <em>step=1</em>, <em>png=False</em>, <em>lastvar=None</em>, <em>nvar='all'</em>, <em>levels=12</em>, <em>cm='RdYlBu_r'</em>, <em>cut=0.5</em>, <em>bgcolor=None</em>, <em>fluct=False</em>, <em>normed=False</em>, <em>avg=False</em>, <em>std=False</em>, <em>dpi=80</em>, <em>normRad=False</em>, <em>precision='Float32'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/movie.html#Movie"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.Movie" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class allows to read the <a class="reference internal" href="../outputFiles/outMovie.html#secmoviefile"><span>movie files</span></a> generated
+by the MagIC code.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">Movie</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># This returns a list of the available movies in the directory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># and lets you decide which one you want to read</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Reads and display AV_mov.test</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">Movie</span><span class="p">(</span><span class="n">filed</span><span class="o">=</span><span class="s">&#39;AV_mov.test&#39;</span><span class="p">)</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="c"># access to the data</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Read three movie files (no display)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m1</span> <span class="o">=</span> <span class="n">Movie</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s">&#39;AV_mov.testa&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m2</span> <span class="o">=</span> <span class="n">Movie</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s">&#39;AV_mov.testb&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m3</span> <span class="o">=</span> <span class="n">Movie</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s">&#39;AV_mov.testc&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Stack them together</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">m1</span><span class="o">+</span><span class="n">m2</span><span class="o">+</span><span class="n">m3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Display</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">levels</span><span class="o">=</span><span class="mi">33</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s">&#39;seismic&#39;</span><span class="p">,</span> <span class="n">cut</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Store the outputs in movie/img_#.png</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Only from the timesteps 280 to 380</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">Movie</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s">&#39;AB_mov.test&#39;</span><span class="p">,</span> <span class="n">png</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">nvar</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">lastvar</span><span class="o">=</span><span class="mi">380</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="magic.Movie.__add__">
+<code class="descname">__add__</code><span class="sig-paren">(</span><em>new</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/movie.html#Movie.__add__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.Movie.__add__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Built-in function to sum two movies</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">So far this function only works for two movies with the same 
+grid sizes. At some point, we might introduce grid extrapolation 
+to allow any summation/</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.Movie.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>file=None</em>, <em>iplot=True</em>, <em>step=1</em>, <em>png=False</em>, <em>lastvar=None</em>, <em>nvar='all'</em>, <em>levels=12</em>, <em>cm='RdYlBu_r'</em>, <em>cut=0.5</em>, <em>bgcolor=None</em>, <em>fluct=False</em>, <em>normed=False</em>, <em>avg=False</em>, <em>std=False</em>, <em>dpi=80</em>, <em>normRad=False</em>, <em>precision='Float32'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/movie.html#Movie.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.Movie.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>nvar</strong> (<em>int</em>) &#8211; the number of timesteps of the movie file we want to plot
+starting from the last line</li>
+<li><strong>png</strong> (<em>bool</em>) &#8211; if png=True, write the png files instead of display</li>
+<li><strong>iplot</strong> (<em>bool</em>) &#8211; if iplot=True, display otherwise just read</li>
+<li><strong>lastvar</strong> (<em>int</em>) &#8211; the number of the last timesteps to be read</li>
+<li><strong>step</strong> (<em>int</em>) &#8211; the stepping between two timesteps</li>
+<li><strong>levels</strong> (<em>int</em>) &#8211; the number of contour levels</li>
+<li><strong>cm</strong> (<em>str</em>) &#8211; the name of the color map</li>
+<li><strong>fluct</strong> (<em>bool</em>) &#8211; if fluct=True, substract the axisymmetric part</li>
+<li><strong>normed</strong> (<em>bool</em>) &#8211; the colormap is rescaled every timestep when set to True,
+otherwise it is calculated from the global extrema</li>
+<li><strong>avg</strong> (<em>bool</em>) &#8211; if avg=True, time-average is displayed</li>
+<li><strong>std</strong> (<em>bool</em>) &#8211; if std=True, standard deviation is displayed</li>
+<li><strong>dpi</strong> (<em>int</em>) &#8211; dot per inch when saving PNGs</li>
+<li><strong>normRad</strong> (<em>bool</em>) &#8211; if normRad=True, then we normalise for each radial level</li>
+<li><strong>precision</strong> (<em>str</em>) &#8211; precision of the input file, Float32 for single precision,
+Float64 for double precision</li>
+<li><strong>cut</strong> (<em>float</em>) &#8211; adjust the contour extrema to max(abs(data))*cut</li>
+<li><strong>bgcolor</strong> (<em>str</em>) &#8211; background color of the figure</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.Movie.avgStd">
+<code class="descname">avgStd</code><span class="sig-paren">(</span><em>std=False</em>, <em>cut=0.5</em>, <em>levels=12</em>, <em>cmap='RdYlBu_r'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/movie.html#Movie.avgStd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.Movie.avgStd" title="Permalink to this definition">¶</a></dt>
+<dd><p>plot time-average or standard deviation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>std</strong> (<em>bool</em>) &#8211; the standard deviation is computed instead the average
+when std is True</li>
+<li><strong>levels</strong> (<em>int</em>) &#8211; number of contour levels</li>
+<li><strong>cmap</strong> (<em>str</em>) &#8211; name of the colormap</li>
+<li><strong>cut</strong> (<em>float</em>) &#8211; adjust the contour extrema to max(abs(data))*cut</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.Movie.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>cut=0.5</em>, <em>levels=12</em>, <em>cmap='RdYlBu_r'</em>, <em>png=False</em>, <em>step=1</em>, <em>normed=False</em>, <em>dpi=80</em>, <em>bgcolor=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/movie.html#Movie.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.Movie.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plotting function (it can also write the png files)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>levels</strong> (<em>int</em>) &#8211; number of contour levels</li>
+<li><strong>cmap</strong> (<em>str</em>) &#8211; name of the colormap</li>
+<li><strong>cut</strong> (<em>float</em>) &#8211; adjust the contour extrema to max(abs(data))*cut</li>
+<li><strong>png</strong> (<em>bool</em>) &#8211; save the movie as a series of png files when
+set to True</li>
+<li><strong>dpi</strong> (<em>int</em>) &#8211; dot per inch when saving PNGs</li>
+<li><strong>bgcolor</strong> (<em>str</em>) &#8211; background color of the figure</li>
+<li><strong>normed</strong> (<em>bool</em>) &#8211; the colormap is rescaled every timestep when set to True,
+otherwise it is calculated from the global extrema</li>
+<li><strong>step</strong> (<em>int</em>) &#8211; the stepping between two timesteps</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="magic.Movie3D">
+<em class="property">class </em><code class="descclassname">magic.</code><code class="descname">Movie3D</code><span class="sig-paren">(</span><em>file=None</em>, <em>step=1</em>, <em>lastvar=None</em>, <em>nvar='all'</em>, <em>nrout=48</em>, <em>ratio_out=2.0</em>, <em>extrapot=False</em>, <em>precision='Float32'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/movie3D.html#Movie3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.Movie3D" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class allows to read the 3D movie files <a class="reference internal" href="../outputFiles/outMovie.html#secmoviefile"><span>(B|V)_3D_.TAG</span></a>  and 
+transform them into a series of VTS files <code class="docutils literal"><span class="pre">./vtsFiles/B3D_#.TAG</span></code> that can be further 
+read using paraview.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Movie3D</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s">&#39;B_3D.TAG&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="magic.Movie3D.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>file=None</em>, <em>step=1</em>, <em>lastvar=None</em>, <em>nvar='all'</em>, <em>nrout=48</em>, <em>ratio_out=2.0</em>, <em>extrapot=False</em>, <em>precision='Float32'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/movie3D.html#Movie3D.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.Movie3D.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>file</strong> (<em>str</em>) &#8211; file name</li>
+<li><strong>nvar</strong> (<em>int</em>) &#8211; the number of timesteps of the movie file we want to plot
+starting from the last line</li>
+<li><strong>lastvar</strong> (<em>int</em>) &#8211; the number of the last timestep to be read</li>
+<li><strong>step</strong> (<em>int</em>) &#8211; the stepping between two timesteps</li>
+<li><strong>precision</strong> (<em>str</em>) &#8211; precision of the input file, Float32 for single precision,
+Float64 for double precision</li>
+<li><strong>extrapot</strong> (<em>bool</em>) &#8211; when set to True, potential extrapolation of the magnetic field
+outside the fluid domain is also computed</li>
+<li><strong>ratio_out</strong> (<em>float</em>) &#8211; ratio of desired external radius to the CMB radius. This is
+is only used when extrapot=True</li>
+<li><strong>nrout</strong> (<em>int</em>) &#8211; number of additional radial grid points to compute the potential
+extrapolation. This is only used when extrapot=True</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-magic.coeff">
+<span id="support-for-b-cmb-coeff-tag-and-v-b-coeff-r-tag-files"></span><span id="secpythoncoeffs"></span><h1>Support for <code class="docutils literal"><span class="pre">B_cmb_coeff.TAG</span></code> and <code class="docutils literal"><span class="pre">(V|B)_coeff_r#.TAG</span></code> files<a class="headerlink" href="#module-magic.coeff" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="magic.coeff.MagicCoeffCmb">
+<em class="property">class </em><code class="descclassname">magic.coeff.</code><code class="descname">MagicCoeffCmb</code><span class="sig-paren">(</span><em>tag</em>, <em>ratio_cmb_surface=1</em>, <em>scale_b=1</em>, <em>iplot=True</em>, <em>precision='Float64'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/coeff.html#MagicCoeffCmb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.coeff.MagicCoeffCmb" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class allows to read the <a class="reference internal" href="../outputFiles/outCoeffFiles.html#seccoefffiles"><span>B_coeff_cmb.TAG</span></a> files.
+It first read the poloidal potential at the CMB and then transform
+it to the Gauss coefficients <span class="math">\(g_{\ell m}\)</span> and <span class="math">\(h_{\ell m}\)</span>
+using the getGauss function.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Reads the files B_coeff_cmb.testa, B_coeff_cmb.testb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># and B_coeff_cmb.testc and stack them in one single time series</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cmb</span> <span class="o">=</span> <span class="n">MagicCoeffCmb</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s">&#39;test[a-c]&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">cmb</span><span class="o">.</span><span class="n">ell</span><span class="p">,</span> <span class="n">cmb</span><span class="o">.</span><span class="n">glm</span><span class="p">)</span> <span class="c"># print \ell and g_{\ell m}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">cmb</span><span class="o">.</span><span class="n">glm</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="c"># time-series of the axisymmetric dipole</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">cmb</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">cmb</span><span class="o">.</span><span class="n">dglmdt</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="c"># Secular variation of the dipole</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="magic.coeff.MagicCoeffCmb.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>tag</em>, <em>ratio_cmb_surface=1</em>, <em>scale_b=1</em>, <em>iplot=True</em>, <em>precision='Float64'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/coeff.html#MagicCoeffCmb.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.coeff.MagicCoeffCmb.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to read the B_coeff_cmb files</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>tag</strong> (<em>str</em>) &#8211; if you specify a pattern, it tries to read the corresponding files</li>
+<li><strong>ratio_cmb_surface</strong> (<em>float</em>) &#8211; ratio of surface ratio to CMB radius (default is 1)</li>
+<li><strong>scale_b</strong> (<em>float</em>) &#8211; magnetic field unit (default is 1)</li>
+<li><strong>iplot</strong> (<em>int</em>) &#8211; a logical to toggle the plot (default is True)</li>
+<li><strong>precision</strong> (<em>char</em>) &#8211; single or double precision</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.coeff.MagicCoeffCmb.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/coeff.html#MagicCoeffCmb.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.coeff.MagicCoeffCmb.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display some results when iplot is set to True</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="magic.coeff.MagicCoeffR">
+<em class="property">class </em><code class="descclassname">magic.coeff.</code><code class="descname">MagicCoeffR</code><span class="sig-paren">(</span><em>tag</em>, <em>ratio_cmb_surface=1</em>, <em>scale_b=1</em>, <em>iplot=True</em>, <em>field='B'</em>, <em>r=1</em>, <em>precision='Float64'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/coeff.html#MagicCoeffR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.coeff.MagicCoeffR" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class allows to read the <a class="reference internal" href="../outputFiles/outCoeffFiles.html#secbcoeffrfile"><span>B_coeff_r#.TAG</span></a>
+and <a class="reference internal" href="../outputFiles/outCoeffFiles.html#secvcoeffrfile"><span>V_coeff_r#.TAG</span></a> files.
+It reads the poloidal and toroidal potentials and reconstruct the time
+series (or the energy) contained in any given mode.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Reads the files V_coeff_r2.test*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cr</span> <span class="o">=</span> <span class="n">MagicCoeffR</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s">&#39;test*&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s">&#39;V&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">cr</span><span class="o">.</span><span class="n">ell</span><span class="p">,</span> <span class="n">cr</span><span class="o">.</span><span class="n">wlm</span><span class="p">)</span> <span class="c"># print \ell and w_{\ell m}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Time-evolution of the poloidal energy in the (\ell=10, m=10) mode</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">cr</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">cr</span><span class="o">.</span><span class="n">epolLM</span><span class="p">[:,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span> 
+</pre></div>
+</div>
+<dl class="method">
+<dt id="magic.coeff.MagicCoeffR.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>tag</em>, <em>ratio_cmb_surface=1</em>, <em>scale_b=1</em>, <em>iplot=True</em>, <em>field='B'</em>, <em>r=1</em>, <em>precision='Float64'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/coeff.html#MagicCoeffR.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.coeff.MagicCoeffR.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>tag</strong> (<em>str</em>) &#8211; if you specify a pattern, it tries to read the corresponding files</li>
+<li><strong>ratio_cmb_surface</strong> (<em>float</em>) &#8211; ratio of surface ratio to CMB radius (default is 1)</li>
+<li><strong>scale_b</strong> (<em>float</em>) &#8211; magnetic field unit (default is 1)</li>
+<li><strong>iplot</strong> (<em>bool</em>) &#8211; a logical to toggle the plot (default is True)</li>
+<li><strong>field</strong> (<em>str</em>) &#8211; &#8216;B&#8217;, &#8216;V&#8217; or &#8216;T&#8217; (magnetic field, velocity field or temperature)</li>
+<li><strong>r</strong> (<em>int</em>) &#8211; an integer to characterise which file we want to plot</li>
+<li><strong>precision</strong> (<em>str</em>) &#8211; single or double precision</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.coeff.deriv">
+<code class="descclassname">magic.coeff.</code><code class="descname">deriv</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>axis=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/coeff.html#deriv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.coeff.deriv" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is a simple second order derivative</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>numpy.ndarray</em>) &#8211; input x-axis</li>
+<li><strong>y</strong> (<em>numpy.ndarray</em>) &#8211; input array</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array that contains the derivatives</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.coeff.getGauss">
+<code class="descclassname">magic.coeff.</code><code class="descname">getGauss</code><span class="sig-paren">(</span><em>alm</em>, <em>blm</em>, <em>ell</em>, <em>m</em>, <em>scale_b</em>, <em>ratio_cmb_surface</em>, <em>rcmb</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/coeff.html#getGauss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.coeff.getGauss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the Gauss coefficients from the real and imaginary parts
+of the poloidal potential</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>alm</strong> (<em>numpy.ndarray</em>) &#8211; real part of the poloidal potential</li>
+<li><strong>blm</strong> (<em>numpy.ndarray</em>) &#8211; imaginary part of the poloidal potential</li>
+<li><strong>ell</strong> (<em>numpy.ndarray</em>) &#8211; spherical harmonic degree ell</li>
+<li><strong>scale_b</strong> (<em>float</em>) &#8211; magnetic field unit (default is 1)</li>
+<li><strong>ratio_cmb_surface</strong> (<em>float</em>) &#8211; ratio of surface ratio to CMB radius (default is 1)</li>
+<li><strong>rcmb</strong> (<em>float</em>) &#8211; radius of the outer boundary</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="support-for-b-rp-spec-tag">
+<span id="secpythonrspec"></span><h1>Support for <code class="docutils literal"><span class="pre">B[rp]Spec.TAG</span></code><a class="headerlink" href="#support-for-b-rp-spec-tag" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="magic.MagicRSpec">
+<em class="property">class </em><code class="descclassname">magic.</code><code class="descname">MagicRSpec</code><span class="sig-paren">(</span><em>tag</em>, <em>field='Br'</em>, <em>precision='Float32'</em>, <em>avg=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/radialSpectra.html#MagicRSpec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicRSpec" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class allows to read the <a class="reference internal" href="../outputFiles/outRSpecFiles.html#secrbspecfiles"><span>rB[r|p]Spec.TAG files</span></a>.
+Those files contain the time-evolution of the poloidal/toroidal magnetic energy
+for all radii and for spherical harmonic degrees from 1 to 6. This is an unformatted
+fortran file.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Read all the `BrSpec.test*` files in the current working directory and</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># stack them.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rsp</span> <span class="o">=</span> <span class="n">MagicRSpec</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s">&#39;test*&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s">&#39;Br&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="magic.MagicRSpec.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>tag</em>, <em>field='Br'</em>, <em>precision='Float32'</em>, <em>avg=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/radialSpectra.html#MagicRSpec.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicRSpec.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>tag</strong> (<em>str</em>) &#8211; if you specify a pattern, it tries to read the corresponding 
+files and stack them.</li>
+<li><strong>field</strong> (<em>str</em>) &#8211; nature of the radial spectra. Possible choices are
+&#8216;Bt&#8217; or &#8216;Bp&#8217;</li>
+<li><strong>precision</strong> (<em>str</em>) &#8211; single or double precision (default single, i.e. &#8216;Float32&#8217;)</li>
+<li><strong>avg</strong> (<em>bool</em>) &#8211; when set to True, display time averaged quantities</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.MagicRSpec.plotAvg">
+<code class="descname">plotAvg</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/radialSpectra.html#MagicRSpec.plotAvg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicRSpec.plotAvg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plotting function for time-averaged profiles</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Support for <code class="docutils literal"><span class="pre">G_#.TAG</span></code> files</a></li>
+<li><a class="reference internal" href="#support-for-movie-files-mov-tag">Support for movie files <code class="docutils literal"><span class="pre">*_mov.TAG</span></code></a></li>
+<li><a class="reference internal" href="#module-magic.coeff">Support for <code class="docutils literal"><span class="pre">B_cmb_coeff.TAG</span></code> and <code class="docutils literal"><span class="pre">(V|B)_coeff_r#.TAG</span></code> files</a></li>
+<li><a class="reference internal" href="#support-for-b-rp-spec-tag">Support for <code class="docutils literal"><span class="pre">B[rp]Spec.TAG</span></code></a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="spectra.html"
+                        title="previous chapter">Support for the spectra files <code class="docutils literal"><span class="pre">(kin|mag|u2)_spec_#.TAG</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="outTO.html"
+                        title="next chapter">Support for <code class="docutils literal"><span class="pre">TO</span></code> outputs</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/apiPython/graphMovCoeff.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="outTO.html" title="Support for TO outputs"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="spectra.html" title="Support for the spectra files (kin|mag|u2)_spec_#.TAG"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../postProc.html" >Data visualisation and post-processing</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

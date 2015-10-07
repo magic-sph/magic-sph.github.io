@@ -1,0 +1,327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>magic.movie3D &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../../contents.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../../index.html">Home</a></li>
+    <li><a href="../../install.html">Get it/Run it</a></li>
+    <li><a href="../../contribute.html">Contribute!</a></li>
+    <li><a href="../../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../../index.html">
+      <img src="../../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for magic.movie3D</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">re</span><span class="o">,</span><span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">N</span>
+<span class="kn">from</span> <span class="nn">magic.libmagic</span> <span class="kn">import</span> <span class="n">symmetrize</span>
+<span class="kn">from</span> <span class="nn">magic</span> <span class="kn">import</span> <span class="n">ExtraPot</span>
+<span class="kn">from</span> <span class="nn">.npfile</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">vtklib3</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="k">elif</span>  <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">vtklib2</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="Movie3D"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.Movie3D">[docs]</a><span class="k">class</span> <span class="nc">Movie3D</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class allows to read the 3D movie files :ref:`(B|V)_3D_.TAG&lt;secMovieFile&gt;`  and </span>
+<span class="sd">    transform them into a series of VTS files ``./vtsFiles/B3D_#.TAG`` that can be further </span>
+<span class="sd">    read using paraview.</span>
+
+<span class="sd">    &gt;&gt;&gt; Movie3D(file=&#39;B_3D.TAG&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Movie3D.__init__"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.Movie3D.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">file</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">lastvar</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">nvar</span><span class="o">=</span><span class="s">&#39;all&#39;</span><span class="p">,</span> <span class="n">nrout</span><span class="o">=</span><span class="mi">48</span><span class="p">,</span>
+                 <span class="n">ratio_out</span><span class="o">=</span><span class="mf">2.</span><span class="p">,</span> <span class="n">extrapot</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="s">&#39;Float32&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param file: file name</span>
+<span class="sd">        :type file: str</span>
+<span class="sd">        :param nvar: the number of timesteps of the movie file we want to plot</span>
+<span class="sd">                     starting from the last line</span>
+<span class="sd">        :type nvar: int</span>
+<span class="sd">        :param lastvar: the number of the last timestep to be read</span>
+<span class="sd">        :type lastvar: int</span>
+<span class="sd">        :param step: the stepping between two timesteps</span>
+<span class="sd">        :type step: int</span>
+<span class="sd">        :param precision: precision of the input file, Float32 for single precision,</span>
+<span class="sd">                          Float64 for double precision</span>
+<span class="sd">        :type precision: str</span>
+<span class="sd">        :param extrapot: when set to True, potential extrapolation of the magnetic field</span>
+<span class="sd">                         outside the fluid domain is also computed</span>
+<span class="sd">        :type extrapot: bool</span>
+<span class="sd">        :param ratio_out: ratio of desired external radius to the CMB radius. This is</span>
+<span class="sd">                          is only used when extrapot=True</span>
+<span class="sd">        :type ratio_out: float</span>
+<span class="sd">        :param nrout: number of additional radial grid points to compute the potential</span>
+<span class="sd">                      extrapolation. This is only used when extrapot=True</span>
+<span class="sd">        :type nrout: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">file</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">dat</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;*_mov.*&#39;</span><span class="p">)</span>
+            <span class="n">str1</span> <span class="o">=</span> <span class="s">&#39;Which movie do you want ?</span><span class="se">\n</span><span class="s">&#39;</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">movie</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dat</span><span class="p">):</span>
+                <span class="n">str1</span> <span class="o">+=</span> <span class="s">&#39; </span><span class="si">%i</span><span class="s">) </span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">movie</span><span class="p">)</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="n">str1</span><span class="p">))</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="n">index</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&#39;Non valid index: </span><span class="si">%s</span><span class="s"> has been chosen instead&#39;</span> <span class="o">%</span> <span class="n">dat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="nb">file</span>
+        <span class="n">mot</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;.*_mov\.(.*)&#39;</span><span class="p">)</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">mot</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c"># DETERMINE THE NUMBER OF LINES BY READING THE LOG FILE</span>
+        <span class="n">logfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;log.</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">end</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">mot</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;  ! WRITING MOVIE FRAME NO\s*(\d*).*&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">logfile</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">mot</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+                 <span class="n">nlines</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">mot</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">line</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">logfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">lastvar</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">var2</span> <span class="o">=</span> <span class="n">nlines</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">var2</span> <span class="o">=</span> <span class="n">lastvar</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">nvar</span><span class="p">)</span> <span class="o">==</span> <span class="s">&#39;all&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nvar</span> <span class="o">=</span> <span class="n">nlines</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">var2</span> <span class="o">=</span> <span class="n">nlines</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nvar</span> <span class="o">=</span> <span class="n">nvar</span>
+
+        <span class="c"># READ the movie file </span>
+        <span class="n">infile</span> <span class="o">=</span> <span class="n">npfile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s">&#39;B&#39;</span><span class="p">)</span>
+        <span class="c"># HEADER</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="s">&#39;|S64&#39;</span><span class="p">)</span>
+        <span class="n">n_type</span><span class="p">,</span> <span class="n">n_surface</span><span class="p">,</span> <span class="n">const</span><span class="p">,</span> <span class="n">n_fields</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
+        <span class="n">n_fields</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_fields</span><span class="p">)</span>
+        <span class="n">n_surface</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_surface</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">n_fields</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">movtype</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">movtype</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">movtype</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">movtype</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
+
+        <span class="c"># RUN PARAMETERS</span>
+        <span class="n">runid</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="s">&#39;|S64&#39;</span><span class="p">)</span>
+        <span class="n">n_r_mov_tot</span><span class="p">,</span> <span class="n">n_r_max</span><span class="p">,</span> <span class="n">n_theta_max</span><span class="p">,</span> <span class="n">n_phi_tot</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> <span class="n">ra</span><span class="p">,</span> \
+             <span class="n">ek</span><span class="p">,</span> <span class="n">pr</span><span class="p">,</span> <span class="n">prmag</span><span class="p">,</span> <span class="n">radratio</span><span class="p">,</span> <span class="n">tScale</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
+        <span class="n">minc</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">minc</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_r_max</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_theta_max</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_phi_tot</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">)</span>
+        <span class="n">n_r_mov_tot</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_r_mov_tot</span><span class="p">)</span>
+
+        <span class="c"># GRID</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">]</span> <span class="c"># remove inner core</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="n">radratio</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">phi</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
+
+        <span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">n_r_mov_tot</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_phi_tot</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nvar</span><span class="p">,</span> <span class="n">precision</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&#39;vtsFiles&#39;</span><span class="p">):</span>
+            <span class="n">startdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s">&#39;vtsFiles&#39;</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">&#39;vtsFiles&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var2</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">nvar</span><span class="p">):</span>
+            <span class="n">n_frame</span><span class="p">,</span> <span class="n">t_movieS</span><span class="p">,</span> <span class="n">omega_ic</span><span class="p">,</span> <span class="n">omega_ma</span><span class="p">,</span> <span class="n">movieDipColat</span><span class="p">,</span> \
+                 <span class="n">movieDipLon</span><span class="p">,</span> <span class="n">movieDipStrength</span><span class="p">,</span> \
+                 <span class="n">movieDipStrengthGeo</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
+            <span class="n">vecr</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">vect</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">vecp</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nvar</span><span class="p">):</span>
+            <span class="n">n_frame</span><span class="p">,</span> <span class="n">t_movieS</span><span class="p">,</span> <span class="n">omega_ic</span><span class="p">,</span> <span class="n">omega_ma</span><span class="p">,</span> <span class="n">movieDipColat</span><span class="p">,</span> \
+                 <span class="n">movieDipLon</span><span class="p">,</span> <span class="n">movieDipStrength</span><span class="p">,</span> \
+                 <span class="n">movieDipStrengthGeo</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">t_movieS</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="o">%</span> <span class="n">step</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c">#print(k+self.var2-self.nvar)</span>
+                <span class="n">vecr</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
+                <span class="n">vect</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
+                <span class="n">vecp</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;B3D_</span><span class="si">%05d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">k</span>
+                <span class="n">vecr</span> <span class="o">=</span> <span class="n">vecr</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="c"># remove inner core </span>
+                <span class="n">vecr</span> <span class="o">=</span> <span class="n">vecr</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+                <span class="n">vect</span> <span class="o">=</span> <span class="n">vect</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="c"># remove inner core </span>
+                <span class="n">vect</span> <span class="o">=</span> <span class="n">vect</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+                <span class="n">vecp</span> <span class="o">=</span> <span class="n">vecp</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="c"># remove inner core </span>
+                <span class="n">vecp</span> <span class="o">=</span> <span class="n">vecp</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+                <span class="n">br</span> <span class="o">=</span> <span class="n">vecr</span><span class="o">.</span><span class="n">T</span>
+                <span class="n">bt</span> <span class="o">=</span> <span class="n">vect</span><span class="o">.</span><span class="n">T</span>
+                <span class="n">bp</span> <span class="o">=</span> <span class="n">vecp</span><span class="o">.</span><span class="n">T</span>
+                <span class="n">brCMB</span> <span class="o">=</span> <span class="n">br</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">rcmb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">extrapot</span><span class="p">:</span>
+                    <span class="n">pot</span> <span class="o">=</span> <span class="n">ExtraPot</span><span class="p">(</span><span class="n">rcmb</span><span class="p">,</span> <span class="n">brCMB</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> <span class="n">ratio_out</span><span class="o">=</span><span class="n">ratio_out</span><span class="p">,</span> 
+                                   <span class="n">nrout</span><span class="o">=</span><span class="n">nrout</span><span class="p">,</span> <span class="n">cutCMB</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+                    <span class="n">br</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">br</span><span class="p">,</span> <span class="n">minc</span><span class="p">)</span>
+                    <span class="n">bt</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">bt</span><span class="p">,</span> <span class="n">minc</span><span class="p">)</span>
+                    <span class="n">bp</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">bp</span><span class="p">,</span> <span class="n">minc</span><span class="p">)</span>
+                    <span class="n">radii</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">pot</span><span class="o">.</span><span class="n">rout</span><span class="p">))</span>
+                    <span class="n">br</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">br</span><span class="p">,</span> <span class="n">pot</span><span class="o">.</span><span class="n">brout</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+                    <span class="n">bt</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">bt</span><span class="p">,</span> <span class="n">pot</span><span class="o">.</span><span class="n">btout</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+                    <span class="n">bp</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">bp</span><span class="p">,</span> <span class="n">pot</span><span class="o">.</span><span class="n">bpout</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">radii</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span>
+                <span class="n">vts</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">radii</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">bt</span><span class="p">,</span> <span class="n">bp</span><span class="p">)</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&#39;write </span><span class="si">%s</span><span class="s">.vts&#39;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span> <span class="c"># Otherwise we read</span>
+                <span class="n">vecr</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
+                <span class="n">vect</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
+                <span class="n">vecp</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">startdir</span><span class="p">)</span>
+
+</div></div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">magic</span> <span class="kn">import</span> <span class="n">MagicGraph</span>
+
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">Movie3D</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s">&#39;B_3D_mov.CJ2&#39;</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

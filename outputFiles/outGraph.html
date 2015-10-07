@@ -1,0 +1,470 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Graphic files G_#.TAG and G_ave.TAG &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../contents.html" />
+    <link rel="up" title="Output files" href="outFiles.html" />
+    <link rel="next" title="Movie files *_mov.TAG" href="outMovie.html" />
+    <link rel="prev" title="Spectra" href="outSpecFiles.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../install.html">Get it/Run it</a></li>
+    <li><a href="../contribute.html">Contribute!</a></li>
+    <li><a href="../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../index.html">
+      <img src="../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="outMovie.html" title="Movie files *_mov.TAG"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="outSpecFiles.html" title="Spectra"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="outFiles.html" accesskey="U">Output files</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="graphic-files-g-tag-and-g-ave-tag">
+<span id="secgraphfile"></span><h1>Graphic files <code class="docutils literal"><span class="pre">G_#.TAG</span></code> and <code class="docutils literal"><span class="pre">G_ave.TAG</span></code><a class="headerlink" href="#graphic-files-g-tag-and-g-ave-tag" title="Permalink to this headline">¶</a></h1>
+<p>These are fortran unformatted files containing 3D data (in the form
+vector_array(phi, theta, r) ) which can be used to visualize the solution.
+They are written after a fixed number of time steps as specified by the user
+in the <a class="reference internal" href="../inputNamelists/outNamelist.html#secoutputnml"><span>Output Control namelist</span></a> using the parameters
+listed in the section on <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlStd.html#secoutgraphfile"><span>output of graphic files</span></a>. In case
+<a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlStd.html#varl-average"><span>l_average</span></a> is set to <code class="docutils literal"><span class="pre">.true.</span></code>, then an average graphic file,
+named <code class="docutils literal"><span class="pre">G_ave.TAG</span></code>, containing time averaged values of 3D data, is also written
+at the end of the simulation.</p>
+<p>These files are written in chunks of latitude for one radial level at a time by the
+subroutine <a class="reference internal" href="../apiFortran/IOBinaryOutputs.html#f/graphout_mod/graphout" title="f/graphout_mod/graphout"><code class="xref f f-subr docutils literal"><span class="pre">graphOut</span></code></a> or by
+<a class="reference internal" href="../apiFortran/IOBinaryOutputs.html#f/graphout_mod/graphout_mpi" title="f/graphout_mod/graphout_mpi"><code class="xref f f-subr docutils literal"><span class="pre">graphOut_mpi</span></code></a> depending on whether
+<code class="docutils literal"><span class="pre">USE_MPI</span></code> is set to <code class="docutils literal"><span class="pre">Yes</span></code> or <code class="docutils literal"><span class="pre">No</span></code> in the Makefile. The structure of the
+file looks like below:</p>
+<blockquote>
+<div><div class="highlight-fortran"><div class="highlight"><pre><span class="c">!-------------</span>
+<span class="c">! Line 1</span>
+<span class="c">!-------------</span>
+
+<span class="n">version</span>               <span class="c">!Graphout_version_9 (using MPI) or</span>
+                      <span class="c">!Graphout_version_7 (without MPI)</span>
+<span class="c">!----------</span>
+<span class="c">! Line 2</span>
+<span class="c">!----------</span>
+
+<span class="n">runid</span>
+
+<span class="c">!----------</span>
+<span class="c">! Line 3</span>
+<span class="c">!----------</span>
+
+<span class="nb">time</span><span class="p">,</span> <span class="n">n_r_max</span><span class="p">,</span> <span class="n">n_theta_max</span><span class="p">,</span> <span class="n">n_phi_tot</span><span class="p">,</span>          <span class="c">!time = Time of writing</span>
+<span class="n">n_r_ic_max</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> <span class="n">nThetasBs</span><span class="p">,</span>                  <span class="c">!(Simulation time),</span>
+<span class="n">ra</span><span class="p">,</span> <span class="n">ek</span><span class="p">,</span> <span class="n">pr</span><span class="p">,</span> <span class="n">prmag</span><span class="p">,</span>                              <span class="c">!nThetasBs = no. of</span>
+<span class="n">radratio</span><span class="p">,</span> <span class="n">sigma_ratio</span>                           <span class="c">!theta blocks</span>
+
+<span class="c">!----------</span>
+<span class="c">! Line 4</span>
+<span class="c">!----------</span>
+
+<span class="n">theta</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n_theta_max</span><span class="p">)</span>
+
+<span class="c">!-----------------------------------------------------------------------</span>
+
+<span class="c">!-------------------</span>
+<span class="c">!Graphout_version_9</span>
+<span class="c">!-------------------</span>
+
+<span class="c">! This version is written when the code uses MPI (USE_MPI=yes). Parallel</span>
+<span class="c">! chunks of fields are written for different radial levels. Chunks in theta</span>
+<span class="c">! are written in parallel using OpenMP</span>
+
+<span class="c">!---------------</span>
+<span class="c">! Data</span>
+<span class="c">!---------------</span>
+
+<span class="c">!-------------</span>
+<span class="c">! Block N</span>
+<span class="c">!-------------</span>
+
+<span class="c">!------------</span>
+<span class="c">! Line 4 + N</span>
+<span class="c">!------------</span>
+
+
+<span class="n">n_r</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">(</span><span class="n">n_r</span><span class="p">)</span><span class="o">/</span><span class="n">r</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">n_theta_start</span><span class="p">,</span> <span class="n">n_theta_stop</span>   <span class="c">!Radial index, radius in terms</span>
+                                                  <span class="c">!of r_cmb, start and stop of</span>
+                                                  <span class="c">!the theta block</span>
+
+<span class="c">!---------------</span>
+<span class="c">! Line 4 + (N+1)</span>
+<span class="c">!---------------</span>
+
+<span class="n">sr</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n_phi_tot</span><span class="p">,</span> <span class="n">n_theta_start</span><span class="p">:</span><span class="n">n_theta_stop</span><span class="p">,</span> <span class="n">n_r</span><span class="p">)</span>  <span class="c">!Entropy</span>
+
+<span class="c">!---------------</span>
+<span class="c">! Line 4 + (N+2)</span>
+<span class="c">!---------------</span>
+
+<span class="n">vr</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n_phi_tot</span><span class="p">,</span> <span class="n">n_theta_start</span><span class="p">:</span><span class="n">n_theta_stop</span><span class="p">,</span> <span class="n">n_r</span><span class="p">)</span>  <span class="c">!Radial velocity</span>
+
+<span class="c">!---------------</span>
+<span class="c">! Line 4 + (N+3)</span>
+<span class="c">!---------------</span>
+
+<span class="n">vt</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n_phi_tot</span><span class="p">,</span> <span class="n">n_theta_start</span><span class="p">:</span><span class="n">n_theta_stop</span><span class="p">,</span> <span class="n">n_r</span><span class="p">)</span>  <span class="c">!Theta component of velocity</span>
+
+<span class="c">!---------------</span>
+<span class="c">! Line 4 + (N+4)</span>
+<span class="c">!---------------</span>
+
+<span class="n">vp</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n_phi_tot</span><span class="p">,</span> <span class="n">n_theta_start</span><span class="p">:</span><span class="n">n_theta_stop</span><span class="p">,</span> <span class="n">n_r</span><span class="p">)</span>  <span class="c">!Zonal (phi component) of</span>
+                                                  <span class="c">!velocity</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="n">l_mag</span><span class="p">):</span>                                         <span class="c">!For a magnetic run</span>
+
+  <span class="c">!---------------</span>
+  <span class="c">! Line 4 + (N+5)</span>
+  <span class="c">!---------------</span>
+
+  <span class="n">br</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n_phi_tot</span><span class="p">,</span> <span class="n">n_theta_start</span><span class="p">:</span><span class="n">n_theta_stop</span><span class="p">,</span> <span class="n">n_r</span><span class="p">)</span>  <span class="c">!Radial magnetic field</span>
+
+  <span class="c">!---------------</span>
+  <span class="c">! Line 4 + (N+6)</span>
+  <span class="c">!---------------</span>
+
+  <span class="n">bt</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n_phi_tot</span><span class="p">,</span> <span class="n">n_theta_start</span><span class="p">:</span><span class="n">n_theta_stop</span><span class="p">,</span> <span class="n">n_r</span><span class="p">)</span>  <span class="c">!Theta component of</span>
+                                                    <span class="c">!magnetic field</span>
+
+  <span class="c">!---------------</span>
+  <span class="c">! Line 4 + (N+7)</span>
+  <span class="c">!---------------</span>
+
+  <span class="n">bp</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n_phi_tot</span><span class="p">,</span> <span class="n">n_theta_start</span><span class="p">:</span><span class="n">n_theta_stop</span><span class="p">,</span> <span class="n">n_r</span><span class="p">)</span>  <span class="c">!Zonal (phi component)</span>
+                                                    <span class="c">!of magnetic field</span>
+
+
+<span class="c">!-------------------</span>
+<span class="c">!Graphout_version_7</span>
+<span class="c">!-------------------</span>
+
+<span class="c">!This version is written when the code does not use MPI (USE_MPI=no).</span>
+<span class="c">!Chunks in theta are written in parallel with OpenMP.</span>
+
+<span class="c">!---------------</span>
+<span class="c">! Data</span>
+<span class="c">!---------------</span>
+
+<span class="c">!-------------</span>
+<span class="c">! Block N</span>
+<span class="c">!-------------</span>
+
+<span class="c">!---------------</span>
+<span class="c">! Line 4 + (N+1)</span>
+<span class="c">!---------------</span>
+
+<span class="n">n_r</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">(</span><span class="n">n_r</span><span class="p">)</span><span class="o">/</span><span class="n">r</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">n_theta_start</span><span class="p">,</span> <span class="n">n_theta_stop</span>
+
+<span class="c">!----------------------------------------------------------</span>
+<span class="c">! Each of the following data point is written in a new line</span>
+<span class="c">!----------------------------------------------------------</span>
+
+<span class="c">!-----------------</span>
+<span class="c">! Entropy</span>
+<span class="c">!-----------------</span>
+
+<span class="n">sr</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>           <span class="c">!n_phi = 1, n_theta = n_theta_start, n_r</span>
+<span class="n">sr</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>           <span class="c">!n_phi = 2, n_theta = n_theta_start, n_r</span>
+<span class="p">...</span>
+<span class="n">sr</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>   <span class="c">!n_phi = n_phi_tot, n_theta = n_theta_start, n_r</span>
+<span class="n">sr</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_start</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>         <span class="c">!n_phi = 1, n_theta = n_theta_start+1, n_r</span>
+<span class="p">...</span>
+<span class="n">sr</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_start</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>
+<span class="p">...</span>
+<span class="n">sr</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>            <span class="c">!n_phi = 1, n_theta = n_theta_stop, n_r</span>
+<span class="n">sr</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>            <span class="c">!n_phi = 2, n_theta = n_theta_stop, n_r</span>
+<span class="p">...</span>
+<span class="n">sr</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>    <span class="c">!n_phi = n_phi_tot, n_theta = n_theta_stop, n_r</span>
+
+<span class="c">!-----------------</span>
+<span class="c">! Radial velocity</span>
+<span class="c">!-----------------</span>
+
+<span class="n">vr</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>           <span class="c">!n_phi = 1, n_theta = n_theta_start, n_r</span>
+<span class="n">vr</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>           <span class="c">!n_phi = 2, n_theta = n_theta_start, n_r</span>
+<span class="p">...</span>
+<span class="n">vr</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>   <span class="c">!n_phi = n_phi_tot, n_theta = n_theta_start, n_r</span>
+<span class="n">vr</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_start</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>         <span class="c">!n_phi = 1, n_theta = n_theta_start+1, n_r</span>
+<span class="p">...</span>
+<span class="n">vr</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_start</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>
+<span class="p">...</span>
+<span class="n">vr</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>            <span class="c">!n_phi = 1, n_theta = n_theta_stop, n_r</span>
+<span class="n">vr</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>            <span class="c">!n_phi = 2, n_theta = n_theta_stop, n_r</span>
+<span class="p">...</span>
+<span class="n">vr</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>    <span class="c">!n_phi = n_phi_tot, n_theta = n_theta_stop, n_r</span>
+
+<span class="c">!-----------------------------</span>
+<span class="c">! Theta component of velocity</span>
+<span class="c">!-----------------------------</span>
+
+<span class="n">vt</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>           <span class="c">!n_phi = 1, n_theta = n_theta_start, n_r</span>
+<span class="n">vt</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>           <span class="c">!n_phi = 2, n_theta = n_theta_start, n_r</span>
+<span class="p">...</span>
+<span class="n">vt</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>   <span class="c">!n_phi = n_phi_tot, n_theta = n_theta_start, n_r</span>
+<span class="n">vt</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_start</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>         <span class="c">!n_phi = 1, n_theta = n_theta_start+1, n_r</span>
+<span class="p">...</span>
+<span class="n">vt</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_start</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>
+<span class="p">...</span>
+<span class="n">vt</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>            <span class="c">!n_phi = 1, n_theta = n_theta_stop, n_r</span>
+<span class="n">vt</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>            <span class="c">!n_phi = 2, n_theta = n_theta_stop, n_r</span>
+<span class="p">...</span>
+<span class="n">vt</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>    <span class="c">!n_phi = n_phi_tot, n_theta = n_theta_stop, n_r</span>
+
+
+<span class="c">!----------------------------------</span>
+<span class="c">! Zonal (phi component) of velocity</span>
+<span class="c">!----------------------------------</span>
+
+<span class="n">vp</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>           <span class="c">!n_phi = 1, n_theta = n_theta_start, n_r</span>
+<span class="n">vp</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>           <span class="c">!n_phi = 2, n_theta = n_theta_start, n_r</span>
+<span class="p">...</span>
+<span class="n">vp</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>   <span class="c">!n_phi = n_phi_tot, n_theta = n_theta_start, n_r</span>
+<span class="n">vp</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_start</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>         <span class="c">!n_phi = 1, n_theta = n_theta_start+1, n_r</span>
+<span class="p">...</span>
+<span class="n">vp</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_start</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>
+<span class="p">...</span>
+<span class="n">vp</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>            <span class="c">!n_phi = 1, n_theta = n_theta_stop, n_r</span>
+<span class="n">vp</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>            <span class="c">!n_phi = 2, n_theta = n_theta_stop, n_r</span>
+<span class="p">...</span>
+<span class="n">vp</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>    <span class="c">!n_phi = n_phi_tot, n_theta = n_theta_stop, n_r</span>
+
+
+<span class="k">if</span> <span class="p">(</span><span class="n">l_mag</span><span class="p">):</span>                       <span class="c">!Only if it is a magnetic case</span>
+
+<span class="c">!----------------------</span>
+<span class="c">! Radial magnetic field</span>
+<span class="c">!----------------------</span>
+
+<span class="n">br</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>           <span class="c">!n_phi = 1, n_theta = n_theta_start, n_r</span>
+<span class="n">br</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>           <span class="c">!n_phi = 2, n_theta = n_theta_start, n_r</span>
+<span class="p">...</span>
+<span class="n">br</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>   <span class="c">!n_phi = n_phi_tot, n_theta = n_theta_start, n_r</span>
+<span class="n">br</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_start</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>         <span class="c">!n_phi = 1, n_theta = n_theta_start+1, n_r</span>
+<span class="p">...</span>
+<span class="n">br</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_start</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>
+<span class="p">...</span>
+<span class="n">br</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>            <span class="c">!n_phi = 1, n_theta = n_theta_stop, n_r</span>
+<span class="n">br</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>            <span class="c">!n_phi = 2, n_theta = n_theta_stop, n_r</span>
+<span class="p">...</span>
+<span class="n">br</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>    <span class="c">!n_phi = n_phi_tot, n_theta = n_theta_stop, n_r</span>
+
+
+<span class="c">!----------------------------------</span>
+<span class="c">! Theta component of magnetic field</span>
+<span class="c">!----------------------------------</span>
+
+<span class="n">bt</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>           <span class="c">!n_phi = 1, n_theta = n_theta_start, n_r</span>
+<span class="n">bt</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>           <span class="c">!n_phi = 2, n_theta = n_theta_start, n_r</span>
+<span class="p">...</span>
+<span class="n">bt</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>   <span class="c">!n_phi = n_phi_tot, n_theta = n_theta_start, n_r</span>
+<span class="n">bt</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_start</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>         <span class="c">!n_phi = 1, n_theta = n_theta_start+1, n_r</span>
+<span class="p">...</span>
+<span class="n">bt</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_start</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>
+<span class="p">...</span>
+<span class="n">bt</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>            <span class="c">!n_phi = 1, n_theta = n_theta_stop, n_r</span>
+<span class="n">bt</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>            <span class="c">!n_phi = 2, n_theta = n_theta_stop, n_r</span>
+<span class="p">...</span>
+<span class="n">bt</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>    <span class="c">!n_phi = n_phi_tot, n_theta = n_theta_stop, n_r</span>
+
+
+<span class="c">!----------------------------------------</span>
+<span class="c">! Zonal (phi component) of magnetic field</span>
+<span class="c">!----------------------------------------</span>
+
+<span class="n">bp</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>           <span class="c">!n_phi = 1, n_theta = n_theta_start, n_r</span>
+<span class="n">bp</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>           <span class="c">!n_phi = 2, n_theta = n_theta_start, n_r</span>
+<span class="p">...</span>
+<span class="n">bp</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>   <span class="c">!n_phi = n_phi_tot, n_theta = n_theta_start, n_r</span>
+<span class="n">bp</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_start</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>         <span class="c">!n_phi = 1, n_theta = n_theta_start+1, n_r</span>
+<span class="p">...</span>
+<span class="n">bp</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_start</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>
+<span class="p">...</span>
+<span class="n">bp</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>            <span class="c">!n_phi = 1, n_theta = n_theta_stop, n_r</span>
+<span class="n">bp</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>            <span class="c">!n_phi = 2, n_theta = n_theta_stop, n_r</span>
+<span class="p">...</span>
+<span class="n">bp</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>    <span class="c">!n_phi = n_phi_tot, n_theta = n_theta_stop, n_r</span>
+
+<span class="c">!-----------------</span>
+<span class="c">!Subsequent blocks</span>
+<span class="c">!-----------------</span>
+
+<span class="c">!Block N+1 in both cases have data at the same radial level but the next</span>
+<span class="c">!theta chunk (n_theta_start + nThetaB, n_theta_stop + n_thetaB)</span>
+
+<span class="c">!After data for all the theta blocks have been written for one radial</span>
+<span class="c">!level, everything above is repeated for the next radial level</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>The graphic files can be read using the python class <a class="reference internal" href="../apiPython/graphMovCoeff.html#magic.MagicGraph" title="magic.MagicGraph"><code class="xref py py-class docutils literal"><span class="pre">MagicGraph</span></code></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">MagicGraph</span><span class="p">(</span><span class="n">ivar</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s">&#39;TAG&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>They can be visualized using the <a class="reference internal" href="../apiPython/graphMovCoeff.html#magic.Surf" title="magic.Surf"><code class="xref py py-class docutils literal"><span class="pre">Surf</span></code></a> class:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">S</span> <span class="o">=</span> <span class="n">Surf</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s">&#39;TAG&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Surface map of radial velocity:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">S</span><span class="o">.</span><span class="n">surf</span><span class="p">(</span><span class="n">field</span> <span class="o">=</span> <span class="s">&#39;vr&#39;</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s">&#39;jet&#39;</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">S</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="n">field</span> <span class="o">=</span> <span class="s">&#39;br&#39;</span><span class="p">,</span> <span class="n">lon_0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c"># Longitudinal Slice of radial magnetic field</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">S</span><span class="o">.</span><span class="n">equat</span><span class="p">(</span><span class="n">field</span> <span class="o">=</span> <span class="s">&#39;entropy&#39;</span><span class="p">)</span>         <span class="c"># Equatorial slice of entropy</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="outSpecFiles.html"
+                        title="previous chapter">Spectra</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="outMovie.html"
+                        title="next chapter">Movie files <code class="docutils literal"><span class="pre">*_mov.TAG</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/outputFiles/outGraph.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="outMovie.html" title="Movie files *_mov.TAG"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="outSpecFiles.html" title="Spectra"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="outFiles.html" >Output files</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

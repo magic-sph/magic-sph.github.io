@@ -1,0 +1,594 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Standard time-series outputs &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../../contents.html" />
+    <link rel="up" title="Output control namelist" href="../outNamelist.html" />
+    <link rel="next" title="Poloidal magnetic field potential at CMB" href="outputNmlCoeff.html" />
+    <link rel="prev" title="Output control namelist" href="../outNamelist.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../../index.html">Home</a></li>
+    <li><a href="../../install.html">Get it/Run it</a></li>
+    <li><a href="../../contribute.html">Contribute!</a></li>
+    <li><a href="../../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../../index.html">
+      <img src="../../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="outputNmlCoeff.html" title="Poloidal magnetic field potential at CMB"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../outNamelist.html" title="Output control namelist"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../namelists.html" >Input parameters</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../outNamelist.html" accesskey="U">Output control namelist</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="standard-time-series-outputs">
+<span id="secoutnmlstd"></span><h1>Standard time-series outputs<a class="headerlink" href="#standard-time-series-outputs" title="Permalink to this headline">¶</a></h1>
+<p>The <strong>log</strong> outputs controls the output of all the default time series of the
+file: kinetic and magnetic energies (<a class="reference internal" href="../../outputFiles/outTimeSeriesStd.html#secekinfile"><span>e_kin.TAG</span></a>,
+<a class="reference internal" href="../../outputFiles/outTimeSeriesStd.html#secemagocfile"><span>e_mag_oc.TAG</span></a> and <a class="reference internal" href="../../outputFiles/outTimeSeriesStd.html#secemagicfile"><span>e_mag_ic.TAG</span></a>
+files), dipole information (<a class="reference internal" href="../../outputFiles/outTimeSeriesStd.html#secdipolefile"><span>dipole.TAG</span></a> file), rotation
+(<a class="reference internal" href="../../outputFiles/outTimeSeriesStd.html#secrotfile"><span>rot.TAG</span></a>) parameters (<a class="reference internal" href="../../outputFiles/outTimeSeriesStd.html#secparfile"><span>par.TAG</span></a>) and
+various additional diagnostics (<a class="reference internal" href="../../outputFiles/outTimeSeriesStd.html#secmiscfile"><span>misc.TAG</span></a>):</p>
+<ul id="varn-log-step">
+<li><p class="first"><strong>n_log_step</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/n_log_step" title="f/output_data/n_log_step"><code class="xref f f-var docutils literal"><span class="pre">n_log_step=50</span></code></a>) is an integer. This is the number of timesteps between two log outputs.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Be careful: when using too small <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/n_log_step" title="f/output_data/n_log_step"><code class="xref f f-var docutils literal"><span class="pre">n_log_step</span></code></a>, the disk access will dramatically increases, thus decreasing the code performance.</p>
+</div>
+</li>
+</ul>
+<ul class="simple" id="varn-logs">
+<li><strong>n_logs</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/n_logs" title="f/output_data/n_logs"><code class="xref f f-var docutils literal"><span class="pre">n_logs=0</span></code></a>) is an integer. This is the number of log-information sets to be written.</li>
+</ul>
+<ul class="simple" id="vart-log">
+<li><strong>t_log</strong>  (default  <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/t_log" title="f/output_data/t_log"><code class="xref f f-var docutils literal"><span class="pre">t_log=-1.0</span> <span class="pre">-1.0</span> <span class="pre">...</span></code></a>) is real array, which contains the times when log outputs are requested.</li>
+</ul>
+<ul class="simple" id="vardt-log">
+<li><strong>dt_log</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/dt_log" title="f/output_data/dt_log"><code class="xref f f-var docutils literal"><span class="pre">dt_log=0.0</span></code></a>) is a real, which defines the time interval between log outputs.</li>
+</ul>
+<ul class="simple" id="vart-log-start">
+<li><strong>t_log_start</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/t_log_start" title="f/output_data/t_log_start"><code class="xref f f-var docutils literal"><span class="pre">t_log_start=0.0</span></code></a>) is a real, which defines the time to start writing log outputs.</li>
+</ul>
+<ul class="simple" id="vart-log-stop">
+<li><strong>t_log_stop</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/t_log_stop" title="f/output_data/t_log_stop"><code class="xref f f-var docutils literal"><span class="pre">t_log_stop=0.0</span></code></a>) is a real, which defines the time to stop writing log outputs.</li>
+</ul>
+</div>
+<div class="section" id="restart-files">
+<span id="secrstin"></span><h1>Restart files<a class="headerlink" href="#restart-files" title="Permalink to this headline">¶</a></h1>
+<p>The <strong>rst</strong> outputs controls the output of restart files (<a class="reference internal" href="../../outputFiles/outRst.html#secrestartfile"><span>rst_t_#.TAG</span></a>) (i.e. check points in time from which the code could be restarted):</p>
+<ul class="simple" id="varn-rst-step">
+<li><strong>n_rst_step</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/n_rst_step" title="f/output_data/n_rst_step"><code class="xref f f-var docutils literal"><span class="pre">n_rst_step=0</span></code></a>) is an integer. This is the number of timesteps between two restart files.</li>
+</ul>
+<ul class="simple" id="varn-rsts">
+<li><strong>n_rsts</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/n_rsts" title="f/output_data/n_rsts"><code class="xref f f-var docutils literal"><span class="pre">n_rsts=1</span></code></a>) is an integer. This is the number of restart files to be written.</li>
+</ul>
+<ul class="simple" id="vart-rst">
+<li><strong>t_rst</strong>  (default  <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/t_rst" title="f/output_data/t_rst"><code class="xref f f-var docutils literal"><span class="pre">t_rst=-1.0</span> <span class="pre">-1.0</span> <span class="pre">...</span></code></a>) is real array, which contains the times when restart files are requested.</li>
+</ul>
+<ul class="simple" id="vardt-rst">
+<li><strong>dt_rst</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/dt_rst" title="f/output_data/dt_rst"><code class="xref f f-var docutils literal"><span class="pre">dt_rst=0.0</span></code></a>) is a real, which defines the time interval between restart files.</li>
+<li><strong>t_rst_start</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/t_rst_start" title="f/output_data/t_rst_start"><code class="xref f f-var docutils literal"><span class="pre">t_rst_start=0.0</span></code></a>) is a real, which defines the time to start writing restart files.</li>
+<li><strong>t_rst_stop</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/t_rst_stop" title="f/output_data/t_rst_stop"><code class="xref f f-var docutils literal"><span class="pre">t_rst_stop=0.0</span></code></a>) is a real, which defines the time to stop writing restart files.</li>
+<li><strong>n_stores</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/n_stores" title="f/output_data/n_stores"><code class="xref f f-var docutils literal"><span class="pre">n_stores=0</span></code></a>) is an integer. This is another way of requesting a certain number of restart files. However, instead of creating each time a new restart file, if <code class="docutils literal"><span class="pre">n_stores</span> <span class="pre">&gt;</span> <span class="pre">n_rsts</span></code>  the restart file is overwritten, which can possibly help saving some disk space.</li>
+</ul>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The <code class="docutils literal"><span class="pre">rst</span></code> files can become quite big and writting them too frequently will slow down the code. Except for very special use, the default set up should be sufficient.</p>
+</div>
+</div>
+<div class="section" id="graphic-files">
+<span id="secoutgraphfile"></span><h1>Graphic files<a class="headerlink" href="#graphic-files" title="Permalink to this headline">¶</a></h1>
+<p>The <strong>graph</strong> outputs controls the output of graphic files (<a class="reference internal" href="../../outputFiles/outGraph.html#secgraphfile"><span>G_#.TAG</span></a>) which contain a snapshot the entropy, the velocity field and the magnetic fields:</p>
+<ul class="simple" id="varn-graph-step">
+<li><strong>n_graph_step</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/n_graph_step" title="f/output_data/n_graph_step"><code class="xref f f-var docutils literal"><span class="pre">n_graph_step=0</span></code></a>) is an integer. This is the number of timesteps between two graphic files.</li>
+</ul>
+<ul class="simple" id="varn-graphs">
+<li><strong>n_graphs</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/n_graphs" title="f/output_data/n_graphs"><code class="xref f f-var docutils literal"><span class="pre">n_graphs=1</span></code></a>) is an integer. This is the number of graphic files to be written.</li>
+</ul>
+<ul class="simple" id="vart-graph">
+<li><strong>t_graph</strong>  (default  <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/t_graph" title="f/output_data/t_graph"><code class="xref f f-var docutils literal"><span class="pre">t_graph=-1.0</span> <span class="pre">-1.0</span> <span class="pre">...</span></code></a>) is real array, which contains the times when graphic files are requested.</li>
+</ul>
+<ul class="simple" id="vardt-graph">
+<li><strong>dt_graph</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/dt_graph" title="f/output_data/dt_graph"><code class="xref f f-var docutils literal"><span class="pre">dt_graph=0.0</span></code></a>) is a real, which defines the time interval between graphic files.</li>
+</ul>
+<ul class="simple" id="vart-graph-start">
+<li><strong>t_graph_start</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/t_graph_start" title="f/output_data/t_graph_start"><code class="xref f f-var docutils literal"><span class="pre">t_graph_start=0.0</span></code></a>) is a real, which defines the time to start writing graphic files.</li>
+</ul>
+<ul class="simple" id="vart-graph-stop">
+<li><strong>t_graph_stop</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/t_graph_stop" title="f/output_data/t_graph_stop"><code class="xref f f-var docutils literal"><span class="pre">t_graph_stop=0.0</span></code></a>) is a real, which defines the time to stop writing graphic files.</li>
+</ul>
+</div>
+<div class="section" id="spectra">
+<h1>Spectra<a class="headerlink" href="#spectra" title="Permalink to this headline">¶</a></h1>
+<p>The <strong>spec</strong> outputs controls the output of spectra: kinetic energy spectra (<a class="reference internal" href="../../outputFiles/outSpecFiles.html#seckinspecfile"><span>kin_spec_#.TAG</span></a>), magnetic energy spectra (<a class="reference internal" href="../../outputFiles/outSpecFiles.html#secmagspecfile"><span>mag_spec_#.TAG</span></a>) and thermal spectra (<a class="reference internal" href="../../outputFiles/outSpecFiles.html#sectspecfile"><span>T_spec_#.TAG</span></a>):</p>
+<ul class="simple" id="varn-spec-step">
+<li><strong>n_spec_step</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/n_spec_step" title="f/output_data/n_spec_step"><code class="xref f f-var docutils literal"><span class="pre">n_spec_step=0</span></code></a>) is an integer. This is the number of timesteps between two spectra.</li>
+</ul>
+<ul class="simple" id="varn-specs">
+<li><strong>n_specs</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/n_specs" title="f/output_data/n_specs"><code class="xref f f-var docutils literal"><span class="pre">n_specs=0</span></code></a>) is an integer. This is the number of spectra to be written.</li>
+</ul>
+<ul class="simple" id="vart-spec">
+<li><strong>t_spec</strong>  (default  <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/t_spec" title="f/output_data/t_spec"><code class="xref f f-var docutils literal"><span class="pre">t_spec=-1.0</span> <span class="pre">-1.0</span> <span class="pre">...</span></code></a>) is real array, which contains the times when spectra are requested.</li>
+</ul>
+<ul class="simple" id="vardt-spec">
+<li><strong>dt_spec</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/dt_spec" title="f/output_data/dt_spec"><code class="xref f f-var docutils literal"><span class="pre">dt_spec=0.0</span></code></a>) is a real, which defines the time interval between spectra.</li>
+</ul>
+<ul class="simple" id="vart-spec-start">
+<li><strong>t_spec_start</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/t_spec_start" title="f/output_data/t_spec_start"><code class="xref f f-var docutils literal"><span class="pre">t_spec_start=0.0</span></code></a>) is a real, which defines the time to start writing spectra.</li>
+</ul>
+<ul class="simple" id="vart-spec-stop">
+<li><strong>t_spec_stop</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/t_spec_stop" title="f/output_data/t_spec_stop"><code class="xref f f-var docutils literal"><span class="pre">t_spec_stop=0.0</span></code></a>) is a real, which defines the time to stop writing spectra.</li>
+</ul>
+</div>
+<div class="section" id="movie-files">
+<h1>Movie files<a class="headerlink" href="#movie-files" title="Permalink to this headline">¶</a></h1>
+<p>The <strong>movie</strong> outputs controls the output of movie files (<a class="reference internal" href="../../outputFiles/outMovie.html#secmoviefile"><span>*_mov.TAG</span></a>).</p>
+<div class="section" id="specific-inputs">
+<h2>Specific inputs<a class="headerlink" href="#specific-inputs" title="Permalink to this headline">¶</a></h2>
+<ul id="varl-movie">
+<li><p class="first"><strong>l_movie</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/logic/l_movie" title="f/logic/l_movie"><code class="xref f f-var docutils literal"><span class="pre">l_movie=.false.</span></code></a>) is a logical. It needs to be turned on to get movie computed.</p>
+<p>Several movie-files can be produced during a run (it is now limited to 30 by
+the variable``n_movies_max`` in the module <code class="xref f f-mod docutils literal"><span class="pre">movie</span></code>). The movies are
+defined by a keyword determining the fields to be plotted and an expression
+that determines the nature of movie (<span class="math">\(r\)</span>-slice, <span class="math">\(\theta\)</span>-slice,
+<span class="math">\(\phi\)</span>-slice, etc.). The code searches this information in a
+character string  provided for each movie.  These strings are elements of the
+array <a class="reference internal" href="#varmovie"><span>movie</span></a>:</p>
+</li>
+</ul>
+<ul id="varmovie">
+<li><p class="first"><strong>movie</strong> (default <a class="reference internal" href="../../apiFortran/IOBinaryOutputs.html#f/movie_data/movie" title="f/movie_data/movie"><code class="xref f f-var docutils literal"><span class="pre">movie='</span> <span class="pre">',</span> <span class="pre">'</span> <span class="pre">',</span> <span class="pre">...</span></code></a>) is a character string array. It contains the description of the movies one wants to compute.</p>
+<p>For example, to invoke a movie(file) that shows (stores) the radial magnetic
+component of the magnetic field at the CMB, you have to provide the line</p>
+<blockquote>
+<div><div class="highlight-fortran"><div class="highlight"><pre><span class="n">movie</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="s2">&quot;Br CMB&quot;</span><span class="p">,</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>in the <a class="reference internal" href="../outNamelist.html#secoutputnml"><span>&amp;output</span></a> namelist. Here, <code class="docutils literal"><span class="pre">Br</span></code> is the keyword for
+the radial component of the magnetic field and <code class="docutils literal"><span class="pre">CMB</span></code> is the expression that
+defines the movie surface. If, in addition, a movie of the temperature field
+at the meridional slice <code class="docutils literal"><span class="pre">phi=0</span></code> and a movie of the <span class="math">\(z\)</span>-vorticity in
+the equatorial plane are desired, the following line have to be added:</p>
+<blockquote>
+<div><div class="highlight-fortran"><div class="highlight"><pre><span class="n">movie</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">=</span><span class="s2">&quot;Temp phi=0&quot;</span><span class="p">,</span>
+<span class="n">movie</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">=</span><span class="s2">&quot;Vortz eq&quot;</span><span class="p">,</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Note that the code does <strong>not interpret spaces and ignores additional characters</strong>
+that do not form a keyword or a surface definition. Thus, for example <code class="docutils literal"><span class="pre">Br</span></code> or <code class="docutils literal"><span class="pre">B</span> <span class="pre">r</span></code>
+or <code class="docutils literal"><span class="pre">Bradial</span></code> are all interpreted as the same keyword. Furthermore, the
+interpretation is <strong>not case-sensitive</strong>. The following table gives the possible
+keywords for movie calculations and their corresponding physical meaning:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Fields stored in movie file</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Br[radial]</td>
+<td>Radial component of the magnetic field <span class="math">\(B_r\)</span>.</td>
+</tr>
+<tr class="row-odd"><td>Bt[heta]</td>
+<td>Latitudinal component of the magnetic field  <span class="math">\(B_\theta\)</span>.</td>
+</tr>
+<tr class="row-even"><td>Bp[hi]</td>
+<td>Azimuthal component of the magnetic field  <span class="math">\(B_\phi\)</span>.</td>
+</tr>
+<tr class="row-odd"><td>Bh[orizontal]</td>
+<td>The two horizontal components of the magnetic field.</td>
+</tr>
+<tr class="row-even"><td>Bs</td>
+<td>Cylindrically radial component of the magnetic field <span class="math">\(B_s\)</span>.</td>
+</tr>
+<tr class="row-odd"><td>Ba[ll]</td>
+<td>All magnetic field components.</td>
+</tr>
+<tr class="row-even"><td>Fieldline[s] or FL</td>
+<td>Axisymmetric poloidal field lines in a meridional cut.</td>
+</tr>
+<tr class="row-odd"><td>AX[ISYMMETRIC] B or AB</td>
+<td>Axisymmetric phi component of the magnetic field for <span class="math">\(\phi=cst.\)</span></td>
+</tr>
+<tr class="row-even"><td>Vr[adial]</td>
+<td>Radial component of the velocity field <span class="math">\(u_r\)</span>.</td>
+</tr>
+<tr class="row-odd"><td>Vt[heta]</td>
+<td>Latitudinal component of the velocity field  <span class="math">\(u_\theta\)</span>.</td>
+</tr>
+<tr class="row-even"><td>Vp[hi]</td>
+<td>Azimuthal component of the velocity field  <span class="math">\(u_\phi\)</span>.</td>
+</tr>
+<tr class="row-odd"><td>Vh[orizontal]</td>
+<td>Horizontal velocity field, two components depending on  the surface.</td>
+</tr>
+<tr class="row-even"><td>Va[ll]</td>
+<td>All velocity field components.</td>
+</tr>
+<tr class="row-odd"><td>Streamline[s] or SL</td>
+<td>Field lines of axisymmetric poloidal field for <span class="math">\(\phi=cst.\)</span></td>
+</tr>
+<tr class="row-even"><td>AX[ISYMMETRIC] V or AV</td>
+<td>Axisymmetric component of the velocity field for <span class="math">\(\phi=cst.\)</span></td>
+</tr>
+<tr class="row-odd"><td>Vz</td>
+<td>Vertical component of the velocity  at the equator + vertical component of the vorticity at the equator (closest point to equator).</td>
+</tr>
+<tr class="row-even"><td>Voz</td>
+<td>Vertical component of the vorticity <span class="math">\(\omega_z\)</span>.</td>
+</tr>
+<tr class="row-odd"><td>Vor</td>
+<td>Radial component of the vorticity  <span class="math">\(\omega_r\)</span>.</td>
+</tr>
+<tr class="row-even"><td>Vop</td>
+<td>Azimuthal component of vorticity  <span class="math">\(\omega_\phi\)</span></td>
+</tr>
+<tr class="row-odd"><td>Tem[perature] or Entropy</td>
+<td>Temperature/Entropy</td>
+</tr>
+<tr class="row-even"><td>Entropy (or Tem[perature]) AX[ISYMMETRIC] or AT</td>
+<td>Axisymmetric temperature/entropy field for <span class="math">\(\phi=cst.\)</span></td>
+</tr>
+<tr class="row-odd"><td>Heat t[ransport]</td>
+<td>Radial advection of temperature <span class="math">\(u_r\frac{\partial s}{\partial r}\)</span></td>
+</tr>
+<tr class="row-even"><td>HEATF AX[iSYMMETRIC]</td>
+<td>Conducting heat flux <span class="math">\(\partial s /\partial r\)</span></td>
+</tr>
+<tr class="row-odd"><td>FL Pro</td>
+<td>Axisymmetric field line stretching.</td>
+</tr>
+<tr class="row-even"><td>FL Adv</td>
+<td>Axisymmetric field line advection.</td>
+</tr>
+<tr class="row-odd"><td>FL Dif</td>
+<td>Axisymmetric field line diffusion.</td>
+</tr>
+<tr class="row-even"><td>AB Pro</td>
+<td>Toroidal axisymmetric  field production.</td>
+</tr>
+<tr class="row-odd"><td>AB Dif</td>
+<td>Toroidal axisymmetric field diffusion.</td>
+</tr>
+<tr class="row-even"><td>Br Pro</td>
+<td>Production of radial magnetic field  <span class="math">\(B_r\)</span>.</td>
+</tr>
+<tr class="row-odd"><td>Br Adv</td>
+<td>Advection of radial magnetic field  <span class="math">\(B_r\)</span>.</td>
+</tr>
+<tr class="row-even"><td>Br Dif</td>
+<td>Diffusion of radial magnetic field <span class="math">\(B_r\)</span>.</td>
+</tr>
+<tr class="row-odd"><td>Jr</td>
+<td>Radial component of the current <span class="math">\(j_r\)</span>.</td>
+</tr>
+<tr class="row-even"><td>Jr Pro</td>
+<td>Production of radial current + <span class="math">\(\Omega\)</span>-effect.</td>
+</tr>
+<tr class="row-odd"><td>Jr Adv</td>
+<td>Advection of the radial component of the current <span class="math">\(j_r\)</span>.</td>
+</tr>
+<tr class="row-even"><td>Jr Dif</td>
+<td>Diffusion of the radial component of the current <span class="math">\(j_r\)</span>.</td>
+</tr>
+<tr class="row-odd"><td>Bz Pol</td>
+<td>Poloidal part of vertical component of the magnetic field  <span class="math">\(B_z\)</span>.</td>
+</tr>
+<tr class="row-even"><td>Bz Pol Pro</td>
+<td>Production of the poloidal part of the vertical component of the magnetic field  <span class="math">\(B_z\)</span>.</td>
+</tr>
+<tr class="row-odd"><td>Bz Pol Adv</td>
+<td>Advection  of the poloidal part of the vertical component of the magnetic field <span class="math">\(B_z\)</span>.</td>
+</tr>
+<tr class="row-even"><td>Bz Pol Dif</td>
+<td>Diffusion of the poloidal part of the vertical component of the magnetic field <span class="math">\(B_z\)</span>.</td>
+</tr>
+<tr class="row-odd"><td>Jz Tor</td>
+<td>Toroidal part of the vertical component of the current (<span class="math">\(j_z\)</span>).</td>
+</tr>
+<tr class="row-even"><td>Jz Tor Pro</td>
+<td>Production of the toroidal part of the vertical component of the current <span class="math">\(j_z\)</span>.</td>
+</tr>
+<tr class="row-odd"><td>Jz Tor Adv</td>
+<td>Advection  of the toroidal part of the vertical component of the current <span class="math">\(j_z\)</span>.</td>
+</tr>
+<tr class="row-even"><td>Jz Tor Dif</td>
+<td>Diffusion of the  toroidal part of the vertical component of the current <span class="math">\(j_z\)</span>.</td>
+</tr>
+<tr class="row-odd"><td>Bp Tor</td>
+<td>Toroidal part of the azimuthal component of the magnetic field <span class="math">\(B_\phi\)</span>.</td>
+</tr>
+<tr class="row-even"><td>Bp Tor Pro</td>
+<td>Production of the toroidal part of the azimuthal component of the magnetic field <span class="math">\(B_\phi\)</span>.</td>
+</tr>
+<tr class="row-odd"><td>Bp Tor Adv</td>
+<td>Advection of the toroidal part of the azimuthal component of the magnetic field <span class="math">\(B_\phi\)</span>.</td>
+</tr>
+<tr class="row-even"><td>Bp Tor Dif</td>
+<td>Diffusion of the toroidal part of the azimuthal component of the magnetic field <span class="math">\(B_\phi\)</span>.</td>
+</tr>
+<tr class="row-odd"><td>HEL[ICITY]</td>
+<td>Kinetic helicity <span class="math">\({\cal H}=\vec{u}\cdot(\vec{\nabla}\times\vec{u})\)</span></td>
+</tr>
+<tr class="row-even"><td>AX[ISYMMETRIC HELICITY] or AHEL</td>
+<td>Axisymmetric component of the kinetic helicity.</td>
+</tr>
+<tr class="row-odd"><td>Bt Tor</td>
+<td>Toroidal component of the latitudinal component of the magnetic field <span class="math">\(B_\theta\)</span>.</td>
+</tr>
+<tr class="row-even"><td>Pot Tor</td>
+<td>Toroidal potential.</td>
+</tr>
+<tr class="row-odd"><td>Pol Fieldlines</td>
+<td>Poloidal fieldlines.</td>
+</tr>
+<tr class="row-even"><td>Br Shear</td>
+<td>Azimuthal shear of the radial component of the magnetic field <span class="math">\(B_r\)</span></td>
+</tr>
+<tr class="row-odd"><td>Lorentz[force] or LF</td>
+<td>Lorentz force (only <span class="math">\(\phi\)</span>-component).</td>
+</tr>
+<tr class="row-even"><td>Br Inv</td>
+<td>Inverse field apperance at CMB.</td>
+</tr>
+</tbody>
+</table>
+<p>The following table gives the possible surface expression for movie calculations
+and their corresponding physical meaning:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="71%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Surface expression</th>
+<th class="head">Definition</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>CMB</td>
+<td>Core-mantle boundary</td>
+</tr>
+<tr class="row-odd"><td>Surface</td>
+<td>Earth surface</td>
+</tr>
+<tr class="row-even"><td>EQ[uatot]</td>
+<td>Equatorial plane</td>
+</tr>
+<tr class="row-odd"><td>r=radius</td>
+<td>Radial cut at r=radius with radius given in
+units of the outer core radius.</td>
+</tr>
+<tr class="row-even"><td>theta=colat</td>
+<td>Latitudinal cut at theta=colat given in degrees</td>
+</tr>
+<tr class="row-odd"><td>phi=phiSlice</td>
+<td>Azimuthal cut ath phi=phiSlice given in degrees.</td>
+</tr>
+<tr class="row-even"><td>AX[isymmetric]</td>
+<td>Axisymmetric quantity in an azimuthal plane</td>
+</tr>
+<tr class="row-odd"><td>3D</td>
+<td>3D array</td>
+</tr>
+</tbody>
+</table>
+<p>Here is an additional example of the possible combinations to build your
+desired <code class="docutils literal"><span class="pre">movie</span></code> files.</p>
+<div class="highlight-fortran"><div class="highlight"><pre><span class="n">l_movie</span>  <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.,</span>
+<span class="n">movie</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="s2">&quot;Br CMB&quot;</span><span class="p">,</span>
+<span class="n">movie</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="s2">&quot;Vr EQ&quot;</span><span class="p">,</span>
+<span class="n">movie</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="s2">&quot;Vortr r=0.8&quot;</span><span class="p">,</span>
+<span class="n">movie</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">=</span> <span class="s2">&quot;Bp theta=45&quot;</span><span class="p">,</span>
+<span class="n">movie</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">=</span> <span class="s2">&quot;Vp phi=10&quot;</span><span class="p">,</span>
+<span class="n">movie</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">=</span> <span class="s2">&quot;entropy AX&quot;</span><span class="p">,</span>
+<span class="n">movie</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="o">=</span> <span class="s2">&quot;vr 3D&quot;</span><span class="p">,</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="standard-inputs">
+<span id="secmoviestdin"></span><h2>Standard inputs<a class="headerlink" href="#standard-inputs" title="Permalink to this headline">¶</a></h2>
+<ul class="simple" id="varn-movie-step">
+<li><strong>n_movie_step</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/n_movie_step" title="f/output_data/n_movie_step"><code class="xref f f-var docutils literal"><span class="pre">n_movie_step=0</span></code></a>) is an integer. This is the number of timesteps between two movie outputs.</li>
+<li><strong>n_movies</strong> (default <a class="reference internal" href="../../apiFortran/IOBinaryOutputs.html#f/movie_data/n_movies" title="f/movie_data/n_movies"><code class="xref f f-var docutils literal"><span class="pre">n_movies=1</span></code></a>) is an integer. This is the number of movie outputs to be written.</li>
+</ul>
+<ul class="simple" id="vart-movie">
+<li><strong>t_movie</strong>  (default  <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/t_movie" title="f/output_data/t_movie"><code class="xref f f-var docutils literal"><span class="pre">t_movie=-1.0</span> <span class="pre">-1.0</span> <span class="pre">...</span></code></a>) is real array, which contains the times when movie outputs are requested.</li>
+</ul>
+<ul class="simple" id="vardt-movie">
+<li><strong>dt_movie</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/dt_movie" title="f/output_data/dt_movie"><code class="xref f f-var docutils literal"><span class="pre">dt_movie=0.0</span></code></a>) is a real, which defines the time interval between movie outputs.</li>
+<li><strong>t_movie_start</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/t_movie_start" title="f/output_data/t_movie_start"><code class="xref f f-var docutils literal"><span class="pre">t_movie_start=0.0</span></code></a>) is a real, which defines the time to start writing movie outputs.</li>
+<li><strong>t_movie_stop</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/t_movie_stop" title="f/output_data/t_movie_stop"><code class="xref f f-var docutils literal"><span class="pre">t_movie_stop=0.0</span></code></a>) is a real, which defines the time to stop writing movie outputs.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="field-averages">
+<span id="varl-average"></span><h1>Field Averages<a class="headerlink" href="#field-averages" title="Permalink to this headline">¶</a></h1>
+<p>The code can perform on-the-fly time-averaging of entropy, velocity field and magnetic field. Respective graphic output and spectra are written into the corresponding files (with <a class="reference internal" href="../../outputFiles/outGraph.html#secgraphfile"><span>G_ave.TAG</span></a>, <a class="reference internal" href="../../outputFiles/outSpecFiles.html#seckinspecavefile"><span>kin_spec_ave.TAG</span></a>,  <a class="reference internal" href="../../outputFiles/outSpecFiles.html#secmagspecavefile"><span>mag_spec_ave.TAG</span></a>). The time-averaged energies are written into the <a class="reference internal" href="../../outputFiles/logFile.html#seclogfile"><span>log.TAG</span></a> file.</p>
+<ul>
+<li><p class="first"><strong>l_average</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/logic/l_average" title="f/logic/l_average"><code class="xref f f-var docutils literal"><span class="pre">l_average=.false.</span></code></a>) is a logical, which enables the time-averaging of fields when set to <code class="docutils literal"><span class="pre">.true.</span></code>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Time-averaging has a large memory imprint as it requires the storage of 3-D arrays. Be careful, when using large truncations.</p>
+</div>
+</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Standard time-series outputs</a></li>
+<li><a class="reference internal" href="#restart-files">Restart files</a></li>
+<li><a class="reference internal" href="#graphic-files">Graphic files</a></li>
+<li><a class="reference internal" href="#spectra">Spectra</a></li>
+<li><a class="reference internal" href="#movie-files">Movie files</a><ul>
+<li><a class="reference internal" href="#specific-inputs">Specific inputs</a></li>
+<li><a class="reference internal" href="#standard-inputs">Standard inputs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#field-averages">Field Averages</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../outNamelist.html"
+                        title="previous chapter">Output control namelist</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="outputNmlCoeff.html"
+                        title="next chapter">Poloidal magnetic field potential at CMB</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/inputNamelists/outputNamelist/outputNmlStd.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="outputNmlCoeff.html" title="Poloidal magnetic field potential at CMB"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../outNamelist.html" title="Output control namelist"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../namelists.html" >Input parameters</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../outNamelist.html" >Output control namelist</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

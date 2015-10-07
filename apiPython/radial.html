@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Support for time-averaged radial profiles &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../contents.html" />
+    <link rel="up" title="Data visualisation and post-processing" href="../postProc.html" />
+    <link rel="next" title="Support for the spectra files (kin|mag|u2)_spec_#.TAG" href="spectra.html" />
+    <link rel="prev" title="Support for the log.TAG files" href="timeSeries.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../install.html">Get it/Run it</a></li>
+    <li><a href="../contribute.html">Contribute!</a></li>
+    <li><a href="../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../index.html">
+      <img src="../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="spectra.html" title="Support for the spectra files (kin|mag|u2)_spec_#.TAG"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="timeSeries.html" title="Support for the log.TAG files"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../postProc.html" accesskey="U">Data visualisation and post-processing</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="support-for-time-averaged-radial-profiles">
+<span id="secpythonradial"></span><h1>Support for time-averaged radial profiles<a class="headerlink" href="#support-for-time-averaged-radial-profiles" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="magic.MagicRadial">
+<em class="property">class </em><code class="descclassname">magic.</code><code class="descname">MagicRadial</code><span class="sig-paren">(</span><em>datadir='.'</em>, <em>field='eKin'</em>, <em>iplot=True</em>, <em>tag=None</em>, <em>tags=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/radial.html#MagicRadial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicRadial" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class can be used to read and display the time and 
+horizontally averaged files:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Kinetic energy: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secekinrfile"><span>eKinR.TAG</span></a></li>
+<li>Magnetic energy: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secemagrfile"><span>eMagR.TAG</span></a></li>
+<li>Anelastic reference state: <a class="reference internal" href="../outputFiles/outTransportProp.html#secanelfile"><span>anel.TAG</span></a></li>
+<li>Variable electrical conductivity: <a class="reference internal" href="../outputFiles/outTransportProp.html#secvarcondfile"><span>varCond.TAG</span></a></li>
+<li>Variable thermal diffusivity: <a class="reference internal" href="../outputFiles/outTransportProp.html#secvardifffile"><span>varDiff.TAG</span></a></li>
+<li>Variable kinematic viscosity: <a class="reference internal" href="../outputFiles/outTransportProp.html#secvarviscfile"><span>varVisc.TAG</span></a></li>
+<li>Diagnostic parameters: <a class="reference internal" href="../outputFiles/outTimeSeriesStd.html#secparfile"><span>parR.TAG</span></a></li>
+<li>Power budget: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secpowerrfile"><span>powerR.TAG</span></a></li>
+<li>Heat fluxes: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secfluxesrfile"><span>fluxesR.TAG</span></a></li>
+<li>Radial profiles used for boundary layers: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secblayersrfile"><span>bLayersR.TAG</span></a></li>
+<li>Parallel/perpendicular decomposition: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secperpparrfile"><span>perpParR.TAG</span></a></li>
+</ul>
+</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rad</span> <span class="o">=</span> <span class="n">MagicRadial</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;eKinR&#39;</span><span class="p">)</span> <span class="c"># display the content of eKinR.tag</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">rad</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">rad</span><span class="o">.</span><span class="n">ekin_pol_axi</span><span class="p">)</span> <span class="c"># print radius and poloidal energy</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="magic.MagicRadial.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>datadir='.'</em>, <em>field='eKin'</em>, <em>iplot=True</em>, <em>tag=None</em>, <em>tags=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/radial.html#MagicRadial.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicRadial.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>field</strong> (<em>str</em>) &#8211; the field you want to plot</li>
+<li><strong>iplot</strong> (<em>bool</em>) &#8211; to plot the output, default is True</li>
+<li><strong>tag</strong> (<em>str</em>) &#8211; a specific tag, default is None</li>
+<li><strong>tags</strong> (<em>list</em>) &#8211; a list that contains multiple tags: useful to sum
+several radial files</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.MagicRadial.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/radial.html#MagicRadial.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicRadial.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display the result when <code class="docutils literal"><span class="pre">iplot=True</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="timeSeries.html"
+                        title="previous chapter">Support for the <code class="docutils literal"><span class="pre">log.TAG</span></code> files</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="spectra.html"
+                        title="next chapter">Support for the spectra files <code class="docutils literal"><span class="pre">(kin|mag|u2)_spec_#.TAG</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/apiPython/radial.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="spectra.html" title="Support for the spectra files (kin|mag|u2)_spec_#.TAG"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="timeSeries.html" title="Support for the log.TAG files"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../postProc.html" >Data visualisation and post-processing</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Output control namelist &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../contents.html" />
+    <link rel="up" title="Input parameters" href="namelists.html" />
+    <link rel="next" title="Standard time-series outputs" href="outputNamelist/outputNmlStd.html" />
+    <link rel="prev" title="Start field namelist" href="startNamelist.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../install.html">Get it/Run it</a></li>
+    <li><a href="../contribute.html">Contribute!</a></li>
+    <li><a href="../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../index.html">
+      <img src="../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="outputNamelist/outputNmlStd.html" title="Standard time-series outputs"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="startNamelist.html" title="Start field namelist"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="namelists.html" accesskey="U">Input parameters</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="output-control-namelist">
+<span id="secoutputnml"></span><h1>Output control namelist<a class="headerlink" href="#output-control-namelist" title="Permalink to this headline">¶</a></h1>
+<p>This namelist contains all the parameters that can be adjusted to control the outputs and diagnostics calculated by the code.</p>
+<p>There are four different ways to control at which time step a specific output
+should be written. Outputs are generally distributed over the total calculation
+intervall unless an output time interval is defined by a start time <code class="docutils literal"><span class="pre">t_start</span></code>
+and a stop time <code class="docutils literal"><span class="pre">t_stop</span></code>. If no <code class="docutils literal"><span class="pre">t_start</span></code> is provided, the start time of
+the calculation is used. If no <code class="docutils literal"><span class="pre">t_stop</span></code> is provided or <code class="docutils literal"><span class="pre">t_stop&gt;t_start</span></code> the
+total calculation interval is assumed</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><strong>Prescribed number of outputs</strong>. The outputs are distributed evenly over the total calculation interval so that the number of timesteps between two outputs is always the same, with the possible exception of the first interval. Last output is written for the last time step, and to compensate the interval before the first output may be longer. However, if <code class="docutils literal"><span class="pre">t_stop</span></code> is provided, the outputs are distributed evenly over the interval [<code class="docutils literal"><span class="pre">t_stop</span></code>, <code class="docutils literal"><span class="pre">t_start</span></code>] with equal times intervals between them.</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>These input variables are usually named with a pattern that follows
+<code class="docutils literal"><span class="pre">n_outputName</span></code>, for instance, <a class="reference internal" href="outputNamelist/outputNmlStd.html#varn-graphs"><span>n_graphs</span></a>,
+<a class="reference internal" href="outputNamelist/outputNmlStd.html#varn-rsts"><span>n_rsts</span></a>, <a class="reference internal" href="outputNamelist/outputNmlStd.html#varn-specs"><span>n_specs</span></a>,
+<a class="reference internal" href="outputNamelist/outputNmlStd.html#varn-logs"><span>n_logs</span></a>, etc.</p>
+<p class="last">In case you want to make use ot a specific time interval, the input
+variables follow a pattern of the form <code class="docutils literal"><span class="pre">t_outputName_start</span></code>,
+<code class="docutils literal"><span class="pre">t_outputName_stop</span></code>. For instance,
+<a class="reference internal" href="outputNamelist/outputNmlStd.html#vart-graph-start"><span>t_graph_start</span></a>,
+<a class="reference internal" href="outputNamelist/outputNmlStd.html#vart-graph-stop"><span>t_graph_stop</span></a>, <a class="reference internal" href="outputNamelist/outputNmlStd.html#vart-log-start"><span>t_log_start</span></a>,
+<a class="reference internal" href="outputNamelist/outputNmlStd.html#vart-log-stop"><span>t_log_stop</span></a>, <a class="reference internal" href="outputNamelist/outputNmlStd.html#vart-spec-start"><span>t_spec_start</span></a>,
+<a class="reference internal" href="outputNamelist/outputNmlStd.html#vart-spec-stop"><span>t_spec_stop</span></a>, etc.</p>
+</div>
+<ol class="arabic simple" start="2">
+<li><strong>User-defined interval between two outputs, given in number of time steps</strong>. Again the last output is performed at the end of the run and a compensation may take place at the beginning.</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">These input variables are usually named with a pattern that follows
+<code class="docutils literal"><span class="pre">n_outputName_step</span></code>, for instance,
+<a class="reference internal" href="outputNamelist/outputNmlStd.html#varn-graph-step"><span>n_graph_step</span></a>, <a class="reference internal" href="outputNamelist/outputNmlStd.html#varn-rst-step"><span>n_rst_step</span></a>,
+<a class="reference internal" href="outputNamelist/outputNmlStd.html#varn-spec-step"><span>n_spec_step</span></a>, <a class="reference internal" href="outputNamelist/outputNmlStd.html#varn-log-step"><span>n_log_step</span></a>,
+<a class="reference internal" href="outputNamelist/outputNmlStd.html#varn-movie-step"><span>n_movie_step</span></a>, etc.</p>
+</div>
+<ol class="arabic simple" start="3">
+<li><strong>Defined time interval between two outputs</strong>.</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">These input variables are usually named with a pattern that follows
+<code class="docutils literal"><span class="pre">dt_outputName</span></code>, for instance, <a class="reference internal" href="outputNamelist/outputNmlStd.html#vardt-graph"><span>dt_graph</span></a>,
+<a class="reference internal" href="outputNamelist/outputNmlStd.html#vardt-rst"><span>dt_rst</span></a>, <a class="reference internal" href="outputNamelist/outputNmlStd.html#vardt-spec"><span>dt_spec</span></a>,
+<a class="reference internal" href="outputNamelist/outputNmlStd.html#vardt-log"><span>dt_log</span></a>, <a class="reference internal" href="outputNamelist/outputNmlStd.html#vardt-movie"><span>dt_movie</span></a>, etc.</p>
+</div>
+<ol class="arabic simple" start="4">
+<li><strong>User-defined times for output</strong>. By default 5000 different times can be defined for each output type. This can be increased by increasing n_time_hits in the file <code class="docutils literal"><span class="pre">output_data.f90</span></code>. While the first three possibilities can only be used alternatively, the fourth one can be employed in addition to one of the two others.</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">These input variables are usually named with a pattern that follows
+<code class="docutils literal"><span class="pre">t_outputName</span></code>, for instance, <a class="reference internal" href="outputNamelist/outputNmlStd.html#vart-graph"><span>t_graph</span></a>,
+<a class="reference internal" href="outputNamelist/outputNmlStd.html#vart-rst"><span>t_rst</span></a>, <a class="reference internal" href="outputNamelist/outputNmlStd.html#vart-spec"><span>t_spec</span></a>,
+<a class="reference internal" href="outputNamelist/outputNmlStd.html#vart-log"><span>t_log</span></a>, <a class="reference internal" href="outputNamelist/outputNmlStd.html#vart-movie"><span>t_movie</span></a>, etc.</p>
+</div>
+</div></blockquote>
+<p>An important parameter in this context is <a class="reference internal" href="#varl-true-time"><span>l_true_time</span></a>.
+If this is set to <code class="docutils literal"><span class="pre">.true.</span></code>, the time steps of the program are modified to
+meet a desired output time. This forces a recalculation of the inversion
+matricies and therefore requires some additional computing time. When
+<code class="docutils literal"><span class="pre">l_true_time=.false.</span></code>, the values at the timestep closest to the desired
+output time are chosen. Since the timesteps are generally small, this option
+suffices for most applications.</p>
+<ul class="simple" id="varl-true-time">
+<li><strong>l_true_time</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/logic/l_true_time" title="f/logic/l_true_time"><code class="xref f f-var docutils literal"><span class="pre">l_true_time=.false.</span></code></a>) is a logical. It causes the code to change time steps to exactly meet the requested output times.</li>
+</ul>
+<p>The different possible outputs control parameters are then extensively described in the following pages:</p>
+<div class="topic">
+<p class="topic-title first">Possible outputs</p>
+<ol class="arabic simple">
+<li><a class="reference internal" href="outputNamelist/outputNmlStd.html#secoutnmlstd"><span>Control standard/common outputs</span></a></li>
+<li><a class="reference internal" href="outputNamelist/outputNmlCoeff.html#secoutnmlcoeff"><span>CMB and radial coefficients</span></a></li>
+<li><a class="reference internal" href="outputNamelist/outputNmlPot.html#secoutnmlpot"><span>Storage of potentials in spectral space</span></a></li>
+<li><a class="reference internal" href="outputNamelist/outputNmlTO.html#secoutnmlto"><span>Torsional oscillations diagnostics</span></a></li>
+<li><a class="reference internal" href="outputNamelist/outputNmlMisc.html#secoutnmlmisc"><span>Additional possible diagnostics</span></a></li>
+</ol>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="generic-options">
+<h2>Generic options<a class="headerlink" href="#generic-options" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first"><strong>l_save_out</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/logic/l_save_out" title="f/logic/l_save_out"><code class="xref f f-var docutils literal"><span class="pre">l_save_out=.false.</span></code></a>) is a logical. When set to <code class="docutils literal"><span class="pre">.true.</span></code>, the diagnostic files will be safely opened and closed before and after any outputs. When set to <code class="docutils literal"><span class="pre">.false.</span></code>, the diagnostic files will be opened before the first iteration timestep and close at the end of the run. This may cost some computing time, but guarantees that only minimal information is lost in case of a crash.</p>
+</li>
+<li><p class="first"><strong>lVerbose</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/logic/lverbose" title="f/logic/lverbose"><code class="xref f f-var docutils literal"><span class="pre">lVerbose=.false.</span></code></a>) is a logical. When set to <code class="docutils literal"><span class="pre">.true.</span></code>, the code displays a lot of debugging informations.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Never set <code class="xref f f-var docutils literal"><span class="pre">lVerbose</span></code> to <code class="docutils literal"><span class="pre">.true.</span></code> for a production run!</p>
+</div>
+</li>
+<li><p class="first"><strong>runid</strong> (default, <a class="reference internal" href="../apiFortran/baseModules.html#f/output_data/runid" title="f/output_data/runid"><code class="xref f f-var docutils literal"><span class="pre">runid=&quot;MAGIC</span> <span class="pre">default</span> <span class="pre">run&quot;</span></code></a>) is a character string. This can be used to briefly describe your run. This information is then for instance stored in the header of the graphic files.</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Output control namelist</a><ul>
+<li><a class="reference internal" href="#generic-options">Generic options</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="startNamelist.html"
+                        title="previous chapter">Start field namelist</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="outputNamelist/outputNmlStd.html"
+                        title="next chapter">Standard time-series outputs</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/inputNamelists/outNamelist.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="outputNamelist/outputNmlStd.html" title="Standard time-series outputs"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="startNamelist.html" title="Start field namelist"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="namelists.html" >Input parameters</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

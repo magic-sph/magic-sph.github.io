@@ -1,0 +1,835 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Additional possible analyses &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../contents.html" />
+    <link rel="up" title="Data visualisation and post-processing" href="../postProc.html" />
+    <link rel="next" title="Various useful functions" href="libs.html" />
+    <link rel="prev" title="Run comparison" href="runComparison.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../install.html">Get it/Run it</a></li>
+    <li><a href="../contribute.html">Contribute!</a></li>
+    <li><a href="../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../index.html">
+      <img src="../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="libs.html" title="Various useful functions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="runComparison.html" title="Run comparison"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../postProc.html" accesskey="U">Data visualisation and post-processing</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-magic.bLayers">
+<span id="additional-possible-analyses"></span><span id="secpythonmisc"></span><h1>Additional possible analyses<a class="headerlink" href="#module-magic.bLayers" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="magic.bLayers.BLayers">
+<em class="property">class </em><code class="descclassname">magic.bLayers.</code><code class="descname">BLayers</code><span class="sig-paren">(</span><em>iplot=False</em>, <em>quiet=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/bLayers.html#BLayers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.bLayers.BLayers" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class allows to determine the viscous and thermal boundary layers
+using several classical methods (slope method, peak values, dissipation
+rates, etc.). It uses the following files:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Kinetic energy: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secekinrfile"><span>eKinR.TAG</span></a></li>
+<li>Power budget: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secpowerrfile"><span>powerR.TAG</span></a></li>
+<li>Radial profiles used for boundary layers: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secblayersrfile"><span>bLayersR.TAG</span></a></li>
+</ul>
+</div></blockquote>
+<p>This function can thus <strong>only</strong> be used when both 
+<a class="reference internal" href="../outputFiles/outRadialFiles.html#secpowerrfile"><span>powerR.TAG</span></a> and <a class="reference internal" href="../outputFiles/outRadialFiles.html#secblayersrfile"><span>bLayersR.TAG</span></a>
+exist in the working directory.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This function works well as long as rigid boundaries and
+fixed temperature boundary conditions are employed. Other
+combination of boundary conditions (fixed fluxes and/or
+stress-free) might give wrong results, since boundary layers
+become awkward to define in that case.</p>
+</div>
+<p>Since this function is supposed to use time-averaged quantities, the usual
+procedure is first to define the initial averaging time using
+<a class="reference internal" href="timeSeries.html#magic.AvgField" title="magic.AvgField"><code class="xref py py-class docutils literal"><span class="pre">AvgField</span></code></a>: (this needs to be done only once)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">AvgField</span><span class="p">(</span><span class="n">tstart</span><span class="o">=</span><span class="mf">2.58</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Once the <code class="docutils literal"><span class="pre">tInitAvg</span></code> file exists, the boundary layer calculation can be
+done:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">bl</span> <span class="o">=</span> <span class="n">BLayers</span><span class="p">(</span><span class="n">iplot</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># print the formatted output</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">bl</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="magic.bLayers.BLayers.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>iplot=False</em>, <em>quiet=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/bLayers.html#BLayers.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.bLayers.BLayers.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>iplot</strong> (<em>bool</em>) &#8211; display the result when set to True (default False)</li>
+<li><strong>quiet</strong> (<em>bool</em>) &#8211; less verbose when set to True (default is False)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.bLayers.BLayers.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/bLayers.html#BLayers.__str__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.bLayers.BLayers.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formatted output</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.bLayers.BLayers.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/bLayers.html#BLayers.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.bLayers.BLayers.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plotting function</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.bLayers.getAccuratePeaks">
+<code class="descclassname">magic.bLayers.</code><code class="descname">getAccuratePeaks</code><span class="sig-paren">(</span><em>rad</em>, <em>uh</em>, <em>uhTop</em>, <em>uhBot</em>, <em>ri</em>, <em>ro</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/bLayers.html#getAccuratePeaks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.bLayers.getAccuratePeaks" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions performs a spline extrapolation around the maxima
+of the input array uh to define a more accurate location of the
+boundary layer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>rad</strong> (<em>numpy.ndarray</em>) &#8211; radius</li>
+<li><strong>uh</strong> (<em>numpy.ndarray</em>) &#8211; the horizontal velocity profile</li>
+<li><strong>uhTop</strong> (<em>float</em>) &#8211; first peak value of uh close to the outer boundary</li>
+<li><strong>uhBot</strong> (<em>float</em>) &#8211; first peak value of uh close to the inner boundary</li>
+<li><strong>ri</strong> (<em>float</em>) &#8211; the inner core radius</li>
+<li><strong>ro</strong> (<em>float</em>) &#8211; the outer core radius</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">four floats: thickness of the bottom boundary layer,
+thickness of the top boundary layer, extrapolated value of uh 
+at the bottom boundary layer, extrapolated value of uh at the
+top boundary layer</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.bLayers.getMaxima">
+<code class="descclassname">magic.bLayers.</code><code class="descname">getMaxima</code><span class="sig-paren">(</span><em>field</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/bLayers.html#getMaxima"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.bLayers.getMaxima" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function determines the local maxima of the input array field</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>field</strong> (<em>numpy.ndarray</em>) &#8211; the input array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a list containing the indices of the local maxima</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.bLayers.integBotTop">
+<code class="descclassname">magic.bLayers.</code><code class="descname">integBotTop</code><span class="sig-paren">(</span><em>rad</em>, <em>field</em>, <em>ri</em>, <em>ro</em>, <em>lambdai</em>, <em>lambdao</em>, <em>normed=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/bLayers.html#integBotTop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.bLayers.integBotTop" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function evaluates the radial integral of the input array field
+in the bottom and top boundary layers separately.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>rad</strong> (<em>numpy.ndarray</em>) &#8211; radius</li>
+<li><strong>field</strong> (<em>numpy.ndarray</em>) &#8211; the input radial profile</li>
+<li><strong>ri</strong> (<em>float</em>) &#8211; the inner core radius</li>
+<li><strong>ro</strong> (<em>float</em>) &#8211; the outer core radius</li>
+<li><strong>lambdai</strong> (<em>float</em>) &#8211; thickness of the inner boundary layer</li>
+<li><strong>lambdao</strong> (<em>float</em>) &#8211; thickness of the outer boundary layer</li>
+<li><strong>normed</strong> (<em>bool</em>) &#8211; when set to True, the outputs are normalised by the volumes
+of the boundary layers. In that case, the outputs are 
+volume-averaged quantities.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">two floats that contains the bottom and top boundary layers
+integrations (integBot, integTop)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.bLayers.integBulkBc">
+<code class="descclassname">magic.bLayers.</code><code class="descname">integBulkBc</code><span class="sig-paren">(</span><em>rad</em>, <em>field</em>, <em>ri</em>, <em>ro</em>, <em>lambdai</em>, <em>lambdao</em>, <em>normed=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/bLayers.html#integBulkBc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.bLayers.integBulkBc" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function evaluates the radial integral of the input array field
+in the boundary layer and in the bulk separately.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>rad</strong> (<em>numpy.ndarray</em>) &#8211; radius</li>
+<li><strong>field</strong> (<em>numpy.ndarray</em>) &#8211; the input radial profile</li>
+<li><strong>ri</strong> (<em>float</em>) &#8211; the inner core radius</li>
+<li><strong>ro</strong> (<em>float</em>) &#8211; the outer core radius</li>
+<li><strong>lambdai</strong> (<em>float</em>) &#8211; thickness of the inner boundary layer</li>
+<li><strong>lambdao</strong> (<em>float</em>) &#8211; thickness of the outer boundary layer</li>
+<li><strong>normed</strong> (<em>bool</em>) &#8211; when set to True, the outputs are normalised by the volumes
+of the boundary layers and the fluid bulk, respectively. In
+that case, the outputs are volume-averaged quantities.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">two floats that contains the boundary layer and the bulk
+integrations (integBc, integBulk)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="magic.ThetaHeat">
+<em class="property">class </em><code class="descclassname">magic.</code><code class="descname">ThetaHeat</code><span class="sig-paren">(</span><em>iplot=False</em>, <em>angle=10</em>, <em>pickleName='thHeat.pickle'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/thHeat.html#ThetaHeat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.ThetaHeat" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class allows to conduct some analysis of the latitudinal
+variation of the heat transfer. It relies on the movie files 
+<a class="reference internal" href="../outputFiles/outMovie.html#secmoviefile"><span>ATmov.TAG</span></a> and <a class="reference internal" href="../outputFiles/outMovie.html#secmoviefile"><span>AHF_mov.TAG</span></a>.
+As it&#8217;s a bit time-consuming, the calculations are stored in a 
+python.pickle file to quicken future usage of the data.</p>
+<p>This function can <strong>only</strong> be used when
+<cite>bLayersR.TAG &lt;secBLayersRfile&gt;</cite> exist in the working directory.</p>
+<p>Since this function is supposed to use time-averaged quantities, the usual
+procedure is first to define the initial averaging time using
+<a class="reference internal" href="timeSeries.html#magic.AvgField" title="magic.AvgField"><code class="xref py py-class docutils literal"><span class="pre">AvgField</span></code></a>: (this needs to be done only once)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">AvgField</span><span class="p">(</span><span class="n">tstart</span><span class="o">=</span><span class="mf">2.58</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Once the <code class="docutils literal"><span class="pre">tInitAvg</span></code> file exists, the latitudinal heat transfer analysis
+can be done using:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># For chunk-averages over 10^\degree in the polar and equatorial regions.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">th</span> <span class="o">=</span> <span class="n">ThetaHeat</span><span class="p">(</span><span class="n">angle</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Formatted output</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">th</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="magic.ThetaHeat.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>iplot=False</em>, <em>angle=10</em>, <em>pickleName='thHeat.pickle'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/thHeat.html#ThetaHeat.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.ThetaHeat.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>iplot</strong> (<em>bool</em>) &#8211; a boolean to toggle the plots on/off</li>
+<li><strong>angle</strong> (<em>float</em>) &#8211; the integration angle in degrees</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">PickleName:</th><td class="field-body"><p class="first last">calculations a</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.ThetaHeat.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/thHeat.html#ThetaHeat.__str__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.ThetaHeat.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formatted outputs</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">th</span> <span class="o">=</span> <span class="n">ThetaHeat</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">th</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.ThetaHeat.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/thHeat.html#ThetaHeat.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.ThetaHeat.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plotting function</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-magic.cyl"></span><dl class="class">
+<dt id="magic.cyl.Cyl">
+<em class="property">class </em><code class="descclassname">magic.cyl.</code><code class="descname">Cyl</code><span class="sig-paren">(</span><em>ivar=1</em>, <em>datadir='.'</em>, <em>ns=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/cyl.html#Cyl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.cyl.Cyl" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class allows to extrapolate a given <a class="reference internal" href="../outputFiles/outGraph.html#secgraphfile"><span>graphic file</span></a>
+on a cylindrical grid. Once done, the extrapolated file is stored in 
+a python.pickle file. It is then possible to display 2-D cuts of the extrapolated
+arrays (radial cuts, phi-averages, equatorial cuts, z-averages and phi-slices)</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This process is actually <strong>very demanding</strong> and it might take a lot
+of time to extrapolate the G_#.TAG file. Be careful when choosing the
+input value of ns!</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Extrapolate the G file to the cylindrical grid (ns=128, nz=2*ns)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">Cyl</span><span class="p">(</span><span class="n">ivar</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ns</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Radial cut of v_r</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">surf</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;vr&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Vertical average of B_\phi</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">avgz</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;Bphi&#39;</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s">&#39;seismic&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">33</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Azimuthal average of v_\phi</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;Bphi&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Equatorial cut of of v_theta</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">equat</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;vtheta&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="magic.cyl.Cyl.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>ivar=1</em>, <em>datadir='.'</em>, <em>ns=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/cyl.html#Cyl.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.cyl.Cyl.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ivar</strong> (<em>int</em>) &#8211; the number of the Graphic file</li>
+<li><strong>datadir</strong> (<em>str</em>) &#8211; working directory</li>
+<li><strong>ns</strong> (<em>int</em>) &#8211; number of grid points in the radial direction</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.cyl.Cyl.avg">
+<code class="descname">avg</code><span class="sig-paren">(</span><em>field='Bphi'</em>, <em>levels=16</em>, <em>cm='RdYlBu_r'</em>, <em>normed=True</em>, <em>vmax=None</em>, <em>vmin=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/cyl.html#Cyl.avg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.cyl.Cyl.avg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the azimutal average of a given field.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">Cyl</span><span class="p">(</span><span class="n">ns</span><span class="o">=</span><span class="mi">65</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Azimuthal average of B_r</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;Br&#39;</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s">&#39;seismic&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">33</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>field</strong> (<em>str</em>) &#8211; name of the input field</li>
+<li><strong>levels</strong> (<em>int</em>) &#8211; number of contour levels</li>
+<li><strong>cm</strong> (<em>str</em>) &#8211; name of the color map</li>
+<li><strong>normed</strong> (<em>bool</em>) &#8211; when set to True, the contours are normalised fro
+-max(field), max(field)</li>
+<li><strong>vmin</strong> (<em>float</em>) &#8211; truncate the contour levels to values &gt; vmin</li>
+<li><strong>vmax</strong> (<em>float</em>) &#8211; truncate the contour levels to values &lt; vmax</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.cyl.Cyl.avgz">
+<code class="descname">avgz</code><span class="sig-paren">(</span><em>field='vs'</em>, <em>levels=16</em>, <em>cm='RdYlBu_r'</em>, <em>normed=True</em>, <em>vmin=None</em>, <em>vmax=None</em>, <em>avg=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/cyl.html#Cyl.avgz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.cyl.Cyl.avgz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the vertical average of a given field.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">Cyl</span><span class="p">(</span><span class="n">ns</span><span class="o">=</span><span class="mi">65</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Vertical average of v_s</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;vs&#39;</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s">&#39;seismic&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">33</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>field</strong> (<em>str</em>) &#8211; name of the input field</li>
+<li><strong>levels</strong> (<em>int</em>) &#8211; number of contour levels</li>
+<li><strong>cm</strong> (<em>str</em>) &#8211; name of the color map</li>
+<li><strong>normed</strong> (<em>bool</em>) &#8211; when set to True, the contours are normalised fro
+-max(field), max(field)</li>
+<li><strong>vmin</strong> (<em>float</em>) &#8211; truncate the contour levels to values &gt; vmin</li>
+<li><strong>vmax</strong> (<em>float</em>) &#8211; truncate the contour levels to values &lt; vmax</li>
+<li><strong>avg</strong> (<em>bool</em>) &#8211; when set to True, an additional figure with the phi-average
+profile is also displayed</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.cyl.Cyl.equat">
+<code class="descname">equat</code><span class="sig-paren">(</span><em>field='vs'</em>, <em>levels=16</em>, <em>cm='RdYlBu_r'</em>, <em>normed=True</em>, <em>vmax=None</em>, <em>vmin=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/cyl.html#Cyl.equat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.cyl.Cyl.equat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot an input field in the equatorial plane.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">Cyl</span><span class="p">(</span><span class="n">ns</span><span class="o">=</span><span class="mi">65</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Equatorial cut of v_\phi</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">equat</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;vphi&#39;</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s">&#39;seismic&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">33</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>field</strong> (<em>str</em>) &#8211; name of the input field</li>
+<li><strong>levels</strong> (<em>int</em>) &#8211; number of contour levels</li>
+<li><strong>cm</strong> (<em>str</em>) &#8211; name of the color map</li>
+<li><strong>normed</strong> (<em>bool</em>) &#8211; when set to True, the contours are normalised fro
+-max(field), max(field)</li>
+<li><strong>vmin</strong> (<em>float</em>) &#8211; truncate the contour levels to values &gt; vmin</li>
+<li><strong>vmax</strong> (<em>float</em>) &#8211; truncate the contour levels to values &lt; vmax</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.cyl.Cyl.slice">
+<code class="descname">slice</code><span class="sig-paren">(</span><em>field='Bphi'</em>, <em>lon_0=0.0</em>, <em>levels=16</em>, <em>cm='RdYlBu_r'</em>, <em>normed=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/cyl.html#Cyl.slice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.cyl.Cyl.slice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot an azimuthal slice of a given field.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">Cyl</span><span class="p">(</span><span class="n">ns</span><span class="o">=</span><span class="mi">65</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Slices of v_r at 30 and 60 degrees</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;vr&#39;</span><span class="p">,</span> <span class="n">lon_0</span><span class="o">=</span><span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">60</span><span class="p">])</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>field</strong> (<em>str</em>) &#8211; name of the input field</li>
+<li><strong>lon_0</strong> (<em>float or list</em>) &#8211; the longitude of the slice in degrees, or a list of longitudes</li>
+<li><strong>levels</strong> (<em>int</em>) &#8211; number of contour levels</li>
+<li><strong>cm</strong> (<em>str</em>) &#8211; name of the color map</li>
+<li><strong>normed</strong> (<em>bool</em>) &#8211; when set to True, the contours are normalised fro
+-max(field), max(field)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.cyl.Cyl.surf">
+<code class="descname">surf</code><span class="sig-paren">(</span><em>field='Bphi'</em>, <em>r=0.85</em>, <em>vmin=None</em>, <em>vmax=None</em>, <em>levels=16</em>, <em>cm='RdYlBu_r'</em>, <em>normed=True</em>, <em>figsize=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/cyl.html#Cyl.surf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.cyl.Cyl.surf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the surface distribution of an input field at a given
+input radius (normalised by the outer boundary radius).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">Cyl</span><span class="p">(</span><span class="n">ns</span><span class="o">=</span><span class="mi">65</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Surface plot of B_\phi from -10 to 10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">surf</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;Bphi&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">65</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>field</strong> (<em>str</em>) &#8211; name of the input field</li>
+<li><strong>r</strong> (<em>float</em>) &#8211; radial level (normalised to the outer boundary radius)</li>
+<li><strong>levels</strong> (<em>int</em>) &#8211; number of contour levels</li>
+<li><strong>cm</strong> (<em>str</em>) &#8211; name of the color map</li>
+<li><strong>normed</strong> (<em>bool</em>) &#8211; when set to True, the contours are normalised fro
+-max(field), max(field)</li>
+<li><strong>vmin</strong> (<em>float</em>) &#8211; truncate the contour levels to values &gt; vmin</li>
+<li><strong>vmax</strong> (<em>float</em>) &#8211; truncate the contour levels to values &lt; vmax</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.cyl.sph2cyl">
+<code class="descclassname">magic.cyl.</code><code class="descname">sph2cyl</code><span class="sig-paren">(</span><em>g</em>, <em>ns=None</em>, <em>nz=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/cyl.html#sph2cyl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.cyl.sph2cyl" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function interpolates the three flow (or magnetic field)
+component of a <a class="reference internal" href="../outputFiles/outGraph.html#secgraphfile"><span>G_#.TAG</span></a> file
+on a cylindrical grid of size (ns, nz).</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This might be really slow!</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>g</strong> (<a class="reference internal" href="graphMovCoeff.html#magic.MagicGraph" title="magic.MagicGraph"><code class="xref py py-class docutils literal"><span class="pre">magic.MagicGraph</span></code></a>) &#8211; input graphic output file</li>
+<li><strong>ns</strong> (<em>int</em>) &#8211; number of grid points in the radial direction</li>
+<li><strong>nz</strong> (<em>int</em>) &#8211; number of grid points in the vertical direction</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a python tuple of five numpy.ndarray (S,Z,vs,vp_cyl,vz).
+S[nz,ns] is a meshgrid that contains the radial coordinate.
+Z[nz,ns] is a meshgrid that contains the vertical coordinate.
+vs[nz,ns] is the radial component of the velocity (or magnetic
+field), vp_cyl[nz,ns] the azimuthal component and vz[nz,ns] the
+vertical component.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">tuple</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.cyl.sph2cyl_plane">
+<code class="descclassname">magic.cyl.</code><code class="descname">sph2cyl_plane</code><span class="sig-paren">(</span><em>data</em>, <em>rad</em>, <em>ns</em>, <em>nz</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/cyl.html#sph2cyl_plane"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.cyl.sph2cyl_plane" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function extrapolates a phi-slice of a spherical shell on 
+a cylindrical grid</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Read G_1.test</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gr</span> <span class="o">=</span> <span class="n">MagicGraph</span><span class="p">(</span><span class="n">ivar</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s">&#39;test&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># phi-average v_\phi and s</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vpm</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sm</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">entropy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Interpolate on a cylindrical grid</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">S</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">sph2cyl_plane</span><span class="p">([</span><span class="n">vpm</span><span class="p">,</span> <span class="n">sm</span><span class="p">],</span> <span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vpm_cyl</span><span class="p">,</span> <span class="n">sm_cyl</span> <span class="o">=</span> <span class="n">outputs</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>list(numpy.ndarray)</em>) &#8211; a list of 2-D arrays [(ntheta, nr), (ntheta, nr), ...]</li>
+<li><strong>rad</strong> (<em>numpy.ndarray</em>) &#8211; radius</li>
+<li><strong>ns</strong> (<em>int</em>) &#8211; number of grid points in s direction</li>
+<li><strong>nz</strong> (<em>int</em>) &#8211; number of grid points in z direction</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a python tuple that contains two numpy.ndarray and a list (S,Z,output).
+S[nz,ns] is a meshgrid that contains the radial coordinate.
+Z[nz,ns] is a meshgrid that contains the vertical coordinate.
+output=[arr1[nz,ns], ..., arrN[nz,ns]] is a list of the interpolated
+array on the cylindrical grid.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">tuple</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.cyl.zavg">
+<code class="descclassname">magic.cyl.</code><code class="descname">zavg</code><span class="sig-paren">(</span><em>input</em>, <em>radius</em>, <em>ns</em>, <em>minc</em>, <em>save=True</em>, <em>filename='vp.pickle'</em>, <em>normed=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/cyl.html#zavg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.cyl.zavg" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function computes a z-integration of a list of input arrays (on the spherical
+grid). This works well for 2-D (phi-slice) arrays. In case of 3-D arrays, only
+one element is allowed (too demanding otherwise).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>input</strong> (<em>list(numpy.ndarray)</em>) &#8211; a list of 2-D or 3-D arrays</li>
+<li><strong>radius</strong> (<em>numpy.ndarray</em>) &#8211; spherical radius</li>
+<li><strong>ns</strong> (<em>int</em>) &#8211; radial resolution of the cylindrical grid (nz=2*ns)</li>
+<li><strong>minc</strong> (<em>int</em>) &#8211; azimuthal symmetry</li>
+<li><strong>save</strong> (<em>bool</em>) &#8211; a boolean to specify if one wants to save the outputs into 
+a pickle (default is True)</li>
+<li><strong>filename</strong> (<em>str</em>) &#8211; name of the output pickle when save=True</li>
+<li><strong>normed</strong> (<em>bool</em>) &#8211; a boolean to specify if ones wants to simply integrate over
+z or compute a z-average (default is True: average)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a python tuple that contains two numpy.ndarray and a list (height,cylRad,output)
+height[ns] is the height of the spherical shell for all radii.
+cylRad[ns] is the cylindrical radius. output=[arr1[ns], ..., arrN[ns]] contains
+the z-integrated output arrays.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">tuple</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="magic.Butterfly">
+<em class="property">class </em><code class="descclassname">magic.</code><code class="descname">Butterfly</code><span class="sig-paren">(</span><em>file=None</em>, <em>step=1</em>, <em>iplot=True</em>, <em>rad=0.8</em>, <em>lastvar=None</em>, <em>nvar='all'</em>, <em>levels=20</em>, <em>cm='RdYlBu_r'</em>, <em>precision='Float32'</em>, <em>cut=0.8</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/butterfly.html#Butterfly"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.Butterfly" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class can be used to display the time evolution of the magnetic field for
+various latitudes (i.e. the well-known butterfly diagrams). These diagrams are
+usually constructed using MagIC&#8217;s <a class="reference internal" href="../outputFiles/outMovie.html#secmoviefile"><span>movie files</span></a>: either
+radial cuts (like Br_CMB_mov.TAG) or azimuthal-average (like AB_mov.TAG).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Read Br_CMB_mov.ccondAnelN3MagRa2e7Pm2ggg</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t1</span> <span class="o">=</span> <span class="n">Butterfly</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s">&#39;Br_CMB_mov.ccondAnelN3MagRa2e7Pm2ggg&#39;</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+<span class="go">                   iplot=False)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Plot it</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">levels</span><span class="o">=</span><span class="mi">33</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s">&#39;seismic&#39;</span><span class="p">,</span> <span class="n">cut</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="magic.Butterfly.__add__">
+<code class="descname">__add__</code><span class="sig-paren">(</span><em>new</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/butterfly.html#Butterfly.__add__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.Butterfly.__add__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overload of the addition operator</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Read 2 files</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b1</span> <span class="o">=</span> <span class="n">Butterfly</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s">&#39;AB_mov.test1&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b2</span> <span class="o">=</span> <span class="n">Butterfly</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s">&#39;AB_mov.test2&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Stack them and display the whole thing</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">b1</span><span class="o">+</span><span class="n">b2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">levels</span><span class="o">=</span><span class="mi">33</span><span class="p">,</span> <span class="n">contour</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">cut</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s">&#39;seismic&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.Butterfly.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>file=None</em>, <em>step=1</em>, <em>iplot=True</em>, <em>rad=0.8</em>, <em>lastvar=None</em>, <em>nvar='all'</em>, <em>levels=20</em>, <em>cm='RdYlBu_r'</em>, <em>precision='Float32'</em>, <em>cut=0.8</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/butterfly.html#Butterfly.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.Butterfly.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>file</strong> (<em>str</em>) &#8211; when specified, the constructor reads this file, otherwise
+a list with the possible options is displayed</li>
+<li><strong>rad</strong> (<em>float</em>) &#8211; radial level (normalised to the outer boundary radius)</li>
+<li><strong>iplot</strong> (<em>bool</em>) &#8211; display/hide the plots (default is True)</li>
+<li><strong>nvar</strong> (<em>int</em>) &#8211; the number of time steps (lines) of the movie file we want to plot
+starting from the last line</li>
+<li><strong>lastvar</strong> (<em>int</em>) &#8211; the number of the last time step to be read</li>
+<li><strong>step</strong> (<em>int</em>) &#8211; the stepping between two lines</li>
+<li><strong>levels</strong> (<em>int</em>) &#8211; the number of contour levels</li>
+<li><strong>cm</strong> (<em>str</em>) &#8211; the name of the color map</li>
+<li><strong>cut</strong> (<em>float</em>) &#8211; adjust the contour extrema to max(abs(data))*cut</li>
+<li><strong>precision</strong> (<em>bool</em>) &#8211; precision of the input file, Float32 for single precision,
+Float64 for double precision</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.Butterfly.fourier2D">
+<code class="descname">fourier2D</code><span class="sig-paren">(</span><em>renorm=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/butterfly.html#Butterfly.fourier2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.Butterfly.fourier2D" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function allows to conduct some basic Fourier analysis on the
+data. It displays two figures: the first one is a contour levels
+in the (Frequency, Latitude) plane, the second one is integrated over
+latitudes (thus a simple, power vs Frequency plot)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Load the data without plotting</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b1</span> <span class="o">=</span> <span class="n">Butterfly</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s">&#39;AB_mov.test1&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Fourier analysis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b1</span><span class="o">.</span><span class="n">fourier2D</span><span class="p">()</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>renorm</strong> (<em>bool</em>) &#8211; when set to True, it rebins the time series in case of 
+irregularly spaced data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.Butterfly.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>levels=12</em>, <em>contour=False</em>, <em>renorm=False</em>, <em>cut=0.5</em>, <em>mesh=3</em>, <em>cm='RdYlBu_R'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/butterfly.html#Butterfly.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.Butterfly.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plotting function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cm</strong> (<em>str</em>) &#8211; name of the colormap</li>
+<li><strong>levels</strong> (<em>int</em>) &#8211; the number of contour levels (only used when iplot=True and
+contour=True)</li>
+<li><strong>contour</strong> (<em>bool</em>) &#8211; when set to True, display contour levels (pylab.contourf),
+when set to False, display an image (pylab.imshow)</li>
+<li><strong>renorm</strong> (<em>bool</em>) &#8211; when set to True, it re-bins the time series in case of 
+irregularly time-spaced data</li>
+<li><strong>mesh</strong> (<em>int</em>) &#8211; when renorm=True, factor of regriding: NewTime = mesh*OldTime</li>
+<li><strong>cut</strong> (<em>float</em>) &#8211; adjust the contour extrema to max(abs(data))*cut</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="runComparison.html"
+                        title="previous chapter">Run comparison</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="libs.html"
+                        title="next chapter">Various useful functions</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/apiPython/misc.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="libs.html" title="Various useful functions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="runComparison.html" title="Run comparison"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../postProc.html" >Data visualisation and post-processing</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,819 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Various useful functions &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../contents.html" />
+    <link rel="up" title="Data visualisation and post-processing" href="../postProc.html" />
+    <link rel="next" title="Description of the Fortran modules" href="../api.html" />
+    <link rel="prev" title="Additional possible analyses" href="misc.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../install.html">Get it/Run it</a></li>
+    <li><a href="../contribute.html">Contribute!</a></li>
+    <li><a href="../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../index.html">
+      <img src="../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../api.html" title="Description of the Fortran modules"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="misc.html" title="Additional possible analyses"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../postProc.html" accesskey="U">Data visualisation and post-processing</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-magic.libmagic">
+<span id="various-useful-functions"></span><span id="secpythonlibs"></span><h1>Various useful functions<a class="headerlink" href="#module-magic.libmagic" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="magic.libmagic.anelprof">
+<code class="descclassname">magic.libmagic.</code><code class="descname">anelprof</code><span class="sig-paren">(</span><em>radius</em>, <em>strat</em>, <em>polind</em>, <em>g0=0.0</em>, <em>g1=0.0</em>, <em>g2=1.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#anelprof"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.anelprof" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions calculates the reference temperature and density profiles
+of an anelastic model.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rad</span> <span class="o">=</span> <span class="n">chebgrid</span><span class="p">(</span><span class="mi">65</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">temp</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">beta</span> <span class="o">=</span> <span class="n">anelprof</span><span class="p">(</span><span class="n">rad</span><span class="p">,</span> <span class="n">strat</span><span class="o">=</span><span class="mf">5.</span><span class="p">,</span> <span class="n">polind</span><span class="o">=</span><span class="mf">2.</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>radius</strong> (<em>numpy.ndarray</em>) &#8211; the radial gridpoints</li>
+<li><strong>polind</strong> (<em>float</em>) &#8211; the polytropic index</li>
+<li><strong>strat</strong> (<em>float</em>) &#8211; the number of the density scale heights between the inner
+and the outer boundary</li>
+<li><strong>g0</strong> (<em>float</em>) &#8211; gravity profile: g=g0</li>
+<li><strong>g1</strong> (<em>float</em>) &#8211; gravity profile: g=g1*r/r_o</li>
+<li><strong>g2</strong> (<em>float</em>) &#8211; gravity profile: g=g2*(r_o/r)**2</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a tuple that contains the temperature profile, the density profile
+and the log-derivative of the density profile versus radius</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray, numpy.ndarray, numpy.ndarray)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.libmagic.avgField">
+<code class="descclassname">magic.libmagic.</code><code class="descname">avgField</code><span class="sig-paren">(</span><em>time</em>, <em>field</em>, <em>tstart</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#avgField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.avgField" title="Permalink to this definition">¶</a></dt>
+<dd><p>This subroutine computes the time-average of a time series</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ts</span> <span class="o">=</span> <span class="n">MagicTs</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;misc&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="nb">all</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nuavg</span> <span class="o">=</span> <span class="n">avgField</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">ts</span><span class="o">.</span><span class="n">topnuss</span><span class="p">,</span> <span class="mf">0.35</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">nuavg</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>time</strong> (<em>numpy.ndarray</em>) &#8211; time</li>
+<li><strong>field</strong> (<em>numpy.ndarray</em>) &#8211; the time series of a given field</li>
+<li><strong>tstart</strong> (<em>float</em>) &#8211; the starting time of the averaging</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the time-averaged quantity</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.libmagic.chebgrid">
+<code class="descclassname">magic.libmagic.</code><code class="descname">chebgrid</code><span class="sig-paren">(</span><em>nr</em>, <em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#chebgrid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.chebgrid" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function defines a Gauss-Lobatto grid from a to b.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">r_icb</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="p">;</span> <span class="n">r_cmb</span> <span class="o">=</span> <span class="mf">1.5</span><span class="p">;</span> <span class="n">n_r_max</span><span class="o">=</span><span class="mi">65</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rr</span> <span class="o">=</span> <span class="n">chebgrid</span><span class="p">(</span><span class="n">n_r_max</span><span class="p">,</span> <span class="n">r_icb</span><span class="p">,</span> <span class="n">r_cmb</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>nr</strong> (<em>int</em>) &#8211; number of radial grid points</li>
+<li><strong>a</strong> (<em>float</em>) &#8211; lower limit of the Gauss-Lobatto grid</li>
+<li><strong>b</strong> (<em>float</em>) &#8211; upper limit of the Gauss-Lobatto grid</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the Gauss-Lobatto grid</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.libmagic.cut">
+<code class="descclassname">magic.libmagic.</code><code class="descname">cut</code><span class="sig-paren">(</span><em>dat</em>, <em>vmax=None</em>, <em>vmin=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#cut"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.cut" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions truncates the values of an input array that are beyond 
+vmax or below vmin and replace them by vmax and vmin, respectively.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Keep only values between -1e3 and 1e3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">datNew</span> <span class="o">=</span> <span class="n">cut</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">1e3</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dat</strong> (<em>numpy.ndarray</em>) &#8211; an input array</li>
+<li><strong>vmax</strong> (<em>float</em>) &#8211; maximum upper bound</li>
+<li><strong>vmin</strong> (<em>float</em>) &#8211; minimum lower bound</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array where the values &gt;=vmax have been replaced by vmax
+and the values &lt;=vmin have been replaced by vmin</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.libmagic.cylSder">
+<code class="descclassname">magic.libmagic.</code><code class="descname">cylSder</code><span class="sig-paren">(</span><em>radius</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#cylSder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.cylSder" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function computes the s derivative of an input array defined on
+a regularly-spaced cylindrical grid.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mi">129</span> <span class="p">;</span> <span class="n">dat</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ddatds</span> <span class="o">=</span> <span class="n">cylSder</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">dat</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>radius</strong> (<em>numpy.ndarray</em>) &#8211; cylindrical radius</li>
+<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; input data</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">s derivative</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.libmagic.cylZder">
+<code class="descclassname">magic.libmagic.</code><code class="descname">cylZder</code><span class="sig-paren">(</span><em>z</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#cylZder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.cylZder" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function computes the z derivative of an input array defined on
+a regularly-spaced cylindrical grid.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">z</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mi">129</span> <span class="p">;</span> <span class="n">dat</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ddatdz</span> <span class="o">=</span> <span class="n">cylZder</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">dat</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>z</strong> (<em>numpy.ndarray</em>) &#8211; height of the cylinder</li>
+<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; input data</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">z derivative</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.libmagic.fast_read">
+<code class="descclassname">magic.libmagic.</code><code class="descname">fast_read</code><span class="sig-paren">(</span><em>file</em>, <em>skiplines=0</em>, <em>binary=False</em>, <em>precision='Float64'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#fast_read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.fast_read" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function reads an input ascii table 
+(can read both formatted or unformatted fortran)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Read &#39;e_kin.test&#39;, skip the first 10 lines</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">fast_read</span><span class="p">(</span><span class="s">&#39;e_kin.test&#39;</span><span class="p">,</span> <span class="n">skiplines</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>file</strong> (<em>str</em>) &#8211; name of the input file</li>
+<li><strong>skiplines</strong> (<em>int</em>) &#8211; number of header lines to be skept during reading</li>
+<li><strong>binary</strong> (<em>bool</em>) &#8211; when set to True, try to read an unformatted binray Fortran file
+(default is False)</li>
+<li><strong>precision</strong> (<em>str</em>) &#8211; single (&#8216;Float32&#8217;) or double precision (&#8216;Float64&#8217;)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array[nlines, ncols] that contains the data of the ascii file</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.libmagic.getCpuTime">
+<code class="descclassname">magic.libmagic.</code><code class="descname">getCpuTime</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#getCpuTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.getCpuTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function calculates the CPU time from one given log file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<em>file</em>) &#8211; the log file you want to analyze</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the total CPU time</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.libmagic.getTotalRunTime">
+<code class="descclassname">magic.libmagic.</code><code class="descname">getTotalRunTime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#getTotalRunTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.getTotalRunTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function calculates the total CPU time of one run directory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the total RUN time</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.libmagic.hammer2cart">
+<code class="descclassname">magic.libmagic.</code><code class="descname">hammer2cart</code><span class="sig-paren">(</span><em>ttheta</em>, <em>pphi</em>, <em>colat=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#hammer2cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.hammer2cart" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is used to define the Hammer projection used when
+plotting surface contours in <a class="reference internal" href="graphMovCoeff.html#magic.Surf" title="magic.Surf"><code class="xref py py-class docutils literal"><span class="pre">magic.Surf</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Load Graphic file</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gr</span> <span class="o">=</span> <span class="n">MagicGraph</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Meshgrid</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pphi</span><span class="p">,</span> <span class="n">ttheta</span> <span class="o">=</span> <span class="n">mgrid</span><span class="p">[</span><span class="o">-</span><span class="n">N</span><span class="o">.</span><span class="n">pi</span><span class="p">:</span><span class="n">N</span><span class="o">.</span><span class="n">pi</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nphi</span><span class="o">*</span><span class="mi">1j</span><span class="p">,</span> <span class="n">N</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mf">2.</span><span class="p">:</span><span class="o">-</span><span class="n">N</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mf">2.</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="o">*</span><span class="mi">1j</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">hammer2cart</span><span class="p">(</span><span class="n">ttheta</span><span class="p">,</span> <span class="n">pphi</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Contour plots</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">contourf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ttheta</strong> (<em>numpy.ndarray</em>) &#8211; meshgrid [nphi, ntheta] for the latitudinal direction</li>
+<li><strong>pphi</strong> &#8211; meshgrid [nphi, ntheta] for the azimuthal direction</li>
+<li><strong>colat</strong> (<em>numpy.ndarray</em>) &#8211; colatitudes (when not specified a regular grid is assumed)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a tuple that contains two [nphi, ntheta] arrays: the x, y meshgrid
+used in contour plots</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray, numpy.ndarray)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.libmagic.intcheb">
+<code class="descclassname">magic.libmagic.</code><code class="descname">intcheb</code><span class="sig-paren">(</span><em>f</em>, <em>nr</em>, <em>z1</em>, <em>z2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#intcheb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.intcheb" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function integrates an input function f defined on the Gauss-Lobatto grid.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">intcheb</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">))</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>f</strong> &#8211; an input array</li>
+<li><strong>nr</strong> (<em>int</em>) &#8211; number of radial grid points</li>
+<li><strong>z1</strong> (<em>float</em>) &#8211; lower limit of the Gauss-Lobatto grid</li>
+<li><strong>z2</strong> (<em>float</em>) &#8211; upper limit of the Gauss-Lobatto grid</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first">numpy.ndarray</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the integrated quantity</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.libmagic.matder">
+<code class="descclassname">magic.libmagic.</code><code class="descname">matder</code><span class="sig-paren">(</span><em>nr</em>, <em>z1</em>, <em>z2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#matder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.matder" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function calculates the derivative in Chebyshev space.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">r_icb</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="p">;</span> <span class="n">r_cmb</span> <span class="o">=</span> <span class="mf">1.5</span><span class="p">;</span> <span class="n">n_r_max</span><span class="o">=</span><span class="mi">65</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span> <span class="o">=</span> <span class="n">matder</span><span class="p">(</span><span class="n">n_r_max</span><span class="p">,</span> <span class="n">r_icb</span><span class="p">,</span> <span class="n">r_cmb</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Chebyshev grid and data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rr</span> <span class="o">=</span> <span class="n">chebgrid</span><span class="p">(</span><span class="n">n_r_max</span><span class="p">,</span> <span class="n">r_icb</span><span class="p">,</span> <span class="n">r_cmb</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">rr</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Radial derivative</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">dot</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>nr</strong> (<em>int</em>) &#8211; number of radial grid points</li>
+<li><strong>z1</strong> (<em>float</em>) &#8211; lower limit of the Gauss-Lobatto grid</li>
+<li><strong>z2</strong> (<em>float</em>) &#8211; upper limit of the Gauss-Lobatto grid</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a matrix of dimension (nr,nr) to calculate the derivatives</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.libmagic.phideravg">
+<code class="descclassname">magic.libmagic.</code><code class="descname">phideravg</code><span class="sig-paren">(</span><em>data</em>, <em>minc=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#phideravg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.phideravg" title="Permalink to this definition">¶</a></dt>
+<dd><p>phi-derivative of an input array</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gr</span> <span class="o">=</span> <span class="n">MagicGraph</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dvphidp</span> <span class="o">=</span> <span class="n">phideravg</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; input array</li>
+<li><strong>minc</strong> (<em>int</em>) &#8211; azimuthal symmetry</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the phi-derivative of the input array</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.libmagic.progressbar">
+<code class="descclassname">magic.libmagic.</code><code class="descname">progressbar</code><span class="sig-paren">(</span><em>it</em>, <em>prefix=''</em>, <em>size=60</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#progressbar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.progressbar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fancy progress-bar for loops</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">progressbar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">i</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>prefix</strong> (<em>str</em>) &#8211; prefix string before progress bar</li>
+<li><strong>size</strong> (<em>int</em>) &#8211; width of the progress bar (in points of xterm width)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.libmagic.rderavg">
+<code class="descclassname">magic.libmagic.</code><code class="descname">rderavg</code><span class="sig-paren">(</span><em>data</em>, <em>eta=0.35</em>, <em>spectral=True</em>, <em>exclude=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#rderavg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.rderavg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Radial derivative of an input array</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gr</span> <span class="o">=</span> <span class="n">MagiGraph</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dvrdr</span> <span class="o">=</span> <span class="n">rderavg</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vr</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="n">gr</span><span class="o">.</span><span class="n">radratio</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; input array</li>
+<li><strong>eta</strong> (<em>float</em>) &#8211; aspect ratio of the spherical shell</li>
+<li><strong>spectral</strong> (<em>bool</em>) &#8211; when set to True use Chebyshev derivatives, otherwise use
+finite differences (default is True)</li>
+<li><strong>exclude</strong> (<em>bool</em>) &#8211; when set to True, exclude the first and last radial grid points
+and replace them by a spline extrapolation (default is False)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the radial derivative of the input array</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.libmagic.scanDir">
+<code class="descclassname">magic.libmagic.</code><code class="descname">scanDir</code><span class="sig-paren">(</span><em>pattern</em>, <em>tfix=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#scanDir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.scanDir" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function sorts the files which match a given input pattern from the oldest
+to the most recent one (in the current working directory)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">dat</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="s">&#39;log.*&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">log</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pattern</strong> (<em>str</em>) &#8211; a classical regexp pattern</li>
+<li><strong>tfix</strong> (<em>float</em>) &#8211; in case you want to add only the files that are more recent than
+a certain date, use tfix (computer 1970 format!!)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a list of files that match the input pattern</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.libmagic.sderavg">
+<code class="descclassname">magic.libmagic.</code><code class="descname">sderavg</code><span class="sig-paren">(</span><em>data</em>, <em>eta=0.35</em>, <em>spectral=True</em>, <em>colat=None</em>, <em>exclude=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#sderavg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.sderavg" title="Permalink to this definition">¶</a></dt>
+<dd><p>s derivative of an input array</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gr</span> <span class="o">=</span> <span class="n">MagiGraph</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dvpds</span> <span class="o">=</span> <span class="n">sderavg</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="n">gr</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="n">colat</span><span class="o">=</span><span class="n">gr</span><span class="o">.</span><span class="n">colatitude</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; input array</li>
+<li><strong>eta</strong> (<em>float</em>) &#8211; aspect ratio of the spherical shell</li>
+<li><strong>spectral</strong> (<em>bool</em>) &#8211; when set to True use Chebyshev derivatives, otherwise use
+finite differences (default is True)</li>
+<li><strong>exclude</strong> (<em>bool</em>) &#8211; when set to True, exclude the first and last radial grid points
+and replace them by a spline extrapolation (default is False)</li>
+<li><strong>colat</strong> (<em>numpy.ndarray</em>) &#8211; colatitudes (when not specified a regular grid is assumed)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the s derivative of the input array</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.libmagic.selectField">
+<code class="descclassname">magic.libmagic.</code><code class="descname">selectField</code><span class="sig-paren">(</span><em>obj</em>, <em>field</em>, <em>labTex=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#selectField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.selectField" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function selects for you which field you want to display. It actually
+allows to avoid possible variables miss-spelling: i.e. &#8216;Bphi&#8217;=&#8217;bp&#8217;=&#8217;Bp&#8217;=&#8217;bphi&#8217;</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>obj</strong> (<a class="reference internal" href="graphMovCoeff.html#magic.MagicGraph" title="magic.MagicGraph"><code class="xref py py-class docutils literal"><span class="pre">magic.MagicGraph</span></code></a>) &#8211; a graphic output file</li>
+<li><strong>field</strong> (<em>str</em>) &#8211; the name of the field one wants to select</li>
+<li><strong>labTex</strong> (<em>bool</em>) &#8211; when set to True, format the labels using LaTeX fonts</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a tuple that contains the selected physical field and its label</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray, str)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.libmagic.symmetrize">
+<code class="descclassname">magic.libmagic.</code><code class="descname">symmetrize</code><span class="sig-paren">(</span><em>data</em>, <em>ms</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#symmetrize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.symmetrize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Symmetrise an array which is defined only with an azimuthal symmetry minc=ms</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; the input array</li>
+<li><strong>ms</strong> (<em>int</em>) &#8211; the azimuthal symmetry</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an output array of dimension (data.shape[0]*ms+1)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.libmagic.thetaderavg">
+<code class="descclassname">magic.libmagic.</code><code class="descname">thetaderavg</code><span class="sig-paren">(</span><em>data</em>, <em>order=4</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#thetaderavg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.thetaderavg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Theta-derivative of an input array (finite differences)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gr</span> <span class="o">=</span> <span class="n">MagiGraph</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dvtdt</span> <span class="o">=</span> <span class="n">thetaderavg</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vtheta</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; input array</li>
+<li><strong>order</strong> (<em>int</em>) &#8211; order of the finite-difference scheme (possible values are 2 or 4)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the theta-derivative of the input array</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.libmagic.writeVpEq">
+<code class="descclassname">magic.libmagic.</code><code class="descname">writeVpEq</code><span class="sig-paren">(</span><em>par</em>, <em>tstart</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#writeVpEq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.writeVpEq" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function computes the time-averaged surface zonal flow (and Rolc) and
+format the output</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Reads all the par.* files from the current directory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">par</span> <span class="o">=</span> <span class="n">MagicTs</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;par&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="nb">all</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Time-average</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">st</span> <span class="o">=</span> <span class="n">writeVpEq</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="n">tstart</span><span class="o">=</span><span class="mf">2.1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">st</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>par</strong> (<a class="reference internal" href="timeSeries.html#magic.MagicTs" title="magic.MagicTs"><code class="xref py py-class docutils literal"><span class="pre">magic.MagicTs</span></code></a>) &#8211; a <a class="reference internal" href="timeSeries.html#magic.MagicTs" title="magic.MagicTs"><code class="xref py py-class docutils literal"><span class="pre">MagicTs</span></code></a> object containing the par file</li>
+<li><strong>tstart</strong> (<em>float</em>) &#8211; the starting time of the averaging</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a formatted string</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.libmagic.zderavg">
+<code class="descclassname">magic.libmagic.</code><code class="descname">zderavg</code><span class="sig-paren">(</span><em>data</em>, <em>eta=0.35</em>, <em>spectral=True</em>, <em>colat=None</em>, <em>exclude=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#zderavg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.zderavg" title="Permalink to this definition">¶</a></dt>
+<dd><p>z derivative of an input array</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gr</span> <span class="o">=</span> <span class="n">MagiGraph</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dvrdz</span> <span class="o">=</span> <span class="n">zderavg</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vr</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="n">gr</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="n">colat</span><span class="o">=</span><span class="n">gr</span><span class="o">.</span><span class="n">colatitude</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; input array</li>
+<li><strong>eta</strong> (<em>float</em>) &#8211; aspect ratio of the spherical shell</li>
+<li><strong>spectral</strong> (<em>bool</em>) &#8211; when set to True use Chebyshev derivatives, otherwise use
+finite differences (default is True)</li>
+<li><strong>exclude</strong> (<em>bool</em>) &#8211; when set to True, exclude the first and last radial grid points
+and replace them by a spline extrapolation (default is False)</li>
+<li><strong>colat</strong> (<em>numpy.ndarray</em>) &#8211; colatitudes (when not specified a regular grid is assumed)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the z derivative of the input array</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="misc.html"
+                        title="previous chapter">Additional possible analyses</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../api.html"
+                        title="next chapter">Description of the Fortran modules</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/apiPython/libs.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../api.html" title="Description of the Fortran modules"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="misc.html" title="Additional possible analyses"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../postProc.html" >Data visualisation and post-processing</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

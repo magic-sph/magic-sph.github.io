@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Interactive communication with the code using signal.TAG &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="contents.html" />
+    <link rel="next" title="Output files" href="outputFiles/outFiles.html" />
+    <link rel="prev" title="Mantle and Inner Core Namelists" href="inputNamelists/mantle_icNamelist.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="install.html">Get it/Run it</a></li>
+    <li><a href="contribute.html">Contribute!</a></li>
+    <li><a href="contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="index.html">
+      <img src="_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="outputFiles/outFiles.html" title="Output files"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="inputNamelists/mantle_icNamelist.html" title="Mantle and Inner Core Namelists"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="contents.html">Magic 5.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="interactive-communication-with-the-code-using-signal-tag">
+<h1>Interactive communication with the code using <code class="docutils literal"><span class="pre">signal.TAG</span></code><a class="headerlink" href="#interactive-communication-with-the-code-using-signal-tag" title="Permalink to this headline">¶</a></h1>
+<p>It is possible to interactively communicate with the MagIC code <strong>during a run</strong>,
+using a file which is systematically created when the simulation starts, called
+<strong>signal.TAG</strong>. By default, this file contains only the word <code class="docutils literal"><span class="pre">NOT</span></code> and does
+nothing to the simulation. Replacing <code class="docutils literal"><span class="pre">NOT</span></code> by one of the following allowed
+keywords will have some influence on the outputs or possibly force the code to
+terminate its execution:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>END</strong>: Changing the word <code class="docutils literal"><span class="pre">NOT</span></code> to <code class="docutils literal"><span class="pre">END</span></code> will cause the code to
+finish after the current time step and write all the outputs as if it was
+programmed to finish at that time from the start. This will thus normally
+produce the <a class="reference internal" href="outputFiles/outRst.html#secrestartfile"><span>rst_end.TAG</span></a> file that will possibly
+allow you to continue this run later at your convenience.</li>
+<li><strong>GRA</strong>: Changing the word <code class="docutils literal"><span class="pre">NOT</span></code> to <code class="docutils literal"><span class="pre">GRA</span></code> will cause the code to produce
+a graphic ouptut file <a class="reference internal" href="outputFiles/outGraph.html#secgraphfile"><span>G_#.TAG</span></a>. The keyword will be
+automatically restored to <code class="docutils literal"><span class="pre">NOT</span></code> once the graphic file has been produced.</li>
+<li><strong>RST</strong>: Changing the word <code class="docutils literal"><span class="pre">NOT</span></code> to <code class="docutils literal"><span class="pre">RST</span></code> will cause the code to produce
+a restart file <a class="reference internal" href="outputFiles/outRst.html#secrestartfile"><span>rst_t#.TAG</span></a>. The keyword will then be
+restored to <code class="docutils literal"><span class="pre">NOT</span></code> once the restart file has been written.</li>
+<li><strong>SPE</strong>: Changing the word <code class="docutils literal"><span class="pre">NOT</span></code> to <code class="docutils literal"><span class="pre">SPE</span></code> will cause the code to produce
+spectra <a class="reference internal" href="outputFiles/outSpecFiles.html#seckinspecfile"><span>kin_spec_#.TAG</span></a> (and possibly
+<a class="reference internal" href="outputFiles/outSpecFiles.html#secmagspecfile"><span>mag_spec_#.TAG</span></a> and <cite>T_spec_#.TAG &lt;secTSpecFile&gt;</cite> depending
+if the run is magnetic or not, or if it solves a temperature/entropy equation).
+Once the spectra files have been written, the keyword will be automatically replaced
+by <code class="docutils literal"><span class="pre">NOT</span></code>.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Those keywords are <strong>case-insensitive</strong>.</p>
+</div>
+</div></blockquote>
+<p>Instead of editing the file with your favorite editor to specify the requested
+keyword, we recommand using instead the shell command <code class="docutils literal"><span class="pre">echo</span></code> to avoid some
+possible crash during the code execution when writing into the <code class="docutils literal"><span class="pre">signal.TAG</span></code>
+file. For instance, if you want a <a class="reference internal" href="outputFiles/outGraph.html#secgraphfile"><span>graphic output file</span></a>, just use
+the following command (adapted to your current <a class="reference internal" href="inputNamelists/controlNamelist.html#vartag"><span>TAG</span></a>):</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">echo </span>GRA &gt; signal.TAG
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="inputNamelists/mantle_icNamelist.html"
+                        title="previous chapter">Mantle and Inner Core Namelists</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="outputFiles/outFiles.html"
+                        title="next chapter">Output files</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/signalFile.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="outputFiles/outFiles.html" title="Output files"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="inputNamelists/mantle_icNamelist.html" title="Mantle and Inner Core Namelists"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="contents.html">Magic 5.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

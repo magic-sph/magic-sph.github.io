@@ -1,0 +1,288 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Run comparison &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../contents.html" />
+    <link rel="up" title="Data visualisation and post-processing" href="../postProc.html" />
+    <link rel="next" title="Additional possible analyses" href="misc.html" />
+    <link rel="prev" title="Support for TO outputs" href="outTO.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../install.html">Get it/Run it</a></li>
+    <li><a href="../contribute.html">Contribute!</a></li>
+    <li><a href="../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../index.html">
+      <img src="../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="misc.html" title="Additional possible analyses"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="outTO.html" title="Support for TO outputs"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../postProc.html" accesskey="U">Data visualisation and post-processing</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="run-comparison">
+<span id="secpythoncomp"></span><h1>Run comparison<a class="headerlink" href="#run-comparison" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="magic.CompSims">
+<em class="property">class </em><code class="descclassname">magic.</code><code class="descname">CompSims</code><span class="sig-paren">(</span><em>file='liste'</em>, <em>field='ts'</em>, <em>ncol=4</em>, <em>cm='RdYlBu_r'</em>, <em>dpi=96</em>, <em>normed=True</em>, <em>levels=16</em>, <em>type=None</em>, <em>r=0.9</em>, <em>bw=False</em>, <em>ave=False</em>, <em>cut=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/compSims.html#CompSims"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.CompSims" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class allows to compare an analyse several DNS simultaneously. It is possible
+to compare time-series or <a class="reference internal" href="../outputFiles/outGraph.html#secgraphfile"><span>graphic files</span></a>. To set it up, you
+first need to create a file that contains the list of directories you want to analyse:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>cat inputList
+E3e4Eps5e3Q05
+E3e4Eps2e3Q07
+E3e4Eps2e3Q08
+E3e4Eps2e3Q09
+</pre></div>
+</div>
+<p>This list thus contains four directories (one run per directory) that can be further
+analysed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Display the time-series of kinetic energy on 2 columns</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">CompSims</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s">&#39;inputList&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s">&#39;ts&#39;</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Display the equatorial cuts of v_r</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">CompSims</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s">&#39;inputList&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s">&#39;vr&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&#39;equat&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">65</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s">&#39;seismic&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Display the radial cuts of B_r at r=0.8 r_o</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">CompSims</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s">&#39;inputList&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s">&#39;br&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&#39;surf&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Display the average zonal flow</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">CompSims</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s">&#39;inputList&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s">&#39;vp&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&#39;avg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="magic.CompSims.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>file='liste'</em>, <em>field='ts'</em>, <em>ncol=4</em>, <em>cm='RdYlBu_r'</em>, <em>dpi=96</em>, <em>normed=True</em>, <em>levels=16</em>, <em>type=None</em>, <em>r=0.9</em>, <em>bw=False</em>, <em>ave=False</em>, <em>cut=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/compSims.html#CompSims.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.CompSims.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>file</strong> (<em>str</em>) &#8211; the input file that contains the list of directories that one
+wants to analyse</li>
+<li><strong>field</strong> (<em>str</em>) &#8211; name of the input field. Possible options are:
+&#8216;ts&#8217;: displaye the time-series of kinetic energy;
+&#8216;e_mag&#8217;: display the time-series of magnetic energy;
+&#8216;flux&#8217;: display the time-series of the Nusselt numbers;
+&#8216;zonal&#8217;: display the surface zonal flow;
+&#8216;Anything else&#8217;: try to interpret the field</li>
+<li><strong>type</strong> (<em>str</em>) &#8211; nature of the plot. Possible values are:
+&#8216;avg&#8217; or &#8216;slice&#8217;: phi-average or phi-slice;
+&#8216;equat&#8217;: equatorial cut;
+&#8216;surf&#8217;: radial cut;
+&#8216;ts*: time series</li>
+<li><strong>ncol</strong> (<em>int</em>) &#8211; number of columns of the figure</li>
+<li><strong>ave</strong> (<em>bool</em>) &#8211; when set to True, it tries to read a time-averaged graphic file</li>
+<li><strong>r</strong> (<em>float</em>) &#8211; the radius at which you want to display the input
+data (in normalised units with the radius of the outer boundary)</li>
+<li><strong>levels</strong> (<em>int</em>) &#8211; the number of levels in the contour</li>
+<li><strong>cm</strong> (<em>str</em>) &#8211; name of the colormap (&#8216;jet&#8217;, &#8216;seismic&#8217;, &#8216;RdYlBu_r&#8217;, etc.)</li>
+<li><strong>normed</strong> (<em>bool</em>) &#8211; when set to True, the colormap is centered around zero.
+Default is True, except for entropy/temperature plots.</li>
+<li><strong>dpi</strong> (<em>int</em>) &#8211; dot per inch when saving PNGs</li>
+<li><strong>bw</strong> (<em>bool</em>) &#8211; when set to True, display grey-scaled contour levels</li>
+<li><strong>cut</strong> (<em>float</em>) &#8211; adjust the contour extrema to max(abs(data))*cut</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.CompSims.plotAvg">
+<code class="descname">plotAvg</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/compSims.html#CompSims.plotAvg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.CompSims.plotAvg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot azimutal averages in (theta, r) planes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.CompSims.plotEmag">
+<code class="descname">plotEmag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/compSims.html#CompSims.plotEmag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.CompSims.plotEmag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot time-series of the magnetic energy</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.CompSims.plotEquat">
+<code class="descname">plotEquat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/compSims.html#CompSims.plotEquat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.CompSims.plotEquat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot equatorial cuts in (phi, r)  planes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.CompSims.plotFlux">
+<code class="descname">plotFlux</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/compSims.html#CompSims.plotFlux"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.CompSims.plotFlux" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot time-series of the top and bottom Nusselt numbers</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.CompSims.plotSurf">
+<code class="descname">plotSurf</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/compSims.html#CompSims.plotSurf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.CompSims.plotSurf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot radial cuts in (phi, theta)  planes using the Hammer projection.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.CompSims.plotTs">
+<code class="descname">plotTs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/compSims.html#CompSims.plotTs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.CompSims.plotTs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot time-series of the kinetic energy</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.CompSims.plotZonal">
+<code class="descname">plotZonal</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/compSims.html#CompSims.plotZonal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.CompSims.plotZonal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot surface zonal flow profiles.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="outTO.html"
+                        title="previous chapter">Support for <code class="docutils literal"><span class="pre">TO</span></code> outputs</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="misc.html"
+                        title="next chapter">Additional possible analyses</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/apiPython/runComparison.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="misc.html" title="Additional possible analyses"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="outTO.html" title="Support for TO outputs"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../postProc.html" >Data visualisation and post-processing</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

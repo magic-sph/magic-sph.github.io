@@ -1,0 +1,493 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>magic.toMovie &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../../contents.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../../index.html">Home</a></li>
+    <li><a href="../../install.html">Get it/Run it</a></li>
+    <li><a href="../../contribute.html">Contribute!</a></li>
+    <li><a href="../../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../../index.html">
+      <img src="../../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for magic.toMovie</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">N</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">P</span>
+<span class="kn">from</span> <span class="nn">.npfile</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="TOMovie"><a class="viewcode-back" href="../../apiPython/outTO.html#magic.TOMovie">[docs]</a><span class="k">class</span> <span class="nc">TOMovie</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class allows to read and display the :ref:`TO_mov.TAG &lt;secTO_movieFile&gt;` </span>
+<span class="sd">    generated when :ref:`l_TOmovie=.true. &lt;varl_TOmovie&gt;` is True.</span>
+
+<span class="sd">    &gt;&gt;&gt; # This will allow you to pick up one TO_mov files among the existing ones</span>
+<span class="sd">    &gt;&gt;&gt; t = TOMovie()</span>
+
+<span class="sd">    &gt;&gt;&gt; # Read TO_mov.N0m2, time-averaged it and display it with 65 contour levels</span>
+<span class="sd">    &gt;&gt;&gt; t = TOMovie(file=&#39;TO_mov.N0m2&#39;, avg=True, levels=65, cm=&#39;seismic&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TOMovie.__init__"><a class="viewcode-back" href="../../apiPython/outTO.html#magic.TOMovie.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">file</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s">&#39;RdYlBu_r&#39;</span><span class="p">,</span>
+                 <span class="n">cut</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">avg</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="s">&#39;Float32&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param file: the filename of the TO_mov file</span>
+<span class="sd">        :type file: str</span>
+<span class="sd">        :param cmap: the name of the color map</span>
+<span class="sd">        :type cmap: str</span>
+<span class="sd">        :param levels: the number of contour levels</span>
+<span class="sd">        :type levels: int</span>
+<span class="sd">        :param cut: adjust the contour extrema to max(abs(data))*cut</span>
+<span class="sd">        :type cut: float</span>
+<span class="sd">        :param iplot: a boolean to specify if one wants to plot or not the</span>
+<span class="sd">                      results</span>
+<span class="sd">        :type iplot: bool</span>
+<span class="sd">        :param avg: time average of the different forces</span>
+<span class="sd">        :type avg: bool</span>
+<span class="sd">        :param precision: precision of the input file, Float32 for single precision,</span>
+<span class="sd">                          Float64 for double precision</span>
+<span class="sd">        :type precision: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+                 
+        <span class="k">if</span> <span class="nb">file</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">dat</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;TO_mov.*&#39;</span><span class="p">)</span>
+            <span class="n">str1</span> <span class="o">=</span> <span class="s">&#39;Which TO movie do you want ?</span><span class="se">\n</span><span class="s">&#39;</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">movie</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dat</span><span class="p">):</span>
+                <span class="n">str1</span> <span class="o">+=</span> <span class="s">&#39; </span><span class="si">%i</span><span class="s">) </span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">movie</span><span class="p">)</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="n">str1</span><span class="p">))</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="n">index</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&#39;Non valid index: </span><span class="si">%s</span><span class="s"> has been chosen instead&#39;</span> <span class="o">%</span> <span class="n">dat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="nb">file</span>
+
+        <span class="n">mot</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;TO_mov\.(.*)&#39;</span><span class="p">)</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">mot</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c"># DETERMINE THE NUMBER OF LINES BY READING THE LOG FILE</span>
+        <span class="n">logfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;log.</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">end</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">mot</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39; ! WRITING TO MOVIE FRAME NO\s*(\d*).*&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">logfile</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">mot</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+                <span class="n">nlines</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">mot</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">line</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">logfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">nvar</span> <span class="o">=</span> <span class="n">nlines</span>
+
+        <span class="c"># READ the movie file </span>
+        <span class="n">infile</span> <span class="o">=</span> <span class="n">npfile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s">&#39;B&#39;</span><span class="p">)</span>
+        <span class="c"># HEADER</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="s">&#39;|S64&#39;</span><span class="p">)</span>
+        <span class="n">n_type</span><span class="p">,</span> <span class="n">n_surface</span><span class="p">,</span> <span class="n">const</span><span class="p">,</span> <span class="n">n_fields</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
+        <span class="n">movtype</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
+        <span class="n">n_fields</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_fields</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">movtype</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">movtype</span><span class="p">)</span>
+        <span class="n">n_surface</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_surface</span><span class="p">)</span>
+
+        <span class="c"># RUN PARAMETERS</span>
+        <span class="n">runid</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="s">&#39;|S64&#39;</span><span class="p">)</span>
+        <span class="n">n_r_mov_tot</span><span class="p">,</span> <span class="n">n_r_max</span><span class="p">,</span> <span class="n">n_theta_max</span><span class="p">,</span> <span class="n">n_phi_tot</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span> \
+             <span class="bp">self</span><span class="o">.</span><span class="n">ek</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prmag</span><span class="p">,</span> \
+             <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tScale</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
+        <span class="n">n_r_mov_tot</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_r_mov_tot</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_r_max</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_theta_max</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_phi_tot</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">)</span>
+
+        <span class="c"># GRID</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">]</span> <span class="c"># remove inner core</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">phi</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
+
+        <span class="n">surftype</span> <span class="o">=</span> <span class="s">&#39;phi_constant&#39;</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nvar</span><span class="p">,</span> <span class="n">precision</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">asVphi</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nvar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">),</span> <span class="n">precision</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rey</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">asVphi</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">adv</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">asVphi</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visc</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">asVphi</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lorentz</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">asVphi</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coriolis</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">asVphi</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dtVp</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">asVphi</span><span class="p">)</span>
+
+        <span class="c"># READ the data</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nvar</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+            <span class="n">n_frame</span><span class="p">,</span> <span class="n">t_movieS</span><span class="p">,</span> <span class="n">omega_ic</span><span class="p">,</span> <span class="n">omega_ma</span><span class="p">,</span> <span class="n">movieDipColat</span><span class="p">,</span> \
+                                   <span class="n">movieDipLon</span><span class="p">,</span> <span class="n">movieDipStrength</span><span class="p">,</span> \
+                           <span class="n">movieDipStrengthGeo</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">t_movieS</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">asVphi</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rey</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">adv</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">visc</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lorentz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">coriolis</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dtVp</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="k">if</span> <span class="n">iplot</span><span class="p">:</span>
+            <span class="n">cmap</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">cm</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cut</span><span class="p">,</span> <span class="n">levels</span><span class="p">,</span> <span class="n">avg</span><span class="p">,</span> <span class="n">cmap</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TOMovie.plot"><a class="viewcode-back" href="../../apiPython/outTO.html#magic.TOMovie.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cut</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">levs</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">avg</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s">&#39;RdYlBu_r&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plotting function</span>
+
+<span class="sd">        :param cut: adjust the contour extrema to max(abs(data))*cut</span>
+<span class="sd">        :type cut: float</span>
+<span class="sd">        :param levs: number of contour levels</span>
+<span class="sd">        :type levs: int</span>
+<span class="sd">        :param avg: when set to True, quantities are time-averaged</span>
+<span class="sd">        :type avg: bool</span>
+<span class="sd">        :param cmap: name of the colormap</span>
+<span class="sd">        :type cmap: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">th</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">N</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="o">-</span><span class="n">N</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">)</span>
+        <span class="n">rr</span><span class="p">,</span> <span class="n">tth</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">th</span><span class="p">)</span>
+        <span class="n">xx</span> <span class="o">=</span> <span class="n">rr</span> <span class="o">*</span> <span class="n">N</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">tth</span><span class="p">)</span>
+        <span class="n">yy</span> <span class="o">=</span> <span class="n">rr</span> <span class="o">*</span> <span class="n">N</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">tth</span><span class="p">)</span>
+        <span class="n">xxout</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">*</span> <span class="n">N</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">)</span>
+        <span class="n">yyout</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">*</span> <span class="n">N</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">)</span>
+        <span class="n">xxin</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">*</span> <span class="n">N</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">)</span>
+        <span class="n">yyin</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">*</span> <span class="n">N</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">)</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">top</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">avg</span><span class="p">:</span>
+            <span class="n">cor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coriolis</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">asVp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">asVphi</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">rey</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rey</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">adv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">adv</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">lor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lorentz</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">vis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visc</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">dt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtVp</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="n">vmin</span> <span class="o">=</span> <span class="o">-</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">cor</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">cor</span><span class="o">.</span><span class="n">min</span><span class="p">()))</span>
+            <span class="n">vmin</span> <span class="o">=</span> <span class="n">cut</span> <span class="o">*</span> <span class="n">vmin</span>
+            <span class="n">vmax</span> <span class="o">=</span> <span class="o">-</span><span class="n">vmin</span>
+            <span class="n">cs</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">levs</span><span class="p">)</span>
+
+            <span class="n">vmin</span> <span class="o">=</span> <span class="o">-</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">asVp</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">asVp</span><span class="o">.</span><span class="n">min</span><span class="p">()))</span>
+            <span class="n">vmin</span> <span class="o">=</span> <span class="n">cut</span> <span class="o">*</span> <span class="n">vmin</span>
+            <span class="n">vmax</span> <span class="o">=</span> <span class="o">-</span><span class="n">vmin</span>
+            <span class="n">csVp</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">levs</span><span class="p">)</span>
+
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">181</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s">&#39;off&#39;</span><span class="p">)</span>
+            <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">asVp</span><span class="p">,</span> <span class="n">csVp</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxout</span><span class="p">,</span> <span class="n">yyout</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxin</span><span class="p">,</span> <span class="n">yyin</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="s">&#39;uphi&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s">&#39;left&#39;</span><span class="p">,</span>
+                                  <span class="n">verticalalignment</span><span class="o">=</span><span class="s">&#39;center&#39;</span><span class="p">)</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">182</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s">&#39;off&#39;</span><span class="p">)</span>
+            <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">adv</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxout</span><span class="p">,</span> <span class="n">yyout</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxin</span><span class="p">,</span> <span class="n">yyin</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="s">&#39;Adv&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s">&#39;left&#39;</span><span class="p">,</span>
+                                  <span class="n">verticalalignment</span><span class="o">=</span><span class="s">&#39;center&#39;</span><span class="p">)</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">183</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s">&#39;off&#39;</span><span class="p">)</span>
+            <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">rey</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxout</span><span class="p">,</span> <span class="n">yyout</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxin</span><span class="p">,</span> <span class="n">yyin</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="s">&#39;Rey&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s">&#39;left&#39;</span><span class="p">,</span>
+                                  <span class="n">verticalalignment</span><span class="o">=</span><span class="s">&#39;center&#39;</span><span class="p">)</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">184</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s">&#39;off&#39;</span><span class="p">)</span>
+            <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">vis</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxout</span><span class="p">,</span> <span class="n">yyout</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxin</span><span class="p">,</span> <span class="n">yyin</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="s">&#39;Visc&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s">&#39;left&#39;</span><span class="p">,</span>
+                                  <span class="n">verticalalignment</span><span class="o">=</span><span class="s">&#39;center&#39;</span><span class="p">)</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">185</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s">&#39;off&#39;</span><span class="p">)</span>
+            <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">lor</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxout</span><span class="p">,</span> <span class="n">yyout</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxin</span><span class="p">,</span> <span class="n">yyin</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="s">&#39;Lo.&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s">&#39;left&#39;</span><span class="p">,</span>
+                                  <span class="n">verticalalignment</span><span class="o">=</span><span class="s">&#39;center&#39;</span><span class="p">)</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">186</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s">&#39;off&#39;</span><span class="p">)</span>
+            <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">cor</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxout</span><span class="p">,</span> <span class="n">yyout</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxin</span><span class="p">,</span> <span class="n">yyin</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="s">&#39;Cor.&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s">&#39;left&#39;</span><span class="p">,</span>
+                                  <span class="n">verticalalignment</span><span class="o">=</span><span class="s">&#39;center&#39;</span><span class="p">)</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">187</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s">&#39;off&#39;</span><span class="p">)</span>
+            <span class="n">balance</span> <span class="o">=</span> <span class="n">adv</span><span class="o">+</span><span class="n">cor</span><span class="o">+</span><span class="n">vis</span><span class="o">+</span><span class="n">lor</span><span class="o">+</span><span class="n">rey</span>
+            <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">balance</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxout</span><span class="p">,</span> <span class="n">yyout</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxin</span><span class="p">,</span> <span class="n">yyin</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="s">&#39;sum&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s">&#39;left&#39;</span><span class="p">,</span>
+                                  <span class="n">verticalalignment</span><span class="o">=</span><span class="s">&#39;center&#39;</span><span class="p">)</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">188</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s">&#39;off&#39;</span><span class="p">)</span>
+            <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxout</span><span class="p">,</span> <span class="n">yyout</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxin</span><span class="p">,</span> <span class="n">yyin</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="s">&#39;dvp/dt&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s">&#39;left&#39;</span><span class="p">,</span>
+                                  <span class="n">verticalalignment</span><span class="o">=</span><span class="s">&#39;center&#39;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">P</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
+
+            <span class="n">vmin</span> <span class="o">=</span> <span class="o">-</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coriolis</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coriolis</span><span class="o">.</span><span class="n">min</span><span class="p">()))</span>
+            <span class="n">vmin</span> <span class="o">=</span> <span class="n">cut</span> <span class="o">*</span> <span class="n">vmin</span>
+            <span class="n">vmax</span> <span class="o">=</span> <span class="o">-</span><span class="n">vmin</span>
+            <span class="n">cs</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">levs</span><span class="p">)</span>
+
+            <span class="n">vmin</span> <span class="o">=</span> <span class="o">-</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">asVphi</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">asVphi</span><span class="o">.</span><span class="n">min</span><span class="p">()))</span>
+            <span class="n">vmin</span> <span class="o">=</span> <span class="n">cut</span> <span class="o">*</span> <span class="n">vmin</span>
+            <span class="n">vmax</span> <span class="o">=</span> <span class="o">-</span><span class="n">vmin</span>
+            <span class="n">cs1</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">levs</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nvar</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span> <span class="c"># avoid last dvp/dt which is wrong</span>
+                <span class="n">bal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">asVphi</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">adv</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">rey</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">+</span>\
+                      <span class="bp">self</span><span class="o">.</span><span class="n">visc</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">lorentz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">coriolis</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">181</span><span class="p">)</span>
+                    <span class="n">ax1</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s">&#39;off&#39;</span><span class="p">)</span>
+                    <span class="n">im</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">asVphi</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">cs1</span><span class="p">,</span> 
+                                     <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+                    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxout</span><span class="p">,</span> <span class="n">yyout</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+                    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxin</span><span class="p">,</span> <span class="n">yyin</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+                    <span class="n">ax1</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="s">&#39;uphi&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s">&#39;left&#39;</span><span class="p">,</span>
+                                  <span class="n">verticalalignment</span><span class="o">=</span><span class="s">&#39;center&#39;</span><span class="p">)</span>
+                    <span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">182</span><span class="p">)</span>
+                    <span class="n">ax2</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s">&#39;off&#39;</span><span class="p">)</span>
+                    <span class="n">im</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">adv</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">cs</span><span class="p">,</span> 
+                                     <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+                    <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxout</span><span class="p">,</span> <span class="n">yyout</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+                    <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxin</span><span class="p">,</span> <span class="n">yyin</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+                    <span class="n">ax2</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="s">&#39;Adv&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s">&#39;left&#39;</span><span class="p">,</span>
+                                  <span class="n">verticalalignment</span><span class="o">=</span><span class="s">&#39;center&#39;</span><span class="p">)</span>
+                    <span class="n">ax3</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">183</span><span class="p">)</span>
+                    <span class="n">ax3</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s">&#39;off&#39;</span><span class="p">)</span>
+                    <span class="n">im</span> <span class="o">=</span> <span class="n">ax3</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rey</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">cs</span><span class="p">,</span> 
+                                     <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+                    <span class="n">ax3</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxout</span><span class="p">,</span> <span class="n">yyout</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+                    <span class="n">ax3</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxin</span><span class="p">,</span> <span class="n">yyin</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+                    <span class="n">ax3</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="s">&#39;Rey&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s">&#39;left&#39;</span><span class="p">,</span>
+                                  <span class="n">verticalalignment</span><span class="o">=</span><span class="s">&#39;center&#39;</span><span class="p">)</span>
+                    <span class="n">ax4</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">184</span><span class="p">)</span>
+                    <span class="n">ax4</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s">&#39;off&#39;</span><span class="p">)</span>
+                    <span class="n">im</span> <span class="o">=</span> <span class="n">ax4</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">visc</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">cs</span><span class="p">,</span> 
+                                     <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+                    <span class="n">ax4</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxout</span><span class="p">,</span> <span class="n">yyout</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+                    <span class="n">ax4</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxin</span><span class="p">,</span> <span class="n">yyin</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+                    <span class="n">ax4</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="s">&#39;Visc&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s">&#39;left&#39;</span><span class="p">,</span>
+                                  <span class="n">verticalalignment</span><span class="o">=</span><span class="s">&#39;center&#39;</span><span class="p">)</span>
+                    <span class="n">ax5</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">185</span><span class="p">)</span>
+                    <span class="n">ax5</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s">&#39;off&#39;</span><span class="p">)</span>
+                    <span class="n">im</span> <span class="o">=</span> <span class="n">ax5</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lorentz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">cs</span><span class="p">,</span> 
+                                     <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+                    <span class="n">ax5</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxout</span><span class="p">,</span> <span class="n">yyout</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+                    <span class="n">ax5</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxin</span><span class="p">,</span> <span class="n">yyin</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+                    <span class="n">ax5</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="s">&#39;Lo.&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s">&#39;left&#39;</span><span class="p">,</span>
+                                  <span class="n">verticalalignment</span><span class="o">=</span><span class="s">&#39;center&#39;</span><span class="p">)</span>
+                    <span class="n">ax6</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">186</span><span class="p">)</span>
+                    <span class="n">ax6</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s">&#39;off&#39;</span><span class="p">)</span>
+                    <span class="n">im</span> <span class="o">=</span> <span class="n">ax6</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">coriolis</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">cs</span><span class="p">,</span> 
+                                     <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+                    <span class="n">ax6</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxout</span><span class="p">,</span> <span class="n">yyout</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+                    <span class="n">ax6</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxin</span><span class="p">,</span> <span class="n">yyin</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+                    <span class="n">ax6</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="s">&#39;Cor.&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s">&#39;left&#39;</span><span class="p">,</span>
+                                  <span class="n">verticalalignment</span><span class="o">=</span><span class="s">&#39;center&#39;</span><span class="p">)</span>
+                    <span class="n">ax7</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">187</span><span class="p">)</span>
+                    <span class="n">ax7</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s">&#39;off&#39;</span><span class="p">)</span>
+                    <span class="n">im</span> <span class="o">=</span> <span class="n">ax7</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">bal</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> 
+                                     <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+                    <span class="n">ax7</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxout</span><span class="p">,</span> <span class="n">yyout</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+                    <span class="n">ax7</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxin</span><span class="p">,</span> <span class="n">yyin</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+                    <span class="n">ax7</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="s">&#39;sum&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s">&#39;left&#39;</span><span class="p">,</span>
+                                  <span class="n">verticalalignment</span><span class="o">=</span><span class="s">&#39;center&#39;</span><span class="p">)</span>
+                    <span class="n">ax8</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">188</span><span class="p">)</span>
+                    <span class="n">ax8</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s">&#39;off&#39;</span><span class="p">)</span>
+                    <span class="n">im</span> <span class="o">=</span> <span class="n">ax8</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtVp</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">cs</span><span class="p">,</span> 
+                                     <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+                    <span class="n">ax8</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxout</span><span class="p">,</span> <span class="n">yyout</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+                    <span class="n">ax8</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxin</span><span class="p">,</span> <span class="n">yyin</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+                    <span class="n">ax8</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="s">&#39;dvp/dt&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s">&#39;left&#39;</span><span class="p">,</span>
+                                  <span class="n">verticalalignment</span><span class="o">=</span><span class="s">&#39;center&#39;</span><span class="p">)</span>
+
+                    <span class="n">man</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">get_current_fig_manager</span><span class="p">()</span>
+                    <span class="n">man</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">P</span><span class="o">.</span><span class="n">cla</span><span class="p">()</span>
+                    <span class="n">im</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">asVphi</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">cs1</span><span class="p">,</span> 
+                                     <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+                    <span class="n">im</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">adv</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">cs</span><span class="p">,</span> 
+                                     <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+                    <span class="n">im</span> <span class="o">=</span> <span class="n">ax3</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rey</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">cs</span><span class="p">,</span> 
+                                     <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+                    <span class="n">im</span> <span class="o">=</span> <span class="n">ax4</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">visc</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">cs</span><span class="p">,</span> 
+                                     <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+                    <span class="n">im</span> <span class="o">=</span> <span class="n">ax5</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lorentz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">cs</span><span class="p">,</span> 
+                                     <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+                    <span class="n">im</span> <span class="o">=</span> <span class="n">ax6</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">coriolis</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">cs</span><span class="p">,</span> 
+                                     <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+                    <span class="n">im</span> <span class="o">=</span> <span class="n">ax7</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">bal</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> 
+                                     <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+                    <span class="n">im</span> <span class="o">=</span> <span class="n">ax8</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtVp</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">cs</span><span class="p">,</span> 
+                                     <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+
+                    <span class="n">P</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s">&#39;off&#39;</span><span class="p">)</span>
+                    <span class="n">man</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+
+            <span class="c">#P.ioff()</span>
+
+            
+</div></div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="nb">file</span> <span class="o">=</span><span class="s">&#39;TO_mov.test&#39;</span>
+    <span class="n">TOMovie</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="nb">file</span><span class="p">)</span>
+    <span class="n">P</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

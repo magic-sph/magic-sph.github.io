@@ -1,0 +1,643 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Physical parameters namelist &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../contents.html" />
+    <link rel="up" title="Input parameters" href="namelists.html" />
+    <link rel="next" title="External Magnetic Field Namelist" href="BextNamelist.html" />
+    <link rel="prev" title="Control namelist" href="controlNamelist.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../install.html">Get it/Run it</a></li>
+    <li><a href="../contribute.html">Contribute!</a></li>
+    <li><a href="../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../index.html">
+      <img src="../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="BextNamelist.html" title="External Magnetic Field Namelist"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="controlNamelist.html" title="Control namelist"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="namelists.html" accesskey="U">Input parameters</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="physical-parameters-namelist">
+<span id="secphysnml"></span><h1>Physical parameters namelist<a class="headerlink" href="#physical-parameters-namelist" title="Permalink to this headline">¶</a></h1>
+<p>This namelist contains all the appropriate relevant control physical parameters.</p>
+<div class="section" id="dimensionless-control-parameters">
+<h2>Dimensionless control parameters<a class="headerlink" href="#dimensionless-control-parameters" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first"><strong>ra</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/ra" title="f/physical_parameters/ra"><code class="xref f f-var docutils literal"><span class="pre">ra=1.1e5</span></code></a>) is a real. This the Rayleigh number expressed by</p>
+<div class="math">
+\[Ra = \frac{\alpha g_o \Delta T d^3}{\kappa\nu}\]</div>
+</li>
+<li><p class="first"><strong>ek</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/ek" title="f/physical_parameters/ek"><code class="xref f f-var docutils literal"><span class="pre">ek=1e-3</span></code></a>) is a real. This is the Ekman number expressed by</p>
+<div class="math">
+\[E = \frac{\nu}{\Omega d^2}\]</div>
+</li>
+<li><p class="first"><strong>pr</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/pr" title="f/physical_parameters/pr"><code class="xref f f-var docutils literal"><span class="pre">pr=1.0</span></code></a>) is a real. This is the Prandtl number expressed by</p>
+<div class="math">
+\[Pr = \frac{\nu}{\kappa}\]</div>
+</li>
+<li><p class="first"><strong>prmag</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/prmag" title="f/physical_parameters/prmag"><code class="xref f f-var docutils literal"><span class="pre">prmag=5.0</span></code></a>) is a real. This is the magnetic Prandtl number expressed by</p>
+<div class="math">
+\[Pm = \frac{\nu}{\lambda}\]</div>
+</li>
+<li><p class="first"><strong>radratio</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/radratio" title="f/physical_parameters/radratio"><code class="xref f f-var docutils literal"><span class="pre">radratio=0.35</span></code></a>) is a real. This is the ratio of the inner core radius <span class="math">\(r_i\)</span> to the outer core radius <span class="math">\(r_o\)</span>:</p>
+<div class="math">
+\[\eta = \frac{r_i}{r_o}\]</div>
+</li>
+</ul>
+<ul id="varstrat">
+<li><p class="first"><strong>strat</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/strat" title="f/physical_parameters/strat"><code class="xref f f-var docutils literal"><span class="pre">strat=0.0</span></code></a>) is a real. This is the number of density scale heights of the reference state:</p>
+<div class="math">
+\[N_\rho = \ln \frac{\tilde{\rho}(r_i)}{\tilde{\rho}(r_o)}\]</div>
+</li>
+<li><p class="first"><strong>polind</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/polind" title="f/physical_parameters/polind"><code class="xref f f-var docutils literal"><span class="pre">polind=1.5</span></code></a>) is a real. This is the polytropic index, which relates the background temperature to the background density:</p>
+<div class="math">
+\[\tilde{\rho} = \tilde{T}^m\]</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Be careful: in its current version the code only handles <strong>adiabatic</strong> backgrounds, therefore changing <code class="docutils literal"><span class="pre">polind</span></code> physically means that the nature of the fluid (in particular its Grüneisen parameter) will change. For an ideal gas, it actually always follows <span class="math">\(m+1=\frac{\gamma -1}{\gamma}\)</span></p>
+</div>
+</li>
+<li><p class="first"><strong>l_isothermal</strong> (default <code class="xref f f-var docutils literal"><span class="pre">l_isothermal=.false.</span></code>) is a logical. When set to <code class="docutils literal"><span class="pre">.true.</span></code>, makes the temperature background isothermal (i.e. <span class="math">\(\tilde{T}=cst.\)</span>). In that case, the dissipation number <span class="math">\(Di\)</span> vanishes and there is no viscous and Ohmic heating left. The only difference with the Boussinesq set of equations are thus restricted to the density background <span class="math">\(\tilde{\rho}\)</span> and its radial derivatives that enters the viscous stress. This approximation is also called the <strong>zero Grüneisen parameter</strong> and was extensively explored by Denise Tortorella during her <a class="reference external" href="http://www.mps.mpg.de/3183008/Dissertation_2005_Tortorella__Denise_Aida1.pdf">PhD</a>.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="heat-sources-and-sinks">
+<span id="varepsc0"></span><h2>Heat sources and sinks<a class="headerlink" href="#heat-sources-and-sinks" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first"><strong>epsc0</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/epsc0" title="f/physical_parameters/epsc0"><code class="xref f f-var docutils literal"><span class="pre">epsc0=0.0</span></code></a>) is a real. This is the volumetric heat source <span class="math">\(\epsilon_0\)</span> that enters the thermal equilibrium relation:</p>
+<div class="math" id="equation-heatEq">
+<span class="eqno">(1)</span>\[-\nabla\cdot\left(\tilde{\rho}\tilde{T}\nabla s\right) + \epsilon_0\,f(r)=0\]</div>
+<p>The radial function <span class="math">\(f(r)\)</span> can be modified with the variable <code class="docutils literal"><span class="pre">nVarEps</span></code> that enters the same input namelist.</p>
+</li>
+<li><p class="first"><strong>nVarEps</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/nvareps" title="f/physical_parameters/nvareps"><code class="xref f f-var docutils literal"><span class="pre">nVarEps=0</span></code></a>) is an integer. This is used to modify the radial-dependence ofthe volumetric heat source, i.e. <span class="math">\(f(r)\)</span> that enters equation <a href="#equation-heatEq">(1)</a>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">nVarEps=0</span></code></td>
+<td>Constant, i.e. <span class="math">\(f(r)=\hbox{cst.}\)</span>.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">nVarEps=1</span></code></td>
+<td>Proportional to density, i.e. <span class="math">\(f(r)=\tilde{\rho}(r)\)</span>.</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+<div class="section" id="realistic-interior-models">
+<span id="varinterior-model"></span><h2>Realistic interior models<a class="headerlink" href="#realistic-interior-models" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first"><strong>interior_model</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/interior_model" title="f/physical_parameters/interior_model"><code class="xref f f-var docutils literal"><span class="pre">interior_model=&quot;None&quot;</span></code></a>) is a character string. This defines a polynomial fit of the density profile of the interior structure of several astrophysical objects. Possible options are <code class="docutils literal"><span class="pre">&quot;earth&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;jupiter&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;saturn&quot;</span></code> and <code class="docutils literal"><span class="pre">&quot;sun&quot;</span></code> (the naming is <strong>not</strong> case sensitive).</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">When <code class="docutils literal"><span class="pre">interior_model</span></code> is defined the variables <code class="docutils literal"><span class="pre">strat</span></code>, <code class="docutils literal"><span class="pre">polind</span></code>, <code class="docutils literal"><span class="pre">g0</span></code>, <code class="docutils literal"><span class="pre">g1</span></code> and <code class="docutils literal"><span class="pre">g2</span></code> are not interpreted.</p>
+</div>
+<p>The subroutine <a class="reference internal" href="../apiFortran/precalcModules.html#f/radial_functions/radial" title="f/radial_functions/radial"><code class="xref f f-subr docutils literal"><span class="pre">radial</span></code></a> gives the exact details of the implementation.</p>
+</li>
+<li><p class="first"><strong>r_cut_model</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/r_cut_model" title="f/physical_parameters/r_cut_model"><code class="xref f f-var docutils literal"><span class="pre">r_cut_model=0.98</span></code></a>) is a real. This defines the cut-off radius of the reference model, i.e. the fluid domain is restricted to radii with <span class="math">\(r\leq r_{cut}\)</span>.</p>
+</li>
+</ul>
+<p>The following input parameters will thus define a polynomial fit to the expected interior structure of Jupiter until 99% of Jupiter&#8217;s radius (assumed here at the 1 bar level)</p>
+<blockquote>
+<div><div class="highlight-fortran"><div class="highlight"><pre><span class="n">interior_model</span><span class="o">=</span><span class="s2">&quot;JUP&quot;</span><span class="p">,</span>
+<span class="n">r_cut_model</span>   <span class="o">=</span><span class="mf">0.99e0</span><span class="p">,</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="gravity">
+<h2>Gravity<a class="headerlink" href="#gravity" title="Permalink to this headline">¶</a></h2>
+<p>The radial dependence of the gravity profile can be adjusted following</p>
+<div class="math" id="equation-eqGravity">
+<span class="eqno">(2)</span>\[g(r)=g_0+g_1\,\frac{r}{r_o}+g_2\,\left(\frac{r_o}{r}\right)^2\]</div>
+<p>The three following parameters are used to set this profile</p>
+<ul class="simple">
+<li><strong>g0</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/g0" title="f/physical_parameters/g0"><code class="xref f f-var docutils literal"><span class="pre">g0=0</span></code></a>) is the pre-factor of the constant part of the gravity profile, i.e. <span class="math">\(g_0\)</span> in equation <a href="#equation-eqGravity">(2)</a>.</li>
+<li><strong>g1</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/g1" title="f/physical_parameters/g1"><code class="xref f f-var docutils literal"><span class="pre">g1=1</span></code></a>) is the pre-factor of the linear part of the gravity profile, i.e. <span class="math">\(g_1\)</span> in equation <a href="#equation-eqGravity">(2)</a>.</li>
+<li><strong>g2</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/g2" title="f/physical_parameters/g2"><code class="xref f f-var docutils literal"><span class="pre">g2=0</span></code></a>) is the pre-factor of the <span class="math">\(1/r^2\)</span> part of the gravity profile, i.e. <span class="math">\(g_2\)</span> in equation <a href="#equation-eqGravity">(2)</a>.</li>
+</ul>
+</div>
+<div class="section" id="transport-properties">
+<h2>Transport properties<a class="headerlink" href="#transport-properties" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>:<strong>difExp</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/difexp" title="f/physical_parameters/difexp"><code class="xref f f-var docutils literal"><span class="pre">difExp=-0.5</span></code></a>) is a real. This is the exponent that is used when <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/nvarvisc" title="f/physical_parameters/nvarvisc"><code class="xref f f-var docutils literal"><span class="pre">nVarVisc=2</span></code></a>, <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/nvardiff" title="f/physical_parameters/nvardiff"><code class="xref f f-var docutils literal"><span class="pre">nVarDiff=2</span></code></a> or <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/nvarcond" title="f/physical_parameters/nvarcond"><code class="xref f f-var docutils literal"><span class="pre">nVarCond=4</span></code></a>.</li>
+</ul>
+<div class="section" id="electrical-conductivity">
+<span id="varnvarcond"></span><h3>Electrical conductivity<a class="headerlink" href="#electrical-conductivity" title="Permalink to this headline">¶</a></h3>
+<p>There are several electrical conductivity profiles implemented in the code that
+can be chosen with the <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/nvarcond" title="f/physical_parameters/nvarcond"><code class="xref f f-var docutils literal"><span class="pre">nVarCond</span></code></a> input variable. The following one
+corresponds to a constant electrical conductivity in the deep interior
+(<span class="math">\(r&lt;r_m\)</span>) and an exponential decay in the outer layer.</p>
+<div class="math" id="equation-eqElecCond">
+<span class="eqno">(3)</span>\[\begin{split}\sigma(r)=1+ (\sigma_m-1)\left(\frac{r-r_i}{r_m-r_i}\right)^a \quad \hbox{for}\quad r&lt;r_m, \\
+\sigma(r)=\sigma_m \exp \left[a \left(\frac{r-r_m}{r_m-r_i}\right)\frac{\sigma_m-1}{\sigma_m}\right]
+\quad\hbox{for}\quad r\geq r_m.\end{split}\]</div>
+<ul>
+<li><p class="first"><strong>nVarCond</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/nvarcond" title="f/physical_parameters/nvarcond"><code class="xref f f-var docutils literal"><span class="pre">nVarCond=0</span></code></a>) is an integer. This is used to modify the radial-dependence of the electrical conductivity.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="82%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">nVarCond=0</span></code></td>
+<td>Constant electrical conductivity, i.e. <span class="math">\(\sigma=\hbox{cst.}\)</span></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">nVarCond=1</span></code></td>
+<td><span class="math">\(\sigma\propto\tanh[a(r-r_m)]\)</span></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">nVarCond=2</span></code></td>
+<td>See equation <a href="#equation-eqElecCond">(3)</a>.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">nVarCond=3</span></code></td>
+<td><dl class="first last docutils">
+<dt>Magnetic diffusivity proportional to <span class="math">\(1/\tilde{\rho}\)</span>, i.e.</dt>
+<dd><div class="first last math">
+\[\lambda=\frac{\tilde{\rho}_i}{\tilde{\rho}}\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">nVarCond=2</span></code></td>
+<td><dl class="first last docutils">
+<dt>Radial profile of the form:</dt>
+<dd><div class="first last math">
+\[\lambda=\left(\frac{\tilde{\rho}(r)}
+ {\tilde{\rho}_i}\right)^{\alpha}\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><p class="first"><strong>con_RadRatio</strong>  (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/con_radratio" title="f/physical_parameters/con_radratio"><code class="xref f f-var docutils literal"><span class="pre">con_RadRatio=0.75</span></code></a>) is a real. This defines the transition radius <span class="math">\(r_m\)</span> that enters equation <a href="#equation-eqElecCond">(3)</a>.</p>
+</li>
+<li><p class="first"><strong>con_DecRate</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/con_decrate" title="f/physical_parameters/con_decrate"><code class="xref f f-var docutils literal"><span class="pre">con_DecRate=9</span></code></a>) is an integer. This defines the decay rate <span class="math">\(a\)</span> that enters equation <a href="#equation-eqElecCond">(3)</a>.</p>
+</li>
+<li><p class="first"><strong>con_LambdaMatch</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/con_lambdamatch" title="f/physical_parameters/con_lambdamatch"><code class="xref f f-var docutils literal"><span class="pre">con_LambdaMatch=0.6</span></code></a>) is a real. This is the value of the conductivity at the transition point <span class="math">\(\sigma_m\)</span> that enters equation <a href="#equation-eqElecCond">(3)</a>.</p>
+</li>
+<li><p class="first"><strong>con_LambdaOut</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/con_lambdaout" title="f/physical_parameters/con_lambdaout"><code class="xref f f-var docutils literal"><span class="pre">con_LambdaOut=0.1</span></code></a>) is a real. This is the value of the conduvity at the outer boundary. This parameter is only used when <code class="docutils literal"><span class="pre">nVarCond=1</span></code>.</p>
+</li>
+<li><p class="first"><strong>con_FuncWidth</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/con_funcwidth" title="f/physical_parameters/con_funcwidth"><code class="xref f f-var docutils literal"><span class="pre">con_FuncWidth=0.25</span></code></a>) is a real. This parameter is only used when <code class="docutils literal"><span class="pre">nVarCond=1</span></code>.</p>
+</li>
+<li><p class="first"><strong>r_LCR</strong>  (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/r_lcr" title="f/physical_parameters/r_lcr"><code class="xref f f-var docutils literal"><span class="pre">r_LCR=2.0</span></code></a>) is a real. <code class="docutils literal"><span class="pre">r_LCR</span></code> possibly defines a low-conductivity region for <span class="math">\(r\geq r_{LCR}\)</span>, in which the electrical conductivity vanishes, i.e. <span class="math">\(\lambda=0\)</span>.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="thermal-diffusivity">
+<span id="varnvardiff"></span><h3>Thermal diffusivity<a class="headerlink" href="#thermal-diffusivity" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first"><strong>nVarDiff</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/nvardiff" title="f/physical_parameters/nvardiff"><code class="xref f f-var docutils literal"><span class="pre">nVarDiff=0</span></code></a>) is an integer. This is used to change the radial-dependence of the thermal diffusivity:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">nVarDiff=0</span></code></td>
+<td>Constant thermal diffusivity <span class="math">\(\kappa\)</span></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">nVarDiff=1</span></code></td>
+<td><dl class="first last docutils">
+<dt>Constant thermal conductivity, i.e.</dt>
+<dd><div class="first last math">
+\[\kappa =\frac{\tilde{\rho}_i}{\tilde{\rho}(r)}\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">nVarDiff=2</span></code></td>
+<td><dl class="first last docutils">
+<dt>Radial profile of the form:</dt>
+<dd><div class="first last math">
+\[\kappa=\left(\frac{\tilde{\rho}(r)}
+{\tilde{\rho}_i}\right)^{\alpha}\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">nVarDiff=3</span></code></td>
+<td>polynomial-fit to an interior model of Jupiter</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">nVarDiff=4</span></code></td>
+<td>polynomial-fit to an interior model of the Earth liquid core</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+<div class="section" id="viscosity">
+<span id="varnvarvisc"></span><h3>Viscosity<a class="headerlink" href="#viscosity" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first"><strong>nVarVisc</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/nvarvisc" title="f/physical_parameters/nvarvisc"><code class="xref f f-var docutils literal"><span class="pre">nVarVisc=0</span></code></a>) is an integer. This is used to change the radial-dependence of the viscosity:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="82%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">nVarVisc=0</span></code></td>
+<td>Constant kinematic viscosity <span class="math">\(\nu\)</span></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">nVarVisc=1</span></code></td>
+<td><dl class="first last docutils">
+<dt>Constant dynamic viscosity, i.e.</dt>
+<dd><div class="first last math">
+\[\nu =\frac{\tilde{\rho}_o}{\tilde{\rho}(r)}\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">nVarVisc=2</span></code></td>
+<td><dl class="first last docutils">
+<dt>Radial profile of the form:</dt>
+<dd><div class="first last math">
+\[\nu=\left(\frac{\tilde{\rho}(r)}
+{\tilde{\rho}_i}\right)^{\alpha}\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p>where <span class="math">\(\alpha\)</span> is an exponent set by the namelist input variable <code class="docutils literal"><span class="pre">difExp</span></code>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="anelastic-liquid-equations">
+<h2>Anelastic liquid equations<a class="headerlink" href="#anelastic-liquid-equations" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This part is still work in progress. The input parameters here are likely to
+be changed in the future.</p>
+</div>
+<ul>
+<li><p class="first"><strong>epsS</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/epss" title="f/physical_parameters/epss"><code class="xref f f-var docutils literal"><span class="pre">epsS=0.0</span></code></a>) is a real. It controls the deviation to the adiabat. It can be related to the small parameter <span class="math">\(\epsilon\)</span>:</p>
+<div class="math">
+\[\epsilon \simeq \frac{\Delta T}{T} \simeq \frac{\Delta s}{c_p}\]</div>
+</li>
+<li><p class="first"><strong>cmbHflux</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/cmbhflux" title="f/physical_parameters/cmbhflux"><code class="xref f f-var docutils literal"><span class="pre">cmbHflux=0.0</span></code></a>) is a real. This is the CMB heat flux that enters the calculation of the reference state of the liquid core of the Earth, when the anelastic liquid approximation is employed.</p>
+</li>
+<li><p class="first"><strong>slopeStrat</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/slopestrat" title="f/physical_parameters/slopestrat"><code class="xref f f-var docutils literal"><span class="pre">slopeStrat=20.0</span></code></a>) is a real. This parameter controls the transition between the convective layer and the stably-stratified layer below the CMB.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="boundary-conditions">
+<h2>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="thermal-boundary-conditions">
+<h3>Thermal boundary conditions<a class="headerlink" href="#thermal-boundary-conditions" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first"><strong>ktops</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/ktops" title="f/physical_parameters/ktops"><code class="xref f f-var docutils literal"><span class="pre">ktops=1</span></code></a>) is an  integer to specify the outer boundary entropy (or temperature) boundary condition:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="87%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">ktops=1</span></code></td>
+<td>Fixed entropy at outer boundary: <span class="math">\(s(r_o)=s_{top}\)</span></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">ktops=2</span></code></td>
+<td>Fixed entropy flux at outer boundary: <span class="math">\(\partial s(r_o)/\partial r = s_{top}\)</span></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><p class="first"><strong>kbots</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/kbots" title="f/physical_parameters/kbots"><code class="xref f f-var docutils literal"><span class="pre">ktops=1</span></code></a>) is an  integer to specify the inner boundary entropy (or temperature) boundary condition.</p>
+</li>
+<li><p class="first"><strong>s_top</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/s_top" title="f/init_fields/s_top"><code class="xref f f-var docutils literal"><span class="pre">s_top=</span> <span class="pre">0</span> <span class="pre">0</span> <span class="pre">0.0</span> <span class="pre">0.0</span></code></a>) is a real array of lateraly varying outer heat boundary conditions. Each four consecutive numbers are interpreted as follows:</p>
+<ol class="arabic simple">
+<li>Spherical harmonic degree <span class="math">\(\ell\)</span></li>
+<li>Spherical harmonic order <span class="math">\(m\)</span></li>
+<li>Real amplitude (<span class="math">\(\cos\)</span> contribution)</li>
+<li>Imaginary amplitude (<span class="math">\(\sin\)</span> contribution)</li>
+</ol>
+<p>For example, if the boundary condition should be a combination of an <span class="math">\((\ell=1,m=0)\)</span> sherical harmonic with the amplitude 1 and an <span class="math">\((\ell=2,m=1)\)</span> spherical harmonic with the amplitude (0.5,0.5) the respective namelist entry could read:</p>
+<div class="highlight-fortran"><div class="highlight"><pre><span class="n">s_top</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="c">! The comas could be left away.</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>s_bot</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/s_bot" title="f/init_fields/s_bot"><code class="xref f f-var docutils literal"><span class="pre">s_bot=0</span> <span class="pre">0</span> <span class="pre">0.0</span> <span class="pre">0.0</span></code></a>) is a real array. This is the same as <code class="docutils literal"><span class="pre">s_top</span></code> but for the bottom boundary.</p>
+</li>
+<li><p class="first"><strong>impS</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/imps" title="f/physical_parameters/imps"><code class="xref f f-var docutils literal"><span class="pre">impS=0</span></code></a>) is an integer. This is a  flag to indicate if there is a localized entropy disturbance, imposed at the CMB. The number of these input boundary conditions is stored in <code class="docutils literal"><span class="pre">n_impS</span></code> (the maximum allowed is 20), and it&#8217;s given by the number of <code class="docutils literal"><span class="pre">sCMB</span></code> defined in the same namelist. The default value of <code class="docutils literal"><span class="pre">impS</span></code> is zero (no entropy disturbance). If it is set in the namelist for an integer greater than zero, then <code class="docutils literal"><span class="pre">sCMB</span></code> has to be also defined in the namelist, as shown below.</p>
+</li>
+<li><p class="first"><strong>sCMB</strong> (default <code class="xref f f-var docutils literal"><span class="pre">sCMB=0.0</span> <span class="pre">0.0</span> <span class="pre">0.0</span> <span class="pre">0.0</span></code>) is a real array of CMB heat boundary conditions (similar to the case of <code class="docutils literal"><span class="pre">s_bot</span></code> and <code class="docutils literal"><span class="pre">s_top</span></code>). Each four consecutive numbers are interpreted as follows:</p>
+<ol class="arabic simple">
+<li>Highest amplitude value of the entropy boundary condition, stored in array <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/peaks" title="f/physical_parameters/peaks"><code class="xref f f-var docutils literal"><span class="pre">peakS(20)</span></code></a>. When <code class="docutils literal"><span class="pre">impS&lt;0</span></code>, <code class="docutils literal"><span class="pre">peakS</span></code> is a relative amplitude in comparison to the <span class="math">\((\ell=0,m=0)\)</span> contribution (for example, the case <code class="docutils literal"><span class="pre">s_top=</span> <span class="pre">0</span> <span class="pre">0</span> <span class="pre">-1</span> <span class="pre">0</span></code>).</li>
+<li><span class="math">\(\theta\)</span> coordinate (input has to be given in degrees), stored in array <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/thetas" title="f/physical_parameters/thetas"><code class="xref f f-var docutils literal"><span class="pre">thetaS(20)</span></code></a>.</li>
+<li><span class="math">\(\phi\)</span> coordinate (input has to be given in degrees), stored in array <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/phis" title="f/physical_parameters/phis"><code class="xref f f-var docutils literal"><span class="pre">phiS(20)</span></code></a>.</li>
+<li>Angular width (input has to be given in degrees), stored in array <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/widths" title="f/physical_parameters/widths"><code class="xref f f-var docutils literal"><span class="pre">widthS(20)</span></code></a>.</li>
+</ol>
+</li>
+</ul>
+</div>
+<div class="section" id="mechanical-boundary-conditions">
+<h3>Mechanical boundary conditions<a class="headerlink" href="#mechanical-boundary-conditions" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first"><strong>ktopv</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/ktopv" title="f/physical_parameters/ktopv"><code class="xref f f-var docutils literal"><span class="pre">ktopv=2</span></code></a>) is an integer, which corresponds to the mechanical boundary condition for <span class="math">\(r=r_o\)</span>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">ktopv=1</span></code></td>
+<td><dl class="first last docutils">
+<dt>Stress-free outer boundary for <span class="math">\(r=r_o\)</span>:</dt>
+<dd><div class="first last math">
+\[\begin{split}w_{\ell m}(r=r_o)=0, \quad
+\frac{\partial}{\partial r}\left(\frac{1}{r^2\tilde{\rho}}
+\frac{\partial w_{\ell m}}{\partial r}\right)=0 \\
+\frac{\partial}{\partial r}\left(\frac{1}{r^2\tilde{\rho}}
+ z_{\ell m}\right)=0\end{split}\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">ktopv=2</span></code></td>
+<td><dl class="first last docutils">
+<dt>Rigid outer boundary for <span class="math">\(r=r_o\)</span>:</dt>
+<dd><div class="first last math">
+\[\begin{split}w_{\ell m}=0,\quad
+\frac{\partial w_{\ell m}}{\partial r}=0, \\
+z_{\ell m}=0\end{split}\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><p class="first"><strong>kbotv</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/kbotv" title="f/physical_parameters/kbotv"><code class="xref f f-var docutils literal"><span class="pre">kbotv=2</span></code></a>) is an integer, which corresponds to the mechanical boundary condition for <span class="math">\(r=r_i\)</span>.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="magnetic-boundary-conditions">
+<h3>Magnetic boundary conditions<a class="headerlink" href="#magnetic-boundary-conditions" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first"><strong>ktopb</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/ktopb" title="f/physical_parameters/ktopb"><code class="xref f f-var docutils literal"><span class="pre">ktopb=1</span></code></a>) is an integer, which corresponds to the magnetic boundary condition for <span class="math">\(r=r_o\)</span>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="86%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">ktopb=1</span></code></td>
+<td><dl class="first last docutils">
+<dt>Insulating outer boundary:</dt>
+<dd><div class="first last math">
+\[\frac{\partial b_{\ell m}}{\partial r}+\frac{\ell}{r}\,b_{\ell m}=0,\quad
+\frac{\partial j_{\ell m}}{\partial r}=0\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">ktopb=3</span></code></td>
+<td>Finitely conducting mantle</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">ktopb=4</span></code></td>
+<td><dl class="first last docutils">
+<dt>Pseudo-vacuum outer boundary:</dt>
+<dd><div class="first last math">
+\[\frac{\partial b_{\ell m}}{\partial r}=0,\quad  j_{\ell m}=0\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><p class="first"><strong>kbotb</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/kbotb" title="f/physical_parameters/kbotb"><code class="xref f f-var docutils literal"><span class="pre">kbotb=1</span></code></a>) is an integer, which corresponds to the magnetic boundary condition for <span class="math">\(r=r_i\)</span>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="86%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">kbotb=1</span></code></td>
+<td><dl class="first last docutils">
+<dt>Insulating inner boundary:</dt>
+<dd><div class="first last math">
+\[\frac{\partial b_{\ell m}}{\partial r}-\frac{\ell+1}{r}\,b_{\ell m}=0,\quad
+  \frac{\partial j_{\ell m}}{\partial r}=0\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">ktopb=2</span></code></td>
+<td><dl class="first last docutils">
+<dt>Perfectly-conducting innner core:</dt>
+<dd><div class="first last math">
+\[b_{\ell m} = \frac{\partial b_{\ell m}}{\partial r}=0,\quad
+\frac{\partial j_{\ell m}}{\partial r}=0\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">ktopb=3</span></code></td>
+<td>Finitely conducting innner core</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">ktopb=4</span></code></td>
+<td><dl class="first last docutils">
+<dt>Pseudo-vacuum outer boundary:</dt>
+<dd><div class="first last math">
+\[\frac{\partial b_{\ell m}}{\partial r}=0,\quad  j_{\ell m}=0\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Physical parameters namelist</a><ul>
+<li><a class="reference internal" href="#dimensionless-control-parameters">Dimensionless control parameters</a></li>
+<li><a class="reference internal" href="#heat-sources-and-sinks">Heat sources and sinks</a></li>
+<li><a class="reference internal" href="#realistic-interior-models">Realistic interior models</a></li>
+<li><a class="reference internal" href="#gravity">Gravity</a></li>
+<li><a class="reference internal" href="#transport-properties">Transport properties</a><ul>
+<li><a class="reference internal" href="#electrical-conductivity">Electrical conductivity</a></li>
+<li><a class="reference internal" href="#thermal-diffusivity">Thermal diffusivity</a></li>
+<li><a class="reference internal" href="#viscosity">Viscosity</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#anelastic-liquid-equations">Anelastic liquid equations</a></li>
+<li><a class="reference internal" href="#boundary-conditions">Boundary conditions</a><ul>
+<li><a class="reference internal" href="#thermal-boundary-conditions">Thermal boundary conditions</a></li>
+<li><a class="reference internal" href="#mechanical-boundary-conditions">Mechanical boundary conditions</a></li>
+<li><a class="reference internal" href="#magnetic-boundary-conditions">Magnetic boundary conditions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="controlNamelist.html"
+                        title="previous chapter">Control namelist</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="BextNamelist.html"
+                        title="next chapter">External Magnetic Field Namelist</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/inputNamelists/physNamelist.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="BextNamelist.html" title="External Magnetic Field Namelist"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="controlNamelist.html" title="Control namelist"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="namelists.html" >Input parameters</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

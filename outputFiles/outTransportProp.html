@@ -1,0 +1,435 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Transport properties of the reference state &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../contents.html" />
+    <link rel="up" title="Output files" href="outFiles.html" />
+    <link rel="next" title="Spectra" href="outSpecFiles.html" />
+    <link rel="prev" title="Time-averaged radial profiles" href="outRadialFiles.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../install.html">Get it/Run it</a></li>
+    <li><a href="../contribute.html">Contribute!</a></li>
+    <li><a href="../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../index.html">
+      <img src="../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="outSpecFiles.html" title="Spectra"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="outRadialFiles.html" title="Time-averaged radial profiles"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="outFiles.html" accesskey="U">Output files</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="transport-properties-of-the-reference-state">
+<h1>Transport properties of the reference state<a class="headerlink" href="#transport-properties-of-the-reference-state" title="Permalink to this headline">¶</a></h1>
+<p>These files define the radial transport properties of the reference state.
+These arrays are calculated in the subroutines <a class="reference internal" href="../apiFortran/precalcModules.html#f/radial_functions/radial" title="f/radial_functions/radial"><code class="xref f f-subr docutils literal"><span class="pre">radial</span></code></a> and <a class="reference internal" href="../apiFortran/precalcModules.html#f/radial_functions/transportproperties" title="f/radial_functions/transportproperties"><code class="xref f f-subr docutils literal"><span class="pre">transportProperties</span></code></a>.  The output files are written in the
+subroutine <a class="reference internal" href="../apiFortran/precalcModules.html#f/precalculations/precalc" title="f/precalculations/precalc"><code class="xref f f-subr docutils literal"><span class="pre">preCalc</span></code></a>.</p>
+<div class="section" id="anel-tag">
+<span id="secanelfile"></span><h2><code class="docutils literal"><span class="pre">anel.TAG</span></code><a class="headerlink" href="#anel-tag" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This output is only calculated when an anelastic model is run, that is when
+<a class="reference internal" href="../apiFortran/baseModules.html#f/logic/l_anel" title="f/logic/l_anel"><code class="xref f f-var docutils literal"><span class="pre">l_anel=.true.</span></code></a> or <a class="reference internal" href="../apiFortran/baseModules.html#f/logic/l_anelastic_liquid" title="f/logic/l_anelastic_liquid"><code class="xref f f-var docutils literal"><span class="pre">l_anelastic_liquid=.true.</span></code></a>.</p>
+</div>
+<p>This file contains the radial profiles of the reference state (density,
+temperature, gravity, etc.).</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="78%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">No. of column</th>
+<th class="head">Contents</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>radial level: <span class="math">\(r\)</span></td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>temperature: <span class="math">\(\tilde{T}(r)\)</span></td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>density: <span class="math">\(\tilde{\rho}(r)\)</span></td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>radial derivative of the density:
+<span class="math">\(\beta={\rm d} \ln\tilde{\rho}/{\rm d} r\)</span></td>
+</tr>
+<tr class="row-even"><td>5</td>
+<td>radial derivative of <span class="math">\(\beta\)</span>:
+<span class="math">\({\rm d} \beta/{\rm d} r\)</span></td>
+</tr>
+<tr class="row-odd"><td>6</td>
+<td>gravity: <span class="math">\(g(r)\)</span></td>
+</tr>
+<tr class="row-even"><td>7</td>
+<td>entropy gradient: <span class="math">\({\rm d} s_0/{\rm d} r\)</span></td>
+</tr>
+<tr class="row-odd"><td>8</td>
+<td>thermal diffusion operator:
+<span class="math">\(\nabla \cdot (K(r)\tilde{T}(r)\nabla s_0)\)</span></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>This file can be read using <a class="reference internal" href="../apiPython/radial.html#magic.MagicRadial" title="magic.MagicRadial"><code class="xref py py-class docutils literal"><span class="pre">MagicRadial</span></code></a> with the following options:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rad</span> <span class="o">=</span> <span class="n">MagicRadial</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;anel&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># print radius and density</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">rad</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">rad</span><span class="o">.</span><span class="n">rho0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="varcond-tag">
+<span id="secvarcondfile"></span><h2><code class="docutils literal"><span class="pre">varCond.TAG</span></code><a class="headerlink" href="#varcond-tag" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This output is only calculated when the electrical conductivity varies with radius, i.e. when <a class="reference internal" href="../inputNamelists/physNamelist.html#varnvarcond"><span>nVarCond /= 0</span></a></p>
+</div>
+<p>This file contains the radial profiles of the electrical conductivity, the electrical
+diffusivity and its radial derivative.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="78%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">No. of column</th>
+<th class="head">Contents</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>radial level: <span class="math">\(r\)</span></td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>electrical conductivity: <span class="math">\(\sigma(r)\)</span></td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>electrical diffusivity: <span class="math">\(\lambda(r)=1/\sigma(r)\)</span></td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>radial derivative of the electrical diffusivity:
+<span class="math">\({\rm d} \ln\lambda/{\rm d} r\)</span></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>This file can be read using <a class="reference internal" href="../apiPython/radial.html#magic.MagicRadial" title="magic.MagicRadial"><code class="xref py py-class docutils literal"><span class="pre">MagicRadial</span></code></a> with the following options:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rad</span> <span class="o">=</span> <span class="n">MagicRadial</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;varCond&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">rad</span><span class="o">.</span><span class="n">conduc</span><span class="p">)</span> <span class="c"># Electrical conductivity</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="vardiff-tag">
+<span id="secvardifffile"></span><h2><code class="docutils literal"><span class="pre">varDiff.TAG</span></code><a class="headerlink" href="#vardiff-tag" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This output is only calculated when the thermal diffusivity varies with
+radius, i.e. when <a class="reference internal" href="../inputNamelists/physNamelist.html#varnvardiff"><span>nVarDiff /= 0</span></a></p>
+</div>
+<p>This file contains the radial profiles of the thermal conductivity, the thermal
+diffusivity and its radial derivative.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="79%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">No. of column</th>
+<th class="head">Contents</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>radial level: <span class="math">\(r\)</span></td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>thermal conductivity: <span class="math">\(K(r)\)</span></td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>thermal diffusivity: <span class="math">\(\kappa(r)=K(r)/\tilde{\rho}(r)\)</span></td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>radial derivative of the electrical diffusivity:
+<span class="math">\({\rm d} \ln\kappa/{\rm d} r\)</span></td>
+</tr>
+<tr class="row-even"><td>5</td>
+<td>Prandtl number: <span class="math">\(Pr(r)=\nu(r)/\kappa(r)\)</span></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>This file can be read using <a class="reference internal" href="../apiPython/radial.html#magic.MagicRadial" title="magic.MagicRadial"><code class="xref py py-class docutils literal"><span class="pre">MagicRadial</span></code></a> with the following options:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rad</span> <span class="o">=</span> <span class="n">MagicRadial</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;varDiff&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">rad</span><span class="o">.</span><span class="n">kappa</span><span class="p">)</span> <span class="c"># Thermal diffusivity</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="varvisc-tag">
+<span id="secvarviscfile"></span><h2><code class="docutils literal"><span class="pre">varVisc.TAG</span></code><a class="headerlink" href="#varvisc-tag" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This output is only calculated when the kinematic viscosity varies with
+radius, i.e. when <a class="reference internal" href="../inputNamelists/physNamelist.html#varnvarvisc"><span>nVarVisc /= 0</span></a></p>
+</div>
+<p>This file contains the radial profiles of the dynamic viscosity, the kinematic
+viscosity and its radial derivative.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="79%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">No. of column</th>
+<th class="head">Contents</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>radial level: <span class="math">\(r\)</span></td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>dynamic viscosity: <span class="math">\(\mu(r)\)</span></td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>kinetmatic viscosity: <span class="math">\(\nu(r)=\mu(r)/\tilde{\rho}(r)\)</span></td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>radial derivative of the kinematic viscosity:
+<span class="math">\({\rm d} \ln\nu/{\rm d} r\)</span></td>
+</tr>
+<tr class="row-even"><td>5</td>
+<td>Prandtl number: <span class="math">\(Pr(r)=\nu(r)/\kappa(r)\)</span></td>
+</tr>
+<tr class="row-odd"><td>6</td>
+<td>magnetic Prandtl number <span class="math">\(Pm(r)=\nu(r)/\lambda(r)\)</span></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>This file can be read using <a class="reference internal" href="../apiPython/radial.html#magic.MagicRadial" title="magic.MagicRadial"><code class="xref py py-class docutils literal"><span class="pre">MagicRadial</span></code></a> with the following options:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rad</span> <span class="o">=</span> <span class="n">MagicRadial</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;varVisc&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># print kinematic viscosity and Ekman</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">rad</span><span class="o">.</span><span class="n">kinVisc</span><span class="p">,</span> <span class="n">rad</span><span class="o">.</span><span class="n">ekman</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="nonlinear-mapping-of-the-chebyshev-grid">
+<span id="secmappingfile"></span><h1>Nonlinear mapping of the Chebyshev grid<a class="headerlink" href="#nonlinear-mapping-of-the-chebyshev-grid" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="rnm-tag">
+<h2><code class="docutils literal"><span class="pre">rNM.TAG</span></code><a class="headerlink" href="#rnm-tag" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This file is only written when <a class="reference internal" href="../inputNamelists/controlNamelist.html#varl-newmap"><span>l_newmap=.true.</span></a>.</p>
+</div>
+<p>This file contains the profile of the radial mapping and its derivatives:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="77%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">No. of column</th>
+<th class="head">Contents</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>Grid point index</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>Radius of a grid point</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>First derivative of the mapping at a grid point</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>Second derivative of the mapping at a grid point</td>
+</tr>
+<tr class="row-even"><td>5</td>
+<td>Third derivative of the mapping at a grid point</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Transport properties of the reference state</a><ul>
+<li><a class="reference internal" href="#anel-tag"><code class="docutils literal"><span class="pre">anel.TAG</span></code></a></li>
+<li><a class="reference internal" href="#varcond-tag"><code class="docutils literal"><span class="pre">varCond.TAG</span></code></a></li>
+<li><a class="reference internal" href="#vardiff-tag"><code class="docutils literal"><span class="pre">varDiff.TAG</span></code></a></li>
+<li><a class="reference internal" href="#varvisc-tag"><code class="docutils literal"><span class="pre">varVisc.TAG</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nonlinear-mapping-of-the-chebyshev-grid">Nonlinear mapping of the Chebyshev grid</a><ul>
+<li><a class="reference internal" href="#rnm-tag"><code class="docutils literal"><span class="pre">rNM.TAG</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="outRadialFiles.html"
+                        title="previous chapter">Time-averaged radial profiles</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="outSpecFiles.html"
+                        title="next chapter">Spectra</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/outputFiles/outTransportProp.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="outSpecFiles.html" title="Spectra"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="outRadialFiles.html" title="Time-averaged radial profiles"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="outFiles.html" >Output files</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

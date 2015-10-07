@@ -1,0 +1,1041 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>MPI related modules &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../contents.html" />
+    <link rel="up" title="Description of the Fortran modules" href="../api.html" />
+    <link rel="next" title="Code initialization" href="initModules.html" />
+    <link rel="prev" title="Base modules" href="baseModules.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../install.html">Get it/Run it</a></li>
+    <li><a href="../contribute.html">Contribute!</a></li>
+    <li><a href="../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../index.html">
+      <img src="../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="initModules.html" title="Code initialization"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="baseModules.html" title="Base modules"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../api.html" accesskey="U">Description of the Fortran modules</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mpi-related-modules">
+<span id="secfortranmpi"></span><h1>MPI related modules<a class="headerlink" href="#mpi-related-modules" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="f/parallel_mod">
+<span id="parallel-f90"></span><h2><code class="docutils literal"><span class="pre">parallel.f90</span></code><a class="headerlink" href="#f/parallel_mod" title="Permalink to this headline">¶</a></h2>
+<p class="rubric">Description</p>
+<p>This module contains the blocking information</p>
+<p class="rubric">Quick access</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><a class="reference internal" href="#f/parallel_mod/chunksize" title="f/parallel_mod/chunksize"><code class="xref f f-var docutils literal"><span class="pre">chunksize</span></code></a>, <a class="reference internal" href="#f/parallel_mod/ierr" title="f/parallel_mod/ierr"><code class="xref f f-var docutils literal"><span class="pre">ierr</span></code></a>, <a class="reference internal" href="#f/parallel_mod/n_procs" title="f/parallel_mod/n_procs"><code class="xref f f-var docutils literal"><span class="pre">n_procs</span></code></a>, <a class="reference internal" href="#f/parallel_mod/nlmbs_per_rank" title="f/parallel_mod/nlmbs_per_rank"><code class="xref f f-var docutils literal"><span class="pre">nlmbs_per_rank</span></code></a>, <a class="reference internal" href="#f/parallel_mod/nr_on_last_rank" title="f/parallel_mod/nr_on_last_rank"><code class="xref f f-var docutils literal"><span class="pre">nr_on_last_rank</span></code></a>, <a class="reference internal" href="#f/parallel_mod/nr_per_rank" title="f/parallel_mod/nr_per_rank"><code class="xref f f-var docutils literal"><span class="pre">nr_per_rank</span></code></a>, <a class="reference internal" href="#f/parallel_mod/nthreads" title="f/parallel_mod/nthreads"><code class="xref f f-var docutils literal"><span class="pre">nthreads</span></code></a>, <a class="reference internal" href="#f/parallel_mod/rank_bn" title="f/parallel_mod/rank_bn"><code class="xref f f-var docutils literal"><span class="pre">rank_bn</span></code></a>, <a class="reference internal" href="#f/parallel_mod/rank_with_l1m0" title="f/parallel_mod/rank_with_l1m0"><code class="xref f f-var docutils literal"><span class="pre">rank_with_l1m0</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Routines:</th><td class="field-body"><a class="reference internal" href="#f/parallel_mod/parallel" title="f/parallel_mod/parallel"><code class="xref f f-func docutils literal"><span class="pre">parallel()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Needed modules</p>
+<ul class="simple">
+<li><code class="xref f f-mod docutils literal"><span class="pre">omp_lib</span></code></li>
+<li><code class="xref f f-mod docutils literal"><span class="pre">mpi</span></code></li>
+</ul>
+<p class="rubric">Variables</p>
+<ul>
+<li><dl class="variable">
+<dt id="f/parallel_mod/nr_on_last_rank">
+<code class="descclassname">parallel_mod/</code><code class="descname">nr_on_last_rank</code><em> [</em><em>integer</em><em>]</em><a class="headerlink" href="#f/parallel_mod/nr_on_last_rank" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/parallel_mod/rank_with_l1m0">
+<code class="descclassname">parallel_mod/</code><code class="descname">rank_with_l1m0</code><em> [</em><em>integer</em><em>]</em><a class="headerlink" href="#f/parallel_mod/rank_with_l1m0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/parallel_mod/nthreads">
+<code class="descclassname">parallel_mod/</code><code class="descname">nthreads</code><em> [</em><em>integer</em><em>]</em><a class="headerlink" href="#f/parallel_mod/nthreads" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/parallel_mod/rank_bn">
+<code class="descclassname">parallel_mod/</code><code class="descname">rank_bn</code><em> [</em><em>integer</em><em>]</em><a class="headerlink" href="#f/parallel_mod/rank_bn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/parallel_mod/n_procs">
+<code class="descclassname">parallel_mod/</code><code class="descname">n_procs</code><em> [</em><em>integer</em><em>]</em><a class="headerlink" href="#f/parallel_mod/n_procs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/parallel_mod/nlmbs_per_rank">
+<code class="descclassname">parallel_mod/</code><code class="descname">nlmbs_per_rank</code><em> [</em><em>integer</em><em>]</em><a class="headerlink" href="#f/parallel_mod/nlmbs_per_rank" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/parallel_mod/ierr">
+<code class="descclassname">parallel_mod/</code><code class="descname">ierr</code><em> [</em><em>integer</em><em>]</em><a class="headerlink" href="#f/parallel_mod/ierr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/parallel_mod/nr_per_rank">
+<code class="descclassname">parallel_mod/</code><code class="descname">nr_per_rank</code><em> [</em><em>integer</em><em>]</em><a class="headerlink" href="#f/parallel_mod/nr_per_rank" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/parallel_mod/chunksize">
+<code class="descclassname">parallel_mod/</code><code class="descname">chunksize</code><em> [</em><em>integer</em><em>]</em><a class="headerlink" href="#f/parallel_mod/chunksize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
+<p class="rubric">Subroutines and functions</p>
+<dl class="subroutine">
+<dt id="f/parallel_mod/parallel">
+<em class="property">subroutine  </em><code class="descclassname">parallel_mod/</code><code class="descname">parallel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#f/parallel_mod/parallel" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><a class="reference internal" href="magic.html#f/magic" title="f/magic"><code class="xref f f-prog docutils literal"><span class="pre">magic</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="f/radial_data">
+<span id="radial-data-f90"></span><h2><code class="docutils literal"><span class="pre">radial_data.f90</span></code><a class="headerlink" href="#f/radial_data" title="Permalink to this headline">¶</a></h2>
+<p class="rubric">Quick access</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><a class="reference internal" href="#f/radial_data/n_r_cmb" title="f/radial_data/n_r_cmb"><code class="xref f f-var docutils literal"><span class="pre">n_r_cmb</span></code></a>, <a class="reference internal" href="#f/radial_data/n_r_icb" title="f/radial_data/n_r_icb"><code class="xref f f-var docutils literal"><span class="pre">n_r_icb</span></code></a>, <a class="reference internal" href="#f/radial_data/nrstart" title="f/radial_data/nrstart"><code class="xref f f-var docutils literal"><span class="pre">nrstart</span></code></a>, <a class="reference internal" href="#f/radial_data/nrstartmag" title="f/radial_data/nrstartmag"><code class="xref f f-var docutils literal"><span class="pre">nrstartmag</span></code></a>, <a class="reference internal" href="#f/radial_data/nrstop" title="f/radial_data/nrstop"><code class="xref f f-var docutils literal"><span class="pre">nrstop</span></code></a>, <a class="reference internal" href="#f/radial_data/nrstopmag" title="f/radial_data/nrstopmag"><code class="xref f f-var docutils literal"><span class="pre">nrstopmag</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Routines:</th><td class="field-body"><a class="reference internal" href="#f/radial_data/initialize_radial_data" title="f/radial_data/initialize_radial_data"><code class="xref f f-func docutils literal"><span class="pre">initialize_radial_data()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Needed modules</p>
+<ul class="simple">
+<li><a class="reference internal" href="#f/parallel_mod" title="f/parallel_mod: This module contains the blocking information"><code class="xref f f-mod docutils literal"><span class="pre">parallel_mod</span></code></a> (<a class="reference internal" href="#f/parallel_mod/nr_on_last_rank" title="f/parallel_mod/nr_on_last_rank"><code class="xref f f-func docutils literal"><span class="pre">nr_on_last_rank()</span></code></a>, <a class="reference internal" href="#f/parallel_mod/nr_per_rank" title="f/parallel_mod/nr_per_rank"><code class="xref f f-func docutils literal"><span class="pre">nr_per_rank()</span></code></a>, <a class="reference internal" href="#f/parallel_mod/n_procs" title="f/parallel_mod/n_procs"><code class="xref f f-func docutils literal"><span class="pre">n_procs()</span></code></a>, <code class="xref f f-func docutils literal"><span class="pre">rank()</span></code>): This module contains the blocking information</li>
+<li><a class="reference internal" href="baseModules.html#f/logic" title="f/logic: Module containing the logicals that control the run"><code class="xref f f-mod docutils literal"><span class="pre">logic</span></code></a> (<a class="reference internal" href="baseModules.html#f/logic/l_mag" title="f/logic/l_mag"><code class="xref f f-func docutils literal"><span class="pre">l_mag()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/lverbose" title="f/logic/lverbose"><code class="xref f f-func docutils literal"><span class="pre">lverbose()</span></code></a>): Module containing the logicals that control the run</li>
+<li><a class="reference internal" href="baseModules.html#f/truncation" title="f/truncation: This module defines the grid points and the truncation"><code class="xref f f-mod docutils literal"><span class="pre">truncation</span></code></a> (<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max"><code class="xref f f-func docutils literal"><span class="pre">n_r_max()</span></code></a>): This module defines the grid points and the truncation</li>
+</ul>
+<p class="rubric">Variables</p>
+<ul>
+<li><dl class="variable">
+<dt id="f/radial_data/n_r_cmb">
+<code class="descclassname">radial_data/</code><code class="descname">n_r_cmb</code><em> [</em><em>integer</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/radial_data/n_r_cmb" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/radial_data/n_r_icb">
+<code class="descclassname">radial_data/</code><code class="descname">n_r_icb</code><em> [</em><em>integer</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/radial_data/n_r_icb" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/radial_data/nrstopmag">
+<code class="descclassname">radial_data/</code><code class="descname">nrstopmag</code><em> [</em><em>integer</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/radial_data/nrstopmag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/radial_data/nrstartmag">
+<code class="descclassname">radial_data/</code><code class="descname">nrstartmag</code><em> [</em><em>integer</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/radial_data/nrstartmag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/radial_data/nrstop">
+<code class="descclassname">radial_data/</code><code class="descname">nrstop</code><em> [</em><em>integer</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/radial_data/nrstop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/radial_data/nrstart">
+<code class="descclassname">radial_data/</code><code class="descname">nrstart</code><em> [</em><em>integer</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/radial_data/nrstart" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
+<p class="rubric">Subroutines and functions</p>
+<dl class="subroutine">
+<dt id="f/radial_data/initialize_radial_data">
+<em class="property">subroutine  </em><code class="descclassname">radial_data/</code><code class="descname">initialize_radial_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#f/radial_data/initialize_radial_data" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><a class="reference internal" href="magic.html#f/magic" title="f/magic"><code class="xref f f-prog docutils literal"><span class="pre">magic</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="f/lmloop_data">
+<span id="lmloop-data-f90"></span><h2><code class="docutils literal"><span class="pre">LMLoop_data.f90</span></code><a class="headerlink" href="#f/lmloop_data" title="Permalink to this headline">¶</a></h2>
+<p class="rubric">Quick access</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><a class="reference internal" href="#f/lmloop_data/llm" title="f/lmloop_data/llm"><code class="xref f f-var docutils literal"><span class="pre">llm</span></code></a>, <a class="reference internal" href="#f/lmloop_data/llmmag" title="f/lmloop_data/llmmag"><code class="xref f f-var docutils literal"><span class="pre">llmmag</span></code></a>, <a class="reference internal" href="#f/lmloop_data/lm_on_last_rank" title="f/lmloop_data/lm_on_last_rank"><code class="xref f f-var docutils literal"><span class="pre">lm_on_last_rank</span></code></a>, <a class="reference internal" href="#f/lmloop_data/lm_per_rank" title="f/lmloop_data/lm_per_rank"><code class="xref f f-var docutils literal"><span class="pre">lm_per_rank</span></code></a>, <a class="reference internal" href="#f/lmloop_data/ulm" title="f/lmloop_data/ulm"><code class="xref f f-var docutils literal"><span class="pre">ulm</span></code></a>, <a class="reference internal" href="#f/lmloop_data/ulmmag" title="f/lmloop_data/ulmmag"><code class="xref f f-var docutils literal"><span class="pre">ulmmag</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Routines:</th><td class="field-body"><a class="reference internal" href="#f/lmloop_data/initialize_lmloop_data" title="f/lmloop_data/initialize_lmloop_data"><code class="xref f f-func docutils literal"><span class="pre">initialize_lmloop_data()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Needed modules</p>
+<ul class="simple">
+<li><a class="reference internal" href="#f/parallel_mod" title="f/parallel_mod: This module contains the blocking information"><code class="xref f f-mod docutils literal"><span class="pre">parallel_mod</span></code></a> (<a class="reference internal" href="#f/parallel_mod/n_procs" title="f/parallel_mod/n_procs"><code class="xref f f-func docutils literal"><span class="pre">n_procs()</span></code></a>, <a class="reference internal" href="#f/parallel_mod/nlmbs_per_rank" title="f/parallel_mod/nlmbs_per_rank"><code class="xref f f-func docutils literal"><span class="pre">nlmbs_per_rank()</span></code></a>, <code class="xref f f-func docutils literal"><span class="pre">rank()</span></code>): This module contains the blocking information</li>
+<li><a class="reference internal" href="blocking.html#f/blocking" title="f/blocking: Module containing blocking information"><code class="xref f f-mod docutils literal"><span class="pre">blocking</span></code></a> (<a class="reference internal" href="blocking.html#f/blocking/sizelmb" title="f/blocking/sizelmb"><code class="xref f f-func docutils literal"><span class="pre">sizelmb()</span></code></a>, <a class="reference internal" href="blocking.html#f/blocking/nlmbs" title="f/blocking/nlmbs"><code class="xref f f-func docutils literal"><span class="pre">nlmbs()</span></code></a>, <a class="reference internal" href="blocking.html#f/blocking/lmstartb" title="f/blocking/lmstartb"><code class="xref f f-func docutils literal"><span class="pre">lmstartb()</span></code></a>, <a class="reference internal" href="blocking.html#f/blocking/lmstopb" title="f/blocking/lmstopb"><code class="xref f f-func docutils literal"><span class="pre">lmstopb()</span></code></a>): Module containing blocking information</li>
+<li><a class="reference internal" href="baseModules.html#f/logic" title="f/logic: Module containing the logicals that control the run"><code class="xref f f-mod docutils literal"><span class="pre">logic</span></code></a> (<a class="reference internal" href="baseModules.html#f/logic/l_mag" title="f/logic/l_mag"><code class="xref f f-func docutils literal"><span class="pre">l_mag()</span></code></a>): Module containing the logicals that control the run</li>
+</ul>
+<p class="rubric">Variables</p>
+<ul>
+<li><dl class="variable">
+<dt id="f/lmloop_data/llmmag">
+<code class="descclassname">lmloop_data/</code><code class="descname">llmmag</code><em> [</em><em>integer</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/lmloop_data/llmmag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/lmloop_data/lm_per_rank">
+<code class="descclassname">lmloop_data/</code><code class="descname">lm_per_rank</code><em> [</em><em>integer</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/lmloop_data/lm_per_rank" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/lmloop_data/lm_on_last_rank">
+<code class="descclassname">lmloop_data/</code><code class="descname">lm_on_last_rank</code><em> [</em><em>integer</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/lmloop_data/lm_on_last_rank" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/lmloop_data/ulmmag">
+<code class="descclassname">lmloop_data/</code><code class="descname">ulmmag</code><em> [</em><em>integer</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/lmloop_data/ulmmag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/lmloop_data/llm">
+<code class="descclassname">lmloop_data/</code><code class="descname">llm</code><em> [</em><em>integer</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/lmloop_data/llm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/lmloop_data/ulm">
+<code class="descclassname">lmloop_data/</code><code class="descname">ulm</code><em> [</em><em>integer</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/lmloop_data/ulm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
+<p class="rubric">Subroutines and functions</p>
+<dl class="subroutine">
+<dt id="f/lmloop_data/initialize_lmloop_data">
+<em class="property">subroutine  </em><code class="descclassname">lmloop_data/</code><code class="descname">initialize_lmloop_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#f/lmloop_data/initialize_lmloop_data" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><a class="reference internal" href="magic.html#f/magic" title="f/magic"><code class="xref f f-prog docutils literal"><span class="pre">magic</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="f/communications">
+<span id="communications-f90"></span><h2><code class="docutils literal"><span class="pre">communications.f90</span></code><a class="headerlink" href="#f/communications" title="Permalink to this headline">¶</a></h2>
+<p class="rubric">Quick access</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><a class="reference internal" href="#f/communications/get_global_sum" title="f/communications/get_global_sum"><code class="xref f f-var docutils literal"><span class="pre">get_global_sum</span></code></a>, <a class="reference internal" href="#f/communications/r_lm_gather_type" title="f/communications/r_lm_gather_type"><code class="xref f f-var docutils literal"><span class="pre">r_lm_gather_type</span></code></a>, <a class="reference internal" href="#f/communications/r_lm_gather_type_lm_end" title="f/communications/r_lm_gather_type_lm_end"><code class="xref f f-var docutils literal"><span class="pre">r_lm_gather_type_lm_end</span></code></a>, <a class="reference internal" href="#f/communications/final_wait_array" title="f/communications/final_wait_array"><code class="xref f f-var docutils literal"><span class="pre">final_wait_array</span></code></a>, <a class="reference internal" href="#f/communications/r_request" title="f/communications/r_request"><code class="xref f f-var docutils literal"><span class="pre">r_request</span></code></a>, <a class="reference internal" href="#f/communications/s_request" title="f/communications/s_request"><code class="xref f f-var docutils literal"><span class="pre">s_request</span></code></a>, <a class="reference internal" href="#f/communications/array_of_statuses" title="f/communications/array_of_statuses"><code class="xref f f-var docutils literal"><span class="pre">array_of_statuses</span></code></a>, <a class="reference internal" href="#f/communications/r_transfer_type" title="f/communications/r_transfer_type"><code class="xref f f-var docutils literal"><span class="pre">r_transfer_type</span></code></a>, <a class="reference internal" href="#f/communications/r_transfer_type_nr_end" title="f/communications/r_transfer_type_nr_end"><code class="xref f f-var docutils literal"><span class="pre">r_transfer_type_nr_end</span></code></a>, <a class="reference internal" href="#f/communications/s_transfer_type" title="f/communications/s_transfer_type"><code class="xref f f-var docutils literal"><span class="pre">s_transfer_type</span></code></a>, <a class="reference internal" href="#f/communications/s_transfer_type_nr_end" title="f/communications/s_transfer_type_nr_end"><code class="xref f f-var docutils literal"><span class="pre">s_transfer_type_nr_end</span></code></a>, <a class="reference internal" href="#f/communications/r_transfer_type_cont" title="f/communications/r_transfer_type_cont"><code class="xref f f-var docutils literal"><span class="pre">r_transfer_type_cont</span></code></a>, <a class="reference internal" href="#f/communications/r_transfer_type_nr_end_cont" title="f/communications/r_transfer_type_nr_end_cont"><code class="xref f f-var docutils literal"><span class="pre">r_transfer_type_nr_end_cont</span></code></a>, <a class="reference internal" href="#f/communications/s_transfer_type_cont" title="f/communications/s_transfer_type_cont"><code class="xref f f-var docutils literal"><span class="pre">s_transfer_type_cont</span></code></a>, <a class="reference internal" href="#f/communications/s_transfer_type_nr_end_cont" title="f/communications/s_transfer_type_nr_end_cont"><code class="xref f f-var docutils literal"><span class="pre">s_transfer_type_nr_end_cont</span></code></a>, <a class="reference internal" href="#f/communications/gt_cheb" title="f/communications/gt_cheb"><code class="xref f f-var docutils literal"><span class="pre">gt_cheb</span></code></a>, <a class="reference internal" href="#f/communications/gt_ic" title="f/communications/gt_ic"><code class="xref f f-var docutils literal"><span class="pre">gt_ic</span></code></a>, <a class="reference internal" href="#f/communications/gt_oc" title="f/communications/gt_oc"><code class="xref f f-var docutils literal"><span class="pre">gt_oc</span></code></a>, <a class="reference internal" href="#f/communications/lo2r_aj" title="f/communications/lo2r_aj"><code class="xref f f-var docutils literal"><span class="pre">lo2r_aj</span></code></a>, <a class="reference internal" href="#f/communications/lo2r_b" title="f/communications/lo2r_b"><code class="xref f f-var docutils literal"><span class="pre">lo2r_b</span></code></a>, <a class="reference internal" href="#f/communications/lo2r_p" title="f/communications/lo2r_p"><code class="xref f f-var docutils literal"><span class="pre">lo2r_p</span></code></a>, <a class="reference internal" href="#f/communications/lo2r_s" title="f/communications/lo2r_s"><code class="xref f f-var docutils literal"><span class="pre">lo2r_s</span></code></a>, <a class="reference internal" href="#f/communications/lo2r_w" title="f/communications/lo2r_w"><code class="xref f f-var docutils literal"><span class="pre">lo2r_w</span></code></a>, <a class="reference internal" href="#f/communications/lo2r_z" title="f/communications/lo2r_z"><code class="xref f f-var docutils literal"><span class="pre">lo2r_z</span></code></a>, <a class="reference internal" href="#f/communications/temp_gather_lo" title="f/communications/temp_gather_lo"><code class="xref f f-var docutils literal"><span class="pre">temp_gather_lo</span></code></a>, <a class="reference internal" href="#f/communications/temp_r2lo" title="f/communications/temp_r2lo"><code class="xref f f-var docutils literal"><span class="pre">temp_r2lo</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Routines:</th><td class="field-body"><a class="reference internal" href="#f/communications/initialize_communications" title="f/communications/initialize_communications"><code class="xref f f-func docutils literal"><span class="pre">initialize_communications()</span></code></a>, <a class="reference internal" href="#f/communications/scatter_from_rank0_to_lo" title="f/communications/scatter_from_rank0_to_lo"><code class="xref f f-func docutils literal"><span class="pre">scatter_from_rank0_to_lo()</span></code></a>, <a class="reference internal" href="#f/communications/lm2lo_redist" title="f/communications/lm2lo_redist"><code class="xref f f-func docutils literal"><span class="pre">lm2lo_redist()</span></code></a>, <a class="reference internal" href="#f/communications/gather_from_lo_to_rank0" title="f/communications/gather_from_lo_to_rank0"><code class="xref f f-func docutils literal"><span class="pre">gather_from_lo_to_rank0()</span></code></a>, <a class="reference internal" href="#f/communications/lo2lm_redist" title="f/communications/lo2lm_redist"><code class="xref f f-func docutils literal"><span class="pre">lo2lm_redist()</span></code></a>, <a class="reference internal" href="#f/communications/r2lm_redist" title="f/communications/r2lm_redist"><code class="xref f f-func docutils literal"><span class="pre">r2lm_redist()</span></code></a>, <a class="reference internal" href="#f/communications/r2lo_redist" title="f/communications/r2lo_redist"><code class="xref f f-func docutils literal"><span class="pre">r2lo_redist()</span></code></a>, <a class="reference internal" href="#f/communications/destroy_gather_type" title="f/communications/destroy_gather_type"><code class="xref f f-func docutils literal"><span class="pre">destroy_gather_type()</span></code></a>, <a class="reference internal" href="#f/communications/destroy_lm2r_type" title="f/communications/destroy_lm2r_type"><code class="xref f f-func docutils literal"><span class="pre">destroy_lm2r_type()</span></code></a>, <a class="reference internal" href="#f/communications/lm2r_redist_wait" title="f/communications/lm2r_redist_wait"><code class="xref f f-func docutils literal"><span class="pre">lm2r_redist_wait()</span></code></a>, <a class="reference internal" href="#f/communications/lo2r_redist_wait" title="f/communications/lo2r_redist_wait"><code class="xref f f-func docutils literal"><span class="pre">lo2r_redist_wait()</span></code></a>, <a class="reference internal" href="#f/communications/lm2r_redist_start" title="f/communications/lm2r_redist_start"><code class="xref f f-func docutils literal"><span class="pre">lm2r_redist_start()</span></code></a>, <a class="reference internal" href="#f/communications/gather_all_from_lo_to_rank0" title="f/communications/gather_all_from_lo_to_rank0"><code class="xref f f-func docutils literal"><span class="pre">gather_all_from_lo_to_rank0()</span></code></a>, <a class="reference internal" href="#f/communications/lo2r_redist_start" title="f/communications/lo2r_redist_start"><code class="xref f f-func docutils literal"><span class="pre">lo2r_redist_start()</span></code></a>, <a class="reference internal" href="#f/communications/create_lm2r_type" title="f/communications/create_lm2r_type"><code class="xref f f-func docutils literal"><span class="pre">create_lm2r_type()</span></code></a>, <a class="reference internal" href="#f/communications/create_gather_type" title="f/communications/create_gather_type"><code class="xref f f-func docutils literal"><span class="pre">create_gather_type()</span></code></a>, <a class="reference internal" href="#f/communications/myallgather" title="f/communications/myallgather"><code class="xref f f-func docutils literal"><span class="pre">myallgather()</span></code></a>, <a class="reference internal" href="#f/communications/get_global_sum_cmplx_1d" title="f/communications/get_global_sum_cmplx_1d"><code class="xref f f-func docutils literal"><span class="pre">get_global_sum_cmplx_1d()</span></code></a>, <a class="reference internal" href="#f/communications/get_global_sum_cmplx_2d" title="f/communications/get_global_sum_cmplx_2d"><code class="xref f f-func docutils literal"><span class="pre">get_global_sum_cmplx_2d()</span></code></a>, <a class="reference internal" href="#f/communications/get_global_sum_real_2d" title="f/communications/get_global_sum_real_2d"><code class="xref f f-func docutils literal"><span class="pre">get_global_sum_real_2d()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Needed modules</p>
+<ul class="simple">
+<li><a class="reference internal" href="#f/parallel_mod" title="f/parallel_mod: This module contains the blocking information"><code class="xref f f-mod docutils literal"><span class="pre">parallel_mod</span></code></a> (<a class="reference internal" href="#f/parallel_mod/nr_on_last_rank" title="f/parallel_mod/nr_on_last_rank"><code class="xref f f-func docutils literal"><span class="pre">nr_on_last_rank()</span></code></a>, <a class="reference internal" href="#f/parallel_mod/nr_per_rank" title="f/parallel_mod/nr_per_rank"><code class="xref f f-func docutils literal"><span class="pre">nr_per_rank()</span></code></a>, <a class="reference internal" href="#f/parallel_mod/n_procs" title="f/parallel_mod/n_procs"><code class="xref f f-func docutils literal"><span class="pre">n_procs()</span></code></a>, <a class="reference internal" href="#f/parallel_mod/ierr" title="f/parallel_mod/ierr"><code class="xref f f-func docutils literal"><span class="pre">ierr()</span></code></a>, <code class="xref f f-func docutils literal"><span class="pre">rank()</span></code>): This module contains the blocking information</li>
+<li><a class="reference internal" href="#f/lmloop_data" title="f/lmloop_data"><code class="xref f f-mod docutils literal"><span class="pre">lmloop_data</span></code></a> (<a class="reference internal" href="#f/lmloop_data/llm" title="f/lmloop_data/llm"><code class="xref f f-func docutils literal"><span class="pre">llm()</span></code></a>, <a class="reference internal" href="#f/lmloop_data/ulm" title="f/lmloop_data/ulm"><code class="xref f f-func docutils literal"><span class="pre">ulm()</span></code></a>)</li>
+<li><code class="xref f f-mod docutils literal"><span class="pre">mpi</span></code></li>
+<li><a class="reference internal" href="baseModules.html#f/precision_mod" title="f/precision_mod: This module controls the precision used in MagIC"><code class="xref f f-mod docutils literal"><span class="pre">precision_mod</span></code></a>: This module controls the precision used in MagIC</li>
+<li><a class="reference internal" href="baseModules.html#f/logic" title="f/logic: Module containing the logicals that control the run"><code class="xref f f-mod docutils literal"><span class="pre">logic</span></code></a> (<a class="reference internal" href="baseModules.html#f/logic/l_heat" title="f/logic/l_heat"><code class="xref f f-func docutils literal"><span class="pre">l_heat()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_mag" title="f/logic/l_mag"><code class="xref f f-func docutils literal"><span class="pre">l_mag()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_conv" title="f/logic/l_conv"><code class="xref f f-func docutils literal"><span class="pre">l_conv()</span></code></a>): Module containing the logicals that control the run</li>
+<li><a class="reference internal" href="#f/radial_data" title="f/radial_data"><code class="xref f f-mod docutils literal"><span class="pre">radial_data</span></code></a> (<a class="reference internal" href="#f/radial_data/nrstart" title="f/radial_data/nrstart"><code class="xref f f-func docutils literal"><span class="pre">nrstart()</span></code></a>, <a class="reference internal" href="#f/radial_data/nrstop" title="f/radial_data/nrstop"><code class="xref f f-func docutils literal"><span class="pre">nrstop()</span></code></a>)</li>
+<li><a class="reference internal" href="blocking.html#f/blocking" title="f/blocking: Module containing blocking information"><code class="xref f f-mod docutils literal"><span class="pre">blocking</span></code></a> (<a class="reference internal" href="blocking.html#f/blocking/lo_map" title="f/blocking/lo_map"><code class="xref f f-func docutils literal"><span class="pre">lo_map()</span></code></a>, <a class="reference internal" href="blocking.html#f/blocking/lmstartb" title="f/blocking/lmstartb"><code class="xref f f-func docutils literal"><span class="pre">lmstartb()</span></code></a>, <a class="reference internal" href="blocking.html#f/blocking/st_map" title="f/blocking/st_map"><code class="xref f f-func docutils literal"><span class="pre">st_map()</span></code></a>, <a class="reference internal" href="blocking.html#f/blocking/lmstopb" title="f/blocking/lmstopb"><code class="xref f f-func docutils literal"><span class="pre">lmstopb()</span></code></a>): Module containing blocking information</li>
+<li><a class="reference internal" href="baseModules.html#f/truncation" title="f/truncation: This module defines the grid points and the truncation"><code class="xref f f-mod docutils literal"><span class="pre">truncation</span></code></a> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max"><code class="xref f f-func docutils literal"><span class="pre">lm_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/n_r_ic_max" title="f/truncation/n_r_ic_max"><code class="xref f f-func docutils literal"><span class="pre">n_r_ic_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/l_max" title="f/truncation/l_max"><code class="xref f f-func docutils literal"><span class="pre">l_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/minc" title="f/truncation/minc"><code class="xref f f-func docutils literal"><span class="pre">minc()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max"><code class="xref f f-func docutils literal"><span class="pre">n_r_max()</span></code></a>): This module defines the grid points and the truncation</li>
+</ul>
+<p class="rubric">Types</p>
+<ul>
+<li><dl class="type">
+<dt id="f/communications/unknown_type">
+<em class="property">type  </em><code class="descclassname">communications/</code><code class="descname">unknown_type</code><a class="headerlink" href="#f/communications/unknown_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type fields:</th><td class="field-body"><ul class="first last simple">
+<li><code class="descname">% </code><code class="descname">count</code><em> [</em><em>integer</em><em>]</em></li>
+<li><code class="descname">% </code><code class="descname">temp_rloc</code> (,,*)<em> [</em><em>complex</em><em>,</em><em>pointer</em><em>]</em></li>
+<li><code class="descname">% </code><code class="descname">r_request</code> (*)<em> [</em><em>integer</em><em>,</em><em>allocatable</em><em>]</em></li>
+<li><code class="descname">% </code><code class="descname">arr_rloc</code> (,,*)<em> [</em><em>complex</em><em>,</em><em>pointer</em><em>]</em></li>
+<li><code class="descname">% </code><code class="descname">final_wait_array</code> (*)<em> [</em><em>integer</em><em>,</em><em>allocatable</em><em>]</em></li>
+<li><code class="descname">% </code><code class="descname">s_request</code> (*)<em> [</em><em>integer</em><em>,</em><em>allocatable</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</li>
+<li><dl class="type">
+<dt>
+<em class="property">type  </em><code class="descclassname">communications/</code><code class="descname">unknown_type</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type fields:</th><td class="field-body"><ul class="first last simple">
+<li><code class="descname">% </code><code class="descname">dim2</code><em> [</em><em>integer</em><em>]</em></li>
+<li><code class="descname">% </code><code class="descname">gather_mpi_type</code> (*)<em> [</em><em>integer</em><em>,</em><em>allocatable</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</li>
+</ul>
+<p class="rubric">Variables</p>
+<ul>
+<li><dl class="variable">
+<dt id="f/communications/s_transfer_type_cont">
+<code class="descclassname">communications/</code><code class="descname">s_transfer_type_cont</code> (:,:)<em> [</em><em>integer</em><em>,</em><em>private/allocatable/save</em><em>]</em><a class="headerlink" href="#f/communications/s_transfer_type_cont" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/gt_ic">
+<code class="descclassname">communications/</code><code class="descname">gt_ic</code><em> [</em><em>gather_type</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/communications/gt_ic" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/gt_oc">
+<code class="descclassname">communications/</code><code class="descname">gt_oc</code><em> [</em><em>gather_type</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/communications/gt_oc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/get_global_sum">
+<code class="descclassname">communications/</code><code class="descname">get_global_sum</code><em> [</em><em>public</em><em>]</em><a class="headerlink" href="#f/communications/get_global_sum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/s_transfer_type">
+<code class="descclassname">communications/</code><code class="descname">s_transfer_type</code> (:)<em> [</em><em>integer</em><em>,</em><em>private/allocatable/save</em><em>]</em><a class="headerlink" href="#f/communications/s_transfer_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/array_of_statuses">
+<code class="descclassname">communications/</code><code class="descname">array_of_statuses</code> (:,:)<em> [</em><em>integer</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/communications/array_of_statuses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/r_lm_gather_type">
+<code class="descclassname">communications/</code><code class="descname">r_lm_gather_type</code><em> [</em><em>integer</em><em>,</em><em>private</em><em>]</em><a class="headerlink" href="#f/communications/r_lm_gather_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/s_transfer_type_nr_end_cont">
+<code class="descclassname">communications/</code><code class="descname">s_transfer_type_nr_end_cont</code> (:,:)<em> [</em><em>integer</em><em>,</em><em>private/allocatable/save</em><em>]</em><a class="headerlink" href="#f/communications/s_transfer_type_nr_end_cont" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/r_request">
+<code class="descclassname">communications/</code><code class="descname">r_request</code> (:)<em> [</em><em>integer</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/communications/r_request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/r_transfer_type">
+<code class="descclassname">communications/</code><code class="descname">r_transfer_type</code> (:)<em> [</em><em>integer</em><em>,</em><em>private/allocatable/save</em><em>]</em><a class="headerlink" href="#f/communications/r_transfer_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/final_wait_array">
+<code class="descclassname">communications/</code><code class="descname">final_wait_array</code> (:)<em> [</em><em>integer</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/communications/final_wait_array" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/s_request">
+<code class="descclassname">communications/</code><code class="descname">s_request</code> (:)<em> [</em><em>integer</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/communications/s_request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/r_transfer_type_cont">
+<code class="descclassname">communications/</code><code class="descname">r_transfer_type_cont</code> (:,:)<em> [</em><em>integer</em><em>,</em><em>private/allocatable/save</em><em>]</em><a class="headerlink" href="#f/communications/r_transfer_type_cont" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/r_transfer_type_nr_end_cont">
+<code class="descclassname">communications/</code><code class="descname">r_transfer_type_nr_end_cont</code> (:,:)<em> [</em><em>integer</em><em>,</em><em>private/allocatable/save</em><em>]</em><a class="headerlink" href="#f/communications/r_transfer_type_nr_end_cont" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/r_transfer_type_nr_end">
+<code class="descclassname">communications/</code><code class="descname">r_transfer_type_nr_end</code> (:)<em> [</em><em>integer</em><em>,</em><em>private/allocatable/save</em><em>]</em><a class="headerlink" href="#f/communications/r_transfer_type_nr_end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/lo2r_aj">
+<code class="descclassname">communications/</code><code class="descname">lo2r_aj</code><em> [</em><em>lm2r_type</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/communications/lo2r_aj" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/s_transfer_type_nr_end">
+<code class="descclassname">communications/</code><code class="descname">s_transfer_type_nr_end</code> (:)<em> [</em><em>integer</em><em>,</em><em>private/allocatable/save</em><em>]</em><a class="headerlink" href="#f/communications/s_transfer_type_nr_end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/gt_cheb">
+<code class="descclassname">communications/</code><code class="descname">gt_cheb</code><em> [</em><em>gather_type</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/communications/gt_cheb" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/r_lm_gather_type_lm_end">
+<code class="descclassname">communications/</code><code class="descname">r_lm_gather_type_lm_end</code><em> [</em><em>integer</em><em>,</em><em>private</em><em>]</em><a class="headerlink" href="#f/communications/r_lm_gather_type_lm_end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/lo2r_z">
+<code class="descclassname">communications/</code><code class="descname">lo2r_z</code><em> [</em><em>lm2r_type</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/communications/lo2r_z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/lo2r_w">
+<code class="descclassname">communications/</code><code class="descname">lo2r_w</code><em> [</em><em>lm2r_type</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/communications/lo2r_w" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/lo2r_p">
+<code class="descclassname">communications/</code><code class="descname">lo2r_p</code><em> [</em><em>lm2r_type</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/communications/lo2r_p" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/lo2r_s">
+<code class="descclassname">communications/</code><code class="descname">lo2r_s</code><em> [</em><em>lm2r_type</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/communications/lo2r_s" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/temp_r2lo">
+<code class="descclassname">communications/</code><code class="descname">temp_r2lo</code> (:,:)<em> [</em><em>complex</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/communications/temp_r2lo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/temp_gather_lo">
+<code class="descclassname">communications/</code><code class="descname">temp_gather_lo</code> (:)<em> [</em><em>complex</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/communications/temp_gather_lo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/communications/lo2r_b">
+<code class="descclassname">communications/</code><code class="descname">lo2r_b</code><em> [</em><em>lm2r_type</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/communications/lo2r_b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
+<p class="rubric">Subroutines and functions</p>
+<dl class="subroutine">
+<dt id="f/communications/initialize_communications">
+<em class="property">subroutine  </em><code class="descclassname">communications/</code><code class="descname">initialize_communications</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#f/communications/initialize_communications" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><a class="reference internal" href="magic.html#f/magic" title="f/magic"><code class="xref f f-prog docutils literal"><span class="pre">magic</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Call to:</th><td class="field-body"><a class="reference internal" href="#f/communications/create_gather_type" title="f/communications/create_gather_type"><code class="xref f f-func docutils literal"><span class="pre">create_gather_type()</span></code></a>, <a class="reference internal" href="#f/communications/create_lm2r_type" title="f/communications/create_lm2r_type"><code class="xref f f-func docutils literal"><span class="pre">create_lm2r_type()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="f/communications/get_global_sum_cmplx_2d">
+<em class="property">function  </em><code class="descclassname">communications/</code><code class="descname">get_global_sum_cmplx_2d</code><span class="sig-paren">(</span><em>dwdt_local</em><span class="sig-paren">)</span><a class="headerlink" href="#f/communications/get_global_sum_cmplx_2d" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dwdt_local</strong> (,)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return:</th><td class="field-body"><strong>global_sum</strong><em> [</em><em>real</em><em>]</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="f/communications/get_global_sum_real_2d">
+<em class="property">function  </em><code class="descclassname">communications/</code><code class="descname">get_global_sum_real_2d</code><span class="sig-paren">(</span><em>dwdt_local</em><span class="sig-paren">)</span><a class="headerlink" href="#f/communications/get_global_sum_real_2d" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dwdt_local</strong> (,)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return:</th><td class="field-body"><strong>global_sum</strong><em> [</em><em>real</em><em>]</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="f/communications/get_global_sum_cmplx_1d">
+<em class="property">function  </em><code class="descclassname">communications/</code><code class="descname">get_global_sum_cmplx_1d</code><span class="sig-paren">(</span><em>arr_local</em><span class="sig-paren">)</span><a class="headerlink" href="#f/communications/get_global_sum_cmplx_1d" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Kahan summation algorithm</p>
+<div class="highlight-c"><div class="highlight"><pre><span class="n">function</span> <span class="n">KahanSum</span><span class="p">(</span><span class="n">input</span><span class="p">)</span>
+<span class="n">var</span> <span class="n">sum</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">var</span> <span class="n">c</span> <span class="o">=</span> <span class="mf">0.0</span>             <span class="c1">//A running compensation for lost low-order bits.</span>
+<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="n">to</span> <span class="n">input</span><span class="p">.</span><span class="n">length</span> <span class="k">do</span>
+   <span class="n">y</span> <span class="o">=</span> <span class="n">input</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span>    <span class="c1">//So far, so good: c is zero.</span>
+   <span class="n">t</span> <span class="o">=</span> <span class="n">sum</span> <span class="o">+</span> <span class="n">y</span>         <span class="c1">//Alas, sum is big, y small,</span>
+                       <span class="c1">//so low-order digits of y are lost.</span>
+   <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">sum</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span>   <span class="c1">//(t - sum) recovers the high-order part of y;</span>
+                       <span class="c1">//subtracting y recovers -(low part of y)</span>
+   <span class="n">sum</span> <span class="o">=</span> <span class="n">t</span>             <span class="c1">//Algebraically, c should always be zero.</span>
+                       <span class="c1">//Beware eagerly optimising compilers!</span>
+   <span class="c1">//Next time around, the lost low part will be added to y in a fresh attempt.</span>
+<span class="k">return</span> <span class="n">sum</span>
+</pre></div>
+</div>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>arr_local</strong> (*)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return:</th><td class="field-body"><strong>global_sum</strong><em> [</em><em>real</em><em>]</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/communications/gather_all_from_lo_to_rank0">
+<em class="property">subroutine  </em><code class="descclassname">communications/</code><code class="descname">gather_all_from_lo_to_rank0</code><span class="sig-paren">(</span><em>self</em>, <em>arr_lo</em>, <em>arr_full</em><span class="sig-paren">)</span><a class="headerlink" href="#f/communications/gather_all_from_lo_to_rank0" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>self</strong><em> [</em><em>gather_type</em><em>]</em></li>
+<li><strong>arr_lo</strong> (<a class="reference internal" href="#f/lmloop_data/ulm" title="f/lmloop_data/ulm">ulm</a>-(<a class="reference internal" href="#f/lmloop_data/llm" title="f/lmloop_data/llm">llm</a>)+1,self%dim2)<em> [</em><em>complex</em><em>]</em></li>
+<li><strong>arr_full</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,self%dim2)<em> [</em><em>complex</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="IOBinaryOutputs.html#f/fields_average_mod/fields_average" title="f/fields_average_mod/fields_average"><code class="xref f f-func docutils literal"><span class="pre">fields_average()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/output_mod/output" title="f/output_mod/output"><code class="xref f f-func docutils literal"><span class="pre">output()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/outpv3/outpv" title="f/outpv3/outpv"><code class="xref f f-func docutils literal"><span class="pre">outpv()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/dtb_mod/get_dtblmfinish" title="f/dtb_mod/get_dtblmfinish"><code class="xref f f-func docutils literal"><span class="pre">get_dtblmfinish()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/egeos_mod/getegeos" title="f/egeos_mod/getegeos"><code class="xref f f-func docutils literal"><span class="pre">getegeos()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/outto_mod/outto" title="f/outto_mod/outto"><code class="xref f f-func docutils literal"><span class="pre">outto()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/communications/create_gather_type">
+<em class="property">subroutine  </em><code class="descclassname">communications/</code><code class="descname">create_gather_type</code><span class="sig-paren">(</span><em>self</em>, <em>dim2</em><span class="sig-paren">)</span><a class="headerlink" href="#f/communications/create_gather_type" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Define the datatypes for gather_all_from_lo_to_rank0
+the sending array has dimension (llm:ulm,1:dim2)
+receiving array has dimension (1:lm_max,1:dim2)</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>self</strong><em> [</em><em>gather_type</em><em>]</em></li>
+<li><strong>dim2</strong><em> [</em><em>integer</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/communications/initialize_communications" title="f/communications/initialize_communications"><code class="xref f f-func docutils literal"><span class="pre">initialize_communications()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/communications/destroy_gather_type">
+<em class="property">subroutine  </em><code class="descclassname">communications/</code><code class="descname">destroy_gather_type</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#f/communications/destroy_gather_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong><em> [</em><em>gather_type</em><em>]</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/communications/gather_from_lo_to_rank0">
+<em class="property">subroutine  </em><code class="descclassname">communications/</code><code class="descname">gather_from_lo_to_rank0</code><span class="sig-paren">(</span><em>arr_lo</em>, <em>arr_full</em><span class="sig-paren">)</span><a class="headerlink" href="#f/communications/gather_from_lo_to_rank0" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>arr_lo</strong> (<a class="reference internal" href="#f/lmloop_data/ulm" title="f/lmloop_data/ulm">ulm</a>-(<a class="reference internal" href="#f/lmloop_data/llm" title="f/lmloop_data/llm">llm</a>)+1)<em> [</em><em>complex</em><em>]</em></li>
+<li><strong>arr_full</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>)<em> [</em><em>complex</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="IOBinaryOutputs.html#f/fields_average_mod/fields_average" title="f/fields_average_mod/fields_average"><code class="xref f f-func docutils literal"><span class="pre">fields_average()</span></code></a>, <a class="reference internal" href="IOBinaryOutputs.html#f/store_pot_mod/storepotw" title="f/store_pot_mod/storepotw"><code class="xref f f-func docutils literal"><span class="pre">storepotw()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/communications/scatter_from_rank0_to_lo">
+<em class="property">subroutine  </em><code class="descclassname">communications/</code><code class="descname">scatter_from_rank0_to_lo</code><span class="sig-paren">(</span><em>arr_full</em>, <em>arr_lo</em><span class="sig-paren">)</span><a class="headerlink" href="#f/communications/scatter_from_rank0_to_lo" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>arr_full</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>)<em> [</em><em>complex</em><em>]</em></li>
+<li><strong>arr_lo</strong> (<a class="reference internal" href="#f/lmloop_data/ulm" title="f/lmloop_data/ulm">ulm</a>-(<a class="reference internal" href="#f/lmloop_data/llm" title="f/lmloop_data/llm">llm</a>)+1)<em> [</em><em>complex</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="initModules.html#f/start_fields/getstartfields" title="f/start_fields/getstartfields"><code class="xref f f-func docutils literal"><span class="pre">getstartfields()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/communications/create_lm2r_type">
+<em class="property">subroutine  </em><code class="descclassname">communications/</code><code class="descname">create_lm2r_type</code><span class="sig-paren">(</span><em>self</em><span class="optional">[</span>, <em>count</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#f/communications/create_lm2r_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong><em> [</em><em>lm2r_type</em><em>]</em></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><strong>count</strong><em> [</em><em>integer</em><em>,</em><em>in,optional</em><em>]</em></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><a class="reference internal" href="#f/communications/initialize_communications" title="f/communications/initialize_communications"><code class="xref f f-func docutils literal"><span class="pre">initialize_communications()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/communications/destroy_lm2r_type">
+<em class="property">subroutine  </em><code class="descclassname">communications/</code><code class="descname">destroy_lm2r_type</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#f/communications/destroy_lm2r_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong><em> [</em><em>lm2r_type</em><em>]</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/communications/lm2r_redist_start">
+<em class="property">subroutine  </em><code class="descclassname">communications/</code><code class="descname">lm2r_redist_start</code><span class="sig-paren">(</span><em>self</em>, <em>arr_lmloc</em>, <em>arr_rloc</em><span class="sig-paren">)</span><a class="headerlink" href="#f/communications/lm2r_redist_start" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>self</strong><em> [</em><em>lm2r_type</em><em>]</em></li>
+<li><strong>arr_lmloc</strong> (<a class="reference internal" href="#f/lmloop_data/ulm" title="f/lmloop_data/ulm">ulm</a>-(<a class="reference internal" href="#f/lmloop_data/llm" title="f/lmloop_data/llm">llm</a>)+1,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>,*)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>arr_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,<a class="reference internal" href="#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>-(<a class="reference internal" href="#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a>)+1,*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/communications/lo2r_redist_start" title="f/communications/lo2r_redist_start"><code class="xref f f-func docutils literal"><span class="pre">lo2r_redist_start()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/communications/lm2r_redist_wait">
+<em class="property">subroutine  </em><code class="descclassname">communications/</code><code class="descname">lm2r_redist_wait</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#f/communications/lm2r_redist_wait" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong><em> [</em><em>lm2r_type</em><em>]</em></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><a class="reference internal" href="#f/communications/lo2r_redist_wait" title="f/communications/lo2r_redist_wait"><code class="xref f f-func docutils literal"><span class="pre">lo2r_redist_wait()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/communications/lo2r_redist_start">
+<em class="property">subroutine  </em><code class="descclassname">communications/</code><code class="descname">lo2r_redist_start</code><span class="sig-paren">(</span><em>self</em>, <em>arr_lo</em>, <em>arr_rloc</em><span class="sig-paren">)</span><a class="headerlink" href="#f/communications/lo2r_redist_start" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>self</strong><em> [</em><em>lm2r_type</em><em>]</em></li>
+<li><strong>arr_lo</strong> (<a class="reference internal" href="#f/lmloop_data/ulm" title="f/lmloop_data/ulm">ulm</a>-(<a class="reference internal" href="#f/lmloop_data/llm" title="f/lmloop_data/llm">llm</a>)+1,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>,*)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>arr_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,<a class="reference internal" href="#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>-(<a class="reference internal" href="#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a>)+1,*)<em> [</em><em>complex</em><em>,</em><em>out,target</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="timeAdvLinear.html#f/lmloop_mod/lmloop" title="f/lmloop_mod/lmloop"><code class="xref f f-func docutils literal"><span class="pre">lmloop()</span></code></a>, <a class="reference internal" href="initModules.html#f/start_fields/getstartfields" title="f/start_fields/getstartfields"><code class="xref f f-func docutils literal"><span class="pre">getstartfields()</span></code></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/communications/lm2r_redist_start" title="f/communications/lm2r_redist_start"><code class="xref f f-func docutils literal"><span class="pre">lm2r_redist_start()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/communications/lo2r_redist_wait">
+<em class="property">subroutine  </em><code class="descclassname">communications/</code><code class="descname">lo2r_redist_wait</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#f/communications/lo2r_redist_wait" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong><em> [</em><em>lm2r_type</em><em>]</em></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><a class="reference internal" href="timeAdvance.html#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal"><span class="pre">step_time()</span></code></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><a class="reference internal" href="#f/communications/lm2r_redist_wait" title="f/communications/lm2r_redist_wait"><code class="xref f f-func docutils literal"><span class="pre">lm2r_redist_wait()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/communications/r2lm_redist">
+<em class="property">subroutine  </em><code class="descclassname">communications/</code><code class="descname">r2lm_redist</code><span class="sig-paren">(</span><em>arr_rloc</em>, <em>arr_lmloc</em><span class="sig-paren">)</span><a class="headerlink" href="#f/communications/r2lm_redist" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>arr_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,<a class="reference internal" href="#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>-(<a class="reference internal" href="#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a>)+1)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>arr_lmloc</strong> (<a class="reference internal" href="#f/lmloop_data/ulm" title="f/lmloop_data/ulm">ulm</a>-(<a class="reference internal" href="#f/lmloop_data/llm" title="f/lmloop_data/llm">llm</a>)+1,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/communications/r2lo_redist" title="f/communications/r2lo_redist"><code class="xref f f-func docutils literal"><span class="pre">r2lo_redist()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/communications/r2lo_redist">
+<em class="property">subroutine  </em><code class="descclassname">communications/</code><code class="descname">r2lo_redist</code><span class="sig-paren">(</span><em>arr_rloc</em>, <em>arr_lo</em><span class="sig-paren">)</span><a class="headerlink" href="#f/communications/r2lo_redist" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>arr_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,<a class="reference internal" href="#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>-(<a class="reference internal" href="#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a>)+1)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>arr_lo</strong> (<a class="reference internal" href="#f/lmloop_data/ulm" title="f/lmloop_data/ulm">ulm</a>-(<a class="reference internal" href="#f/lmloop_data/llm" title="f/lmloop_data/llm">llm</a>)+1,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="timeAdvance.html#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal"><span class="pre">step_time()</span></code></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/communications/r2lm_redist" title="f/communications/r2lm_redist"><code class="xref f f-func docutils literal"><span class="pre">r2lm_redist()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/communications/lm2lo_redist">
+<em class="property">subroutine  </em><code class="descclassname">communications/</code><code class="descname">lm2lo_redist</code><span class="sig-paren">(</span><em>arr_lmloc</em>, <em>arr_lo</em><span class="sig-paren">)</span><a class="headerlink" href="#f/communications/lm2lo_redist" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>arr_lmloc</strong> (<a class="reference internal" href="#f/lmloop_data/ulm" title="f/lmloop_data/ulm">ulm</a>-(<a class="reference internal" href="#f/lmloop_data/llm" title="f/lmloop_data/llm">llm</a>)+1,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>arr_lo</strong> (<a class="reference internal" href="#f/lmloop_data/ulm" title="f/lmloop_data/ulm">ulm</a>-(<a class="reference internal" href="#f/lmloop_data/llm" title="f/lmloop_data/llm">llm</a>)+1,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/communications/lo2lm_redist">
+<em class="property">subroutine  </em><code class="descclassname">communications/</code><code class="descname">lo2lm_redist</code><span class="sig-paren">(</span><em>arr_lo</em>, <em>arr_lmloc</em><span class="sig-paren">)</span><a class="headerlink" href="#f/communications/lo2lm_redist" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>arr_lo</strong> (<a class="reference internal" href="#f/lmloop_data/ulm" title="f/lmloop_data/ulm">ulm</a>-(<a class="reference internal" href="#f/lmloop_data/llm" title="f/lmloop_data/llm">llm</a>)+1,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>arr_lmloc</strong> (<a class="reference internal" href="#f/lmloop_data/ulm" title="f/lmloop_data/ulm">ulm</a>-(<a class="reference internal" href="#f/lmloop_data/llm" title="f/lmloop_data/llm">llm</a>)+1,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/communications/myallgather">
+<em class="property">subroutine  </em><code class="descclassname">communications/</code><code class="descname">myallgather</code><span class="sig-paren">(</span><em>arr</em>, <em>dim1</em>, <em>dim2</em><span class="sig-paren">)</span><a class="headerlink" href="#f/communications/myallgather" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>arr</strong> (dim1,dim2)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></li>
+<li><strong>dim1</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></li>
+<li><strong>dim2</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Use :</th><td class="field-body"><p class="first"><a class="reference internal" href="#f/parallel_mod" title="f/parallel_mod: This module contains the blocking information"><code class="xref f f-mod docutils literal"><span class="pre">parallel_mod</span></code></a>, <a class="reference internal" href="blocking.html#f/blocking" title="f/blocking: Module containing blocking information"><code class="xref f f-mod docutils literal"><span class="pre">blocking</span></code></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="IOAdd.html#f/out_rms/dtvrms" title="f/out_rms/dtvrms"><code class="xref f f-func docutils literal"><span class="pre">dtvrms()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/out_rms/dtbrms" title="f/out_rms/dtbrms"><code class="xref f f-func docutils literal"><span class="pre">dtbrms()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">MPI related modules</a><ul>
+<li><a class="reference internal" href="#f/parallel_mod"><code class="docutils literal"><span class="pre">parallel.f90</span></code></a></li>
+<li><a class="reference internal" href="#f/radial_data"><code class="docutils literal"><span class="pre">radial_data.f90</span></code></a></li>
+<li><a class="reference internal" href="#f/lmloop_data"><code class="docutils literal"><span class="pre">LMLoop_data.f90</span></code></a></li>
+<li><a class="reference internal" href="#f/communications"><code class="docutils literal"><span class="pre">communications.f90</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="baseModules.html"
+                        title="previous chapter">Base modules</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="initModules.html"
+                        title="next chapter">Code initialization</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/apiFortran/parallelModules.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="initModules.html" title="Code initialization"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="baseModules.html" title="Base modules"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../api.html" >Description of the Fortran modules</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,632 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>magic.spectrum &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../../contents.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../../index.html">Home</a></li>
+    <li><a href="../../install.html">Get it/Run it</a></li>
+    <li><a href="../../contribute.html">Contribute!</a></li>
+    <li><a href="../../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../../index.html">
+      <img src="../../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for magic.spectrum</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">P</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">N</span>
+<span class="kn">from</span> <span class="nn">.log</span> <span class="kn">import</span> <span class="n">MagicSetup</span>
+<span class="kn">from</span> <span class="nn">.libmagic</span> <span class="kn">import</span> <span class="n">scanDir</span><span class="p">,</span> <span class="n">fast_read</span>
+<span class="kn">from</span> <span class="nn">.npfile</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">magic.setup</span> <span class="kn">import</span> <span class="n">labTex</span>
+
+
+<div class="viewcode-block" id="MagicSpectrum"><a class="viewcode-back" href="../../apiPython/spectra.html#magic.MagicSpectrum">[docs]</a><span class="k">class</span> <span class="nc">MagicSpectrum</span><span class="p">(</span><span class="n">MagicSetup</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class can be used to read and display the spectra:</span>
+
+<span class="sd">        * Kinetic energy spectra: :ref:`kin_spec_#.TAG &lt;secKinSpecFile&gt;` </span>
+<span class="sd">        * Magnetic energy spectra: :ref:`mag_spec_#.TAG &lt;secMagSpecFile&gt;`</span>
+<span class="sd">        * Spectra of the velocity square: :ref:`u2_spec_#.TAG &lt;secu2SpecFile&gt;` </span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; # display the content of kin_spec_1.tag</span>
+<span class="sd">    &gt;&gt;&gt; # where tag is the most recent file in the current directory</span>
+<span class="sd">    &gt;&gt;&gt; sp = MagicSpectrum(field=&#39;e_kin&#39;, ispec=1)</span>
+<span class="sd">    &gt;&gt;&gt; # display the content of mag_spec_ave.test on one single figure</span>
+<span class="sd">    &gt;&gt;&gt; sp = MagicSpectrum(field=&#39;e_mag&#39;, tag=&#39;test&#39;, ave=True, gather=True)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MagicSpectrum.__init__"><a class="viewcode-back" href="../../apiPython/spectra.html#magic.MagicSpectrum.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s">&#39;.&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s">&#39;e_kin&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">ispec</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> 
+                 <span class="n">ave</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">gather</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param field: the spectrum you want to plot, &#39;e_kin&#39; for kinetic</span>
+<span class="sd">                      energy, &#39;e_mag&#39; for magnetic</span>
+<span class="sd">        :type field: str</span>
+<span class="sd">        :param iplot: display the output plot when set to True (default is True)</span>
+<span class="sd">        :type iplot: bool</span>
+<span class="sd">        :param ispec: the number of the spectrum you want to plot</span>
+<span class="sd">        :type ispec: int</span>
+<span class="sd">        :param tag: file suffix (tag), if not specified the most recent one in</span>
+<span class="sd">                    the current directory is chosen</span>
+<span class="sd">        :type tag: str</span>
+<span class="sd">        :param ave: plot a time-averaged spectrum when set to True</span>
+<span class="sd">        :type ave: bool</span>
+<span class="sd">        :param gather: gather the spectra on the same figure when set to True,</span>
+<span class="sd">                       display one figure per spectrum when set to False, </span>
+<span class="sd">                       (default is False)</span>
+<span class="sd">        :type gather: bool</span>
+<span class="sd">        :param datadir: current working directory</span>
+<span class="sd">        :type datadir: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gather</span> <span class="o">=</span> <span class="n">gather</span>
+
+        <span class="k">if</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;eKin&#39;</span><span class="p">,</span> <span class="s">&#39;ekin&#39;</span><span class="p">,</span> <span class="s">&#39;e_kin&#39;</span><span class="p">,</span> <span class="s">&#39;Ekin&#39;</span><span class="p">,</span> <span class="s">&#39;E_kin&#39;</span><span class="p">,</span> <span class="s">&#39;eKinR&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">ave</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;kin_spec_ave&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;kin_spec_&#39;</span>
+        <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;u2&#39;</span><span class="p">,</span> <span class="s">&#39;usquare&#39;</span><span class="p">,</span> <span class="s">&#39;u_square&#39;</span><span class="p">,</span> <span class="s">&#39;uSquare&#39;</span><span class="p">,</span> <span class="s">&#39;U2&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">ave</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;u2_spec_ave&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;u2_spec_&#39;</span>
+        <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span><span class="p">(</span><span class="s">&#39;eMag&#39;</span><span class="p">,</span> <span class="s">&#39;emag&#39;</span><span class="p">,</span> <span class="s">&#39;e_mag&#39;</span><span class="p">,</span> <span class="s">&#39;Emag&#39;</span><span class="p">,</span> <span class="s">&#39;E_mag&#39;</span><span class="p">,</span> <span class="s">&#39;eMagR&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">ave</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;mag_spec_ave&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;mag_spec_&#39;</span>
+
+        <span class="k">if</span> <span class="n">tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ispec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="nb">file</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s%i</span><span class="s">.</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">ispec</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="nb">file</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">files</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">*</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">tag</span><span class="p">))</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="n">files</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s">&#39;No such tag... try again&#39;</span><span class="p">)</span>
+                    <span class="k">return</span>
+
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&#39;log.</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">tag</span><span class="p">):</span>
+                <span class="n">MagicSetup</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="n">datadir</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                    <span class="n">nml</span><span class="o">=</span><span class="s">&#39;log.</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">tag</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ispec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">files</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s%i</span><span class="s">*&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">ispec</span><span class="p">))</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="n">files</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">files</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">*&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="n">files</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="c"># Determine the setup</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;.*\.(.*)&#39;</span><span class="p">)</span>
+            <span class="n">ending</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">groups</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&#39;log.</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">ending</span><span class="p">):</span>
+                <span class="n">MagicSetup</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="n">datadir</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                    <span class="n">nml</span><span class="o">=</span><span class="s">&#39;log.</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">ending</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&#39;No such file&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="n">ave</span> <span class="ow">is</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">fast_read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">skiplines</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">fast_read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&#39;kin_spec_ave&#39;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&#39;kin_spec_&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_poll</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_polm</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_torl</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_torm</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&#39;u2_spec_ave&#39;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&#39;u2_spec_&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_poll</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_polm</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_torl</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_torm</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&#39;mag_spec_ave&#39;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&#39;mag_spec_&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">emag_poll</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">emag_polm</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">emag_torl</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">emag_torm</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">emagic_poll</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">emagic_polm</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">emagic_torl</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">7</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">emagic_torm</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">8</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">emagcmb_l</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">9</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">emagcmb_m</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">10</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eCMB</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">11</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">iplot</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="MagicSpectrum.plot"><a class="viewcode-back" href="../../apiPython/spectra.html#magic.MagicSpectrum.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plotting function</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&#39;kin_spec_ave&#39;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&#39;kin_spec_&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gather</span><span class="p">:</span>
+                <span class="n">fig</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+                <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_poll</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;poloidal&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_torl</span><span class="p">,</span> <span class="s">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;toroidal&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Degree $\ell$&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Degree l&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&#39;Kinetic energy&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+                <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_polm</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">],</span>
+                         <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;poloidal&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_torm</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">],</span> 
+                         <span class="s">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;toroidal&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Order $m+1$&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;m+1&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&#39;Kinetic energy&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">fig</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+                <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_poll</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;poloidal&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_torl</span><span class="p">,</span> <span class="s">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;toroidal&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Degree $\ell$&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Degree l&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&#39;Kinetic energy&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+                <span class="n">fig</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+                <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_polm</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">],</span>
+                         <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;poloidal&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_torm</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">],</span>
+                         <span class="s">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;toroidal&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;$m$ + 1&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;m + 1&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&#39;Kinetic energy&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&#39;u2_spec_ave&#39;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&#39;u2_spec_&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gather</span><span class="p">:</span>
+                <span class="n">fig</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+                <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_poll</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;poloidal&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_torl</span><span class="p">,</span> <span class="s">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;toroidal&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Degree $\ell$&#39;</span><span class="p">)</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">r&#39;${\cal U}^2$&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Degree l&#39;</span><span class="p">)</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&#39;Velocity square&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+                <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_polm</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">],</span>
+                         <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;poloidal&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_torm</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">],</span> 
+                         <span class="s">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;toroidal&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Order $m+1$&#39;</span><span class="p">)</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">r&#39;${\cal U}^2$&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;m+1&#39;</span><span class="p">)</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&#39;Velocity square&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">fig</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+                <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_poll</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;poloidal&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_torl</span><span class="p">,</span> <span class="s">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;toroidal&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Degree $\ell$&#39;</span><span class="p">)</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">r&#39;${\cal U}^2$&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Degree l&#39;</span><span class="p">)</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&#39;Velocity square&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+                <span class="n">fig</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+                <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_polm</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">],</span>
+                         <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;poloidal&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_torm</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">],</span>
+                         <span class="s">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;toroidal&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">r&#39;$m + 1$&#39;</span><span class="p">)</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">r&#39;${\cal U}^2$&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;m + 1&#39;</span><span class="p">)</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&#39;Velocity square&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&#39;mag_spec_ave&#39;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&#39;mag_spec_&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gather</span><span class="p">:</span>
+                <span class="n">fig</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+                <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">emag_poll</span><span class="p">,</span> <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;poloidal&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">emag_torl</span><span class="p">,</span> <span class="s">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;toroidal&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">emagcmb_l</span><span class="p">,</span> <span class="s">&#39;g-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;cmb&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Degree $\ell$&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Degree l&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&#39;Magnetic Energy&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+                <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">emag_polm</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">],</span>
+                         <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;poloidal&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">emag_torm</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">],</span>
+                         <span class="s">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;toroidal&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">emagcmb_m</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">],</span>
+                         <span class="s">&#39;g-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;cmb&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Order $m$&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Order m&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&#39;Magnetic energy&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">fig</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+                <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">emag_poll</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">emag_poll</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
+                          <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;poloidal&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">emag_torl</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">emag_torl</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="s">&#39;b-&#39;</span><span class="p">,</span>
+                          <span class="n">label</span><span class="o">=</span><span class="s">&#39;toroidal&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">emagcmb_l</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">emagcmb_l</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="s">&#39;g-&#39;</span><span class="p">,</span>
+                          <span class="n">label</span><span class="o">=</span><span class="s">&#39;cmb&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Degree $\ell$&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Degree l&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&#39;Magnetic Energy&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+                <span class="n">fig</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+                <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> 
+                          <span class="bp">self</span><span class="o">.</span><span class="n">emag_polm</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">]</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">emag_polm</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
+                          <span class="s">&#39;k-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;poloidal&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> 
+                          <span class="bp">self</span><span class="o">.</span><span class="n">emag_torm</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">]</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">emag_torm</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
+                          <span class="s">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;toroidal&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span>
+                          <span class="bp">self</span><span class="o">.</span><span class="n">emagcmb_m</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">]</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">emagcmb_m</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
+                          <span class="s">&#39;g-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;cmb&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;$m$+1&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;m+1&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&#39;Magnetic energy&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="MagicSpectrum2D"><a class="viewcode-back" href="../../apiPython/spectra.html#magic.MagicSpectrum2D">[docs]</a><span class="k">class</span> <span class="nc">MagicSpectrum2D</span><span class="p">(</span><span class="n">MagicSetup</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class can be used to read and display 2-D spectra in the :math:`(r,\ell)`</span>
+<span class="sd">    and in the :math:`(r,m)` planes</span>
+
+<span class="sd">        * Kinetic energy spectra: :ref:`2D_kin_spec_#.TAG &lt;sec2DSpectra&gt;`</span>
+<span class="sd">        * Velocity square spectra: :ref:`2D_u2_spec_#.TAG &lt;sec2DSpectra&gt;`</span>
+<span class="sd">        * Magnetic energy spectra: :ref:`2D_mag_spec_#.TAG &lt;sec2DSpectra&gt;`</span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; # display the content of 2D_kin_spec_1.tag</span>
+<span class="sd">    &gt;&gt;&gt; # where tag is the most recent file in the current directory</span>
+<span class="sd">    &gt;&gt;&gt; sp = MagicSpectrum2D(field=&#39;e_kin&#39;, ispec=1, levels=17, cm=&#39;seismic&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; # display the content of 2D_mag_spec_3.test</span>
+<span class="sd">    &gt;&gt;&gt; sp = MagicSpectrum2D(field=&#39;e_mag&#39;, tag=&#39;test&#39;, ispec=3)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MagicSpectrum2D.__init__"><a class="viewcode-back" href="../../apiPython/spectra.html#magic.MagicSpectrum2D.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s">&#39;.&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s">&#39;e_mag&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">ispec</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> 
+                 <span class="n">tag</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s">&#39;jet&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">33</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="s">&#39;Float64&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param field: the spectrum you want to plot, &#39;e_kin&#39; for kinetic</span>
+<span class="sd">                      energy, &#39;e_mag&#39; for magnetic</span>
+<span class="sd">        :type field: str</span>
+<span class="sd">        :param iplot: display the output when set to True (default is True)</span>
+<span class="sd">        :type iplot: bool</span>
+<span class="sd">        :param ispec: the number of the spectrum you want to plot</span>
+<span class="sd">        :type ispec: int</span>
+<span class="sd">        :param tag: file suffix (tag=, if not specified the most recent one </span>
+<span class="sd">                    in the current directory is chosen</span>
+<span class="sd">        :type tag: str</span>
+<span class="sd">        :param cm: name of the colormap (default=&#39;jet&#39;)</span>
+<span class="sd">        :type cm: str</span>
+<span class="sd">        :param levels: number of contour levels (default 33)</span>
+<span class="sd">        :type levels: int</span>
+<span class="sd">        :param precision: single or double precision</span>
+<span class="sd">        :type precision: str</span>
+<span class="sd">        :param datadir: current working directory</span>
+<span class="sd">        :type datadir: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;eKin&#39;</span><span class="p">,</span> <span class="s">&#39;ekin&#39;</span><span class="p">,</span> <span class="s">&#39;e_kin&#39;</span><span class="p">,</span> <span class="s">&#39;Ekin&#39;</span><span class="p">,</span> <span class="s">&#39;E_kin&#39;</span><span class="p">,</span> <span class="s">&#39;eKinR&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;2D_kin_spec_&#39;</span>
+        <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;u2&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;2D_u2_spec_&#39;</span>
+        <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span><span class="p">(</span><span class="s">&#39;eMag&#39;</span><span class="p">,</span> <span class="s">&#39;emag&#39;</span><span class="p">,</span> <span class="s">&#39;e_mag&#39;</span><span class="p">,</span> <span class="s">&#39;Emag&#39;</span><span class="p">,</span> <span class="s">&#39;E_mag&#39;</span><span class="p">,</span> <span class="s">&#39;eMagR&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;2D_mag_spec_&#39;</span>
+
+        <span class="k">if</span> <span class="n">tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ispec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="nb">file</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s%i</span><span class="s">.</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">ispec</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="nb">file</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">files</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">*</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">tag</span><span class="p">))</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="n">files</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s">&#39;No such tag... try again&#39;</span><span class="p">)</span>
+                    <span class="k">return</span>
+
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&#39;log.</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">tag</span><span class="p">):</span>
+                <span class="n">MagicSetup</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="n">datadir</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                    <span class="n">nml</span><span class="o">=</span><span class="s">&#39;log.</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">tag</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ispec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">files</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s%i</span><span class="s">*&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">ispec</span><span class="p">))</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="n">files</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">files</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">*&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="n">files</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="c"># Determine the setup</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;.*\.(.*)&#39;</span><span class="p">)</span>
+            <span class="n">ending</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">groups</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&#39;log.</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">ending</span><span class="p">):</span>
+                <span class="n">MagicSetup</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="n">datadir</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                    <span class="n">nml</span><span class="o">=</span><span class="s">&#39;log.</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">ending</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&#39;No such file&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="nb">file</span> <span class="o">=</span> <span class="n">npfile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s">&#39;B&#39;</span><span class="p">)</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="nb">file</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">,3i4&#39;</span> <span class="o">%</span> <span class="n">precision</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rad</span> <span class="o">=</span> <span class="nb">file</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">e_pol_l</span> <span class="o">=</span> <span class="nb">file</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">e_pol_m</span> <span class="o">=</span> <span class="nb">file</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">e_tor_l</span> <span class="o">=</span> <span class="nb">file</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">e_tor_m</span> <span class="o">=</span> <span class="nb">file</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ell</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="nb">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">iplot</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">levels</span><span class="p">,</span> <span class="n">cm</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="MagicSpectrum2D.plot"><a class="viewcode-back" href="../../apiPython/spectra.html#magic.MagicSpectrum2D.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">levels</span><span class="p">,</span> <span class="n">cm</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plotting function</span>
+
+<span class="sd">        :param levels: number of contour levels</span>
+<span class="sd">        :type levels: int</span>
+<span class="sd">        :param cm: name of the colormap</span>
+<span class="sd">        :type cm: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fig0</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+        <span class="n">ax0</span> <span class="o">=</span> <span class="n">fig0</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+        <span class="n">vmax</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e_pol_l</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">vmin</span> <span class="o">=</span> <span class="n">vmax</span><span class="o">-</span><span class="mi">14</span>
+        <span class="n">levs</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">levels</span><span class="p">)</span>
+        <span class="n">im</span> <span class="o">=</span> <span class="n">ax0</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ell</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="bp">self</span><span class="o">.</span><span class="n">rad</span><span class="p">,</span> <span class="n">N</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e_pol_l</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> 
+                          <span class="n">levs</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">P</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">cm</span><span class="p">),</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+        <span class="n">fig0</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+            <span class="n">ax0</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Degree $\ell$&#39;</span><span class="p">)</span>
+            <span class="n">ax0</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&#39;Radius $r$&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ax0</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Degree l&#39;</span><span class="p">)</span>
+            <span class="n">ax0</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&#39;Radius&#39;</span><span class="p">)</span>
+        <span class="n">ax0</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s">&#39;log&#39;</span><span class="p">)</span>
+        <span class="n">ax0</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">&#39;E pol&#39;</span><span class="p">)</span>
+
+        <span class="n">fig1</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+        <span class="n">ax1</span> <span class="o">=</span> <span class="n">fig1</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+        <span class="n">vmax</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e_tor_l</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">vmin</span> <span class="o">=</span> <span class="n">vmax</span><span class="o">-</span><span class="mi">14</span>
+        <span class="n">levs</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">levels</span><span class="p">)</span>
+        <span class="n">im</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ell</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="bp">self</span><span class="o">.</span><span class="n">rad</span><span class="p">,</span> <span class="n">N</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e_tor_l</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> 
+                          <span class="n">levs</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">P</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">cm</span><span class="p">),</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+        <span class="n">fig1</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+            <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Degree $\ell$&#39;</span><span class="p">)</span>
+            <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&#39;Radius $r$&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Degree l&#39;</span><span class="p">)</span>
+            <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&#39;Radius&#39;</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s">&#39;log&#39;</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">&#39;E tor&#39;</span><span class="p">)</span>
+
+        <span class="n">fig2</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+        <span class="n">ax2</span> <span class="o">=</span> <span class="n">fig2</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+        <span class="n">vmax</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e_pol_m</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">vmin</span> <span class="o">=</span> <span class="n">vmax</span><span class="o">-</span><span class="mi">14</span>
+        <span class="n">levs</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">levels</span><span class="p">)</span>
+        <span class="n">im</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ell</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rad</span><span class="p">,</span> 
+                          <span class="n">N</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e_pol_m</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">,:]</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> 
+                          <span class="n">levs</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">P</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">cm</span><span class="p">),</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+        <span class="n">fig2</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+            <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Order $m+1$&#39;</span><span class="p">)</span>
+            <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&#39;Radius $r$&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Order m+1&#39;</span><span class="p">)</span>
+            <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&#39;Radius&#39;</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s">&#39;log&#39;</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">&#39;E pol&#39;</span><span class="p">)</span>
+
+        <span class="n">fig3</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+        <span class="n">ax3</span> <span class="o">=</span> <span class="n">fig3</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+        <span class="n">vmax</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e_tor_m</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">vmin</span> <span class="o">=</span> <span class="n">vmax</span><span class="o">-</span><span class="mi">14</span>
+        <span class="n">levs</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">levels</span><span class="p">)</span>
+        <span class="n">im</span> <span class="o">=</span> <span class="n">ax3</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ell</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rad</span><span class="p">,</span> 
+                          <span class="n">N</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e_tor_m</span><span class="p">[::</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">,:]</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> 
+                          <span class="n">levs</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">P</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">cm</span><span class="p">),</span> <span class="n">extend</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">)</span>
+        <span class="n">fig3</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+            <span class="n">ax3</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Order $m+1$&#39;</span><span class="p">)</span>
+            <span class="n">ax3</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&#39;Radius $r$&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ax3</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Order m+1&#39;</span><span class="p">)</span>
+            <span class="n">ax3</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&#39;Radius&#39;</span><span class="p">)</span>
+        <span class="n">ax3</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s">&#39;log&#39;</span><span class="p">)</span>
+        <span class="n">ax3</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">&#39;E tor&#39;</span><span class="p">)</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

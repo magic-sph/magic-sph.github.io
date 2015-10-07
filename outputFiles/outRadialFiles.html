@@ -1,0 +1,617 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Time-averaged radial profiles &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../contents.html" />
+    <link rel="up" title="Output files" href="outFiles.html" />
+    <link rel="next" title="Transport properties of the reference state" href="outTransportProp.html" />
+    <link rel="prev" title="Additional optional time-series outputs" href="outTimeSeriesSupp.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../install.html">Get it/Run it</a></li>
+    <li><a href="../contribute.html">Contribute!</a></li>
+    <li><a href="../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../index.html">
+      <img src="../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="outTransportProp.html" title="Transport properties of the reference state"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="outTimeSeriesSupp.html" title="Additional optional time-series outputs"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="outFiles.html" accesskey="U">Output files</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="time-averaged-radial-profiles">
+<h1>Time-averaged radial profiles<a class="headerlink" href="#time-averaged-radial-profiles" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ekinr-tag">
+<span id="secekinrfile"></span><h2><code class="docutils literal"><span class="pre">eKinR.TAG</span></code><a class="headerlink" href="#ekinr-tag" title="Permalink to this headline">¶</a></h2>
+<p>This file contains the time and horizontally averaged outer core kinetic energy along the radius. This file is calculated by the subroutine <a class="reference internal" href="../apiFortran/IOGeneral.html#f/kinetic_energy/get_e_kin" title="f/kinetic_energy/get_e_kin"><code class="xref f f-subr docutils literal"><span class="pre">get_e_kin</span></code></a>.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">No. of column</th>
+<th class="head">Contents</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>radial level</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>time and horizontally averaged poloidal energy</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>time and horizontally averaged axisymmetric poloidal energy</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>time and horizontally averaged toroidal energy</td>
+</tr>
+<tr class="row-even"><td>5</td>
+<td>time and horizontally averaged axisymmetric toroidal energy</td>
+</tr>
+<tr class="row-odd"><td>6</td>
+<td>time and horizontally averaged poloidal energy,
+normalized by surface area at this radial level</td>
+</tr>
+<tr class="row-even"><td>7</td>
+<td>time and horizontally averaged axisymmetric poloidal energy,
+normalized by surface area at this radial level</td>
+</tr>
+<tr class="row-odd"><td>8</td>
+<td>time and horizontally averaged toroidal energy,
+normalized by surface area at this radial level</td>
+</tr>
+<tr class="row-even"><td>9</td>
+<td>time and horizontally averaged axisymmetric toroidal energy,
+normalized by surface area at this radial level</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>This file can be read using <a class="reference internal" href="../apiPython/radial.html#magic.MagicRadial" title="magic.MagicRadial"><code class="xref py py-class docutils literal"><span class="pre">MagicRadial</span></code></a> with the following options:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rad</span> <span class="o">=</span> <span class="n">MagicRadial</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;eKinR&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="emagr-tag">
+<span id="secemagrfile"></span><h2><code class="docutils literal"><span class="pre">eMagR.TAG</span></code><a class="headerlink" href="#emagr-tag" title="Permalink to this headline">¶</a></h2>
+<p>This file contains the time and horizontally averaged outer core magnetic energy along the radius. This file is calculated by the subroutine <a class="reference internal" href="../apiFortran/IOGeneral.html#f/magnetic_energy/get_e_mag" title="f/magnetic_energy/get_e_mag"><code class="xref f f-subr docutils literal"><span class="pre">get_e_mag</span></code></a>.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">No. of column</th>
+<th class="head">Contents</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>radial level</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>time and horizontally averaged poloidal energy</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>time and horizontally averaged axisymmetric poloidal energy</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>time and horizontally averaged toroidal energy</td>
+</tr>
+<tr class="row-even"><td>5</td>
+<td>time and horizontally averaged axisymmetric toroidal energy</td>
+</tr>
+<tr class="row-odd"><td>6</td>
+<td>time and horizontally averaged poloidal energy,
+normalized by surface area at this radial level</td>
+</tr>
+<tr class="row-even"><td>7</td>
+<td>time and horizontally averaged axisymmetric poloidal energy,
+normalized by surface area at this radial level</td>
+</tr>
+<tr class="row-odd"><td>8</td>
+<td>time and horizontally averaged toroidal energy,
+normalized by surface area at this radial level</td>
+</tr>
+<tr class="row-even"><td>9</td>
+<td>time and horizontally averaged axisymmetric toroidal energy,
+normalized by surface area at this radial level</td>
+</tr>
+<tr class="row-odd"><td>10</td>
+<td>ratio between time-averaged dipole energy and
+time-averaged total energy</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>This file can be read using <a class="reference internal" href="../apiPython/radial.html#magic.MagicRadial" title="magic.MagicRadial"><code class="xref py py-class docutils literal"><span class="pre">MagicRadial</span></code></a> with the following options:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rad</span> <span class="o">=</span> <span class="n">MagicRadial</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;eMagR&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="parr-tag">
+<span id="secparrfile"></span><h2><code class="docutils literal"><span class="pre">parR.TAG</span></code><a class="headerlink" href="#parr-tag" title="Permalink to this headline">¶</a></h2>
+<p>This file contains several time and horizontally averaged flow properties (magnetic Reynolds number, Rossby number, etc.). This file is calculated by the subroutine <a class="reference internal" href="../apiFortran/IOGeneral.html#f/outpar_mod/outpar" title="f/outpar_mod/outpar"><code class="xref f f-var docutils literal"><span class="pre">outPar</span></code></a>.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">No. of column</th>
+<th class="head">Contents</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>radial level</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>Magnetic Reynolds number</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>Local Rossby number (based on the mass-weighted velocity)</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>Local Rossby number (based on the RMS velocity)</td>
+</tr>
+<tr class="row-even"><td>5</td>
+<td>Local flow length-scale (based on the mass-weighted velocity)</td>
+</tr>
+<tr class="row-odd"><td>6</td>
+<td>Local flow length-scale based on the non-axisymmetric flow
+components (based on the mass-weighted velocity)</td>
+</tr>
+<tr class="row-even"><td>7</td>
+<td>Local flow length-scale (based on the RMS velocity)</td>
+</tr>
+<tr class="row-odd"><td>8</td>
+<td>Local flow length-scale based on the non-axisymmetric flow
+components (based on the RMS velocity)</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>This file can be read using <a class="reference internal" href="../apiPython/radial.html#magic.MagicRadial" title="magic.MagicRadial"><code class="xref py py-class docutils literal"><span class="pre">MagicRadial</span></code></a> with the following options:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rad</span> <span class="o">=</span> <span class="n">MagicRadial</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;parR&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="powerr-tag">
+<span id="secpowerrfile"></span><h2><code class="docutils literal"><span class="pre">powerR.TAG</span></code><a class="headerlink" href="#powerr-tag" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlMisc.html#varl-power"><span>l_power=.true.</span></a></p>
+</div>
+<p>This file contains the time and horizontally averaged power input (Buoyancy power) and outputs (viscous and Ohmic heating). This file is calculated by the subroutine <a class="reference internal" href="../apiFortran/IOGeneral.html#f/power/get_power" title="f/power/get_power"><code class="xref f f-subr docutils literal"><span class="pre">get_power</span></code></a>.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">No. of column</th>
+<th class="head">Contents</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>radial level</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>Buoyancy power: <span class="math">\(Ra\,g(r)\,\langle u_r T'\rangle_s\)</span></td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>Viscous dissipation: <span class="math">\(\langle(\nabla \times u)^2\rangle_s\)</span></td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>Ohmic dissipation: <span class="math">\(\langle(\nabla \times B)^2\rangle_s\)</span></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>This file can be read using <a class="reference internal" href="../apiPython/radial.html#magic.MagicRadial" title="magic.MagicRadial"><code class="xref py py-class docutils literal"><span class="pre">MagicRadial</span></code></a> with the following options:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rad</span> <span class="o">=</span> <span class="n">MagicRadial</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;powerR&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fluxesr-tag">
+<span id="secfluxesrfile"></span><h2><code class="docutils literal"><span class="pre">fluxesR.TAG</span></code><a class="headerlink" href="#fluxesr-tag" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlMisc.html#varl-fluxprofs"><span>l_fluxProfs=.true.</span></a></p>
+</div>
+<p>This file contains the time and horizontally averaged heat flux carried out by several physical processes: conductive flux, convective flux, kinetic flux, viscous flux, Poynting flux and resistive flux. This file is calculated by the subroutine <a class="reference internal" href="../apiFortran/IOGeneral.html#f/outpar_mod/outpar" title="f/outpar_mod/outpar"><code class="xref f f-subr docutils literal"><span class="pre">outPar</span></code></a>.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">No. of column</th>
+<th class="head">Contents</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>radial level</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td><dl class="first last docutils">
+<dt>conductive flux:</dt>
+<dd><div class="first last math">
+\[{\cal F}_{cond} = -\frac{1}{Pr}\kappa\tilde{\rho}
+\tilde{T}\frac{\partial \langle s \rangle_s}
+{\partial r}\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td><dl class="first last docutils">
+<dt>convective flux:</dt>
+<dd><div class="first last math">
+\[{\cal F}_{conv}= \tilde{\rho}\tilde{T} \langle
+s\,u_r \rangle_s+\frac{Pr\,Di}{E\,Ra}\langle
+p\,u_r \rangle_s\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td><dl class="first last docutils">
+<dt>kinetic flux:</dt>
+<dd><div class="first last math">
+\[{\cal F}_{kin}= \frac{1}{2}\frac{Pr\,Di}{Ra}
+\langle u_r (\tilde{\rho}u^2) \rangle_s\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td>5</td>
+<td><dl class="first last docutils">
+<dt>viscous flux:</dt>
+<dd><div class="first last math">
+\[{\cal F}_{visc}= -\frac{Pr\,Di}{Ra}
+\langle \vec{u}\cdot S \rangle_s\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td>6</td>
+<td><dl class="first last docutils">
+<dt>Poynting flux:</dt>
+<dd><div class="first last math">
+\[{\cal F}_{poyn}= -\frac{Pr\,Di}{Ra\,E\,Pm}
+\langle (\vec{u}\times\vec{B})\times\vec{B}
+\rangle_s\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td>7</td>
+<td><dl class="first last docutils">
+<dt>resistive flux:</dt>
+<dd><div class="first last math">
+\[{\cal F}_{poyn}= \frac{Pr\,Di}{Ra\,E\,Pm^2}
+\langle (\vec{\nabla}\times\vec{B})\times\vec{B}
+\rangle_s\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>This file can be read using <a class="reference internal" href="../apiPython/radial.html#magic.MagicRadial" title="magic.MagicRadial"><code class="xref py py-class docutils literal"><span class="pre">MagicRadial</span></code></a> with the following options:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rad</span> <span class="o">=</span> <span class="n">MagicRadial</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;fluxesR&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="blayersr-tag">
+<span id="secblayersrfile"></span><h2><code class="docutils literal"><span class="pre">bLayersR.TAG</span></code><a class="headerlink" href="#blayersr-tag" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlMisc.html#varl-viscbccalc"><span>l_viscBcCalc=.true.</span></a></p>
+</div>
+<p>This file contains several time and horizontally averaged profiles that can be further used to determine thermal and viscous boundary layers: entropy (or temperature), entropy variance, horizontal velocity, radial derivative of the horizontal velocity, thermal dissipation rate. This file is calculated by the subroutine <a class="reference internal" href="../apiFortran/IOGeneral.html#f/outpar_mod/outpar" title="f/outpar_mod/outpar"><code class="xref f f-subr docutils literal"><span class="pre">outPar</span></code></a>.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">No. of column</th>
+<th class="head">Contents</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>radial level</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>entropy: <span class="math">\(\langle s \rangle_s\)</span></td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td><dl class="first last docutils">
+<dt>entropy variance:</dt>
+<dd><div class="first last math">
+\[\sqrt{\left\langle (s-\langle s\rangle_s)^2
+\right\rangle_s}\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td><dl class="first last docutils">
+<dt>horizontal velocity:</dt>
+<dd><div class="first last math">
+\[u_h=\left\langle\sqrt{u_\theta^2+u_\phi^2}
+\right\rangle_s\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td>5</td>
+<td><dl class="first last docutils">
+<dt>radial derivative of the horizontal velocity:</dt>
+<dd><div class="first last math">
+\[\partial u_h/\partial r\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td>6</td>
+<td><dl class="first last docutils">
+<dt>thermal dissipation rate:</dt>
+<dd><div class="first last math">
+\[\epsilon_T=\langle (\nabla T)^2 \rangle_s\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>This file can be read using <a class="reference internal" href="../apiPython/radial.html#magic.MagicRadial" title="magic.MagicRadial"><code class="xref py py-class docutils literal"><span class="pre">MagicRadial</span></code></a> with the following options:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rad</span> <span class="o">=</span> <span class="n">MagicRadial</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;bLayersR&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Additional analyses of the boundary layers can then be carried out using <a class="reference internal" href="../apiPython/misc.html#magic.bLayers.BLayers" title="magic.bLayers.BLayers"><code class="xref py py-class docutils literal"><span class="pre">BLayers</span></code></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">bl</span> <span class="o">=</span> <span class="n">BLayers</span><span class="p">(</span><span class="n">iplot</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="perpparr-tag">
+<span id="secperpparrfile"></span><h2><code class="docutils literal"><span class="pre">perpParR.TAG</span></code><a class="headerlink" href="#perpparr-tag" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlMisc.html#varl-perppar"><span>l_perpPar=.true.</span></a></p>
+</div>
+<p>This file contains several time and horizontally averaged profiles that decompose the kinetic energy into components parallel and perpendicular to the rotation axis. This file is calculated by the subroutine <a class="reference internal" href="../apiFortran/IOGeneral.html#f/outpar_mod/outperppar" title="f/outpar_mod/outperppar"><code class="xref f f-subr docutils literal"><span class="pre">outPerpPar</span></code></a>.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">No. of column</th>
+<th class="head">Contents</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>radial level</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td><dl class="first last docutils">
+<dt>Total kinetic energy perpendicular to the rotation axis:</dt>
+<dd><div class="first last math">
+\[\frac{1}{2}\langle u_s^2+u_\phi^2 \rangle_s\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td><dl class="first last docutils">
+<dt>Total kinetic energy parallel to the rotation axis:</dt>
+<dd><div class="first last math">
+\[\frac{1}{2}\langle u_z^2\rangle_s\]</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>Axisymmetric kinetic energy perpendicular to the rotation axis</td>
+</tr>
+<tr class="row-even"><td>5</td>
+<td>Axisymmetric kinetic energy parallel to the rotation axis</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>This file can be read using <a class="reference internal" href="../apiPython/radial.html#magic.MagicRadial" title="magic.MagicRadial"><code class="xref py py-class docutils literal"><span class="pre">MagicRadial</span></code></a> with the following options:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rad</span> <span class="o">=</span> <span class="n">MagicRadial</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;perpParR&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Time-averaged radial profiles</a><ul>
+<li><a class="reference internal" href="#ekinr-tag"><code class="docutils literal"><span class="pre">eKinR.TAG</span></code></a></li>
+<li><a class="reference internal" href="#emagr-tag"><code class="docutils literal"><span class="pre">eMagR.TAG</span></code></a></li>
+<li><a class="reference internal" href="#parr-tag"><code class="docutils literal"><span class="pre">parR.TAG</span></code></a></li>
+<li><a class="reference internal" href="#powerr-tag"><code class="docutils literal"><span class="pre">powerR.TAG</span></code></a></li>
+<li><a class="reference internal" href="#fluxesr-tag"><code class="docutils literal"><span class="pre">fluxesR.TAG</span></code></a></li>
+<li><a class="reference internal" href="#blayersr-tag"><code class="docutils literal"><span class="pre">bLayersR.TAG</span></code></a></li>
+<li><a class="reference internal" href="#perpparr-tag"><code class="docutils literal"><span class="pre">perpParR.TAG</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="outTimeSeriesSupp.html"
+                        title="previous chapter">Additional optional time-series outputs</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="outTransportProp.html"
+                        title="next chapter">Transport properties of the reference state</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/outputFiles/outRadialFiles.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="outTransportProp.html" title="Transport properties of the reference state"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="outTimeSeriesSupp.html" title="Additional optional time-series outputs"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="outFiles.html" >Output files</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

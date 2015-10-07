@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Output files &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../contents.html" />
+    <link rel="next" title="Log file: log.TAG" href="logFile.html" />
+    <link rel="prev" title="Interactive communication with the code using signal.TAG" href="../signalFile.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../install.html">Get it/Run it</a></li>
+    <li><a href="../contribute.html">Contribute!</a></li>
+    <li><a href="../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../index.html">
+      <img src="../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="logFile.html" title="Log file: log.TAG"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../signalFile.html" title="Interactive communication with the code using signal.TAG"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="output-files">
+<span id="secoutputfiles"></span><h1>Output files<a class="headerlink" href="#output-files" title="Permalink to this headline">¶</a></h1>
+<p>While some information of a run is written into <code class="docutils literal"><span class="pre">STDOUT</span></code> to monitor its
+progress, most outputs are printed into dedicated files identified by the chosen
+<a class="reference internal" href="../inputNamelists/controlNamelist.html#vartag"><span>TAG</span></a> extension. These files can be parsed and analysed using the
+<a class="reference internal" href="../postProc.html#secpythonpostproc"><span>python classes</span></a>. The following pages describe the content
+and the structure of the different type of output files:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">Most of the information found in <code class="docutils literal"><span class="pre">STDOUT</span></code> is
+also written to the <strong>log-file</strong> called <a class="reference internal" href="logFile.html#seclogfile"><span>log.TAG</span></a>. In addition,
+this file contains all input parameters, truncation, information on other
+output files, and some results like the time averaged energies (when
+<a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlStd.html#varl-average"><span>l_average=.true.</span></a>).</p>
+</li>
+<li><p class="first">There are several ascii files that contain the <strong>time-evolution of
+integrated quantities</strong> (energies, heat fluxes, rotation rate, Reynolds
+numbers, etc.) that are systematically produced:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Kinetic energies: <a class="reference internal" href="outTimeSeriesStd.html#secekinfile"><span>e_kin.TAG</span></a>,</li>
+<li>Magnetic energies: <a class="reference internal" href="outTimeSeriesStd.html#secemagocfile"><span>e_mag_oc.TAG</span></a> and <a class="reference internal" href="outTimeSeriesStd.html#secemagicfile"><span>e_mag_ic.TAG</span></a>,</li>
+<li>Rotation rates: <a class="reference internal" href="outTimeSeriesStd.html#secrotfile"><span>rot.TAG</span></a>,</li>
+<li>Informations about the dipolar component of the magnetic field: <a class="reference internal" href="outTimeSeriesStd.html#secdipolefile"><span>dipole.TAG</span></a>,</li>
+<li>Diagnostic parameters (Reynolds, Elsasser, etc.): <a class="reference internal" href="outTimeSeriesStd.html#secparfile"><span>par.TAG</span></a>,</li>
+<li>Additional diagnostics (heat fluxes, Nusselt numbers, etc.): <a class="reference internal" href="outTimeSeriesStd.html#secmiscfile"><span>misc.TAG</span></a>.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">There are <strong>additional conditional time series</strong> that contain the time-evolution of
+other physical quantities that depend on the chosen
+<a class="reference internal" href="../inputNamelists/outNamelist.html#secoutputnml"><span>input parameters</span></a>:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Angular momentum balance: <a class="reference internal" href="outTimeSeriesSupp.html#secamfile"><span>AM.TAG</span></a>,</li>
+<li>Power budget: <a class="reference internal" href="outTimeSeriesSupp.html#secpowerfile"><span>power.TAG</span></a> and <cite>dtE.TAG &lt;secdtEFile&gt;</cite>,</li>
+<li>Square velocities: <a class="reference internal" href="outTimeSeriesSupp.html#secu-squarefile"><span>u_square.TAG</span></a>,</li>
+<li>Drift rates: <a class="reference internal" href="outTimeSeriesSupp.html#secdriftfile"><span>drift[V|B][D|Q].TAG</span></a> and <a class="reference internal" href="outTimeSeriesSupp.html#secinerfile"><span>iner[P|T].TAG</span></a>,</li>
+<li>Torques: <a class="reference internal" href="outTimeSeriesSupp.html#secsrfile"><span>SR[IC|MA].TAG</span></a>,</li>
+<li>RMS calculations of the force balances: <a class="reference internal" href="outTimeSeriesSupp.html#secdtvrmsfile"><span>dtVrms.TAG</span></a>, <a class="reference internal" href="outTimeSeriesSupp.html#secdtbrmsfile"><span>dtBrms.TAG</span></a> and <a class="reference internal" href="outTimeSeriesSupp.html#secdtdrmsfile"><span>dtDrms.TAG</span></a>,</li>
+<li>Kinetic energies perpendicular and parallel to the rotation axis: <a class="reference internal" href="outTimeSeriesSupp.html#secperpparfile"><span>perpPar.TAG</span></a>.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Time-averaged radial profiles</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Kinetic energies: <a class="reference internal" href="outRadialFiles.html#secekinrfile"><span>eKinR.TAG</span></a>,</li>
+<li>Magnetic energies: <a class="reference internal" href="outRadialFiles.html#secemagrfile"><span>eMagR.TAG</span></a>,</li>
+<li>Diagnostic quantities: <a class="reference internal" href="outRadialFiles.html#secparrfile"><span>parR.TAG</span></a>,</li>
+<li>Power budget: <a class="reference internal" href="outRadialFiles.html#secpowerrfile"><span>powerR.TAG</span></a>,</li>
+<li>Heat fluxes: <a class="reference internal" href="outRadialFiles.html#secfluxesrfile"><span>fluxesR.TAG</span></a>,</li>
+<li>Temperature and horizontal velocities: <a class="reference internal" href="outRadialFiles.html#secblayersrfile"><span>bLayersR.TAG</span></a>,</li>
+<li>Kinetic energies perpendicular and parallel to the rotation axis: <a class="reference internal" href="outRadialFiles.html#secperpparrfile"><span>perpParR.TAG</span></a>.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Radial profiles of the transport properties</strong> of the reference state (those files will
+only be produced when the appropriate input option is chosen):</p>
+<blockquote>
+<div><ul class="simple">
+<li>Temperature, density and gravity: <a class="reference internal" href="outTransportProp.html#secanelfile"><span>anel.TAG</span></a>,</li>
+<li>Electrical conductivity: <a class="reference internal" href="outTransportProp.html#secvarcondfile"><span>varCond.TAG</span></a>,</li>
+<li>Thermal conductivity: <a class="reference internal" href="outTransportProp.html#secvardifffile"><span>varDiff.TAG</span></a>,</li>
+<li>Kinematic viscosity: <a class="reference internal" href="outTransportProp.html#secvarviscfile"><span>varVisc.TAG</span></a>,</li>
+<li>Mapping of the Chebyshev grid: <a class="reference internal" href="outTransportProp.html#secmappingfile"><span>rNM.TAG</span></a>.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Kinetic energy, magnetic energy and temperature/entropy <strong>spectra</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Kinetic energy: <a class="reference internal" href="outSpecFiles.html#seckinspecfile"><span>kin_spec_#.TAG</span></a>,</li>
+<li>Magnetic energy: <a class="reference internal" href="outSpecFiles.html#secmagspecfile"><span>kin_spec_#.TAG</span></a>,</li>
+<li>Velocity square: <a class="reference internal" href="outSpecFiles.html#secu2specfile"><span>u2_spec_#.TAG</span></a>,</li>
+<li>Temperature/entropy: <a class="reference internal" href="outSpecFiles.html#secmagspecfile"><span>T_spec_#.TAG</span></a>,</li>
+<li>Time-averaged kinetic energy: <a class="reference internal" href="outSpecFiles.html#seckinspecavefile"><span>kin_spec_ave.TAG</span></a>,</li>
+<li>Time-averaged magnetic energy: <a class="reference internal" href="outSpecFiles.html#secmagspecavefile"><span>mag_spec_ave.TAG</span></a>,</li>
+<li>Time-averaged temperature/entropy: <a class="reference internal" href="outSpecFiles.html#sectempspecavefile"><span>T_spec_ave.TAG</span></a>,</li>
+<li>2-D ([r,ell] and [r,m]) spectra: <a class="reference internal" href="outSpecFiles.html#sec2dspectra"><span>2D_[mag|kin|u2]_spec_#.TAG</span></a>.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Output snapshot that contains the 3-D components of the velocity field, the magnetic
+field and the temperature/entropy. Those files are named <strong>graphic files</strong>
+<a class="reference internal" href="outGraph.html#secgraphfile"><span>G_#.TAG</span></a> (or <a class="reference internal" href="outGraph.html#secgraphfile"><span>G_ave.TAG</span></a> for its time-averaged
+counterpart).</p>
+</li>
+<li><p class="first">Time evolution of some chosen fields. Those files are named <strong>movie files</strong>:
+<a class="reference internal" href="outMovie.html#secmoviefile"><span>*_mov.TAG</span></a>.</p>
+</li>
+<li><p class="first">Checkpoints outputs that will allow the code to restart. Those files are named
+<strong>restart files</strong>: <a class="reference internal" href="outRst.html#secrestartfile"><span>rst_end.TAG</span></a>.</p>
+</li>
+<li><p class="first"><strong>Time-evolution of the poloidal and toroidal coefficients</strong> at diffent depths:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Time evolution of the poloidal magnetic field at the CMB: <a class="reference internal" href="outCoeffFiles.html#seccmbfile"><span>B_coeff_cmb.TAG</span></a>,</li>
+<li>Time evolution of the potentials at several depths: <a class="reference internal" href="outCoeffFiles.html#seccoeffrfiles"><span>[V|T|B]_coeff_r#.TAG</span></a></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Additional specific outputs</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Torsional oscillations (see <a class="reference internal" href="outTOFiles.html#sectooutputfiles"><span>here</span></a>),</li>
+<li>Potential files: <a class="reference internal" href="outPotFiles.html#secvpotfile"><span>Vpot_#.TAG</span></a>, <a class="reference internal" href="outPotFiles.html#secbpotfile"><span>Bpot_#.TAG</span></a> and <a class="reference internal" href="outPotFiles.html#sectpotfile"><span>Tpot_#.TAG</span></a>,</li>
+<li>Potential vorticity files: <code class="docutils literal"><span class="pre">PVZ.TAG</span></code> and <code class="docutils literal"><span class="pre">Vcy.TAG</span></code>,</li>
+<li>Magnetic spectra for various radii: <a class="reference internal" href="outRSpecFiles.html#secrbspecfiles"><span>rB[r|p]Spec.TAG</span></a>.</li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../signalFile.html"
+                        title="previous chapter">Interactive communication with the code using <code class="docutils literal"><span class="pre">signal.TAG</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="logFile.html"
+                        title="next chapter">Log file: <code class="docutils literal"><span class="pre">log.TAG</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/outputFiles/outFiles.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="logFile.html" title="Log file: log.TAG"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../signalFile.html" title="Interactive communication with the code using signal.TAG"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

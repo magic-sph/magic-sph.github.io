@@ -1,0 +1,524 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Poloidal and toroidal potentials at given depths &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../contents.html" />
+    <link rel="up" title="Output files" href="outFiles.html" />
+    <link rel="next" title="TO outputs" href="outTOFiles.html" />
+    <link rel="prev" title="Restart files rst_*.TAG" href="outRst.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../install.html">Get it/Run it</a></li>
+    <li><a href="../contribute.html">Contribute!</a></li>
+    <li><a href="../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../index.html">
+      <img src="../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="outTOFiles.html" title="TO outputs"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="outRst.html" title="Restart files rst_*.TAG"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="outFiles.html" accesskey="U">Output files</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="poloidal-and-toroidal-potentials-at-given-depths">
+<span id="seccoefffiles"></span><h1>Poloidal and toroidal potentials at given depths<a class="headerlink" href="#poloidal-and-toroidal-potentials-at-given-depths" title="Permalink to this headline">¶</a></h1>
+<p>These are fortran unformatted files which store time series of poloidal and
+toroidal coefficients of different fields (magnetic field, velocity and
+temeperature) at specific depths.</p>
+<p>In the following, <code class="code docutils literal"><span class="pre">time(j)</span></code>  is the time during the <span class="math">\(j^{th}\)</span> time
+step, <code class="code docutils literal"><span class="pre">time(N)</span></code> being the last step. <code class="code docutils literal"><span class="pre">real</span></code> and <code class="code docutils literal"><span class="pre">imag</span></code> denote
+real and imaginary parts, respectively, of spherical harmonic coefficients.
+Also, the following notations will be used for the coefficients of potentials
+(note that scalar fields like temperature do not have a poloidal/toroidal
+decomposition):</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="41%" />
+<col width="28%" />
+<col width="31%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Poloidal</th>
+<th class="head">Toroidal</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Magnetic</td>
+<td><a class="reference internal" href="../apiFortran/baseModules.html#f/fields/b" title="f/fields/b"><code class="xref f f-var docutils literal"><span class="pre">b</span></code></a></td>
+<td><a class="reference internal" href="../apiFortran/baseModules.html#f/fields/aj" title="f/fields/aj"><code class="xref f f-var docutils literal"><span class="pre">aj</span></code></a></td>
+</tr>
+<tr class="row-odd"><td>Velocity</td>
+<td><a class="reference internal" href="../apiFortran/baseModules.html#f/fields/w" title="f/fields/w"><code class="xref f f-var docutils literal"><span class="pre">w</span></code></a></td>
+<td><a class="reference internal" href="../apiFortran/baseModules.html#f/fields/z" title="f/fields/z"><code class="xref f f-var docutils literal"><span class="pre">z</span></code></a></td>
+</tr>
+<tr class="row-even"><td>Temperature</td>
+<td colspan="2"><a class="reference internal" href="../apiFortran/baseModules.html#f/fields/s" title="f/fields/s"><code class="xref f f-var docutils literal"><span class="pre">s</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>First and second derivatives are denoted with a differential notation. e.g:
+<a class="reference internal" href="../apiFortran/baseModules.html#f/fields/dw" title="f/fields/dw"><code class="xref f f-var docutils literal"><span class="pre">dw</span></code></a> is the first derivative of <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/w" title="f/fields/w"><code class="xref f f-var docutils literal"><span class="pre">w</span></code></a>, while <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/ddb" title="f/fields/ddb"><code class="xref f f-var docutils literal"><span class="pre">ddb</span></code></a> is the second
+derivative of <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/b" title="f/fields/b"><code class="xref f f-var docutils literal"><span class="pre">b</span></code></a>.</p>
+<div class="section" id="b-coeff-cmb-tag">
+<span id="seccmbfile"></span><h2><code class="docutils literal"><span class="pre">B_coeff_cmb.TAG</span></code><a class="headerlink" href="#b-coeff-cmb-tag" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-cmb-field"><span>l_cmb_field=.true.</span></a></p>
+</div>
+<p>This file contains time series of spherical harmonic coefficients for the
+poloidal potential of the magnetic field at the outer boundary (CMB) up to a
+spherical harmonic degree given by <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-cmb"><span>l_max_cmb</span></a>.
+The detailed calculations are done in the subroutine <a class="reference internal" href="../apiFortran/IOBinaryOutputs.html#f/out_coeff/write_bcmb" title="f/out_coeff/write_bcmb"><code class="xref f f-subr docutils literal"><span class="pre">write_Bcmb</span></code></a>. The contents of the file look as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Header</strong> The file header consists of the information: <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-cmb"><span>l_max_cmb</span></a>, <a class="reference internal" href="../inputNamelists/gridNamelist.html#varminc"><span>minc</span></a> and the number of data points <code class="docutils literal"><span class="pre">n_data</span></code>.</li>
+<li><strong>Data</strong> Each chunk of data after the header has the same pattern of <code class="docutils literal"><span class="pre">time</span></code> followed by a list of real and imaginary values of coefficients.</li>
+</ul>
+</div></blockquote>
+<p>Thus, on a whole, the structure of the file looks like follows:</p>
+<blockquote>
+<div><div class="highlight-fortran"><div class="highlight"><pre><span class="c">!------------</span>
+<span class="c">! Line 1</span>
+<span class="c">!------------</span>
+
+<span class="n">l_max_cmb</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> <span class="n">n_data</span>
+
+<span class="c">!------------------------------</span>
+<span class="p">...</span>
+
+<span class="c">!------------</span>
+<span class="c">! Line j + 1</span>
+<span class="c">!------------</span>
+
+<span class="nb">time</span><span class="p">(</span><span class="n">j</span><span class="p">),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="p">...</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span>
+
+<span class="p">...</span>
+
+<span class="c">!-------------</span>
+<span class="c">! Line N + 1</span>
+<span class="c">!-------------</span>
+
+<span class="nb">time</span><span class="p">(</span><span class="n">N</span><span class="p">),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="p">...</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">))</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>This file can be read using <a class="reference internal" href="../apiPython/graphMovCoeff.html#magic.coeff.MagicCoeffCmb" title="magic.coeff.MagicCoeffCmb"><code class="xref py py-class docutils literal"><span class="pre">MagicCoeffCmb</span></code></a> with the following options:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># To stack the files B_cmb_coeff.testc to B_cmb_coeff.testf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cmb</span> <span class="o">=</span> <span class="n">MagicCoeffCmb</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s">&#39;test[c-f]&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># print Gauss coefficient for (\ell=10, m=3)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">cmb</span><span class="o">.</span><span class="n">glm</span><span class="p">[:,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="coefficients-at-desired-radii">
+<span id="seccoeffrfiles"></span><h2>Coefficients at desired radii<a class="headerlink" href="#coefficients-at-desired-radii" title="Permalink to this headline">¶</a></h2>
+<p>The following files <strong>[B|V|T]_coeff_r#.TAG</strong> save coefficients at specified
+depths and are written by the subroutine <a class="reference internal" href="../apiFortran/IOBinaryOutputs.html#f/out_coeff/write_coeff_r" title="f/out_coeff/write_coeff_r"><code class="xref f f-subr docutils literal"><span class="pre">write_coeff_r</span></code></a>. See the section on <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#secoutnmlcoeff"><span>CMB and radial
+coefficients</span></a> in the <a class="reference internal" href="../inputNamelists/outNamelist.html#secoutputnml"><span>ouput control namelist</span></a> for details of specifying depth, using <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varn-r-step"><span>n_r_step</span></a> or <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varn-r-array"><span>n_r_array</span></a> and desired maximum degree of
+output <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-r"><span>l_max_r</span></a>. A separate file for each desired radius
+is written, numbered suitably as <code class="docutils literal"><span class="pre">[B|V|T]_coeff_r1.TAG</span></code>,
+<code class="docutils literal"><span class="pre">[B|V|T]_coeff_r2.TAG</span></code> etc.</p>
+</div>
+<div class="section" id="b-coeff-r-tag">
+<span id="secbcoeffrfile"></span><h2><code class="docutils literal"><span class="pre">B_coeff_r#.TAG</span></code><a class="headerlink" href="#b-coeff-r-tag" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-r-field"><span>l_r_field=.true.</span></a>.</p>
+</div>
+<p>This file contains output of time series of the spherical harmonic coefficients
+of the poloidal and toroidal magnetic field potentials and the first and second
+derivatives of the poloidal potential coefficients in the order <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/b" title="f/fields/b"><code class="xref f f-var docutils literal"><span class="pre">b</span></code></a>,
+<a class="reference internal" href="../apiFortran/baseModules.html#f/fields/db" title="f/fields/db"><code class="xref f f-var docutils literal"><span class="pre">db</span></code></a>, <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/aj" title="f/fields/aj"><code class="xref f f-var docutils literal"><span class="pre">aj</span></code></a> and <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/ddb" title="f/fields/ddb"><code class="xref f f-var docutils literal"><span class="pre">ddb</span></code></a>.  The output is for a specific
+radius, <span class="math">\(r\)</span> up to degree <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-cmb"><span>l_max_r</span></a>.</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Header</strong> The file header consists of the information: <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-r"><span>l_max_r</span></a>, <a class="reference internal" href="../inputNamelists/gridNamelist.html#varminc"><span>minc</span></a>,  the number of data points <code class="docutils literal"><span class="pre">n_data</span></code>
+and the radius, <a class="reference internal" href="../apiFortran/precalcModules.html#f/radial_functions/r" title="f/radial_functions/r"><code class="xref f f-var docutils literal"><span class="pre">r</span></code></a>.</li>
+<li><strong>Data</strong> Each chunk of data after the header contains the <code class="docutils literal"><span class="pre">time</span></code> at which
+the coefficients are stored, followed by the real and imaginary parts of:
+the poloidal coefficient <code class="docutils literal"><span class="pre">b</span></code>, it&#8217;s first derivative <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/db" title="f/fields/db"><code class="xref f f-var docutils literal"><span class="pre">db</span></code></a>, the toroidal
+coefficient <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/aj" title="f/fields/aj"><code class="xref f f-var docutils literal"><span class="pre">aj</span></code></a> and the second derivative of the poloidal coefficient
+<a class="reference internal" href="../apiFortran/baseModules.html#f/fields/ddb" title="f/fields/ddb"><code class="xref f f-var docutils literal"><span class="pre">ddb</span></code></a>.</li>
+</ul>
+</div></blockquote>
+<p>The complete structure of the file looks like follows:</p>
+<blockquote>
+<div><div class="highlight-fortran"><div class="highlight"><pre><span class="c">!------------</span>
+<span class="c">! Line 1</span>
+<span class="c">!------------</span>
+
+<span class="n">l_max_r</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> <span class="n">n_data</span><span class="p">,</span> <span class="n">r</span>
+
+<span class="c">!-------------------------------------------</span>
+<span class="p">...</span>
+
+<span class="c">!------------</span>
+<span class="c">! Line j + 1</span>
+<span class="c">!------------</span>
+
+<span class="nb">time</span><span class="p">(</span><span class="n">j</span><span class="p">),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="p">...</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">db</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">db</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">db</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">db</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="p">...</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">db</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">db</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">aj</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">aj</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">aj</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">aj</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="p">...</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">aj</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">aj</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">ddb</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">ddb</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">ddb</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">ddb</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="p">...</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">ddb</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">ddb</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span>
+
+<span class="p">...</span>
+
+<span class="c">!------------</span>
+<span class="c">! Line N + 1</span>
+<span class="c">!------------</span>
+
+<span class="nb">time</span><span class="p">(</span><span class="n">N</span><span class="p">),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="p">...</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">db</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">db</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">db</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">db</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="p">...</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">db</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">db</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">aj</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">aj</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">aj</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">aj</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="p">...</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">aj</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">aj</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">ddb</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">ddb</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">ddb</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">ddb</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="p">...</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">ddb</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">ddb</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">))</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>This file can be read using <a class="reference internal" href="../apiPython/graphMovCoeff.html#magic.coeff.MagicCoeffR" title="magic.coeff.MagicCoeffR"><code class="xref py py-class docutils literal"><span class="pre">MagicCoeffR</span></code></a> with the following options:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># To stack the files B_coeff_r3.test* from the working directory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cr</span> <span class="o">=</span> <span class="n">MagicCoeffR</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s">&#39;test*&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s">&#39;B&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># print the time and the poloidal potential for (\ell=3, m=3)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">cr</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">cr</span><span class="o">.</span><span class="n">wlm</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="v-coeff-r-tag">
+<span id="secvcoeffrfile"></span><h2><code class="docutils literal"><span class="pre">V_coeff_r#.TAG</span></code><a class="headerlink" href="#v-coeff-r-tag" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-r-field"><span>l_r_field=.true.</span></a></p>
+</div>
+<p>This file contains output of time series of the spherical harmonic coefficients
+of the poloidal and toroidal velocity field potentials and the first
+derivatives of the poloidal potential coefficients in the order <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/w" title="f/fields/w"><code class="xref f f-var docutils literal"><span class="pre">w</span></code></a>,
+<a class="reference internal" href="../apiFortran/baseModules.html#f/fields/dw" title="f/fields/dw"><code class="xref f f-var docutils literal"><span class="pre">dw</span></code></a>, and <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/z" title="f/fields/z"><code class="xref f f-var docutils literal"><span class="pre">z</span></code></a>.  The output is for a specific radius, <span class="math">\(r\)</span> up
+to degree <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-cmb"><span>l_max_r</span></a>.</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Header</strong> The file header consists of the information: <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-r"><span>l_max_r</span></a>, <a class="reference internal" href="../inputNamelists/gridNamelist.html#varminc"><span>minc</span></a>,  the number of data points <code class="docutils literal"><span class="pre">n_data</span></code>
+and the radius, <a class="reference internal" href="../apiFortran/precalcModules.html#f/radial_functions/r" title="f/radial_functions/r"><code class="xref f f-var docutils literal"><span class="pre">r</span></code></a>.</li>
+<li><strong>Data</strong> Each chunk of data after the header contains the <code class="docutils literal"><span class="pre">time</span></code> at which
+the coefficients are stored, followed by the real and imaginary parts of:
+the poloidal coefficient <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/w" title="f/fields/w"><code class="xref f f-var docutils literal"><span class="pre">w</span></code></a>, it&#8217;s first derivative <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/dw" title="f/fields/dw"><code class="xref f f-var docutils literal"><span class="pre">dw</span></code></a> and the
+toroidal coefficient <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/z" title="f/fields/z"><code class="xref f f-var docutils literal"><span class="pre">z</span></code></a>.</li>
+</ul>
+</div></blockquote>
+<p>The complete structure of the file looks like follows:</p>
+<blockquote>
+<div><div class="highlight-fortran"><div class="highlight"><pre><span class="c">!------------</span>
+<span class="c">! Line 1</span>
+<span class="c">!------------</span>
+
+<span class="n">l_max_r</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> <span class="n">n_data</span><span class="p">,</span> <span class="n">r</span>
+
+<span class="c">!----------------------------------</span>
+<span class="p">...</span>
+
+<span class="c">!------------</span>
+<span class="c">! Line j + 1</span>
+<span class="c">!------------</span>
+
+<span class="nb">time</span><span class="p">(</span><span class="n">j</span><span class="p">),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">w</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">w</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">w</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">w</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="p">...</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">w</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">w</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">dw</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">dw</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">dw</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">dw</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="p">...</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">dw</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">dw</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">z</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">z</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">z</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">z</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="p">...</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">z</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">z</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span>
+
+<span class="p">...</span>
+
+<span class="c">!--------------</span>
+<span class="c">! Line N + 1</span>
+<span class="c">!--------------</span>
+
+<span class="nb">time</span><span class="p">(</span><span class="n">N</span><span class="p">),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">w</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">w</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">w</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">w</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="p">...</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">w</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">w</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">dw</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">dw</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">dw</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">dw</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="p">...</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">dw</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">dw</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">z</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">z</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">z</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">z</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="p">...</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">z</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">z</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">))</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>This file can be read using <a class="reference internal" href="../apiPython/graphMovCoeff.html#magic.coeff.MagicCoeffR" title="magic.coeff.MagicCoeffR"><code class="xref py py-class docutils literal"><span class="pre">MagicCoeffR</span></code></a> with the following options:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># To stack the files V_coeff_r3.test* from the working directory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cr</span> <span class="o">=</span> <span class="n">MagicCoeffR</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s">&#39;test*&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s">&#39;V&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># print the poloidal and toroidal potentials for (\ell=6, m=0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">cr</span><span class="o">.</span><span class="n">wlm</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">cr</span><span class="o">.</span><span class="n">zlm</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="t-coeff-r-tag">
+<span id="sectcoeffrfile"></span><h2><code class="docutils literal"><span class="pre">T_coeff_r#.TAG</span></code><a class="headerlink" href="#t-coeff-r-tag" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-r-fieldt"><span>l_r_fieldT=.true.</span></a></p>
+</div>
+<p>This file contains output of time series of the spherical harmonic coefficients
+of the temperature (or entropy) field. The output is for a specific radius,
+<span class="math">\(r\)</span> up to degree <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-cmb"><span>l_max_r</span></a>.</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Header</strong> The file header consists of the information: <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-r"><span>l_max_r</span></a>, <a class="reference internal" href="../inputNamelists/gridNamelist.html#varminc"><span>minc</span></a>,  the number of data points <code class="docutils literal"><span class="pre">n_data</span></code>
+and the radius, <a class="reference internal" href="../apiFortran/precalcModules.html#f/radial_functions/r" title="f/radial_functions/r"><code class="xref f f-var docutils literal"><span class="pre">r</span></code></a>.</li>
+<li><strong>Data</strong> Each chunk of data after the header contains the <code class="docutils literal"><span class="pre">time</span></code> at which
+the coefficients are stored, followed by the real and imaginary parts of the
+coefficient <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/s" title="f/fields/s"><code class="xref f f-var docutils literal"><span class="pre">s</span></code></a>.</li>
+</ul>
+</div></blockquote>
+<p>The complete structure of the file looks like follows:</p>
+<blockquote>
+<div><div class="highlight-fortran"><div class="highlight"><pre><span class="c">!------------</span>
+<span class="c">! Line 1</span>
+<span class="c">!------------</span>
+
+<span class="n">l_max_r</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> <span class="n">n_data</span><span class="p">,</span> <span class="n">r</span>
+
+<span class="c">!---------------------------------</span>
+
+<span class="p">...</span>
+
+<span class="c">!------------</span>
+<span class="c">! Line j + 1</span>
+<span class="c">!------------</span>
+
+<span class="nb">time</span><span class="p">(</span><span class="n">j</span><span class="p">),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">s</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">s</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">s</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">s</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">s</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">s</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="p">...</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">s</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">s</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span>
+
+<span class="c">!------------</span>
+<span class="c">! Line N + 1</span>
+<span class="c">!------------</span>
+
+<span class="nb">time</span><span class="p">(</span><span class="n">N</span><span class="p">),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">s</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">s</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">s</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">s</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">s</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">s</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+<span class="p">...</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">s</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span> <span class="nb">imag</span><span class="p">(</span><span class="n">s</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="n">l_max_cmb</span><span class="p">)),</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Poloidal and toroidal potentials at given depths</a><ul>
+<li><a class="reference internal" href="#b-coeff-cmb-tag"><code class="docutils literal"><span class="pre">B_coeff_cmb.TAG</span></code></a></li>
+<li><a class="reference internal" href="#coefficients-at-desired-radii">Coefficients at desired radii</a></li>
+<li><a class="reference internal" href="#b-coeff-r-tag"><code class="docutils literal"><span class="pre">B_coeff_r#.TAG</span></code></a></li>
+<li><a class="reference internal" href="#v-coeff-r-tag"><code class="docutils literal"><span class="pre">V_coeff_r#.TAG</span></code></a></li>
+<li><a class="reference internal" href="#t-coeff-r-tag"><code class="docutils literal"><span class="pre">T_coeff_r#.TAG</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="outRst.html"
+                        title="previous chapter">Restart files <code class="docutils literal"><span class="pre">rst_*.TAG</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="outTOFiles.html"
+                        title="next chapter"><code class="docutils literal"><span class="pre">TO</span></code> outputs</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/outputFiles/outCoeffFiles.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="outTOFiles.html" title="TO outputs"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="outRst.html" title="Restart files rst_*.TAG"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="outFiles.html" >Output files</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

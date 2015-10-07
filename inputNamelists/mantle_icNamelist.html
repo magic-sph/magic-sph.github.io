@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Mantle and Inner Core Namelists &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../contents.html" />
+    <link rel="up" title="Input parameters" href="namelists.html" />
+    <link rel="next" title="Interactive communication with the code using signal.TAG" href="../signalFile.html" />
+    <link rel="prev" title="RMS force balance" href="outputNamelist/outputNmlMisc.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../install.html">Get it/Run it</a></li>
+    <li><a href="../contribute.html">Contribute!</a></li>
+    <li><a href="../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../index.html">
+      <img src="../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../signalFile.html" title="Interactive communication with the code using signal.TAG"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="outputNamelist/outputNmlMisc.html" title="RMS force balance"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="namelists.html" accesskey="U">Input parameters</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mantle-and-inner-core-namelists">
+<h1>Mantle and Inner Core Namelists<a class="headerlink" href="#mantle-and-inner-core-namelists" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="mantle-namelist">
+<span id="secmantle"></span><h2>Mantle Namelist<a class="headerlink" href="#mantle-namelist" title="Permalink to this headline">¶</a></h2>
+<p>This namelist defines mantle properties</p>
+<ul class="simple">
+<li><strong>conductance_ma</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/conductance_ma" title="f/physical_parameters/conductance_ma"><code class="xref f f-var docutils literal"><span class="pre">conductance_ma=0.0</span></code></a>) is a real that defines the conductance (dimensionless) of the mantle.</li>
+</ul>
+<ul class="simple" id="varnrotma">
+<li><strong>nRotMa</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/nrotma" title="f/init_fields/nrotma"><code class="xref f f-var docutils literal"><span class="pre">nRotMa=0</span></code></a>) is an integer that defines the rotation of the mantle:</li>
+</ul>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="88%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>nRotMa=-1</td>
+<td>Mantle rotates with prescribed rate (see <code class="docutils literal"><span class="pre">omega_ma1</span></code>  and <code class="docutils literal"><span class="pre">omega_ma2</span></code> below)</td>
+</tr>
+<tr class="row-even"><td>nRotMa=0</td>
+<td>Fixed, non-rotating mantle</td>
+</tr>
+<tr class="row-odd"><td>nRotMa=1</td>
+<td>Mantle rotates according to torques</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<ul class="simple">
+<li><strong>rho_ratio_ma</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/rho_ratio_ma" title="f/physical_parameters/rho_ratio_ma"><code class="xref f f-var docutils literal"><span class="pre">rho_ratio_ma=1</span></code></a>) is a real which gives the density of the mantle in terms of that of the outer core.</li>
+<li><strong>omega_ma1</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/omega_ma1" title="f/init_fields/omega_ma1"><code class="xref f f-var docutils literal"><span class="pre">omega_ma1=0.0</span></code></a>) is a real which defines a mantle rotation rate (used when <code class="docutils literal"><span class="pre">nRotMa=0</span></code>).</li>
+<li><strong>omegaOsz_ma1</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/omegaosz_ma1" title="f/init_fields/omegaosz_ma1"><code class="xref f f-var docutils literal"><span class="pre">omegaOsz_ma1=0.0</span></code></a>) is a real which prescribes the oscillation frequency of the mantle rotation rate. In this case, <code class="docutils literal"><span class="pre">omega_ma1</span></code> is the amplitude of the oscillation.</li>
+<li><strong>tShift_ma1</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/tshift_ma1" title="f/init_fields/tshift_ma1"><code class="xref f f-var docutils literal"><span class="pre">tShift_ma1=0.0</span></code></a>) is a real which defines the time shift of the mantle rotation rate <code class="docutils literal"><span class="pre">omega_ma1</span></code>.</li>
+<li><strong>omega_ma2</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/omega_ma2" title="f/init_fields/omega_ma2"><code class="xref f f-var docutils literal"><span class="pre">omega_ma2=0.0</span></code></a>) is a real which defines a second mantle rotation rate.</li>
+<li><strong>omegaOsz_ma2</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/omegaosz_ma2" title="f/init_fields/omegaosz_ma2"><code class="xref f f-var docutils literal"><span class="pre">omegaOsz_ma2=0.0</span></code></a>) is a real which defines the oscillation frequency of the second mantle rotation rate <code class="docutils literal"><span class="pre">omega_ma2</span></code>.</li>
+<li><strong>tShift_ma2</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/tshift_ma2" title="f/init_fields/tshift_ma2"><code class="xref f f-var docutils literal"><span class="pre">tShift_ma2=0.0</span></code></a>) is a real which defines the time shift for <code class="docutils literal"><span class="pre">omega_ma2</span></code>.</li>
+</ul>
+<p>The resultant prescribed mantle rotation rate is computed as:</p>
+<div class="highlight-fortran"><div class="highlight"><pre><span class="n">omega_ma</span> <span class="o">=</span> <span class="n">omega_ma1</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">omegaOsz_ma1</span><span class="o">*</span><span class="p">(</span><span class="nb">time</span><span class="o">+</span><span class="n">tShift_ma1</span><span class="p">))</span> <span class="o">+</span> <span class="p">&amp;</span>
+           <span class="n">omega_ma2</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">omegaOsz_ma2</span><span class="o">*</span><span class="p">(</span><span class="nb">time</span><span class="o">+</span><span class="n">tShift_ma2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="inner-core-namelist">
+<span id="secinnercore"></span><h2>Inner Core Namelist<a class="headerlink" href="#inner-core-namelist" title="Permalink to this headline">¶</a></h2>
+<p>This namelist defines properties of the inner core</p>
+<ul class="simple">
+<li><strong>sigma_ratio</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/sigma_ratio" title="f/physical_parameters/sigma_ratio"><code class="xref f f-var docutils literal"><span class="pre">sigma_ratio=0.0</span></code></a>) is a real that defines the conductivity of the inner core with respect to the value of the outer core. <code class="docutils literal"><span class="pre">sigma_ratio=0</span></code> thus corresponds to a non-conducting inner core.</li>
+</ul>
+<ul class="simple" id="varnrotic">
+<li><strong>nRotIc</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/nrotic" title="f/init_fields/nrotic"><code class="xref f f-var docutils literal"><span class="pre">nRotIc=0</span></code></a>) is an integer that defines the rotation of the inner core. Behaves the same way as <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/nrotma" title="f/init_fields/nrotma"><code class="xref f f-var docutils literal"><span class="pre">nRotMa</span></code></a> (above).</li>
+<li><strong>rho_ratio_ic</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/rho_ratio_ic" title="f/physical_parameters/rho_ratio_ic"><code class="xref f f-var docutils literal"><span class="pre">rho_ratio_ic=1.0</span></code></a>) is a real which defines the density of the inner core in terms of that of the outer core.</li>
+<li><strong>BIC</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/grenoble/bic" title="f/grenoble/bic"><code class="xref f f-var docutils literal"><span class="pre">BIC=0.0</span></code></a>) is a real which gives the imposed dipole field strength at the Inner Core Boundary. Having <code class="docutils literal"><span class="pre">BIC</span> <span class="pre">&gt;</span> <span class="pre">0</span></code> implies that the inner core acts as a dipole magnet - as implemented in the DTS experiment at Grenoble, France.</li>
+<li><strong>Variables prescribing rotation rate of inner core</strong> The following variables are used to prescribe rotation rate of the inner core. They behave in the same way as the corresponding variables for the mantle. They are usd only when <code class="docutils literal"><span class="pre">nRotIC=0</span></code>.<ul>
+<li><strong>omega_ic1</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/omega_ic" title="f/fields/omega_ic"><code class="xref f f-var docutils literal"><span class="pre">omega_ic1=0.0</span></code></a>)</li>
+<li><strong>omegaOsz_ic1</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/omegaosz_ic1" title="f/init_fields/omegaosz_ic1"><code class="xref f f-var docutils literal"><span class="pre">omegaOsz_ic1=0.0</span></code></a>)</li>
+<li><strong>tShift_ic1</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/tshift_ic1" title="f/init_fields/tshift_ic1"><code class="xref f f-var docutils literal"><span class="pre">tShift_ic1=0.0</span></code></a>)</li>
+<li><strong>omega_ic2</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/omega_ic2" title="f/init_fields/omega_ic2"><code class="xref f f-var docutils literal"><span class="pre">omega_ic2=0.0</span></code></a>)</li>
+<li><strong>omegaOsz_ic2</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/omegaosz_ic2" title="f/init_fields/omegaosz_ic2"><code class="xref f f-var docutils literal"><span class="pre">omegaOsz_ic2=0.0</span></code></a>)</li>
+<li><strong>tShift_ic2</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/tshift_ic2" title="f/init_fields/tshift_ic2"><code class="xref f f-var docutils literal"><span class="pre">tShift_ic2=0.0</span></code></a>)</li>
+</ul>
+</li>
+</ul>
+<p>As with the mantle, the resultant prescribed rotation rate for the inner core is computed as:</p>
+<div class="highlight-fortran"><div class="highlight"><pre><span class="n">omega_ic</span> <span class="o">=</span> <span class="n">omega_ic1</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">omegaOsz_ic1</span><span class="o">*</span><span class="p">(</span><span class="nb">time</span><span class="o">+</span><span class="n">tShift_ic1</span><span class="p">))</span> <span class="o">+</span> <span class="p">&amp;</span>
+           <span class="n">omega_ic2</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">omegaOsz_ic2</span><span class="o">*</span><span class="p">(</span><span class="nb">time</span><span class="o">+</span><span class="n">tShift_ic2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Mantle and Inner Core Namelists</a><ul>
+<li><a class="reference internal" href="#mantle-namelist">Mantle Namelist</a></li>
+<li><a class="reference internal" href="#inner-core-namelist">Inner Core Namelist</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="outputNamelist/outputNmlMisc.html"
+                        title="previous chapter">RMS force balance</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../signalFile.html"
+                        title="next chapter">Interactive communication with the code using <code class="docutils literal"><span class="pre">signal.TAG</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/inputNamelists/mantle_icNamelist.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../signalFile.html" title="Interactive communication with the code using signal.TAG"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="outputNamelist/outputNmlMisc.html" title="RMS force balance"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="namelists.html" >Input parameters</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

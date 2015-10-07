@@ -1,0 +1,437 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>magic.graph &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../../contents.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../../index.html">Home</a></li>
+    <li><a href="../../install.html">Get it/Run it</a></li>
+    <li><a href="../../contribute.html">Contribute!</a></li>
+    <li><a href="../../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../../index.html">
+      <img src="../../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for magic.graph</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">N</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">.log</span> <span class="kn">import</span> <span class="n">MagicSetup</span>
+<span class="kn">from</span> <span class="nn">.libmagic</span> <span class="kn">import</span> <span class="n">scanDir</span>
+<span class="kn">from</span> <span class="nn">magic.setup</span> <span class="kn">import</span> <span class="n">buildSo</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="k">if</span> <span class="n">buildSo</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">sys</span>
+        <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">magic.greader_single3</span> <span class="kn">as</span> <span class="nn">Gsngl</span>
+            <span class="kn">import</span> <span class="nn">magic.greader_double3</span> <span class="kn">as</span> <span class="nn">Gdble</span>
+        <span class="k">elif</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">magic.greader_single2</span> <span class="kn">as</span> <span class="nn">Gsngl</span>
+            <span class="kn">import</span> <span class="nn">magic.greader_double2</span> <span class="kn">as</span> <span class="nn">Gdble</span>
+        <span class="n">readingMode</span> <span class="o">=</span> <span class="s">&#39;f2py&#39;</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">.npfile</span> <span class="kn">import</span> <span class="o">*</span>
+        <span class="n">readingMode</span> <span class="o">=</span> <span class="s">&#39;python&#39;</span>
+    <span class="c">#print(&#39;read with %s&#39; % readingMode)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.npfile</span> <span class="kn">import</span> <span class="o">*</span>
+    <span class="n">readingMode</span> <span class="o">=</span> <span class="s">&#39;python&#39;</span>
+
+<div class="viewcode-block" id="MagicGraph"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicGraph">[docs]</a><span class="k">class</span> <span class="nc">MagicGraph</span><span class="p">(</span><span class="n">MagicSetup</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class allows to read the 3-D graphic outputs of the MagIC code</span>
+<span class="sd">    (:ref:`G_#.TAG &lt;secGraphFile&gt;` and G_ave.TAG) files. Those are </span>
+<span class="sd">    binary unformatted outputs, there are therefore two ways to load them:</span>
+
+<span class="sd">       * If buildLib=True in magic.cfg and the fortran libraries were correctly</span>
+<span class="sd">         built, then the reader uses a fortran program that is expected to be</span>
+<span class="sd">         much faster than the pure python routine.</span>
+<span class="sd">       * If buildLib=False, then a pure python program is used to read the G</span>
+<span class="sd">         files.</span>
+
+<span class="sd">    &gt;&gt;&gt; # Regular G files</span>
+<span class="sd">    &gt;&gt;&gt; gr = MagicGraph(ivar=1, tag=&#39;N0m2a&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; print(gr.vr.shape) # shape of vr</span>
+<span class="sd">    &gt;&gt;&gt; print(gr.ek) # print ekman number</span>
+<span class="sd">    &gt;&gt;&gt; print(gr.minc) # azimuthal symmetry</span>
+<span class="sd">    &gt;&gt;&gt; # Averaged G file with double precision</span>
+<span class="sd">    &gt;&gt;&gt; gr = MagicGraph(ave=True, tag=&#39;N0m2&#39;, precision=&#39;Float64&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MagicGraph.__init__"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicGraph.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ivar</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s">&#39;.&#39;</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&#39;B&#39;</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> 
+                 <span class="n">ave</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="s">&#39;Float32&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param format: format of binary output: &#39;n&#39; (native), &#39;B&#39; (big endian)</span>
+<span class="sd">                       or &#39;l&#39; (little endian), (default &#39;B&#39;)</span>
+<span class="sd">        :type format: str</span>
+<span class="sd">        :param ave: when set to True, it tries to find an average G file (G_ave.TAG)</span>
+<span class="sd">        :type ave: bool</span>
+<span class="sd">        :param ivar: the number of the G file</span>
+<span class="sd">        :type ivar: int</span>
+<span class="sd">        :param tag: extension TAG of the G file. If not specified, the most recent</span>
+<span class="sd">                    G_#.TAG file found in the directory will be selected.</span>
+<span class="sd">        :type tag: str</span>
+<span class="sd">        :param quiet: when set to True, makes the output silent</span>
+<span class="sd">        :type quiet: bool</span>
+<span class="sd">        :param datadir: directory of the G file (default is . )</span>
+<span class="sd">        :type datadir: str</span>
+<span class="sd">        :param precision: single or double precision (default &#39;Float32&#39;)</span>
+<span class="sd">        :type precision: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">=</span> <span class="n">precision</span>
+
+        <span class="k">if</span> <span class="n">ave</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;G_ave&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;G_&#39;</span>
+
+        <span class="k">if</span> <span class="n">tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ivar</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="nb">file</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s%i</span><span class="s">.</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">ivar</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="nb">file</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">files</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">*</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">tag</span><span class="p">))</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="n">files</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s">&#39;No such tag... try again&#39;</span><span class="p">)</span>
+                    <span class="k">return</span>
+
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&#39;log.</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">tag</span><span class="p">):</span>
+                <span class="n">MagicSetup</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="n">datadir</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                    <span class="n">nml</span><span class="o">=</span><span class="s">&#39;log.</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">tag</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ivar</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">files</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s%i</span><span class="s">*&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">ivar</span><span class="p">))</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="n">files</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">files</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">*&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="n">files</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="c"># Determine the setup</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;.*\.(.*)&#39;</span><span class="p">)</span>
+            <span class="n">ending</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">groups</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&#39;log.</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">ending</span><span class="p">):</span>
+                <span class="n">MagicSetup</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="n">datadir</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                    <span class="n">nml</span><span class="o">=</span><span class="s">&#39;log.</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">ending</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&#39;No such file&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="n">readingMode</span> <span class="o">!=</span> <span class="s">&#39;python&#39;</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">==</span> <span class="s">&#39;Float32&#39;</span><span class="p">:</span>
+                <span class="n">G</span> <span class="o">=</span> <span class="n">Gsngl</span><span class="o">.</span><span class="n">greader_single</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">==</span> <span class="s">&#39;Float64&#39;</span><span class="p">:</span>
+                <span class="n">G</span> <span class="o">=</span> <span class="n">Gdble</span><span class="o">.</span><span class="n">greader_double</span>
+
+            <span class="n">G</span><span class="o">.</span><span class="n">readg</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nr</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">nr</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ntheta</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">nt</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">npI</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">np</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">minc</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">time</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ra</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">ra</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ek</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">ek</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pr</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">pr</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prmag</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">prmag</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">radratio</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">sigma</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">npI</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntheta</span><span class="o">*</span><span class="mi">2</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">npI</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nphi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span> <span class="o">+</span><span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">radius</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">colatitude</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">colat</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">entropy</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">entropy</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vr</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">vr</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vtheta</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">vt</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vphi</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">vp</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prmag</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Br</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">br</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Btheta</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">bt</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Bphi</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">bp</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c">#read data</span>
+            <span class="n">inline</span> <span class="o">=</span> <span class="n">npfile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="n">format</span><span class="p">)</span>
+
+            <span class="c"># read the header</span>
+            <span class="n">version</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="s">&#39;|S20&#39;</span><span class="p">)</span>
+            <span class="n">runID</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="s">&#39;|S64&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">n_r_max</span><span class="p">,</span> <span class="n">n_theta_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">,</span> <span class="n">n_r_ic_max</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> <span class="n">nThetaBs</span><span class="p">,</span> \
+                  <span class="bp">self</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ek</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prmag</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> \
+                  <span class="bp">self</span><span class="o">.</span><span class="n">sigma_ratio</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">nr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_r_max</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ntheta</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_theta_max</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">npI</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">minc</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">minc</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">npI</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntheta</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">npI</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nr_ic</span> <span class="o">=</span> <span class="n">n_r_ic_max</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nThetaBs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">nThetaBs</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">quiet</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&#39;Rayleigh = </span><span class="si">%.1e</span><span class="s">, Ekman = </span><span class="si">%.1e</span><span class="s">, Prandtl = </span><span class="si">%.1e</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span> 
+                              <span class="bp">self</span><span class="o">.</span><span class="n">ek</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="p">))</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&#39;nr = </span><span class="si">%i</span><span class="s">, nth = </span><span class="si">%i</span><span class="s">, nphi = </span><span class="si">%i</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> 
+                              <span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">colatitude</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nr</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">)</span>
+
+            <span class="n">entropy</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nr</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">)</span>
+            <span class="n">vr</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">entropy</span><span class="p">)</span>
+            <span class="n">vtheta</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">entropy</span><span class="p">)</span>
+            <span class="n">vphi</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">entropy</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prmag</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">Br</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">entropy</span><span class="p">)</span>
+                <span class="n">Btheta</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">entropy</span><span class="p">)</span>
+                <span class="n">Bphi</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">entropy</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_r_max</span><span class="o">*</span><span class="n">nThetaBs</span><span class="p">):</span>
+                <span class="c"># radius and Thetas in this block</span>
+                <span class="n">ir</span><span class="p">,</span> <span class="n">rad</span><span class="p">,</span> <span class="n">ilat1</span><span class="p">,</span> <span class="n">ilat2</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">)</span>
+                <span class="n">ir</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ir</span><span class="p">)</span>
+                <span class="n">ilat1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ilat1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="n">ilat2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ilat2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">rad</span>
+                <span class="n">nth_loc</span> <span class="o">=</span> <span class="n">ilat2</span> <span class="o">-</span> <span class="n">ilat1</span> <span class="o">+</span> <span class="mi">1</span>
+
+                <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="s">&#39;Graphout_Version_9  &#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prmag</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nth_loc</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">))</span>
+                        <span class="n">entropy</span><span class="p">[:,</span><span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">T</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nth_loc</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">))</span>
+                        <span class="n">vr</span><span class="p">[:,</span><span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">T</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nth_loc</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">))</span>
+                        <span class="n">vtheta</span><span class="p">[:,</span><span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">T</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nth_loc</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">))</span>
+                        <span class="n">vphi</span><span class="p">[:,</span><span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">T</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nth_loc</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">))</span>
+                        <span class="n">Br</span><span class="p">[:,</span><span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">T</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nth_loc</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">))</span>
+                        <span class="n">Btheta</span><span class="p">[:,</span><span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">T</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nth_loc</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">))</span>
+                        <span class="n">Bphi</span><span class="p">[:,</span><span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">T</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c"># vectorize</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nth_loc</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">))</span>
+                        <span class="n">entropy</span><span class="p">[:,</span><span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">T</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nth_loc</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">))</span>
+                        <span class="n">vr</span><span class="p">[:,</span><span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">T</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nth_loc</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">))</span>
+                        <span class="n">vtheta</span><span class="p">[:,</span><span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">T</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nth_loc</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">))</span>
+                        <span class="n">vphi</span><span class="p">[:,</span><span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">T</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prmag</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="c"># To vectorize, one must also read the end-of-line symbol that</span>
+                        <span class="c"># accounts for 2 additionnal floats</span>
+                        <span class="c"># For the last line of the chunk, we should not read the last symbol</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span>
+                                                <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">nth_loc</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span>
+                        <span class="c"># Add 2 zeros for the last lines</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mf">0.</span><span class="p">)</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mf">0.</span><span class="p">)</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">7</span><span class="p">,</span> <span class="n">nth_loc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="o">+</span><span class="mi">2</span><span class="p">))</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,:,:</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+                        <span class="n">entropy</span><span class="p">[:,</span><span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+                        <span class="n">vr</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+                        <span class="n">vtheta</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+                        <span class="n">vphi</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+                        <span class="n">Br</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+                        <span class="n">Btheta</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+                        <span class="n">Bphi</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span>
+                                                <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">nth_loc</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span>
+                        <span class="c"># Add 2 zeros for the last lines</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mf">0.</span><span class="p">)</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mf">0.</span><span class="p">)</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="n">nth_loc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="o">+</span><span class="mi">2</span><span class="p">))</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,:,:</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+                        <span class="n">entropy</span><span class="p">[:,</span><span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+                        <span class="n">vr</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+                        <span class="n">vtheta</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+                        <span class="n">vphi</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+
+            <span class="n">inline</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="c"># Sorting of data (strange hemispherical way that the magic</span>
+            <span class="c"># code uses</span>
+            <span class="n">entropy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rearangeLat</span><span class="p">(</span><span class="n">entropy</span><span class="p">)</span>
+            <span class="n">vr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rearangeLat</span><span class="p">(</span><span class="n">vr</span><span class="p">)</span>
+            <span class="n">vtheta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rearangeLat</span><span class="p">(</span><span class="n">vtheta</span><span class="p">)</span>
+            <span class="n">vphi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rearangeLat</span><span class="p">(</span><span class="n">vphi</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prmag</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">Br</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rearangeLat</span><span class="p">(</span><span class="n">Br</span><span class="p">)</span>
+                <span class="n">Btheta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rearangeLat</span><span class="p">(</span><span class="n">Btheta</span><span class="p">)</span>
+                <span class="n">Bphi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rearangeLat</span><span class="p">(</span><span class="n">Bphi</span><span class="p">)</span>
+
+            <span class="c"># Normalise r</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">)</span>
+            <span class="n">r_cmb</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">)</span>
+            <span class="n">r_icb</span> <span class="o">=</span> <span class="n">r_cmb</span> <span class="o">-</span> <span class="mf">1.</span>
+
+            <span class="c"># Full solution by repeating minc times the structure</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nphi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">npI</span> <span class="o">+</span><span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">entropy</span> <span class="o">=</span> <span class="n">entropy</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vr</span> <span class="o">=</span> <span class="n">vr</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vtheta</span> <span class="o">=</span> <span class="n">vtheta</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vphi</span> <span class="o">=</span> <span class="n">vphi</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prmag</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Br</span> <span class="o">=</span> <span class="n">Br</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Btheta</span> <span class="o">=</span> <span class="n">Btheta</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Bphi</span> <span class="o">=</span> <span class="n">Bphi</span>
+</div>
+<div class="viewcode-block" id="MagicGraph.rearangeLat"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicGraph.rearangeLat">[docs]</a>    <span class="k">def</span> <span class="nf">rearangeLat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is used to unfold the colatitudes</span>
+
+<span class="sd">        :param field: input array with MagIC ordering of colatitudes (i.e.</span>
+<span class="sd">                      successively Northern Hemisphere and Southern </span>
+<span class="sd">                      Hemisphere)</span>
+<span class="sd">        :type field: numpy.ndarray</span>
+<span class="sd">        :return: an array with the regular ordering of the colatitudes</span>
+<span class="sd">        :rtype: numpy.ndarray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">even</span> <span class="o">=</span> <span class="n">field</span><span class="p">[:,</span> <span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="p">:]</span> 
+        <span class="n">odd</span> <span class="o">=</span> <span class="n">field</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="k">return</span> <span class="n">N</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">even</span><span class="p">,</span> <span class="n">odd</span><span class="p">[:,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

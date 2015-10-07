@@ -1,0 +1,302 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>TO outputs &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../contents.html" />
+    <link rel="up" title="Output files" href="outFiles.html" />
+    <link rel="next" title="Radial spectra rB[r|p]Spec.TAG" href="outRSpecFiles.html" />
+    <link rel="prev" title="Poloidal and toroidal potentials at given depths" href="outCoeffFiles.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../install.html">Get it/Run it</a></li>
+    <li><a href="../contribute.html">Contribute!</a></li>
+    <li><a href="../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../index.html">
+      <img src="../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="outRSpecFiles.html" title="Radial spectra rB[r|p]Spec.TAG"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="outCoeffFiles.html" title="Poloidal and toroidal potentials at given depths"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="outFiles.html" accesskey="U">Output files</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="to-outputs">
+<span id="sectooutputfiles"></span><h1><code class="docutils literal"><span class="pre">TO</span></code> outputs<a class="headerlink" href="#to-outputs" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">These output files are <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlTO.html#varl-to"><span>l_TO=.true.</span></a></p>
+</div>
+<div class="section" id="toz-tag-and-tozm-tag">
+<h2><code class="docutils literal"><span class="pre">TOZ_#.TAG</span></code> and <code class="docutils literal"><span class="pre">TOZM.TAG</span></code><a class="headerlink" href="#toz-tag-and-tozm-tag" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="to-mov-tag-files">
+<span id="secto-moviefile"></span><h2><code class="docutils literal"><span class="pre">TO_mov.TAG</span></code> files<a class="headerlink" href="#to-mov-tag-files" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlTO.html#varl-tomovie"><span>l_TOmovie=.true.</span></a></p>
+</div>
+<p>This file contains the time evolution of the different forces that enter the
+phi-average of the azimuthal component of the Navier-Stokes equation. This is a
+special kind of <a class="reference internal" href="outMovie.html#secmoviefile"><span>movie file</span></a> that contains seven different
+azimuthally-averaged fields in a <span class="math">\((r,\theta)\)</span> plane : the axisymmetric
+zonal flow component , the azimuthal component of the Reynolds stresses, the
+azimuthal component of advection, the azimuthal component of viscosity, the
+azimuthal component of Lorentz force, the azimuthal component of Coriolis force
+and the azimuthal component of the time-derivative. The structure of the file
+is similar to a <a class="reference internal" href="outMovie.html#secmoviefile"><span>movie file</span></a>, i.e. an unformatted fortran binary
+file with a header that describes the type of the movie file. The detailed calculations
+can be found in the subroutine <a class="reference internal" href="../apiFortran/IOAdd.html#f/outto_mod/outto" title="f/outto_mod/outto"><code class="xref f f-subr docutils literal"><span class="pre">outTO</span></code></a>.</p>
+<p>On a whole, the structure of the file looks like follows:</p>
+<blockquote>
+<div><div class="highlight-fortran"><div class="highlight"><pre><span class="c">!----------</span>
+<span class="c">! Line 1</span>
+<span class="c">!----------</span>
+
+<span class="n">version</span>
+
+<span class="c">!----------</span>
+<span class="c">! Line 2</span>
+<span class="c">!----------</span>
+
+<span class="n">n_type</span><span class="p">,</span> <span class="n">n_surface</span><span class="p">,</span> <span class="n">const</span><span class="p">,</span> <span class="n">n_fields</span>
+
+<span class="c">!----------</span>
+<span class="c">! Line 3</span>
+<span class="c">!----------</span>
+
+<span class="n">runid</span>
+
+<span class="c">!----------</span>
+<span class="c">! Line 4</span>
+<span class="c">!----------</span>
+
+<span class="n">n_r_movie_max</span><span class="p">,</span> <span class="n">n_r_max</span><span class="p">,</span> <span class="n">n_theta_max</span><span class="p">,</span> <span class="n">n_phi_tot</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> <span class="n">ra</span><span class="p">,</span> <span class="n">ek</span><span class="p">,</span> <span class="n">pr</span><span class="p">,</span> <span class="n">prmag</span><span class="p">,</span> <span class="n">radratio</span><span class="p">,</span> <span class="n">tScale</span>
+
+<span class="c">!----------</span>
+<span class="c">! Line 5</span>
+<span class="c">!----------</span>
+
+<span class="n">r</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">r</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="p">...,</span> <span class="n">r</span><span class="p">(</span><span class="n">n_r_movie_max</span><span class="p">)</span>
+
+<span class="c">!----------</span>
+<span class="c">! Line 6</span>
+<span class="c">!----------</span>
+
+<span class="n">theta</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">theta</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="p">...,</span> <span class="n">theta</span><span class="p">(</span><span class="n">n_theta_max</span><span class="p">)</span>
+
+<span class="c">!----------</span>
+<span class="c">! Line 7</span>
+<span class="c">!----------</span>
+
+<span class="n">phi</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">phi</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="p">...,</span> <span class="n">phi</span><span class="p">(</span><span class="n">n_theta_max</span><span class="p">)</span>
+
+<span class="p">...</span>
+
+<span class="c">!----------</span>
+<span class="c">! Line 7+N</span>
+<span class="c">!----------</span>
+
+<span class="n">n_frame</span><span class="p">,</span> <span class="n">t_movie</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">omega_ic</span><span class="p">,</span> <span class="n">omega_ma</span><span class="p">,</span> <span class="n">dipLat</span><span class="p">,</span> <span class="n">dipLon</span><span class="p">,</span> <span class="n">dipStr</span><span class="p">,</span> <span class="n">dipStrGeo</span>
+
+<span class="c">!----------</span>
+<span class="c">! Line 7+(N+1)</span>
+<span class="c">!----------</span>
+
+<span class="n">vphi</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">t_movie</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="n">phi</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">theta</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+<span class="n">vphi</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">t_movie</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="n">phi</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">theta</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+<span class="p">...,</span>
+<span class="n">vphi</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">t_movie</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="n">phi</span><span class="o">=</span><span class="n">n_phi_max</span><span class="p">,</span><span class="n">theta</span><span class="o">=</span><span class="n">n_theta_max</span><span class="p">)</span>
+
+<span class="c">!----------</span>
+<span class="c">! Line 7+(N+2)</span>
+<span class="c">!----------</span>
+
+<span class="n">rey</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">t_movie</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="n">phi</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">theta</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+<span class="n">rey</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">t_movie</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="n">phi</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">theta</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+<span class="p">...,</span>
+<span class="n">rey</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">t_movie</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="n">phi</span><span class="o">=</span><span class="n">n_phi_max</span><span class="p">,</span><span class="n">theta</span><span class="o">=</span><span class="n">n_theta_max</span><span class="p">)</span>
+
+<span class="p">...</span>
+
+<span class="c">!----------</span>
+<span class="c">! Line 7+(N+7)</span>
+<span class="c">!----------</span>
+
+<span class="n">dtVphi</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">t_movie</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="n">phi</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">theta</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+<span class="n">dtVphi</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">t_movie</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="n">phi</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">theta</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+<span class="p">...,</span>
+<span class="n">dtVphi</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">t_movie</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="n">phi</span><span class="o">=</span><span class="n">n_phi_max</span><span class="p">,</span><span class="n">theta</span><span class="o">=</span><span class="n">n_theta_max</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>This file can be read using <a class="reference internal" href="../apiPython/outTO.html#magic.TOMovie" title="magic.TOMovie"><code class="xref py py-class docutils literal"><span class="pre">TOMovie</span></code></a> with the following options:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># To load &#39;TO_mov.test&#39; and time-average it:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">to</span> <span class="o">=</span> <span class="n">TOMOvie</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s">&#39;TO_mov.test&#39;</span><span class="p">,</span> <span class="n">avg</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">65</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s">&#39;seismic&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="docutils literal"><span class="pre">TO</span></code> outputs</a><ul>
+<li><a class="reference internal" href="#toz-tag-and-tozm-tag"><code class="docutils literal"><span class="pre">TOZ_#.TAG</span></code> and <code class="docutils literal"><span class="pre">TOZM.TAG</span></code></a></li>
+<li><a class="reference internal" href="#to-mov-tag-files"><code class="docutils literal"><span class="pre">TO_mov.TAG</span></code> files</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="outCoeffFiles.html"
+                        title="previous chapter">Poloidal and toroidal potentials at given depths</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="outRSpecFiles.html"
+                        title="next chapter">Radial spectra <code class="docutils literal"><span class="pre">rB[r|p]Spec.TAG</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/outputFiles/outTOFiles.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="outRSpecFiles.html" title="Radial spectra rB[r|p]Spec.TAG"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="outCoeffFiles.html" title="Poloidal and toroidal potentials at given depths"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="outFiles.html" >Output files</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

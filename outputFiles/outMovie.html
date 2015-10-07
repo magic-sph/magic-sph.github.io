@@ -1,0 +1,356 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Movie files *_mov.TAG &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../contents.html" />
+    <link rel="up" title="Output files" href="outFiles.html" />
+    <link rel="next" title="Restart files rst_*.TAG" href="outRst.html" />
+    <link rel="prev" title="Graphic files G_#.TAG and G_ave.TAG" href="outGraph.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../install.html">Get it/Run it</a></li>
+    <li><a href="../contribute.html">Contribute!</a></li>
+    <li><a href="../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../index.html">
+      <img src="../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="outRst.html" title="Restart files rst_*.TAG"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="outGraph.html" title="Graphic files G_#.TAG and G_ave.TAG"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="outFiles.html" accesskey="U">Output files</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="movie-files-mov-tag">
+<span id="secmoviefile"></span><h1>Movie files <code class="docutils literal"><span class="pre">*_mov.TAG</span></code><a class="headerlink" href="#movie-files-mov-tag" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">These files are written <strong>only</strong> when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlStd.html#varl-movie"><span>l_movie = .true.</span></a> or when a finite number of movie frames are asked for using the
+input parameters described in the <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlStd.html#secmoviestdin"><span>standard inputs section</span></a> of the <a class="reference internal" href="../inputNamelists/outNamelist.html#secoutputnml"><span>output control namelist</span></a>.</p>
+</div>
+<p>These are unformatted fortran files containing time evolution of fields on
+different surfaces - constant radius, colatitude or azimuth or on the full 3D
+grid. The fields can be of various types like radial magnetic field or
+velocity, entropy, helicity etc. The type of field and the type of surface can
+be specified using a string that begins with the field name, followed by the
+surface type (or &#8216;full 3D&#8217;, when a 3D movie is desired). One such example is as
+follows:</p>
+<blockquote>
+<div><div class="highlight-fortran"><div class="highlight"><pre><span class="n">l_movie</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.,</span>
+<span class="n">n_movie_frames</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+<span class="n">movie</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="s2">&quot;B r r=0.5&quot;</span><span class="p">,</span>
+<span class="n">movie</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="s2">&quot;V all 3D&quot;</span><span class="p">,</span>
+<span class="n">movie</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="s2">&quot;Hel Eq&quot;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>The code does not interpret any whitespaces and is not case-sensitive so
+there&#8217;s no difference between, say, <code class="docutils literal"><span class="pre">B</span> <span class="pre">r</span> <span class="pre">cmb</span></code> and <code class="docutils literal"><span class="pre">brcmb</span></code>. For further
+details and a list of keywords for different fields and surfaces, please refer
+to the <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlStd.html#varmovie"><span>movie</span></a> in the <a class="reference internal" href="../inputNamelists/outNamelist.html#secoutputnml"><span>output control namelist</span></a>.</p>
+<p>These files are written by the subroutine <a class="reference internal" href="../apiFortran/IOBinaryOutputs.html#f/out_movie/write_movie_frame" title="f/out_movie/write_movie_frame"><code class="xref f f-subr docutils literal"><span class="pre">write_movie_frame</span></code></a>.</p>
+<p>The movie files are suitably named to reflect the type of field and surface. Their names begin
+with the keyword for the type of movie asked for, followed by the type of surface, followed by the word &#8216;mov&#8217;.
+Thus, a generic movie name looks like:</p>
+<blockquote>
+<div><code class="docutils literal"><span class="pre">Keyword_SurType_mov.TAG</span></code></div></blockquote>
+<p>E.g: if one asks for the radial component of magnetic field on surface of CMB, the movie would be named as <code class="docutils literal"><span class="pre">Br_CMB_mov.TAG</span></code>.</p>
+<p>When asks multiple movies for same surface types but different surface levels, the surfaces are numbered with integers. Thus, for the following namelist input,</p>
+<blockquote>
+<div><div class="highlight-fortran"><div class="highlight"><pre><span class="n">l_movie</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.,</span>
+<span class="n">n_movie_frames</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+<span class="n">movie</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="s2">&quot;B r r=0.5&quot;</span><span class="p">,</span>
+<span class="n">movie</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="s2">&quot;V p r=0.5&quot;</span><span class="p">,</span>
+<span class="n">movie</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="s2">&quot;V r r=0.8&quot;</span><span class="p">,</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>one would get the following movie files as output:</p>
+<blockquote>
+<div><div class="highlight-fortran"><div class="highlight"><pre><span class="n">Br_R</span><span class="o">=</span><span class="n">C1_mov</span><span class="p">.</span><span class="n">TAG</span>
+<span class="n">Vp_R</span><span class="o">=</span><span class="n">C1_mov</span><span class="p">.</span><span class="n">TAG</span>
+<span class="n">Vr_R</span><span class="o">=</span><span class="n">C2_mov</span><span class="p">.</span><span class="n">TAG</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>The structure of a generic movie file is as follows:</p>
+<blockquote>
+<div><div class="highlight-fortran"><div class="highlight"><pre><span class="c">!-------</span>
+<span class="c">! Line 1</span>
+<span class="c">!-------</span>
+
+<span class="n">version</span>                       <span class="c">!Movie version: &#39;JW_Movie_Version_2&#39;</span>
+
+<span class="c">!-------</span>
+<span class="c">! Line 2</span>
+<span class="c">!-------</span>
+
+<span class="n">n_type</span><span class="p">,</span> <span class="n">n_surface</span><span class="p">,</span>            <span class="c">!Type of movie,</span>
+<span class="n">const</span><span class="p">,</span> <span class="n">n_fields</span>               <span class="c">!Type of surface (r,theta,phi,CMB,Eq etc.)</span>
+
+<span class="c">!-------</span>
+<span class="c">! Line 3</span>
+<span class="c">!-------</span>
+
+<span class="n">n_movie_field_type</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n_fields</span><span class="p">,</span> <span class="n">n_movie</span><span class="p">)</span> <span class="c">!Type of fields (velocity,</span>
+                                        <span class="c">!mag field, vorticity etc.)</span>
+<span class="c">!-------</span>
+<span class="c">! Line 4</span>
+<span class="c">!-------</span>
+
+<span class="n">runid</span>
+
+<span class="c">!-------</span>
+<span class="c">! Line 5</span>
+<span class="c">!-------</span>
+
+<span class="n">n_r_mov_tot</span><span class="p">,</span> <span class="n">n_r_max</span><span class="p">,</span>          <span class="c">!Total number of</span>
+<span class="n">n_theta_max</span><span class="p">,</span> <span class="n">n_phi_max</span><span class="p">,</span>        <span class="c">!radial grid points (including IC),</span>
+<span class="n">minc</span><span class="p">,</span> <span class="n">ra</span><span class="p">,</span> <span class="n">ek</span><span class="p">,</span> <span class="n">pr</span><span class="p">,</span> <span class="n">prmag</span><span class="p">,</span>       <span class="c">!grid data, physical parameters</span>
+<span class="n">radratio</span><span class="p">,</span> <span class="n">tScale</span>
+
+<span class="c">!-------</span>
+<span class="c">! Line 6</span>
+<span class="c">!-------</span>
+
+<span class="n">r_mov_tot</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n_r_mov_tot</span><span class="p">)</span><span class="o">/</span><span class="n">r_cmb</span> <span class="c">!All radii in terms of r_CMB</span>
+
+<span class="c">!-------</span>
+<span class="c">! Line 7</span>
+<span class="c">!-------</span>
+
+<span class="n">theta</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n_theta_max</span><span class="p">)</span>           <span class="c">!All theta points</span>
+
+<span class="c">!-------</span>
+<span class="c">! Line 8</span>
+<span class="c">!-------</span>
+
+<span class="n">phi</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n_phi_max</span><span class="p">)</span>               <span class="c">!All phi points</span>
+
+<span class="c">!-------------------------------------------------------------------</span>
+
+<span class="c">!---------</span>
+<span class="c">! Frame N</span>
+<span class="c">!---------</span>
+
+<span class="c">!-----------</span>
+<span class="c">! Line 8 + N</span>
+<span class="c">!-----------</span>
+
+<span class="n">n_frame</span><span class="p">,</span> <span class="n">t_movie</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">omega_ic</span><span class="p">,</span> <span class="n">omega_ma</span><span class="p">,</span> <span class="n">dipLat</span><span class="p">,</span> <span class="n">dipLon</span><span class="p">,</span> <span class="n">dipStr</span><span class="p">,</span> <span class="n">dipStrGeo</span>
+
+<span class="c">!---------------</span>
+<span class="c">! Line 8 + (N+1)</span>
+<span class="c">!---------------</span>
+
+<span class="n">frame_data</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n_fields</span><span class="p">,</span><span class="n">n_start</span><span class="p">:</span><span class="n">n_stop</span><span class="p">)</span>  <span class="c">!Desired field data on a</span>
+                                       <span class="c">!surface or 3D volume</span>
+                                       <span class="c">!n_start = start index of a field</span>
+                                       <span class="c">!n_stop  = last index of a field</span>
+
+<span class="c">!-----------</span>
+<span class="c">! Frame N+1</span>
+<span class="c">!-----------</span>
+
+<span class="c">!---------------</span>
+<span class="c">! Line 8 + (N+2)</span>
+<span class="c">!---------------</span>
+
+<span class="n">n_frame</span><span class="p">,</span> <span class="n">t_movie</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">omega_ic</span><span class="p">,</span> <span class="n">omega_ma</span><span class="p">,</span> <span class="n">dipLat</span><span class="p">,</span> <span class="n">dipLon</span><span class="p">,</span> <span class="n">dipStr</span><span class="p">,</span> <span class="n">dipStrGeo</span>
+
+<span class="c">!---------------</span>
+<span class="c">! Line 8 + (N+3)</span>
+<span class="c">!---------------</span>
+
+<span class="n">frame_data</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n_fields</span><span class="p">,</span><span class="n">n_start</span><span class="p">:</span><span class="n">n_stop</span><span class="p">)</span>  <span class="c">!Desired field data on a</span>
+                                       <span class="c">!surface or 3D volume</span>
+                                       <span class="c">!n_start = start index of a field</span>
+                                       <span class="c">!n_stop  = last index of a field</span>
+
+<span class="p">...</span>
+
+<span class="c">!-----------</span>
+<span class="c">! Frame N+M                            !M is the desired number of movie frames</span>
+<span class="c">!-----------</span>
+
+<span class="c">!---------------</span>
+<span class="c">! Line 8 + (N+M)</span>
+<span class="c">!---------------</span>
+
+<span class="n">n_frame</span><span class="p">,</span> <span class="n">t_movie</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="n">M</span><span class="p">),</span> <span class="n">omega_ic</span><span class="p">,</span> <span class="n">omega_ma</span><span class="p">,</span> <span class="n">dipLat</span><span class="p">,</span> <span class="n">dipLon</span><span class="p">,</span> <span class="n">dipStr</span><span class="p">,</span> <span class="n">dipStrGeo</span>
+
+<span class="c">!---------------</span>
+<span class="c">! Line 8 + (N+M)</span>
+<span class="c">!---------------</span>
+
+<span class="n">frame_data</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n_fields</span><span class="p">,</span><span class="n">n_start</span><span class="p">:</span><span class="n">n_stop</span><span class="p">)</span>  <span class="c">!Desired field data on a</span>
+                                       <span class="c">!surface or 3D volume</span>
+                                       <span class="c">!n_start = start index of a field</span>
+                                       <span class="c">!n_stop  = last index of a field</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>The 2D movie files can be read and displayed using the python class <a class="reference internal" href="../apiPython/graphMovCoeff.html#magic.Movie" title="magic.Movie"><code class="xref py py-class docutils literal"><span class="pre">Movie</span></code></a> as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Movie</span><span class="p">()</span>   <span class="c">#Lists out available movie files to choose from</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">M</span> <span class="o">=</span> <span class="n">Movie</span><span class="p">(</span><span class="nb">file</span> <span class="o">=</span> <span class="s">&#39;Vr_R=C1_mov.TAG&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The 3D movie files can be read using the python class <a class="reference internal" href="../apiPython/graphMovCoeff.html#magic.Movie3D" title="magic.Movie3D"><code class="xref py py-class docutils literal"><span class="pre">Movie3D</span></code></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">M</span> <span class="o">=</span> <span class="n">Movie3D</span><span class="p">(</span><span class="nb">file</span> <span class="o">=</span> <span class="s">&#39;V_3D_mov.TAG&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="outGraph.html"
+                        title="previous chapter">Graphic files <code class="docutils literal"><span class="pre">G_#.TAG</span></code> and <code class="docutils literal"><span class="pre">G_ave.TAG</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="outRst.html"
+                        title="next chapter">Restart files <code class="docutils literal"><span class="pre">rst_*.TAG</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/outputFiles/outMovie.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="outRst.html" title="Restart files rst_*.TAG"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="outGraph.html" title="Graphic files G_#.TAG and G_ave.TAG"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="outFiles.html" >Output files</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

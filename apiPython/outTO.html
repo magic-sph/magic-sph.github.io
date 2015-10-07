@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Support for TO outputs &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../contents.html" />
+    <link rel="up" title="Data visualisation and post-processing" href="../postProc.html" />
+    <link rel="next" title="Run comparison" href="runComparison.html" />
+    <link rel="prev" title="Support for G_#.TAG files" href="graphMovCoeff.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../install.html">Get it/Run it</a></li>
+    <li><a href="../contribute.html">Contribute!</a></li>
+    <li><a href="../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../index.html">
+      <img src="../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="runComparison.html" title="Run comparison"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="graphMovCoeff.html" title="Support for G_#.TAG files"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../postProc.html" accesskey="U">Data visualisation and post-processing</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="support-for-to-outputs">
+<span id="secpythonto"></span><h1>Support for <code class="docutils literal"><span class="pre">TO</span></code> outputs<a class="headerlink" href="#support-for-to-outputs" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="magic.TOMovie">
+<em class="property">class </em><code class="descclassname">magic.</code><code class="descname">TOMovie</code><span class="sig-paren">(</span><em>file=None</em>, <em>iplot=True</em>, <em>cm='RdYlBu_r'</em>, <em>cut=0.8</em>, <em>levels=16</em>, <em>avg=True</em>, <em>precision='Float32'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/toMovie.html#TOMovie"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.TOMovie" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class allows to read and display the <a class="reference internal" href="../outputFiles/outTOFiles.html#secto-moviefile"><span>TO_mov.TAG</span></a> 
+generated when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlTO.html#varl-tomovie"><span>l_TOmovie=.true.</span></a> is True.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># This will allow you to pick up one TO_mov files among the existing ones</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">TOMovie</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Read TO_mov.N0m2, time-averaged it and display it with 65 contour levels</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">TOMovie</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s">&#39;TO_mov.N0m2&#39;</span><span class="p">,</span> <span class="n">avg</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">65</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s">&#39;seismic&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="magic.TOMovie.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>file=None</em>, <em>iplot=True</em>, <em>cm='RdYlBu_r'</em>, <em>cut=0.8</em>, <em>levels=16</em>, <em>avg=True</em>, <em>precision='Float32'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/toMovie.html#TOMovie.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.TOMovie.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>file</strong> (<em>str</em>) &#8211; the filename of the TO_mov file</li>
+<li><strong>cmap</strong> (<em>str</em>) &#8211; the name of the color map</li>
+<li><strong>levels</strong> (<em>int</em>) &#8211; the number of contour levels</li>
+<li><strong>cut</strong> (<em>float</em>) &#8211; adjust the contour extrema to max(abs(data))*cut</li>
+<li><strong>iplot</strong> (<em>bool</em>) &#8211; a boolean to specify if one wants to plot or not the
+results</li>
+<li><strong>avg</strong> (<em>bool</em>) &#8211; time average of the different forces</li>
+<li><strong>precision</strong> (<em>str</em>) &#8211; precision of the input file, Float32 for single precision,
+Float64 for double precision</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="magic.TOMovie.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>cut=0.8</em>, <em>levs=16</em>, <em>avg=True</em>, <em>cmap='RdYlBu_r'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/toMovie.html#TOMovie.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.TOMovie.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plotting function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cut</strong> (<em>float</em>) &#8211; adjust the contour extrema to max(abs(data))*cut</li>
+<li><strong>levs</strong> (<em>int</em>) &#8211; number of contour levels</li>
+<li><strong>avg</strong> (<em>bool</em>) &#8211; when set to True, quantities are time-averaged</li>
+<li><strong>cmap</strong> (<em>str</em>) &#8211; name of the colormap</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="graphMovCoeff.html"
+                        title="previous chapter">Support for <code class="docutils literal"><span class="pre">G_#.TAG</span></code> files</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="runComparison.html"
+                        title="next chapter">Run comparison</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/apiPython/outTO.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="runComparison.html" title="Run comparison"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="graphMovCoeff.html" title="Support for G_#.TAG files"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../postProc.html" >Data visualisation and post-processing</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

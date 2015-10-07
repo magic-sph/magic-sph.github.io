@@ -1,0 +1,289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>RMS force balance &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../../contents.html" />
+    <link rel="up" title="Output control namelist" href="../outNamelist.html" />
+    <link rel="next" title="Mantle and Inner Core Namelists" href="../mantle_icNamelist.html" />
+    <link rel="prev" title="Torsional oscillations (TO)" href="outputNmlTO.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../../index.html">Home</a></li>
+    <li><a href="../../install.html">Get it/Run it</a></li>
+    <li><a href="../../contribute.html">Contribute!</a></li>
+    <li><a href="../../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../../index.html">
+      <img src="../../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../mantle_icNamelist.html" title="Mantle and Inner Core Namelists"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="outputNmlTO.html" title="Torsional oscillations (TO)"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../namelists.html" >Input parameters</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../outNamelist.html" accesskey="U">Output control namelist</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="rms-force-balance">
+<span id="secoutnmlmisc"></span><h1>RMS force balance<a class="headerlink" href="#rms-force-balance" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The RMS calculation is actually wrong in the current version. This needs again to be ported from MagIC 3.44. The RMS contributions to the induction equation are correct, though. A ticket has been opened on github regarding this issue: <a class="reference external" href="https://github.com/magic-sph/magic/issues/1">https://github.com/magic-sph/magic/issues/1</a></p>
+</div>
+</div></blockquote>
+<p>The code can compute the RMS of the force balance and the induction equation.</p>
+<ul class="simple" id="varl-rms">
+<li><strong>l_RMS</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/logic/l_rms" title="f/logic/l_rms"><code class="xref f f-var docutils literal"><span class="pre">l_RMS=.false.</span></code></a>) is a logical, which enables the calculation of RMS force balance, when set to <code class="docutils literal"><span class="pre">.true.</span></code>. The outputs are stored in the <a class="reference internal" href="../../outputFiles/outTimeSeriesSupp.html#secdtvrmsfile"><span>dtVrms.TAG</span></a>, <a class="reference internal" href="../../outputFiles/outTimeSeriesSupp.html#secdtbrmsfile"><span>dtBrms.TAG</span></a> and <a class="reference internal" href="../../outputFiles/outTimeSeriesSupp.html#secdtdrmsfile"><span>dtDrms.TAG</span></a> files.</li>
+<li><strong>l_RMStest</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/logic/l_rmstest" title="f/logic/l_rmstest"><code class="xref f f-var docutils literal"><span class="pre">l_RMStest=.false.</span></code></a>) is a logical. This is a debug flag to check the consistency of the RMS calculation.</li>
+<li><strong>rCut</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/rcut" title="f/output_data/rcut"><code class="xref f f-var docutils literal"><span class="pre">rCut=0.075</span></code></a>) is a float. This is the thickness of the layer which is left out at both boundaries for the RMS calculation. <code class="docutils literal"><span class="pre">rCut=0.075</span></code> actually means that 7.5% below the CMB and above the ICB are disregarded in the force balance calculation.</li>
+<li><strong>rDea</strong> (default  <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/rdea" title="f/output_data/rdea"><code class="xref f f-var docutils literal"><span class="pre">rDea=0.0</span></code></a>) is a float. This controls the dealiasing in RMS calculations. <code class="docutils literal"><span class="pre">rDea=0.1</span></code> means that the highest 10% of the Chebyshev modes are set to zero.</li>
+</ul>
+</div>
+<div class="section" id="additional-possible-diagnostics">
+<h1>Additional possible diagnostics<a class="headerlink" href="#additional-possible-diagnostics" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="geostrophy">
+<h2>Geostrophy<a class="headerlink" href="#geostrophy" title="Permalink to this headline">¶</a></h2>
+<ul class="simple" id="varl-par">
+<li><strong>l_par</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/logic/l_par" title="f/logic/l_par"><code class="xref f f-var docutils literal"><span class="pre">l_par=.false.</span></code></a>) is a logical. When set to <code class="docutils literal"><span class="pre">.true.</span></code>, this logical enables additional calculations (for instance the degree of geostrophy). The details of these caclulations can be found in the subroutine <code class="docutils literal"><span class="pre">getEgeos</span></code> in the <code class="docutils literal"><span class="pre">Egeos.f90</span></code> file. These quantities are then stored in the columns 10-16 of the <a class="reference internal" href="../../outputFiles/outTimeSeriesStd.html#secmiscfile"><span>misc.TAG</span></a> file.</li>
+<li><strong>l_corrMov</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/logic/l_corrmov" title="f/logic/l_corrmov"><code class="xref f f-var docutils literal"><span class="pre">l_corrMov=.false.</span></code></a>) is a logical. When set to <code class="docutils literal"><span class="pre">.true.</span></code>, this logical enables the calculation of a movie file that stores North/South correlation in the <code class="docutils literal"><span class="pre">CVorz_mov.TAG</span></code> file.</li>
+</ul>
+</div>
+<div class="section" id="helicity">
+<h2>Helicity<a class="headerlink" href="#helicity" title="Permalink to this headline">¶</a></h2>
+<ul class="simple" id="varl-hel">
+<li><strong>l_hel</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/logic/l_hel" title="f/logic/l_hel"><code class="xref f f-var docutils literal"><span class="pre">l_hel=.false.</span></code></a>) is a logical. When set to <code class="docutils literal"><span class="pre">.true.</span></code>, this logical enables the calculation of helicity (RMS, northern and southern hemisphere, etc.). The outputs are stored in the columns 6-9 of the <a class="reference internal" href="../../outputFiles/outTimeSeriesStd.html#secmiscfile"><span>misc.TAG</span></a> file.</li>
+</ul>
+</div>
+<div class="section" id="power-budget">
+<span id="varl-power"></span><h2>Power budget<a class="headerlink" href="#power-budget" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>l_power</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/logic/l_power" title="f/logic/l_power"><code class="xref f f-var docutils literal"><span class="pre">l_power.false.</span></code></a>) is a logical. When
+set to <code class="docutils literal"><span class="pre">.true.</span></code>, this logical enables the calculation of input and output
+power (buoyancy, viscous and ohmic dissipations, torques). The time series
+are stored in <a class="reference internal" href="../../outputFiles/outTimeSeriesSupp.html#secpowerfile"><span>power.TAG</span></a> and <a class="reference internal" href="../../outputFiles/outTimeSeriesSupp.html#secdtefile"><span>dtE.TAG</span></a>
+and the time-averaged radial profiles in <a class="reference internal" href="../../outputFiles/outRadialFiles.html#secpowerrfile"><span>powerR.TAG</span></a>.</li>
+</ul>
+</div>
+<div class="section" id="angular-momentum">
+<span id="varl-am"></span><h2>Angular momentum<a class="headerlink" href="#angular-momentum" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>l_AM</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/logic/l_am" title="f/logic/l_am"><code class="xref f f-var docutils literal"><span class="pre">l_AM=.false.</span></code></a>) is a logical. When set to <code class="docutils literal"><span class="pre">.true.</span></code>, this logical enables the calculation of angular momentum. The time series are stored in <a class="reference internal" href="../../outputFiles/outTimeSeriesSupp.html#secamfile"><span>AM.TAG</span></a>.</li>
+</ul>
+</div>
+<div class="section" id="drift-rates">
+<span id="varl-drift"></span><h2>Drift rates<a class="headerlink" href="#drift-rates" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>l_drift</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/logic/l_drift" title="f/logic/l_drift"><code class="xref f f-var docutils literal"><span class="pre">l_drift=.false.</span></code></a>) is a logical. When set to <code class="docutils literal"><span class="pre">.true.</span></code>, this logical enables the storage of some selected coefficients to allow the calculation of the drift rate. The time series are stored in <a class="reference internal" href="../../outputFiles/outTimeSeriesSupp.html#secdriftfile"><span>drift[V|B][DQ].TAG</span></a>.</li>
+</ul>
+</div>
+<div class="section" id="inertial-modes">
+<span id="varl-iner"></span><h2>Inertial modes<a class="headerlink" href="#inertial-modes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>l_iner</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/logic/l_iner" title="f/logic/l_iner"><code class="xref f f-var docutils literal"><span class="pre">l_iner=.false.</span></code></a>) is a logical. When set to <code class="docutils literal"><span class="pre">.true.</span></code>, this logical enables the storage of some selected <span class="math">\(w(\ell, m)\)</span> at mid-shell (stored in <a class="reference internal" href="../../outputFiles/outTimeSeriesSupp.html#secinerfile"><span>inerP.TAG</span></a>) and <span class="math">\(z(\ell, m)\)</span> at mid-shell (stored in <a class="reference internal" href="../../outputFiles/outTimeSeriesSupp.html#secinerfile"><span>inerT.TAG</span></a>). Those files can be further used to identify inertial modes.</li>
+</ul>
+</div>
+<div class="section" id="radial-spectra">
+<span id="varl-rmagspec"></span><h2>Radial spectra<a class="headerlink" href="#radial-spectra" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>l_rMagSpec</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/logic/l_rmagspec" title="f/logic/l_rmagspec"><code class="xref f f-var docutils literal"><span class="pre">l_rMagSpec=.false</span></code></a>) is a logical. When set to <code class="docutils literal"><span class="pre">.true.</span></code>, the magnetic spectra for the first 6 spherical harmonic degree <span class="math">\(\ell\)</span> for all radii are stored at times of log ouputs. This produces the unformatted fortran files <a class="reference internal" href="../../outputFiles/outRSpecFiles.html#secrbspecfiles"><span>rBrSpec.TAG</span></a> and <a class="reference internal" href="../../outputFiles/outRSpecFiles.html#secrbspecfiles"><span>rBpSpec.TAG</span></a>.</li>
+<li><strong>l_DTrMagSpec</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/logic/l_dtrmagspec" title="f/logic/l_dtrmagspec"><code class="xref f f-var docutils literal"><span class="pre">l_DTrMagSpec=.false</span></code></a>) is a logical. When set to <code class="docutils literal"><span class="pre">.true.</span></code>, the magnetic spectra of the magnetic field production terms for the first 6 spherical harmonic degree <span class="math">\(\ell\)</span> for all radii are stored at times of log ouputs. This produces the unformatted fortran files <code class="docutils literal"><span class="pre">rBrProSpec.TAG</span></code>, <code class="docutils literal"><span class="pre">rBrAdvSpec.TAG</span></code>, <code class="docutils literal"><span class="pre">rBrDifSpec.TAG</span></code>, <code class="docutils literal"><span class="pre">rBrDynSpec.TAG</span></code>, <code class="docutils literal"><span class="pre">rBpProSpec.TAG</span></code>, <code class="docutils literal"><span class="pre">rBpAdvSpec.TAG</span></code>, <code class="docutils literal"><span class="pre">rBpDifSpec.TAG</span></code> and <code class="docutils literal"><span class="pre">rBpDynSpec.TAG</span></code>. All those files have exactly the same format as the <a class="reference internal" href="../../outputFiles/outRSpecFiles.html#secrbspecfiles"><span>rBrSpec.TAG</span></a>.</li>
+</ul>
+</div>
+<div class="section" id="heat-transport">
+<span id="varl-fluxprofs"></span><h2>Heat transport<a class="headerlink" href="#heat-transport" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>l_fluxProfs</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/logic/l_fluxprofs" title="f/logic/l_fluxprofs"><code class="xref f f-var docutils literal"><span class="pre">l_fluxProfs=.false.</span></code></a>) is a logical. When set to <code class="docutils literal"><span class="pre">.true.</span></code>, this logical enables the calculation of time-averaged radial heat flux profiles (conductive flux, convective flux, kinetic flux, viscous flux, Poynting flux and resistive flux). The time-averaged radial profiles are stored in the <a class="reference internal" href="../../outputFiles/outRadialFiles.html#secfluxesrfile"><span>fluxesR.TAG</span></a> file.</li>
+</ul>
+</div>
+<div class="section" id="boundary-layer-analysis">
+<span id="varl-viscbccalc"></span><h2>Boundary layer analysis<a class="headerlink" href="#boundary-layer-analysis" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>l_viscBcCalc</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/logic/l_viscbccalc" title="f/logic/l_viscbccalc"><code class="xref f f-var docutils literal"><span class="pre">l_viscBcCalc=.false.</span></code></a>) is a logical. When set to <code class="docutils literal"><span class="pre">.true.</span></code>, this logical enables the calculation of time-averaged radial profiles that can be further use to determine the viscous and thermal boundary layer thicknesses: temperature, temperature variance, horizontal velocity, etc. The time-averaged radial profiles are stored in the <a class="reference internal" href="../../outputFiles/outRadialFiles.html#secblayersrfile"><span>bLayersR.TAG</span></a> file.</li>
+</ul>
+</div>
+<div class="section" id="parallel-perpendicular-decomposition">
+<span id="varl-perppar"></span><h2>Parallel/perpendicular decomposition<a class="headerlink" href="#parallel-perpendicular-decomposition" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>l_perpPar</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/logic/l_perppar" title="f/logic/l_perppar"><code class="xref f f-var docutils literal"><span class="pre">l_perpPar=.false.</span></code></a>) is a logical. When set to <code class="docutils literal"><span class="pre">.true.</span></code>, this logical enables the decomposition of kinetic energy into components parallel and perpendicular to the rotation axis. The time series are stored in <a class="reference internal" href="../../outputFiles/outTimeSeriesSupp.html#secperpparfile"><span>perpPar.TAG</span></a> and the time-averaged radial profiles in <a class="reference internal" href="../../outputFiles/outRadialFiles.html#secperpparrfile"><span>perpParR.TAG</span></a>.</li>
+</ul>
+</div>
+<div class="section" id="potential-vorticity">
+<h2>Potential vorticity<a class="headerlink" href="#potential-vorticity" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>l_PV</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/logic/l_pv" title="f/logic/l_pv"><code class="xref f f-var docutils literal"><span class="pre">l_PV=.false.</span></code></a>) is a logical. When set to <code class="docutils literal"><span class="pre">.true.</span></code>, this logical enables some potential vorticity diagnostics. At the end of the run, the results are stored in the the files <code class="docutils literal"><span class="pre">PVZ.TAG</span></code> and <code class="docutils literal"><span class="pre">Vcy.TAG</span></code>.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">RMS force balance</a></li>
+<li><a class="reference internal" href="#additional-possible-diagnostics">Additional possible diagnostics</a><ul>
+<li><a class="reference internal" href="#geostrophy">Geostrophy</a></li>
+<li><a class="reference internal" href="#helicity">Helicity</a></li>
+<li><a class="reference internal" href="#power-budget">Power budget</a></li>
+<li><a class="reference internal" href="#angular-momentum">Angular momentum</a></li>
+<li><a class="reference internal" href="#drift-rates">Drift rates</a></li>
+<li><a class="reference internal" href="#inertial-modes">Inertial modes</a></li>
+<li><a class="reference internal" href="#radial-spectra">Radial spectra</a></li>
+<li><a class="reference internal" href="#heat-transport">Heat transport</a></li>
+<li><a class="reference internal" href="#boundary-layer-analysis">Boundary layer analysis</a></li>
+<li><a class="reference internal" href="#parallel-perpendicular-decomposition">Parallel/perpendicular decomposition</a></li>
+<li><a class="reference internal" href="#potential-vorticity">Potential vorticity</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="outputNmlTO.html"
+                        title="previous chapter">Torsional oscillations (<code class="docutils literal"><span class="pre">TO</span></code>)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../mantle_icNamelist.html"
+                        title="next chapter">Mantle and Inner Core Namelists</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/inputNamelists/outputNamelist/outputNmlMisc.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../mantle_icNamelist.html" title="Mantle and Inner Core Namelists"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="outputNmlTO.html" title="Torsional oscillations (TO)"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../namelists.html" >Input parameters</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../outNamelist.html" >Output control namelist</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

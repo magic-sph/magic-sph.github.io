@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Log file: log.TAG &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../contents.html" />
+    <link rel="up" title="Output files" href="outFiles.html" />
+    <link rel="next" title="Default time-series outputs" href="outTimeSeriesStd.html" />
+    <link rel="prev" title="Output files" href="outFiles.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../install.html">Get it/Run it</a></li>
+    <li><a href="../contribute.html">Contribute!</a></li>
+    <li><a href="../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../index.html">
+      <img src="../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="outTimeSeriesStd.html" title="Default time-series outputs"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="outFiles.html" title="Output files"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="outFiles.html" accesskey="U">Output files</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="log-file-log-tag">
+<span id="seclogfile"></span><h1>Log file: <code class="docutils literal"><span class="pre">log.TAG</span></code><a class="headerlink" href="#log-file-log-tag" title="Permalink to this headline">¶</a></h1>
+<p>This is a text file contains information about the run, including many of the
+things which are printed to <code class="docutils literal"><span class="pre">STDOUT</span></code>. It has the following information in order
+of appearance:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Code version</strong>: the version of the code</li>
+<li><strong>Parallelization</strong>: information about number of MPI ranks being used,
+blocking information of OpenMP chunks and processor load balancing</li>
+<li><strong>Namelists</strong>: displays values of all namelist variables. The ones input by
+the user should have the input values while the rest of them are set to their
+default values.</li>
+<li><strong>Mode</strong> The mode of the run - self-consistent/kinematic dynamo, convection,
+couette flow etc. See the <a class="reference internal" href="../inputNamelists/controlNamelist.html#seccontrolnml"><span>control namelist</span></a> for more
+information about <a class="reference internal" href="../inputNamelists/controlNamelist.html#varmode"><span>mode</span></a>.</li>
+<li><strong>Grid parameters</strong>: information about the grid sizes and truncation being
+used. More information about this in the <a class="reference internal" href="../inputNamelists/gridNamelist.html#secgridnml"><span>grid namelist</span></a>.
+If a new grid, different from that in the restart file is used, then a
+comparison is shown between old and new grid parameters and the user is
+informed that the data is being mapped from the old to the new grid.</li>
+<li><strong>Progress</strong>: information about the progress of the run for every 10% of the
+run and the mean wall time for time step.</li>
+<li><strong>Writing of graphic, movie, restart and spectra files</strong>: displays the time
+step and tells the user whenever a <a class="reference internal" href="outGraph.html#secgraphfile"><span>G_#.TAG</span></a>,
+<a class="reference internal" href="outRst.html#secrestartfile"><span>rst_#.TAG</span></a> or <a class="reference internal" href="outSpecFiles.html#secspecfiles"><span>spectra</span></a> file or a
+<a class="reference internal" href="outMovie.html#secmoviefile"><span>movie frame</span></a> is written disk.</li>
+<li><strong>Energies</strong>: gives kinetic and magnetic energies (total, poloidal, toroidal,
+total density) at the end of the run.</li>
+<li><strong>Time averages</strong>:  this part gives time averaged kinetic and magnetic
+energies (total, poloidal, toroidal, total density) and time averaged
+parameters (Rm, Elsass, Rol etc.). If <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlStd.html#varl-average"><span>l_average=.true.</span></a>,
+this section also provides information about average spectra and graphic
+files being written.</li>
+<li><strong>Wall times</strong>: this is the last part of the log file and it provides
+information about the mean wall time for running different parts of the code.
+These values can be used to judge the speed and scaling capabilities of
+your computer.</li>
+</ul>
+</div></blockquote>
+<p>Most of these informations can be parsed and stored into a python class using
+<a class="reference internal" href="../apiPython/timeSeries.html#magic.MagicSetup" title="magic.MagicSetup"><code class="xref py py-class docutils literal"><span class="pre">MagicSetup</span></code></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># read log.N0m2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stp</span> <span class="o">=</span> <span class="n">MagicSetup</span><span class="p">(</span><span class="n">nml</span><span class="o">=</span><span class="s">&#39;log.N0m2&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">stp</span><span class="o">.</span><span class="n">ek</span><span class="p">,</span> <span class="n">stp</span><span class="o">.</span><span class="n">prmag</span><span class="p">)</span> <span class="c"># print Ekman and magnetic Prandtl numbers</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">stp</span><span class="o">.</span><span class="n">l_max</span><span class="p">)</span> <span class="c"># print l_max</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="outFiles.html"
+                        title="previous chapter">Output files</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="outTimeSeriesStd.html"
+                        title="next chapter">Default time-series outputs</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/outputFiles/logFile.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="outTimeSeriesStd.html" title="Default time-series outputs"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="outFiles.html" title="Output files"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="outFiles.html" >Output files</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

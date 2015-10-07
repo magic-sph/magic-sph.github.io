@@ -1,0 +1,668 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Useful additional libraries &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="../contents.html" />
+    <link rel="up" title="Description of the Fortran modules" href="../api.html" />
+    <link rel="prev" title="Reading and storing check points (restart files)" href="checkPoints.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../install.html">Get it/Run it</a></li>
+    <li><a href="../contribute.html">Contribute!</a></li>
+    <li><a href="../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../index.html">
+      <img src="../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="checkPoints.html" title="Reading and storing check points (restart files)"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../api.html" accesskey="U">Description of the Fortran modules</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="useful-additional-libraries">
+<span id="secfortranmisc"></span><h1>Useful additional libraries<a class="headerlink" href="#useful-additional-libraries" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="f/useful">
+<span id="useful-f90"></span><h2><code class="docutils literal"><span class="pre">useful.f90</span></code><a class="headerlink" href="#f/useful" title="Permalink to this headline">¶</a></h2>
+<p class="rubric">Description</p>
+<p>library with several useful subroutines</p>
+<p class="rubric">Quick access</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Routines:</th><td class="field-body"><a class="reference internal" href="#f/useful/logwrite" title="f/useful/logwrite"><code class="xref f f-func docutils literal"><span class="pre">logwrite()</span></code></a>, <a class="reference internal" href="#f/useful/factorise" title="f/useful/factorise"><code class="xref f f-func docutils literal"><span class="pre">factorise()</span></code></a>, <a class="reference internal" href="#f/useful/safeclose" title="f/useful/safeclose"><code class="xref f f-func docutils literal"><span class="pre">safeclose()</span></code></a>, <a class="reference internal" href="#f/useful/safeopen" title="f/useful/safeopen"><code class="xref f f-func docutils literal"><span class="pre">safeopen()</span></code></a>, <a class="reference internal" href="#f/useful/cc2real" title="f/useful/cc2real"><code class="xref f f-func docutils literal"><span class="pre">cc2real()</span></code></a>, <a class="reference internal" href="#f/useful/cc22real" title="f/useful/cc22real"><code class="xref f f-func docutils literal"><span class="pre">cc22real()</span></code></a>, <a class="reference internal" href="#f/useful/l_correct_step" title="f/useful/l_correct_step"><code class="xref f f-func docutils literal"><span class="pre">l_correct_step()</span></code></a>, <a class="reference internal" href="#f/useful/random" title="f/useful/random"><code class="xref f f-func docutils literal"><span class="pre">random()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Needed modules</p>
+<ul class="simple">
+<li><a class="reference internal" href="baseModules.html#f/precision_mod" title="f/precision_mod: This module controls the precision used in MagIC"><code class="xref f f-mod docutils literal"><span class="pre">precision_mod</span></code></a>: This module controls the precision used in MagIC</li>
+<li><a class="reference internal" href="parallelModules.html#f/parallel_mod" title="f/parallel_mod: This module contains the blocking information"><code class="xref f f-mod docutils literal"><span class="pre">parallel_mod</span></code></a> (<code class="xref f f-func docutils literal"><span class="pre">rank()</span></code>): This module contains the blocking information</li>
+<li><a class="reference internal" href="baseModules.html#f/logic" title="f/logic: Module containing the logicals that control the run"><code class="xref f f-mod docutils literal"><span class="pre">logic</span></code></a> (<a class="reference internal" href="baseModules.html#f/logic/l_save_out" title="f/logic/l_save_out"><code class="xref f f-func docutils literal"><span class="pre">l_save_out()</span></code></a>): Module containing the logicals that control the run</li>
+<li><a class="reference internal" href="baseModules.html#f/constants" title="f/constants: module containing constants and parameters used in the code."><code class="xref f f-mod docutils literal"><span class="pre">constants</span></code></a> (<a class="reference internal" href="baseModules.html#f/constants/one" title="f/constants/one"><code class="xref f f-func docutils literal"><span class="pre">one()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/two" title="f/constants/two"><code class="xref f f-func docutils literal"><span class="pre">two()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/half" title="f/constants/half"><code class="xref f f-func docutils literal"><span class="pre">half()</span></code></a>): module containing constants and parameters used in the code.</li>
+<li><a class="reference internal" href="baseModules.html#f/output_data" title="f/output_data: This module contains the parameters for output control"><code class="xref f f-mod docutils literal"><span class="pre">output_data</span></code></a> (<a class="reference internal" href="baseModules.html#f/output_data/n_log_file" title="f/output_data/n_log_file"><code class="xref f f-func docutils literal"><span class="pre">n_log_file()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/log_file" title="f/output_data/log_file"><code class="xref f f-func docutils literal"><span class="pre">log_file()</span></code></a>): This module contains the parameters for output control</li>
+</ul>
+<p class="rubric">Variables</p>
+<p class="rubric">Subroutines and functions</p>
+<dl class="function">
+<dt id="f/useful/l_correct_step">
+<em class="property">function  </em><code class="descclassname">useful/</code><code class="descname">l_correct_step</code><span class="sig-paren">(</span><em>n</em>, <em>t</em>, <em>t_last</em>, <em>n_max</em>, <em>n_step</em>, <em>n_intervals</em>, <em>n_ts</em>, <em>times</em>, <em>n_eo</em><span class="sig-paren">)</span><a class="headerlink" href="#f/useful/l_correct_step" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: current step</li>
+<li><strong>t</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: time at current step</li>
+<li><strong>t_last</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: last time at current step</li>
+<li><strong>n_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: max number of steps</li>
+<li><strong>n_step</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: action interval</li>
+<li><strong>n_intervals</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: number of actions</li>
+<li><strong>n_ts</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: number of times t</li>
+<li><strong>times</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: times where l_correct_step == true</li>
+<li><strong>n_eo</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: even/odd controller</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return:</th><td class="field-body"><p class="first"><strong>l_correct_step</strong><em> [</em><em>logical</em><em>]</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="timeAdvance.html#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal"><span class="pre">step_time()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="f/useful/random">
+<em class="property">function  </em><code class="descclassname">useful/</code><code class="descname">random</code><span class="sig-paren">(</span><em>r</em><span class="sig-paren">)</span><a class="headerlink" href="#f/useful/random" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>random number generator</p>
+<dl class="docutils">
+<dt>if ( r == 0 ) then</dt>
+<dd>random(r) = next random number (between 0. and 1.)</dd>
+<dt>if ( r &lt; 0 ) then</dt>
+<dd>random(r) = previous random number</dd>
+<dt>if ( r &gt; 0 ) then</dt>
+<dd><dl class="first last docutils">
+<dt>random(r) = a new sequence of random numbers is started</dt>
+<dd>with seed r mod 1
+note: r must be a non-integer to get a different seq</dd>
+</dl>
+</dd>
+</dl>
+<p>called in sinit</p>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>r</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return:</th><td class="field-body"><strong>random</strong><em> [</em><em>real</em><em>]</em></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><a class="reference internal" href="initModules.html#f/init_fields/initb" title="f/init_fields/initb"><code class="xref f f-func docutils literal"><span class="pre">initb()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/initv" title="f/init_fields/initv"><code class="xref f f-func docutils literal"><span class="pre">initv()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/inits" title="f/init_fields/inits"><code class="xref f f-func docutils literal"><span class="pre">inits()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/useful/factorise">
+<em class="property">subroutine  </em><code class="descclassname">useful/</code><code class="descname">factorise</code><span class="sig-paren">(</span><em>n</em>, <em>n_facs</em>, <em>fac</em>, <em>n_factors</em>, <em>factor</em><span class="sig-paren">)</span><a class="headerlink" href="#f/useful/factorise" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Purpose of this subroutine is factorize n into a number of
+given factors fac(i).</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: number to be factorised    !</li>
+<li><strong>n_facs</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: number of facs to be tried !</li>
+<li><strong>fac</strong> (*)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: list of fators to be tried !</li>
+<li><strong>n_factors</strong><em> [</em><em>integer</em><em>,</em><em>out</em><em>]</em> :: number of factors used</li>
+<li><strong>factor</strong> (*)<em> [</em><em>integer</em><em>,</em><em>out</em><em>]</em> :: list of factors used</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="legFourierChebAlgebra.html#f/init_costf/init_costf2" title="f/init_costf/init_costf2"><code class="xref f f-func docutils literal"><span class="pre">init_costf2()</span></code></a>, <a class="reference internal" href="legFourierChebAlgebra.html#f/init_costf/init_costf1" title="f/init_costf/init_costf1"><code class="xref f f-func docutils literal"><span class="pre">init_costf1()</span></code></a>, <a class="reference internal" href="legFourierChebAlgebra.html#f/fft_jw/init_fft" title="f/fft_jw/init_fft"><code class="xref f f-func docutils literal"><span class="pre">init_fft()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="f/useful/cc2real">
+<em class="property">function  </em><code class="descclassname">useful/</code><code class="descname">cc2real</code><span class="sig-paren">(</span><em>c</em>, <em>m</em><span class="sig-paren">)</span><a class="headerlink" href="#f/useful/cc2real" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>c</strong><em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>m</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return:</th><td class="field-body"><p class="first"><strong>cc2real</strong><em> [</em><em>real</em><em>]</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="IOAdd.html#f/rms_helpers/hint2pol" title="f/rms_helpers/hint2pol"><code class="xref f f-func docutils literal"><span class="pre">hint2pol()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/rms_helpers/hint2tor" title="f/rms_helpers/hint2tor"><code class="xref f f-func docutils literal"><span class="pre">hint2tor()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/spectra/spectrum_average" title="f/spectra/spectrum_average"><code class="xref f f-func docutils literal"><span class="pre">spectrum_average()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/spectra/spectrum" title="f/spectra/spectrum"><code class="xref f f-func docutils literal"><span class="pre">spectrum()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/getdlm_mod/getdlm" title="f/getdlm_mod/getdlm"><code class="xref f f-func docutils literal"><span class="pre">getdlm()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/power/get_power" title="f/power/get_power"><code class="xref f f-func docutils literal"><span class="pre">get_power()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/rms_helpers/hint2dpol" title="f/rms_helpers/hint2dpol"><code class="xref f f-func docutils literal"><span class="pre">hint2dpol()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/radial_spectra/rbrspec" title="f/radial_spectra/rbrspec"><code class="xref f f-func docutils literal"><span class="pre">rbrspec()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/kinetic_energy/get_u_square" title="f/kinetic_energy/get_u_square"><code class="xref f f-func docutils literal"><span class="pre">get_u_square()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/spectra/spectrum_temp_average" title="f/spectra/spectrum_temp_average"><code class="xref f f-func docutils literal"><span class="pre">spectrum_temp_average()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/outpar_mod/outpar" title="f/outpar_mod/outpar"><code class="xref f f-func docutils literal"><span class="pre">outpar()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/spectra/spectrum_temp" title="f/spectra/spectrum_temp"><code class="xref f f-func docutils literal"><span class="pre">spectrum_temp()</span></code></a>, <a class="reference internal" href="initModules.html#f/start_fields/getstartfields" title="f/start_fields/getstartfields"><code class="xref f f-func docutils literal"><span class="pre">getstartfields()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/kinetic_energy/get_e_kin" title="f/kinetic_energy/get_e_kin"><code class="xref f f-func docutils literal"><span class="pre">get_e_kin()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/rms_helpers/get_poltorrms" title="f/rms_helpers/get_poltorrms"><code class="xref f f-func docutils literal"><span class="pre">get_poltorrms()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/magnetic_energy/get_e_mag" title="f/magnetic_energy/get_e_mag"><code class="xref f f-func docutils literal"><span class="pre">get_e_mag()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/radial_spectra/rbpspec" title="f/radial_spectra/rbpspec"><code class="xref f f-func docutils literal"><span class="pre">rbpspec()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="f/useful/cc22real">
+<em class="property">function  </em><code class="descclassname">useful/</code><code class="descname">cc22real</code><span class="sig-paren">(</span><em>c1</em>, <em>c2</em>, <em>m</em><span class="sig-paren">)</span><a class="headerlink" href="#f/useful/cc22real" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>c1</strong><em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>c2</strong><em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>m</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return:</th><td class="field-body"><p class="first"><strong>cc22real</strong><em> [</em><em>real</em><em>]</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="IOGeneral.html#f/spectra/spectrum" title="f/spectra/spectrum"><code class="xref f f-func docutils literal"><span class="pre">spectrum()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/power/get_power" title="f/power/get_power"><code class="xref f f-func docutils literal"><span class="pre">get_power()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/magnetic_energy/get_e_mag" title="f/magnetic_energy/get_e_mag"><code class="xref f f-func docutils literal"><span class="pre">get_e_mag()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/useful/safeopen">
+<em class="property">subroutine  </em><code class="descclassname">useful/</code><code class="descname">safeopen</code><span class="sig-paren">(</span><em>nf</em>, <em>file_name</em><span class="sig-paren">)</span><a class="headerlink" href="#f/useful/safeopen" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>nf</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>file_name</strong><em> [</em><em>character</em><em>,</em><em>in</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="timeAdvance.html#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal"><span class="pre">step_time()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/output_mod/output" title="f/output_mod/output"><code class="xref f f-func docutils literal"><span class="pre">output()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/spectra/spectrum_average" title="f/spectra/spectrum_average"><code class="xref f f-func docutils literal"><span class="pre">spectrum_average()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/spectra/spectrum_temp_average" title="f/spectra/spectrum_temp_average"><code class="xref f f-func docutils literal"><span class="pre">spectrum_temp_average()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/lmloop_mod/lmloop" title="f/lmloop_mod/lmloop"><code class="xref f f-func docutils literal"><span class="pre">lmloop()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/useful/safeclose">
+<em class="property">subroutine  </em><code class="descclassname">useful/</code><code class="descname">safeclose</code><span class="sig-paren">(</span><em>nf</em><span class="sig-paren">)</span><a class="headerlink" href="#f/useful/safeclose" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nf</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><a class="reference internal" href="timeAdvance.html#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal"><span class="pre">step_time()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/output_mod/output" title="f/output_mod/output"><code class="xref f f-func docutils literal"><span class="pre">output()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/spectra/spectrum_average" title="f/spectra/spectrum_average"><code class="xref f f-func docutils literal"><span class="pre">spectrum_average()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/spectra/spectrum_temp_average" title="f/spectra/spectrum_temp_average"><code class="xref f f-func docutils literal"><span class="pre">spectrum_temp_average()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/lmloop_mod/lmloop" title="f/lmloop_mod/lmloop"><code class="xref f f-func docutils literal"><span class="pre">lmloop()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/useful/logwrite">
+<em class="property">subroutine  </em><code class="descclassname">useful/</code><code class="descname">logwrite</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#f/useful/logwrite" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong><em> [</em><em>character</em><em>,</em><em>in</em><em>]</em></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><a class="reference internal" href="timeAdvance.html#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal"><span class="pre">step_time()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/output_mod/output" title="f/output_mod/output"><code class="xref f f-func docutils literal"><span class="pre">output()</span></code></a>, <a class="reference internal" href="precalcModules.html#f/precalculations/precalc" title="f/precalculations/precalc"><code class="xref f f-func docutils literal"><span class="pre">precalc()</span></code></a>, <a class="reference internal" href="timeAdvance.html#f/courant_mod/dt_courant" title="f/courant_mod/dt_courant"><code class="xref f f-func docutils literal"><span class="pre">dt_courant()</span></code></a>, <a class="reference internal" href="blocking.html#f/blocking/initialize_blocking" title="f/blocking/initialize_blocking"><code class="xref f f-func docutils literal"><span class="pre">initialize_blocking()</span></code></a>, <a class="reference internal" href="IOBinaryOutputs.html#f/movie_data/initialize_movie_data" title="f/movie_data/initialize_movie_data"><code class="xref f f-func docutils literal"><span class="pre">initialize_movie_data()</span></code></a>, <a class="reference internal" href="initModules.html#f/start_fields/getstartfields" title="f/start_fields/getstartfields"><code class="xref f f-func docutils literal"><span class="pre">getstartfields()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/outto_mod/outto" title="f/outto_mod/outto"><code class="xref f f-func docutils literal"><span class="pre">outto()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="f/charmanip">
+<span id="char-manip-f90"></span><h2><code class="docutils literal"><span class="pre">char_manip.f90</span></code><a class="headerlink" href="#f/charmanip" title="Permalink to this headline">¶</a></h2>
+<p class="rubric">Description</p>
+<p>This module contains several useful routines to manipule character strings</p>
+<p class="rubric">Quick access</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Routines:</th><td class="field-body"><a class="reference internal" href="#f/charmanip/dble2str" title="f/charmanip/dble2str"><code class="xref f f-func docutils literal"><span class="pre">dble2str()</span></code></a>, <a class="reference internal" href="#f/charmanip/capitalize" title="f/charmanip/capitalize"><code class="xref f f-func docutils literal"><span class="pre">capitalize()</span></code></a>, <a class="reference internal" href="#f/charmanip/str2dble" title="f/charmanip/str2dble"><code class="xref f f-func docutils literal"><span class="pre">str2dble()</span></code></a>, <a class="reference internal" href="#f/charmanip/delete_string" title="f/charmanip/delete_string"><code class="xref f f-func docutils literal"><span class="pre">delete_string()</span></code></a>, <a class="reference internal" href="#f/charmanip/length_to_blank" title="f/charmanip/length_to_blank"><code class="xref f f-func docutils literal"><span class="pre">length_to_blank()</span></code></a>, <a class="reference internal" href="#f/charmanip/length_to_char" title="f/charmanip/length_to_char"><code class="xref f f-func docutils literal"><span class="pre">length_to_char()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Needed modules</p>
+<ul class="simple">
+<li><a class="reference internal" href="baseModules.html#f/precision_mod" title="f/precision_mod: This module controls the precision used in MagIC"><code class="xref f f-mod docutils literal"><span class="pre">precision_mod</span></code></a>: This module controls the precision used in MagIC</li>
+</ul>
+<p class="rubric">Subroutines and functions</p>
+<dl class="subroutine">
+<dt id="f/charmanip/capitalize">
+<em class="property">subroutine  </em><code class="descclassname">charmanip/</code><code class="descname">capitalize</code><span class="sig-paren">(</span><em>string_bn</em><span class="sig-paren">)</span><a class="headerlink" href="#f/charmanip/capitalize" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Convert lower-case letters into capital letters</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string_bn</strong><em> [</em><em>character</em><em>,</em><em>inout</em><em>]</em></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><a class="reference internal" href="IOBinaryOutputs.html#f/movie_data/get_movie_type" title="f/movie_data/get_movie_type"><code class="xref f f-func docutils literal"><span class="pre">get_movie_type()</span></code></a>, <a class="reference internal" href="timeAdvance.html#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal"><span class="pre">step_time()</span></code></a>, <a class="reference internal" href="initModules.html#f/namelists/readnamelists" title="f/namelists/readnamelists"><code class="xref f f-func docutils literal"><span class="pre">readnamelists()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/charmanip/delete_string">
+<em class="property">subroutine  </em><code class="descclassname">charmanip/</code><code class="descname">delete_string</code><span class="sig-paren">(</span><em>string_bn</em>, <em>string_del</em>, <em>length</em><span class="sig-paren">)</span><a class="headerlink" href="#f/charmanip/delete_string" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Deletes string_del from string and returns new length of string.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>string_bn</strong><em> [</em><em>character</em><em>,</em><em>inout</em><em>]</em></li>
+<li><strong>string_del</strong><em> [</em><em>character</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>length</strong><em> [</em><em>integer</em><em>,</em><em>out</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="IOBinaryOutputs.html#f/movie_data/get_movie_type" title="f/movie_data/get_movie_type"><code class="xref f f-func docutils literal"><span class="pre">get_movie_type()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/charmanip/str2dble">
+<em class="property">subroutine  </em><code class="descclassname">charmanip/</code><code class="descname">str2dble</code><span class="sig-paren">(</span><em>string_bn</em>, <em>num</em><span class="sig-paren">)</span><a class="headerlink" href="#f/charmanip/str2dble" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>interprets next word in string as an 1 real number
+deletes leading blanks and next_word from string</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>string_bn</strong><em> [</em><em>character</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>num</strong><em> [</em><em>real</em><em>,</em><em>out</em><em>]</em> :: output</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="IOBinaryOutputs.html#f/movie_data/get_movie_type" title="f/movie_data/get_movie_type"><code class="xref f f-func docutils literal"><span class="pre">get_movie_type()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="f/charmanip/length_to_blank">
+<em class="property">function  </em><code class="descclassname">charmanip/</code><code class="descname">length_to_blank</code><span class="sig-paren">(</span><em>string_bn</em><span class="sig-paren">)</span><a class="headerlink" href="#f/charmanip/length_to_blank" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>determines number of characters before first blank in string</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string_bn</strong><em> [</em><em>character</em><em>,</em><em>in</em><em>]</em></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return:</th><td class="field-body"><strong>length_to_blank</strong><em> [</em><em>integer</em><em>]</em></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><a class="reference internal" href="baseModules.html#f/output_data/openfiles" title="f/output_data/openfiles"><code class="xref f f-func docutils literal"><span class="pre">openfiles()</span></code></a>, <a class="reference internal" href="IOBinaryOutputs.html#f/movie_data/get_movie_type" title="f/movie_data/get_movie_type"><code class="xref f f-func docutils literal"><span class="pre">get_movie_type()</span></code></a>, <a class="reference internal" href="initModules.html#f/namelists/writenamelists" title="f/namelists/writenamelists"><code class="xref f f-func docutils literal"><span class="pre">writenamelists()</span></code></a>, <a class="reference internal" href="initModules.html#f/namelists/readnamelists" title="f/namelists/readnamelists"><code class="xref f f-func docutils literal"><span class="pre">readnamelists()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="f/charmanip/length_to_char">
+<em class="property">function  </em><code class="descclassname">charmanip/</code><code class="descname">length_to_char</code><span class="sig-paren">(</span><em>string_bn</em>, <em>char_bn</em><span class="sig-paren">)</span><a class="headerlink" href="#f/charmanip/length_to_char" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>string_bn</strong><em> [</em><em>character</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>char_bn</strong><em> [</em><em>character</em><em>,</em><em>in</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return:</th><td class="field-body"><p class="first last"><strong>length_to_char</strong><em> [</em><em>integer</em><em>]</em></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/charmanip/dble2str">
+<em class="property">subroutine  </em><code class="descclassname">charmanip/</code><code class="descname">dble2str</code><span class="sig-paren">(</span><em>num</em>, <em>str</em><span class="sig-paren">)</span><a class="headerlink" href="#f/charmanip/dble2str" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>converts a 1 number num into a character str</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>num</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>str</strong><em> [</em><em>character</em><em>,</em><em>out</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="timeAdvance.html#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal"><span class="pre">step_time()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/output_mod/output" title="f/output_mod/output"><code class="xref f f-func docutils literal"><span class="pre">output()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/outto_mod/outto" title="f/outto_mod/outto"><code class="xref f f-func docutils literal"><span class="pre">outto()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="f/hdf5helpers">
+<span id="hdf5helpers-f90"></span><h2><code class="docutils literal"><span class="pre">hdf5Helpers.f90</span></code><a class="headerlink" href="#f/hdf5helpers" title="Permalink to this headline">¶</a></h2>
+<p class="rubric">Description</p>
+<p>This module contains several useful tools to manipulate HDF5 files</p>
+<p class="rubric">Quick access</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><a class="reference internal" href="#f/hdf5helpers/readhdf5_attribute" title="f/hdf5helpers/readhdf5_attribute"><code class="xref f f-var docutils literal"><span class="pre">readhdf5_attribute</span></code></a>, <a class="reference internal" href="#f/hdf5helpers/writehdf5_attribute" title="f/hdf5helpers/writehdf5_attribute"><code class="xref f f-var docutils literal"><span class="pre">writehdf5_attribute</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Routines:</th><td class="field-body"><a class="reference internal" href="#f/hdf5helpers/writehdf5_attr_dble" title="f/hdf5helpers/writehdf5_attr_dble"><code class="xref f f-func docutils literal"><span class="pre">writehdf5_attr_dble()</span></code></a>, <a class="reference internal" href="#f/hdf5helpers/writehdf5_attr_int" title="f/hdf5helpers/writehdf5_attr_int"><code class="xref f f-func docutils literal"><span class="pre">writehdf5_attr_int()</span></code></a>, <a class="reference internal" href="#f/hdf5helpers/readhdf5_attr_dble" title="f/hdf5helpers/readhdf5_attr_dble"><code class="xref f f-func docutils literal"><span class="pre">readhdf5_attr_dble()</span></code></a>, <a class="reference internal" href="#f/hdf5helpers/readhdf5_attr_int" title="f/hdf5helpers/readhdf5_attr_int"><code class="xref f f-func docutils literal"><span class="pre">readhdf5_attr_int()</span></code></a>, <a class="reference internal" href="#f/hdf5helpers/write_dataset" title="f/hdf5helpers/write_dataset"><code class="xref f f-func docutils literal"><span class="pre">write_dataset()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Needed modules</p>
+<ul class="simple">
+<li><a class="reference internal" href="baseModules.html#f/precision_mod" title="f/precision_mod: This module controls the precision used in MagIC"><code class="xref f f-mod docutils literal"><span class="pre">precision_mod</span></code></a>: This module controls the precision used in MagIC</li>
+<li><code class="xref f f-mod docutils literal"><span class="pre">hdf5</span></code></li>
+<li><a class="reference internal" href="blocking.html#f/blocking" title="f/blocking: Module containing blocking information"><code class="xref f f-mod docutils literal"><span class="pre">blocking</span></code></a> (<a class="reference internal" href="blocking.html#f/blocking/lo_map" title="f/blocking/lo_map"><code class="xref f f-func docutils literal"><span class="pre">lo_map()</span></code></a>, <a class="reference internal" href="blocking.html#f/blocking/st_map" title="f/blocking/st_map"><code class="xref f f-func docutils literal"><span class="pre">st_map()</span></code></a>): Module containing blocking information</li>
+<li><a class="reference internal" href="parallelModules.html#f/lmloop_data" title="f/lmloop_data"><code class="xref f f-mod docutils literal"><span class="pre">lmloop_data</span></code></a> (<a class="reference internal" href="parallelModules.html#f/lmloop_data/llm" title="f/lmloop_data/llm"><code class="xref f f-func docutils literal"><span class="pre">llm()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/lmloop_data/ulm" title="f/lmloop_data/ulm"><code class="xref f f-func docutils literal"><span class="pre">ulm()</span></code></a>)</li>
+</ul>
+<p class="rubric">Variables</p>
+<ul>
+<li><dl class="variable">
+<dt id="f/hdf5helpers/writehdf5_attribute">
+<code class="descclassname">hdf5helpers/</code><code class="descname">writehdf5_attribute</code><em> [</em><em>public</em><em>]</em><a class="headerlink" href="#f/hdf5helpers/writehdf5_attribute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/hdf5helpers/readhdf5_attribute">
+<code class="descclassname">hdf5helpers/</code><code class="descname">readhdf5_attribute</code><em> [</em><em>public</em><em>]</em><a class="headerlink" href="#f/hdf5helpers/readhdf5_attribute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
+<p class="rubric">Subroutines and functions</p>
+<dl class="subroutine">
+<dt id="f/hdf5helpers/write_dataset">
+<em class="property">subroutine  </em><code class="descclassname">hdf5helpers/</code><code class="descname">write_dataset</code><span class="sig-paren">(</span><em>loc_id</em>, <em>dataset_name</em>, <em>dataset_type</em>, <em>dat</em>, <em>dim1</em>, <em>dims_full</em><span class="sig-paren">)</span><a class="headerlink" href="#f/hdf5helpers/write_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>loc_id</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>dataset_name</strong><em> [</em><em>character</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>dataset_type</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>dat</strong> (<a class="reference internal" href="parallelModules.html#f/lmloop_data/ulm" title="f/lmloop_data/ulm">ulm</a>-(<a class="reference internal" href="parallelModules.html#f/lmloop_data/llm" title="f/lmloop_data/llm">llm</a>)+1,dim1)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>dim1</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></li>
+<li><strong>dims_full</strong> (2)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/hdf5helpers/readhdf5_attr_dble">
+<em class="property">subroutine  </em><code class="descclassname">hdf5helpers/</code><code class="descname">readhdf5_attr_dble</code><span class="sig-paren">(</span><em>loc_id</em>, <em>attr_name</em>, <em>attr_value</em><span class="sig-paren">)</span><a class="headerlink" href="#f/hdf5helpers/readhdf5_attr_dble" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>loc_id</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>attr_name</strong><em> [</em><em>character</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>attr_value</strong><em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/hdf5helpers/readhdf5_attr_int">
+<em class="property">subroutine  </em><code class="descclassname">hdf5helpers/</code><code class="descname">readhdf5_attr_int</code><span class="sig-paren">(</span><em>loc_id</em>, <em>attr_name</em>, <em>attr_value</em><span class="sig-paren">)</span><a class="headerlink" href="#f/hdf5helpers/readhdf5_attr_int" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>loc_id</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>attr_name</strong><em> [</em><em>character</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>attr_value</strong><em> [</em><em>integer</em><em>,</em><em>out</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/hdf5helpers/writehdf5_attr_dble">
+<em class="property">subroutine  </em><code class="descclassname">hdf5helpers/</code><code class="descname">writehdf5_attr_dble</code><span class="sig-paren">(</span><em>loc_id</em>, <em>aspace_id</em>, <em>attr_name</em>, <em>attr_value</em><span class="sig-paren">)</span><a class="headerlink" href="#f/hdf5helpers/writehdf5_attr_dble" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>loc_id</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>aspace_id</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>attr_name</strong><em> [</em><em>character</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>attr_value</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/hdf5helpers/writehdf5_attr_int">
+<em class="property">subroutine  </em><code class="descclassname">hdf5helpers/</code><code class="descname">writehdf5_attr_int</code><span class="sig-paren">(</span><em>loc_id</em>, <em>aspace_id</em>, <em>attr_name</em>, <em>attr_value</em><span class="sig-paren">)</span><a class="headerlink" href="#f/hdf5helpers/writehdf5_attr_int" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>loc_id</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>aspace_id</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>attr_name</strong><em> [</em><em>character</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>attr_value</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Useful additional libraries</a><ul>
+<li><a class="reference internal" href="#f/useful"><code class="docutils literal"><span class="pre">useful.f90</span></code></a></li>
+<li><a class="reference internal" href="#f/charmanip"><code class="docutils literal"><span class="pre">char_manip.f90</span></code></a></li>
+<li><a class="reference internal" href="#f/hdf5helpers"><code class="docutils literal"><span class="pre">hdf5Helpers.f90</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="checkPoints.html"
+                        title="previous chapter">Reading and storing check points (restart files)</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/apiFortran/misc.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="checkPoints.html" title="Reading and storing check points (restart files)"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../api.html" >Description of the Fortran modules</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

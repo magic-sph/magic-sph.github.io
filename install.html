@@ -1,0 +1,351 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Get MagIC and run it &mdash; Magic 5.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.1 documentation" href="contents.html" />
+    <link rel="next" title="Formulation of the (magneto)-hydrodynamics problem" href="equations.html" />
+    <link rel="prev" title="Contents" href="contents.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="#">Get it/Run it</a></li>
+    <li><a href="contribute.html">Contribute!</a></li>
+    <li><a href="contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="index.html">
+      <img src="_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="equations.html" title="Formulation of the (magneto)-hydrodynamics problem"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="contents.html" title="Contents"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="contents.html">Magic 5.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="get-magic-and-run-it">
+<span id="secquickstart"></span><h1>Get MagIC and run it<a class="headerlink" href="#get-magic-and-run-it" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="download-the-code">
+<h2>Download the code<a class="headerlink" href="#download-the-code" title="Permalink to this headline">¶</a></h2>
+<p>You can download a snapshot of the code from the <a class="reference external" href="https://git-scm.com/">Git</a> repository using</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>git clone https://github.com/magic-sph/magic.git
+</pre></div>
+</div>
+<p>In case you already have an account on <a class="reference external" href="https://github.com/">github.com</a> and uploaded a public SSH key on it, you could then rather use SSH:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>git clone ssh://git@github.com/magic-sph/magic.git
+</pre></div>
+</div>
+</div>
+<div class="section" id="setting-up-the-environment-variables">
+<h2>Setting up the environment variables<a class="headerlink" href="#setting-up-the-environment-variables" title="Permalink to this headline">¶</a></h2>
+<p>Although not mandatory, it is strongly recommended to correctly source the
+environment variables of the MagIC code. It will ensure a smoother usage of the
+post-processing <a class="reference internal" href="postProc.html#secpythonpostproc"><span>python classes</span></a> and allow to run the
+<a class="reference internal" href="contribute.html#secautotest"><span>auto-test suite</span></a>.  To do that, just go to the root directory of
+the MagIC code (<code class="docutils literal"><span class="pre">magic</span></code>) and source <code class="docutils literal"><span class="pre">sourceme</span></code> file that corresponds to your
+<code class="docutils literal"><span class="pre">$SHELL</span></code> environment variable.</p>
+<p>In case you use <a class="reference external" href="http://tiswww.case.edu/php/chet/bash/bashtop.html">bash</a>,
+<a class="reference external" href="http://www.kornshell.com/">ksh</a> or <a class="reference external" href="http://www.zsh.org/">zsh</a>, just use:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">source </span>sourceme.sh
+</pre></div>
+</div>
+<p>In case you use <a class="reference external" href="http://www.tcsh.org/Home">csh</a> or <a class="reference external" href="http://www.tcsh.org/Home">tcsh</a>,
+rather use</p>
+<div class="highlight-csh"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">source </span>sourceme.csh
+</pre></div>
+</div>
+<p>You can make sure that the environment variables have been correctly sourced by typing:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$MAGIC_HOME</span>
+<span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$PYTHONPATH</span>
+</pre></div>
+</div>
+<p>If you don&#8217;t want to <code class="docutils literal"><span class="pre">source</span> <span class="pre">sourceme.[c]sh</span></code> on each session, you can add the following
+into your <code class="docutils literal"><span class="pre">.bash_profile</span></code> (or <code class="docutils literal"><span class="pre">.profile</span></code> or <code class="docutils literal"><span class="pre">.zprofile</span></code> or <code class="docutils literal"><span class="pre">.cshrc</span></code>):</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">source </span>whereverYouCheckedOut/magic/sourceme.sh
+</pre></div>
+</div>
+<p>To get started, you then need to compile the code</p>
+</div>
+<div class="section" id="setting-up-compiler-options-and-compiling">
+<h2>Setting up compiler options and compiling<a class="headerlink" href="#setting-up-compiler-options-and-compiling" title="Permalink to this headline">¶</a></h2>
+<p>Go to the directory where the source files of MagIC are contained</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> <span class="nv">$MAGIC_HOME</span>/src
+</pre></div>
+</div>
+<p>and edit the <code class="docutils literal"><span class="pre">Makefile</span></code> there to specify your specific compiler options.</p>
+<div class="section" id="makefile-options">
+<h3>Makefile options<a class="headerlink" href="#makefile-options" title="Permalink to this headline">¶</a></h3>
+<p><strong>Select compiler</strong></p>
+<p>Set a suitable compiler in the first line of the <code class="docutils literal"><span class="pre">Makefile</span></code>: <code class="docutils literal"><span class="pre">COMPILER</span> <span class="pre">=</span>
+<span class="pre">&lt;compiler_phrase&gt;</span></code>. The options are <code class="docutils literal"><span class="pre">intel</span></code>, <code class="docutils literal"><span class="pre">gnu</span></code> or <code class="docutils literal"><span class="pre">amd</span></code> - depending
+on your available compilers.</p>
+<p><em>List of default compilers</em></p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="30%" />
+<col width="36%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Compiler Option</td>
+<td>Normal</td>
+<td>With MPI</td>
+</tr>
+<tr class="row-even"><td>intel</td>
+<td>ifort, icc</td>
+<td>mpiifort, mpiicc</td>
+</tr>
+<tr class="row-odd"><td>gnu</td>
+<td>gfortran, gcc</td>
+<td>mpif90, mpicc</td>
+</tr>
+<tr class="row-even"><td>amd</td>
+<td>openf95</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><strong>Select compiling options</strong></p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">PRECISION</span></code> Set it to &#8216;dble&#8217; for double-precision calculations or to &#8216;sngl&#8217; for single-precision calculations</li>
+<li><code class="docutils literal"><span class="pre">OUT_PREC</span></code> Set it to &#8216;dble&#8217; for double-precision in binary outputs or to &#8216;sngl&#8217; for single precision</li>
+<li><code class="docutils literal"><span class="pre">PRODRUN</span></code> Set it to <code class="docutils literal"><span class="pre">yes</span></code> for production run, <code class="docutils literal"><span class="pre">no</span></code> for debugging.</li>
+<li><code class="docutils literal"><span class="pre">USE_MPI</span></code> Set to <code class="docutils literal"><span class="pre">yes</span></code> to use MPI, set it to <code class="docutils literal"><span class="pre">no</span></code> if you want a serial version of the code .</li>
+<li><code class="docutils literal"><span class="pre">OPENMP</span></code>  Set it to <code class="docutils literal"><span class="pre">yes</span></code> to use the hybrid version of the code, or to <code class="docutils literal"><span class="pre">no</span></code> for a pure MPI (or serial) version.</li>
+<li><code class="docutils literal"><span class="pre">DEBUG</span></code>   Set to <code class="docutils literal"><span class="pre">all</span></code> to enable the full debug flags. <em>While running in debugging mode, set</em> <code class="docutils literal"><span class="pre">PRODRUN</span></code> <em>to</em> <code class="docutils literal"><span class="pre">no</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">USE_FFTLIB</span></code> This option lets you select the library you want to use for Fast Fourier Transforms. This can be set to &#8216;JW&#8217; or &#8216;MKL&#8217;. &#8216;JW&#8217; refers to the inbuilt library by <strong>J</strong> ohannes <strong>W</strong> icht, while &#8216;MKL&#8217; refers to the <a class="reference external" href="https://software.intel.com/en-us/intel-mkl">Intel Math Kernel Library</a>. Use &#8216;JW&#8217; if you don&#8217;t have Intel MKL installed.</li>
+<li><code class="docutils literal"><span class="pre">USE_MKL</span></code> Set to <code class="docutils literal"><span class="pre">yes</span></code> if you have Intel MKL installed and want to use it for matrix operations.</li>
+<li><code class="docutils literal"><span class="pre">USE_HDF5</span></code> Set to <code class="docutils literal"><span class="pre">yes</span></code> if you want the restart file to be written in the  <a class="reference external" href="http://www.hdfgroup.org/">HDF5</a> format</li>
+</ul>
+<p><strong>Architecture (Intel compilers only)</strong></p>
+<p>If you&#8217;re using intel compilers and if your computer is capable of following
+specific intel instruction sets (sse3 or AVX), then the <code class="docutils literal"><span class="pre">Makefile</span></code>
+automatically should automatically detects and sets <code class="docutils literal"><span class="pre">FFLAG_ARCH_OPT</span> <span class="pre">=</span> <span class="pre">-xsse3</span></code>
+or <code class="docutils literal"><span class="pre">FFLAG_ARCH_OPT</span> <span class="pre">=</span> <span class="pre">-xAVX</span></code> under intel compiler options.</p>
+<p><strong>MPI_INCPATH</strong></p>
+<p>This sets the path for your mpi header file <code class="docutils literal"><span class="pre">mpif.h</span></code> . The path depends on
+the computer. For PCs, this is commonly <code class="docutils literal"><span class="pre">/usr/include</span></code> or
+<code class="docutils literal"><span class="pre">/usr/include/mpi</span></code> and should be found by the <code class="docutils literal"><span class="pre">Makefile</span></code> automatically thanks
+to the command <code class="docutils literal"><span class="pre">mpif90</span> <span class="pre">--showme:incdirs</span></code>. In case this doesn&#8217;t work, you may
+need to specify this variable manually in the <code class="docutils literal"><span class="pre">Makefile</span></code>. On supercomputing clusters,
+this variable is in general not used since the <code class="docutils literal"><span class="pre">mpi.mod</span></code> file is usually find
+the standard <code class="docutils literal"><span class="pre">$PATH</span></code>.</p>
+<p><strong>Other compilers</strong></p>
+<p>If your available compilers are different from the options provided in the
+<code class="docutils literal"><span class="pre">Makefile</span></code>, then just create a new profile for your desired compiler
+by changing the options <code class="docutils literal"><span class="pre">COMP_FC</span></code> and
+<code class="docutils literal"><span class="pre">COMP_CC</span></code> for serial fortran and C compilers and <code class="docutils literal"><span class="pre">COMP_MPFC</span></code> and
+<code class="docutils literal"><span class="pre">COMP_MPCC</span></code> for compilers with mpi implementation.</p>
+</div>
+<div class="section" id="compiling-the-code">
+<h3>Compiling the code<a class="headerlink" href="#compiling-the-code" title="Permalink to this headline">¶</a></h3>
+<p>Once you&#8217;ve set up your compiling options compile the code using</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>make -j
+</pre></div>
+</div>
+<p>The compiler should then produce an executable named <code class="docutils literal"><span class="pre">magic.exe</span></code>.</p>
+<p>If you want to recompile the code from scratch do</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>make clean
+</pre></div>
+</div>
+<p>to remove all the files generated by the compiler.</p>
+<p>Once the executable is built, you are now ready to run your first production run!</p>
+</div>
+</div>
+<div class="section" id="preparing-a-production-run">
+<h2>Preparing a production run<a class="headerlink" href="#preparing-a-production-run" title="Permalink to this headline">¶</a></h2>
+<p>After building the executable, use one of the namelists provided in the
+<code class="docutils literal"><span class="pre">$MAGIC_HOME/samples</span></code> directory (called <code class="docutils literal"><span class="pre">input.nml</span></code>), adapt it to your
+physical problem (see <a class="reference internal" href="inputNamelists/namelists.html#secnamelists"><span>here</span></a> for an exhaustive
+description of the possible options) and run <strong>MagIC</strong> as follows:</p>
+<ul>
+<li><p class="first">Running a serial version of the code (<code class="docutils literal"><span class="pre">USE_MPI=no</span></code> and <code class="docutils literal"><span class="pre">OPENMP=no</span></code>):</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>./magic.exe input.nml
+</pre></div>
+</div>
+</li>
+<li><p class="first">Running the code without OpenMP (<code class="docutils literal"><span class="pre">USE_MPI=yes</span></code> and <code class="docutils literal"><span class="pre">OPENMP=no</span></code>) with <code class="docutils literal"><span class="pre">&lt;n_mpi&gt;</span></code>
+MPI ranks:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>mpiexec -n &lt;n_mpi&gt; ./magic.exe input.nml
+</pre></div>
+</div>
+</li>
+<li><p class="first">Running the hybrid code (<code class="docutils literal"><span class="pre">USE_MPI=yes</span></code> and <code class="docutils literal"><span class="pre">OPENMP=yes</span></code>) with <code class="docutils literal"><span class="pre">&lt;n_mpi&gt;</span></code> MPI ranks
+and <code class="docutils literal"><span class="pre">&lt;n_omp&gt;</span></code> OpenMP threads:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">export </span><span class="nv">OMP_NUM_THREAD</span> <span class="o">=</span> &lt;n_omp&gt;
+<span class="nv">$ </span>mpiexec -n &lt;n_mpi&gt; ./magic.exe input.nml
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Note that the <a class="reference internal" href="inputNamelists/gridNamelist.html#varn-r-max"><span>n_r_max</span></a> must be a multiple of <code class="docutils literal"><span class="pre">&lt;n_mpi&gt;</span></code>,
+where <a class="reference internal" href="inputNamelists/gridNamelist.html#varn-r-max"><span>n_r_max</span></a> is the number of radial grid points (see
+<a class="reference internal" href="inputNamelists/gridNamelist.html#secgridnml"><span>here</span></a>).</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Get MagIC and run it</a><ul>
+<li><a class="reference internal" href="#download-the-code">Download the code</a></li>
+<li><a class="reference internal" href="#setting-up-the-environment-variables">Setting up the environment variables</a></li>
+<li><a class="reference internal" href="#setting-up-compiler-options-and-compiling">Setting up compiler options and compiling</a><ul>
+<li><a class="reference internal" href="#makefile-options">Makefile options</a></li>
+<li><a class="reference internal" href="#compiling-the-code">Compiling the code</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#preparing-a-production-run">Preparing a production run</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="contents.html"
+                        title="previous chapter">Contents</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="equations.html"
+                        title="next chapter">Formulation of the (magneto)-hydrodynamics problem</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/install.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="equations.html" title="Formulation of the (magneto)-hydrodynamics problem"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="contents.html" title="Contents"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="contents.html">Magic 5.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>
