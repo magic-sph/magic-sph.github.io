@@ -187,10 +187,6 @@ on your available compilers.</p>
 <td>gfortran, gcc</td>
 <td>mpif90, mpicc</td>
 </tr>
-<tr class="row-even"><td>amd</td>
-<td>openf95</td>
-<td>&nbsp;</td>
-</tr>
 </tbody>
 </table>
 </div></blockquote>
@@ -199,18 +195,24 @@ on your available compilers.</p>
 <li><code class="docutils literal"><span class="pre">PRECISION</span></code> Set it to &#8216;dble&#8217; for double-precision calculations or to &#8216;sngl&#8217; for single-precision calculations</li>
 <li><code class="docutils literal"><span class="pre">OUT_PREC</span></code> Set it to &#8216;dble&#8217; for double-precision in binary outputs or to &#8216;sngl&#8217; for single precision</li>
 <li><code class="docutils literal"><span class="pre">PRODRUN</span></code> Set it to <code class="docutils literal"><span class="pre">yes</span></code> for production run, <code class="docutils literal"><span class="pre">no</span></code> for debugging.</li>
-<li><code class="docutils literal"><span class="pre">USE_MPI</span></code> Set to <code class="docutils literal"><span class="pre">yes</span></code> to use MPI, set it to <code class="docutils literal"><span class="pre">no</span></code> if you want a serial version of the code .</li>
-<li><code class="docutils literal"><span class="pre">OPENMP</span></code>  Set it to <code class="docutils literal"><span class="pre">yes</span></code> to use the hybrid version of the code, or to <code class="docutils literal"><span class="pre">no</span></code> for a pure MPI (or serial) version.</li>
 <li><code class="docutils literal"><span class="pre">DEBUG</span></code>   Set to <code class="docutils literal"><span class="pre">all</span></code> to enable the full debug flags. <em>While running in debugging mode, set</em> <code class="docutils literal"><span class="pre">PRODRUN</span></code> <em>to</em> <code class="docutils literal"><span class="pre">no</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">USE_MPI</span></code> Set to <code class="docutils literal"><span class="pre">yes</span></code> to use MPI, set it to <code class="docutils literal"><span class="pre">no</span></code> if you want a serial version of the code .</li>
+<li><code class="docutils literal"><span class="pre">USE_OMP</span></code>  Set it to <code class="docutils literal"><span class="pre">yes</span></code> to use the hybrid version of the code, or to <code class="docutils literal"><span class="pre">no</span></code> for a pure MPI (or serial) version.</li>
+<li><code class="docutils literal"><span class="pre">USE_PRECOND</span></code> Set to <code class="docutils literal"><span class="pre">yes</span></code> to perform some pre-conditioning of the matrices.</li>
 <li><code class="docutils literal"><span class="pre">USE_FFTLIB</span></code> This option lets you select the library you want to use for Fast Fourier Transforms. This can be set to &#8216;JW&#8217; or &#8216;MKL&#8217;. &#8216;JW&#8217; refers to the inbuilt library by <strong>J</strong> ohannes <strong>W</strong> icht, while &#8216;MKL&#8217; refers to the <a class="reference external" href="https://software.intel.com/en-us/intel-mkl">Intel Math Kernel Library</a>. Use &#8216;JW&#8217; if you don&#8217;t have Intel MKL installed.</li>
 <li><code class="docutils literal"><span class="pre">USE_MKL</span></code> Set to <code class="docutils literal"><span class="pre">yes</span></code> if you have Intel MKL installed and want to use it for matrix operations.</li>
 <li><code class="docutils literal"><span class="pre">USE_HDF5</span></code> Set to <code class="docutils literal"><span class="pre">yes</span></code> if you want the restart file to be written in the  <a class="reference external" href="http://www.hdfgroup.org/">HDF5</a> format</li>
 </ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">MagIC cannot run with openMP alone, therefore a configuration of the form
+<code class="docutils literal"><span class="pre">USE_MPI=no</span></code>, <code class="docutils literal"><span class="pre">USE_OMP=yes</span></code> will be overwritten to force <code class="docutils literal"><span class="pre">USE_OMP=no</span></code></p>
+</div>
 <p><strong>Architecture (Intel compilers only)</strong></p>
-<p>If you&#8217;re using intel compilers and if your computer is capable of following
-specific intel instruction sets (sse3 or AVX), then the <code class="docutils literal"><span class="pre">Makefile</span></code>
-automatically should automatically detects and sets <code class="docutils literal"><span class="pre">FFLAG_ARCH_OPT</span> <span class="pre">=</span> <span class="pre">-xsse3</span></code>
-or <code class="docutils literal"><span class="pre">FFLAG_ARCH_OPT</span> <span class="pre">=</span> <span class="pre">-xAVX</span></code> under intel compiler options.</p>
+<p>By default, MagIC tries to automatically make use of the best available current architecture
+optimisation via the flag <code class="docutils literal"><span class="pre">FFLAG_ARCH_OPT</span> <span class="pre">=</span> <span class="pre">-xHost</span></code> for the Intel compiler or
+<code class="docutils literal"><span class="pre">FFLAG_ARCH_OPT</span> <span class="pre">=</span> <span class="pre">-march=native</span></code> for GNU compiler. In case you want to include additional
+(or more aggressive) optimisations just modify this variable in the Makefile.</p>
 <p><strong>MPI_INCPATH</strong></p>
 <p>This sets the path for your mpi header file <code class="docutils literal"><span class="pre">mpif.h</span></code> . The path depends on
 the computer. For PCs, this is commonly <code class="docutils literal"><span class="pre">/usr/include</span></code> or
@@ -248,18 +250,18 @@ by changing the options <code class="docutils literal"><span class="pre">COMP_FC
 physical problem (see <a class="reference internal" href="inputNamelists/namelists.html#secnamelists"><span>here</span></a> for an exhaustive
 description of the possible options) and run <strong>MagIC</strong> as follows:</p>
 <ul>
-<li><p class="first">Running a serial version of the code (<code class="docutils literal"><span class="pre">USE_MPI=no</span></code> and <code class="docutils literal"><span class="pre">OPENMP=no</span></code>):</p>
+<li><p class="first">Running a serial version of the code (<code class="docutils literal"><span class="pre">USE_MPI=no</span></code> and <code class="docutils literal"><span class="pre">USE_OMP=no</span></code>):</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>./magic.exe input.nml
 </pre></div>
 </div>
 </li>
-<li><p class="first">Running the code without OpenMP (<code class="docutils literal"><span class="pre">USE_MPI=yes</span></code> and <code class="docutils literal"><span class="pre">OPENMP=no</span></code>) with <code class="docutils literal"><span class="pre">&lt;n_mpi&gt;</span></code>
+<li><p class="first">Running the code without OpenMP (<code class="docutils literal"><span class="pre">USE_MPI=yes</span></code> and <code class="docutils literal"><span class="pre">USE_OMP=no</span></code>) with <code class="docutils literal"><span class="pre">&lt;n_mpi&gt;</span></code>
 MPI ranks:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>mpiexec -n &lt;n_mpi&gt; ./magic.exe input.nml
 </pre></div>
 </div>
 </li>
-<li><p class="first">Running the hybrid code (<code class="docutils literal"><span class="pre">USE_MPI=yes</span></code> and <code class="docutils literal"><span class="pre">OPENMP=yes</span></code>) with <code class="docutils literal"><span class="pre">&lt;n_mpi&gt;</span></code> MPI ranks
+<li><p class="first">Running the hybrid code (<code class="docutils literal"><span class="pre">USE_MPI=yes</span></code> and <code class="docutils literal"><span class="pre">USE_OMP=yes</span></code>) with <code class="docutils literal"><span class="pre">&lt;n_mpi&gt;</span></code> MPI ranks
 and <code class="docutils literal"><span class="pre">&lt;n_omp&gt;</span></code> OpenMP threads:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">export </span><span class="nv">OMP_NUM_THREAD</span> <span class="o">=</span> &lt;n_omp&gt;
 <span class="nv">$ </span>mpiexec -n &lt;n_mpi&gt; ./magic.exe input.nml
