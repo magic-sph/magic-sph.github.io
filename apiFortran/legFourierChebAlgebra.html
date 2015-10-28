@@ -279,7 +279,7 @@ x(1)=b, x(n+1)=a, y(1)=1, y(n+1)=-1</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="IOAdd.html#f/chebint_mod/chebintinit" title="f/chebint_mod/chebintinit"><code class="xref f f-func docutils literal"><span class="pre">chebintinit()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/rms_helpers/init_rnb" title="f/rms_helpers/init_rnb"><code class="xref f f-func docutils literal"><span class="pre">init_rnb()</span></code></a>, <a class="reference internal" href="precalcModules.html#f/radial_functions/radial" title="f/radial_functions/radial"><code class="xref f f-func docutils literal"><span class="pre">radial()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="IOAdd.html#f/chebint_mod/chebintinit" title="f/chebint_mod/chebintinit"><code class="xref f f-func docutils literal"><span class="pre">chebintinit()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/rms/init_rnb" title="f/rms/init_rnb"><code class="xref f f-func docutils literal"><span class="pre">init_rnb()</span></code></a>, <a class="reference internal" href="precalcModules.html#f/radial_functions/radial" title="f/radial_functions/radial"><code class="xref f f-func docutils literal"><span class="pre">radial()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -287,28 +287,50 @@ x(1)=b, x(n+1)=a, y(1)=1, y(n+1)=-1</p>
 </dd></dl>
 
 </div>
-<div class="section" id="f/init_costf">
-<span id="init-costf-f90"></span><h2><code class="docutils literal"><span class="pre">init_costf.f90</span></code><a class="headerlink" href="#f/init_costf" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="f/cosine_transform_odd">
+<span id="cosine-transform-odd-f90"></span><h2><code class="docutils literal"><span class="pre">cosine_transform_odd.f90</span></code><a class="headerlink" href="#f/cosine_transform_odd" title="Permalink to this headline">¶</a></h2>
 <p class="rubric">Quick access</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Routines:</th><td class="field-body"><a class="reference internal" href="#f/init_costf/init_costf1" title="f/init_costf/init_costf1"><code class="xref f f-func docutils literal"><span class="pre">init_costf1()</span></code></a>, <a class="reference internal" href="#f/init_costf/init_costf2" title="f/init_costf/init_costf2"><code class="xref f f-func docutils literal"><span class="pre">init_costf2()</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Routines:</th><td class="field-body"><a class="reference internal" href="#f/cosine_transform_odd/costf1_complex_1d" title="f/cosine_transform_odd/costf1_complex_1d"><code class="xref f f-func docutils literal"><span class="pre">costf1_complex_1d()</span></code></a>, <a class="reference internal" href="#f/cosine_transform_odd/costf1_real_1d" title="f/cosine_transform_odd/costf1_real_1d"><code class="xref f f-func docutils literal"><span class="pre">costf1_real_1d()</span></code></a>, <a class="reference internal" href="#f/cosine_transform_odd/costf1_complex" title="f/cosine_transform_odd/costf1_complex"><code class="xref f f-func docutils literal"><span class="pre">costf1_complex()</span></code></a>, <a class="reference internal" href="#f/cosine_transform_odd/costf1_real" title="f/cosine_transform_odd/costf1_real"><code class="xref f f-func docutils literal"><span class="pre">costf1_real()</span></code></a></td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Needed modules</p>
 <ul class="simple">
 <li><a class="reference internal" href="baseModules.html#f/precision_mod" title="f/precision_mod: This module controls the precision used in MagIC"><code class="xref f f-mod docutils literal"><span class="pre">precision_mod</span></code></a>: This module controls the precision used in MagIC</li>
+<li><a class="reference internal" href="#f/fft_fac_mod" title="f/fft_fac_mod"><code class="xref f f-mod docutils literal"><span class="pre">fft_fac_mod</span></code></a> (<a class="reference internal" href="#f/fft_fac_mod/fft_fac_complex" title="f/fft_fac_mod/fft_fac_complex"><code class="xref f f-func docutils literal"><span class="pre">fft_fac_complex()</span></code></a>, <a class="reference internal" href="#f/fft_fac_mod/fft_fac_real" title="f/fft_fac_mod/fft_fac_real"><code class="xref f f-func docutils literal"><span class="pre">fft_fac_real()</span></code></a>)</li>
 <li><a class="reference internal" href="misc.html#f/useful" title="f/useful: library with several useful subroutines"><code class="xref f f-mod docutils literal"><span class="pre">useful</span></code></a> (<a class="reference internal" href="misc.html#f/useful/factorise" title="f/useful/factorise"><code class="xref f f-func docutils literal"><span class="pre">factorise()</span></code></a>): library with several useful subroutines</li>
 <li><a class="reference internal" href="baseModules.html#f/constants" title="f/constants: module containing constants and parameters used in the code."><code class="xref f f-mod docutils literal"><span class="pre">constants</span></code></a> (<a class="reference internal" href="baseModules.html#f/constants/cos36" title="f/constants/cos36"><code class="xref f f-func docutils literal"><span class="pre">cos36()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/sin36" title="f/constants/sin36"><code class="xref f f-func docutils literal"><span class="pre">sin36()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/cos72" title="f/constants/cos72"><code class="xref f f-func docutils literal"><span class="pre">cos72()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/two" title="f/constants/two"><code class="xref f f-func docutils literal"><span class="pre">two()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/one" title="f/constants/one"><code class="xref f f-func docutils literal"><span class="pre">one()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/sin72" title="f/constants/sin72"><code class="xref f f-func docutils literal"><span class="pre">sin72()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/sin60" title="f/constants/sin60"><code class="xref f f-func docutils literal"><span class="pre">sin60()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/half" title="f/constants/half"><code class="xref f f-func docutils literal"><span class="pre">half()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/pi" title="f/constants/pi"><code class="xref f f-func docutils literal"><span class="pre">pi()</span></code></a>): module containing constants and parameters used in the code.</li>
+<li><a class="reference internal" href="baseModules.html#f/truncation" title="f/truncation: This module defines the grid points and the truncation"><code class="xref f f-mod docutils literal"><span class="pre">truncation</span></code></a> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max"><code class="xref f f-func docutils literal"><span class="pre">lm_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/lm_max_real" title="f/truncation/lm_max_real"><code class="xref f f-func docutils literal"><span class="pre">lm_max_real()</span></code></a>): This module defines the grid points and the truncation</li>
 </ul>
-<p class="rubric">Variables</p>
+<p class="rubric">Types</p>
+<ul>
+<li><dl class="type">
+<dt id="f/cosine_transform_odd/unknown_type">
+<em class="property">type  </em><code class="descclassname">cosine_transform_odd/</code><code class="descname">unknown_type</code><a class="headerlink" href="#f/cosine_transform_odd/unknown_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type fields:</th><td class="field-body"><ul class="first last simple">
+<li><code class="descname">% </code><code class="descname">i_costf_init</code> (*)<em> [</em><em>integer</em><em>,</em><em>allocatable</em><em>]</em></li>
+<li><code class="descname">% </code><code class="descname">d_costf_init</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</li>
+</ul>
 <p class="rubric">Subroutines and functions</p>
 <dl class="subroutine">
-<dt id="f/init_costf/init_costf1">
-<em class="property">subroutine  </em><code class="descclassname">init_costf/</code><code class="descname">init_costf1</code><span class="sig-paren">(</span><em>n</em>, <em>i_costf_init</em>, <em>ni</em>, <em>d_costf_init</em>, <em>nd</em><span class="sig-paren">)</span><a class="headerlink" href="#f/init_costf/init_costf1" title="Permalink to this definition">¶</a></dt>
+<dt id="f/cosine_transform_odd/initialize">
+<em class="property">subroutine  </em><code class="descclassname">cosine_transform_odd/</code><code class="descname">initialize</code><span class="sig-paren">(</span><em>this</em>, <em>n</em>, <em>ni</em>, <em>nd</em><span class="sig-paren">)</span><a class="headerlink" href="#f/cosine_transform_odd/initialize" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Purpose of this subroutine is to calculate and store several
 values that will be needed for a fast cosine transform of the
@@ -319,18 +341,14 @@ subroutine costf1.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: No of grid points !</li>
-<li><strong>i_costf_init</strong> (<a class="reference internal" href="#f/fft/ni" title="f/fft/ni">ni</a>)<em> [</em><em>integer</em><em>,</em><em>out</em><em>]</em> :: array for integers</li>
-<li><strong>ni</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: dimension of i_costf_init</li>
-<li><strong>d_costf_init</strong> (<a class="reference internal" href="#f/fft/nd" title="f/fft/nd">nd</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em> :: array for integers</li>
-<li><strong>nd</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: dimension of d_costf_init</li>
+<li><strong>this</strong><em> [</em><em>real</em><em>]</em></li>
+<li><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>ni</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>nd</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="IOAdd.html#f/chebint_mod/chebintinit" title="f/chebint_mod/chebintinit"><code class="xref f f-func docutils literal"><span class="pre">chebintinit()</span></code></a>, <a class="reference internal" href="checkPoints.html#f/readcheckpoints/mapdatar" title="f/readcheckpoints/mapdatar"><code class="xref f f-func docutils literal"><span class="pre">mapdatar()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/rms_helpers/init_rnb" title="f/rms_helpers/init_rnb"><code class="xref f f-func docutils literal"><span class="pre">init_rnb()</span></code></a>, <a class="reference internal" href="precalcModules.html#f/radial_functions/radial" title="f/radial_functions/radial"><code class="xref f f-func docutils literal"><span class="pre">radial()</span></code></a></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="misc.html#f/useful/factorise" title="f/useful/factorise"><code class="xref f f-func docutils literal"><span class="pre">factorise()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="misc.html#f/useful/factorise" title="f/useful/factorise"><code class="xref f f-func docutils literal"><span class="pre">factorise()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -338,69 +356,21 @@ subroutine costf1.</div></blockquote>
 </dd></dl>
 
 <dl class="subroutine">
-<dt id="f/init_costf/init_costf2">
-<em class="property">subroutine  </em><code class="descclassname">init_costf/</code><code class="descname">init_costf2</code><span class="sig-paren">(</span><em>n</em>, <em>i_costf_init</em>, <em>ni</em>, <em>d_costf_init</em>, <em>nd</em><span class="sig-paren">)</span><a class="headerlink" href="#f/init_costf/init_costf2" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div>Purpose of this subroutine is to calculate several things
-needed for the cheb transform.
-Prepares costf2 for even number of grid points.</div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
+<dt id="f/cosine_transform_odd/finalize">
+<em class="property">subroutine  </em><code class="descclassname">cosine_transform_odd/</code><code class="descname">finalize</code><span class="sig-paren">(</span><em>this</em><span class="sig-paren">)</span><a class="headerlink" href="#f/cosine_transform_odd/finalize" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: No of grid points !</li>
-<li><strong>i_costf_init</strong> (<a class="reference internal" href="#f/fft/ni" title="f/fft/ni">ni</a>)<em> [</em><em>integer</em><em>,</em><em>out</em><em>]</em> :: array for integers</li>
-<li><strong>ni</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: dimension of i_costf_init</li>
-<li><strong>d_costf_init</strong> (<a class="reference internal" href="#f/fft/nd" title="f/fft/nd">nd</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em> :: array for integers</li>
-<li><strong>nd</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: dimension of i_costf_init</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="precalcModules.html#f/radial_functions/radial" title="f/radial_functions/radial"><code class="xref f f-func docutils literal"><span class="pre">radial()</span></code></a></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="misc.html#f/useful/factorise" title="f/useful/factorise"><code class="xref f f-func docutils literal"><span class="pre">factorise()</span></code></a></p>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>this</strong><em> [</em><em>real</em><em>]</em></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
-</div>
-<div class="section" id="f/cosine_transform">
-<span id="cosine-transform-f90"></span><h2><code class="docutils literal"><span class="pre">cosine_transform.f90</span></code><a class="headerlink" href="#f/cosine_transform" title="Permalink to this headline">¶</a></h2>
-<p class="rubric">Quick access</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><a class="reference internal" href="#f/cosine_transform/costf1" title="f/cosine_transform/costf1"><code class="xref f f-var docutils literal"><span class="pre">costf1</span></code></a></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Routines:</th><td class="field-body"><a class="reference internal" href="#f/cosine_transform/costf1_complex_1d" title="f/cosine_transform/costf1_complex_1d"><code class="xref f f-func docutils literal"><span class="pre">costf1_complex_1d()</span></code></a>, <a class="reference internal" href="#f/cosine_transform/costf1_real_1d" title="f/cosine_transform/costf1_real_1d"><code class="xref f f-func docutils literal"><span class="pre">costf1_real_1d()</span></code></a>, <a class="reference internal" href="#f/cosine_transform/costf1_complex" title="f/cosine_transform/costf1_complex"><code class="xref f f-func docutils literal"><span class="pre">costf1_complex()</span></code></a>, <a class="reference internal" href="#f/cosine_transform/costf2" title="f/cosine_transform/costf2"><code class="xref f f-func docutils literal"><span class="pre">costf2()</span></code></a>, <a class="reference internal" href="#f/cosine_transform/costf1_real" title="f/cosine_transform/costf1_real"><code class="xref f f-func docutils literal"><span class="pre">costf1_real()</span></code></a></td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Needed modules</p>
-<ul class="simple">
-<li><a class="reference internal" href="baseModules.html#f/precision_mod" title="f/precision_mod: This module controls the precision used in MagIC"><code class="xref f f-mod docutils literal"><span class="pre">precision_mod</span></code></a>: This module controls the precision used in MagIC</li>
-<li><a class="reference internal" href="#f/fft_fac_mod" title="f/fft_fac_mod"><code class="xref f f-mod docutils literal"><span class="pre">fft_fac_mod</span></code></a> (<a class="reference internal" href="#f/fft_fac_mod/fft_fac_complex" title="f/fft_fac_mod/fft_fac_complex"><code class="xref f f-func docutils literal"><span class="pre">fft_fac_complex()</span></code></a>, <a class="reference internal" href="#f/fft_fac_mod/fft_fac_real" title="f/fft_fac_mod/fft_fac_real"><code class="xref f f-func docutils literal"><span class="pre">fft_fac_real()</span></code></a>)</li>
-<li><a class="reference internal" href="baseModules.html#f/constants" title="f/constants: module containing constants and parameters used in the code."><code class="xref f f-mod docutils literal"><span class="pre">constants</span></code></a> (<a class="reference internal" href="baseModules.html#f/constants/one" title="f/constants/one"><code class="xref f f-func docutils literal"><span class="pre">one()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/two" title="f/constants/two"><code class="xref f f-func docutils literal"><span class="pre">two()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/half" title="f/constants/half"><code class="xref f f-func docutils literal"><span class="pre">half()</span></code></a>): module containing constants and parameters used in the code.</li>
-<li><a class="reference internal" href="baseModules.html#f/truncation" title="f/truncation: This module defines the grid points and the truncation"><code class="xref f f-mod docutils literal"><span class="pre">truncation</span></code></a> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max"><code class="xref f f-func docutils literal"><span class="pre">lm_max()</span></code></a>): This module defines the grid points and the truncation</li>
-</ul>
-<p class="rubric">Variables</p>
-<ul>
-<li><dl class="variable">
-<dt id="f/cosine_transform/costf1">
-<code class="descclassname">cosine_transform/</code><code class="descname">costf1</code><em> [</em><em>public</em><em>]</em><a class="headerlink" href="#f/cosine_transform/costf1" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</li>
-</ul>
-<p class="rubric">Subroutines and functions</p>
 <dl class="subroutine">
-<dt id="f/cosine_transform/costf1_complex">
-<em class="property">subroutine  </em><code class="descclassname">cosine_transform/</code><code class="descname">costf1_complex</code><span class="sig-paren">(</span><em>f</em>, <em>n_f_max</em>, <em>n_f_start</em>, <em>n_f_stop</em>, <em>f2</em>, <em>i_costf_init</em>, <em>d_costf_init</em><span class="sig-paren">)</span><a class="headerlink" href="#f/cosine_transform/costf1_complex" title="Permalink to this definition">¶</a></dt>
+<dt id="f/cosine_transform_odd/costf1_complex">
+<em class="property">subroutine  </em><code class="descclassname">cosine_transform_odd/</code><code class="descname">costf1_complex</code><span class="sig-paren">(</span><em>this</em>, <em>f</em>, <em>n_f_max</em>, <em>n_f_start</em>, <em>n_f_stop</em>, <em>f2</em><span class="sig-paren">)</span><a class="headerlink" href="#f/cosine_transform_odd/costf1_complex" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Purpose of this subroutine is to perform a multiple
 cosine transforms for n+1 datapoints
@@ -413,13 +383,12 @@ coeffs or data are returned in f.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>this</strong><em> [</em><em>real</em><em>]</em></li>
 <li><strong>f</strong> (n_f_max,*)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em> :: data/coeff input</li>
 <li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: number of columns in f,f2</li>
 <li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: columns to be transformed</li>
 <li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>f2</strong> (n_f_max,*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: work array of the same size as f</li>
-<li><strong>i_costf_init</strong> (*)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: prestored integers</li>
-<li><strong>d_costf_init</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: prestored 1 numbers</li>
 </ul>
 </td>
 </tr>
@@ -431,17 +400,16 @@ coeffs or data are returned in f.</div></blockquote>
 </dd></dl>
 
 <dl class="subroutine">
-<dt id="f/cosine_transform/costf1_complex_1d">
-<em class="property">subroutine  </em><code class="descclassname">cosine_transform/</code><code class="descname">costf1_complex_1d</code><span class="sig-paren">(</span><em>f</em>, <em>f2</em>, <em>i_costf_init</em>, <em>d_costf_init</em><span class="sig-paren">)</span><a class="headerlink" href="#f/cosine_transform/costf1_complex_1d" title="Permalink to this definition">¶</a></dt>
+<dt id="f/cosine_transform_odd/costf1_complex_1d">
+<em class="property">subroutine  </em><code class="descclassname">cosine_transform_odd/</code><code class="descname">costf1_complex_1d</code><span class="sig-paren">(</span><em>this</em>, <em>f</em>, <em>f2</em><span class="sig-paren">)</span><a class="headerlink" href="#f/cosine_transform_odd/costf1_complex_1d" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>this</strong><em> [</em><em>real</em><em>]</em></li>
 <li><strong>f</strong> (*)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em> :: data/coeff input</li>
 <li><strong>f2</strong> (*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: work array of the same size as f</li>
-<li><strong>i_costf_init</strong> (*)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: prestored integers</li>
-<li><strong>d_costf_init</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: prestored 1 numbers</li>
 </ul>
 </td>
 </tr>
@@ -453,45 +421,19 @@ coeffs or data are returned in f.</div></blockquote>
 </dd></dl>
 
 <dl class="subroutine">
-<dt id="f/cosine_transform/costf1_real">
-<em class="property">subroutine  </em><code class="descclassname">cosine_transform/</code><code class="descname">costf1_real</code><span class="sig-paren">(</span><em>f</em>, <em>n_f_max</em>, <em>n_f_start</em>, <em>n_f_stop</em>, <em>f2</em>, <em>i_costf_init</em>, <em>d_costf_init</em><span class="sig-paren">)</span><a class="headerlink" href="#f/cosine_transform/costf1_real" title="Permalink to this definition">¶</a></dt>
+<dt id="f/cosine_transform_odd/costf1_real">
+<em class="property">subroutine  </em><code class="descclassname">cosine_transform_odd/</code><code class="descname">costf1_real</code><span class="sig-paren">(</span><em>this</em>, <em>f</em>, <em>n_f_max</em>, <em>n_f_start</em>, <em>n_f_stop</em>, <em>f2</em><span class="sig-paren">)</span><a class="headerlink" href="#f/cosine_transform_odd/costf1_real" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>this</strong><em> [</em><em>real</em><em>]</em></li>
 <li><strong>f</strong> (n_f_max,*)<em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em> :: data/coeff input</li>
 <li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: number of columns in f,f2</li>
 <li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: columns to be transformed</li>
 <li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>f2</strong> (n_f_max,*)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em> :: work array of the same size as f</li>
-<li><strong>i_costf_init</strong> (*)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: prestored integers</li>
-<li><strong>d_costf_init</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: prestored 1 numbers</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Use :</th><td class="field-body"><p class="first"><a class="reference internal" href="baseModules.html#f/truncation" title="f/truncation: This module defines the grid points and the truncation"><code class="xref f f-mod docutils literal"><span class="pre">truncation</span></code></a> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max_real" title="f/truncation/lm_max_real"><code class="xref f f-func docutils literal"><span class="pre">lm_max_real()</span></code></a>)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/fft_fac_mod/fft_fac_real" title="f/fft_fac_mod/fft_fac_real"><code class="xref f f-func docutils literal"><span class="pre">fft_fac_real()</span></code></a></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="subroutine">
-<dt id="f/cosine_transform/costf1_real_1d">
-<em class="property">subroutine  </em><code class="descclassname">cosine_transform/</code><code class="descname">costf1_real_1d</code><span class="sig-paren">(</span><em>f</em>, <em>f2</em>, <em>i_costf_init</em>, <em>d_costf_init</em><span class="sig-paren">)</span><a class="headerlink" href="#f/cosine_transform/costf1_real_1d" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>f</strong> (*)<em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em> :: data/coeff input</li>
-<li><strong>f2</strong> (*)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em> :: work array of the same size as f</li>
-<li><strong>i_costf_init</strong> (*)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: prestored integers</li>
-<li><strong>d_costf_init</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: prestored 1 numbers</li>
 </ul>
 </td>
 </tr>
@@ -503,28 +445,133 @@ coeffs or data are returned in f.</div></blockquote>
 </dd></dl>
 
 <dl class="subroutine">
-<dt id="f/cosine_transform/costf2">
-<em class="property">subroutine  </em><code class="descclassname">cosine_transform/</code><code class="descname">costf2</code><span class="sig-paren">(</span><em>f</em>, <em>n_f_max</em>, <em>n_f_start</em>, <em>n_f_stop</em>, <em>f2</em>, <em>i_costf_init</em>, <em>d_costf_init</em>, <em>isign</em><span class="sig-paren">)</span><a class="headerlink" href="#f/cosine_transform/costf2" title="Permalink to this definition">¶</a></dt>
+<dt id="f/cosine_transform_odd/costf1_real_1d">
+<em class="property">subroutine  </em><code class="descclassname">cosine_transform_odd/</code><code class="descname">costf1_real_1d</code><span class="sig-paren">(</span><em>this</em>, <em>f</em>, <em>f2</em><span class="sig-paren">)</span><a class="headerlink" href="#f/cosine_transform_odd/costf1_real_1d" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>this</strong><em> [</em><em>real</em><em>]</em></li>
+<li><strong>f</strong> (*)<em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em> :: data/coeff input</li>
+<li><strong>f2</strong> (*)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em> :: work array</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/fft_fac_mod/fft_fac_real" title="f/fft_fac_mod/fft_fac_real"><code class="xref f f-func docutils literal"><span class="pre">fft_fac_real()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="f/cosine_transform_even">
+<span id="cosine-transform-even-f90"></span><h2><code class="docutils literal"><span class="pre">cosine_transform_even.f90</span></code><a class="headerlink" href="#f/cosine_transform_even" title="Permalink to this headline">¶</a></h2>
+<p class="rubric">Quick access</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Routines:</th><td class="field-body"><a class="reference internal" href="#f/cosine_transform_even/costf2" title="f/cosine_transform_even/costf2"><code class="xref f f-func docutils literal"><span class="pre">costf2()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Needed modules</p>
+<ul class="simple">
+<li><a class="reference internal" href="baseModules.html#f/precision_mod" title="f/precision_mod: This module controls the precision used in MagIC"><code class="xref f f-mod docutils literal"><span class="pre">precision_mod</span></code></a>: This module controls the precision used in MagIC</li>
+<li><a class="reference internal" href="#f/fft_fac_mod" title="f/fft_fac_mod"><code class="xref f f-mod docutils literal"><span class="pre">fft_fac_mod</span></code></a> (<a class="reference internal" href="#f/fft_fac_mod/fft_fac_complex" title="f/fft_fac_mod/fft_fac_complex"><code class="xref f f-func docutils literal"><span class="pre">fft_fac_complex()</span></code></a>)</li>
+<li><a class="reference internal" href="misc.html#f/useful" title="f/useful: library with several useful subroutines"><code class="xref f f-mod docutils literal"><span class="pre">useful</span></code></a> (<a class="reference internal" href="misc.html#f/useful/factorise" title="f/useful/factorise"><code class="xref f f-func docutils literal"><span class="pre">factorise()</span></code></a>): library with several useful subroutines</li>
+<li><a class="reference internal" href="baseModules.html#f/constants" title="f/constants: module containing constants and parameters used in the code."><code class="xref f f-mod docutils literal"><span class="pre">constants</span></code></a> (<a class="reference internal" href="baseModules.html#f/constants/cos36" title="f/constants/cos36"><code class="xref f f-func docutils literal"><span class="pre">cos36()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/sin36" title="f/constants/sin36"><code class="xref f f-func docutils literal"><span class="pre">sin36()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/cos72" title="f/constants/cos72"><code class="xref f f-func docutils literal"><span class="pre">cos72()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/two" title="f/constants/two"><code class="xref f f-func docutils literal"><span class="pre">two()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/one" title="f/constants/one"><code class="xref f f-func docutils literal"><span class="pre">one()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/sin72" title="f/constants/sin72"><code class="xref f f-func docutils literal"><span class="pre">sin72()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/sin60" title="f/constants/sin60"><code class="xref f f-func docutils literal"><span class="pre">sin60()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/half" title="f/constants/half"><code class="xref f f-func docutils literal"><span class="pre">half()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/pi" title="f/constants/pi"><code class="xref f f-func docutils literal"><span class="pre">pi()</span></code></a>): module containing constants and parameters used in the code.</li>
+<li><a class="reference internal" href="baseModules.html#f/truncation" title="f/truncation: This module defines the grid points and the truncation"><code class="xref f f-mod docutils literal"><span class="pre">truncation</span></code></a> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max"><code class="xref f f-func docutils literal"><span class="pre">lm_max()</span></code></a>): This module defines the grid points and the truncation</li>
+</ul>
+<p class="rubric">Types</p>
+<ul>
+<li><dl class="type">
+<dt id="f/cosine_transform_even/unknown_type">
+<em class="property">type  </em><code class="descclassname">cosine_transform_even/</code><code class="descname">unknown_type</code><a class="headerlink" href="#f/cosine_transform_even/unknown_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type fields:</th><td class="field-body"><ul class="first last simple">
+<li><code class="descname">% </code><code class="descname">i_costf_init</code> (*)<em> [</em><em>integer</em><em>,</em><em>allocatable</em><em>]</em></li>
+<li><code class="descname">% </code><code class="descname">d_costf_init</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</li>
+</ul>
+<p class="rubric">Subroutines and functions</p>
+<dl class="subroutine">
+<dt id="f/cosine_transform_even/initialize">
+<em class="property">subroutine  </em><code class="descclassname">cosine_transform_even/</code><code class="descname">initialize</code><span class="sig-paren">(</span><em>this</em>, <em>n</em>, <em>ni</em>, <em>nd</em><span class="sig-paren">)</span><a class="headerlink" href="#f/cosine_transform_even/initialize" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Purpose of this subroutine is to calculate several things
+needed for the cheb transform.
+Prepares costf2 for even number of grid points.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>this</strong><em> [</em><em>real</em><em>]</em></li>
+<li><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>ni</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>nd</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="misc.html#f/useful/factorise" title="f/useful/factorise"><code class="xref f f-func docutils literal"><span class="pre">factorise()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/cosine_transform_even/finalize">
+<em class="property">subroutine  </em><code class="descclassname">cosine_transform_even/</code><code class="descname">finalize</code><span class="sig-paren">(</span><em>this</em><span class="sig-paren">)</span><a class="headerlink" href="#f/cosine_transform_even/finalize" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>this</strong><em> [</em><em>real</em><em>]</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/cosine_transform_even/costf2">
+<em class="property">subroutine  </em><code class="descclassname">cosine_transform_even/</code><code class="descname">costf2</code><span class="sig-paren">(</span><em>this</em>, <em>f</em>, <em>n_f_max</em>, <em>n_f_start</em>, <em>n_f_stop</em>, <em>f2</em>, <em>isign</em><span class="sig-paren">)</span><a class="headerlink" href="#f/cosine_transform_even/costf2" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Purpose of this subroutine is to perform a multiple
+cosine transforms for n+1 datapoints
+on the columns numbered n_f_start to n_f_stop in the array
+y(n_f_max,n+1)
+Depending whether the input y contains data or coeff arrays
+coeffs or data are returned in y.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>this</strong><em> [</em><em>real</em><em>]</em></li>
 <li><strong>f</strong> (n_f_max,*)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em> :: data/coeff input</li>
 <li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: number of columns in y,y2</li>
 <li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: columns to be transformed</li>
 <li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>f2</strong> (n_f_max,*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: work array of the same size as y</li>
-<li><strong>i_costf_init</strong> (*)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: prestored integers</li>
-<li><strong>d_costf_init</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: prestored 1 numbers</li>
 <li><strong>isign</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: = +1 (-1) for forward (backward) transform</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="derInt.html#f/radial_der_even/get_ddr_even" title="f/radial_der_even/get_ddr_even"><code class="xref f f-func docutils literal"><span class="pre">get_ddr_even()</span></code></a>, <a class="reference internal" href="derInt.html#f/radial_der_even/get_ddrns_even" title="f/radial_der_even/get_ddrns_even"><code class="xref f f-func docutils literal"><span class="pre">get_ddrns_even()</span></code></a>, <a class="reference internal" href="derInt.html#f/radial_der_even/get_drns_even" title="f/radial_der_even/get_drns_even"><code class="xref f f-func docutils literal"><span class="pre">get_drns_even()</span></code></a></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/fft_fac_mod/fft_fac_complex" title="f/fft_fac_mod/fft_fac_complex"><code class="xref f f-func docutils literal"><span class="pre">fft_fac_complex()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/fft_fac_mod/fft_fac_complex" title="f/fft_fac_mod/fft_fac_complex"><code class="xref f f-func docutils literal"><span class="pre">fft_fac_complex()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -575,7 +622,7 @@ called in costf1, costf2</div></blockquote>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/cosine_transform/costf1_real_1d" title="f/cosine_transform/costf1_real_1d"><code class="xref f f-func docutils literal"><span class="pre">costf1_real_1d()</span></code></a>, <a class="reference internal" href="#f/cosine_transform/costf1_real" title="f/cosine_transform/costf1_real"><code class="xref f f-func docutils literal"><span class="pre">costf1_real()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/cosine_transform_odd/costf1_real_1d" title="f/cosine_transform_odd/costf1_real_1d"><code class="xref f f-func docutils literal"><span class="pre">costf1_real_1d()</span></code></a>, <a class="reference internal" href="#f/cosine_transform_odd/costf1_real" title="f/cosine_transform_odd/costf1_real"><code class="xref f f-func docutils literal"><span class="pre">costf1_real()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -607,7 +654,7 @@ called in costf1, costf2</div></blockquote>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/cosine_transform/costf1_complex_1d" title="f/cosine_transform/costf1_complex_1d"><code class="xref f f-func docutils literal"><span class="pre">costf1_complex_1d()</span></code></a>, <a class="reference internal" href="#f/cosine_transform/costf2" title="f/cosine_transform/costf2"><code class="xref f f-func docutils literal"><span class="pre">costf2()</span></code></a>, <a class="reference internal" href="#f/cosine_transform/costf1_complex" title="f/cosine_transform/costf1_complex"><code class="xref f f-func docutils literal"><span class="pre">costf1_complex()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/cosine_transform_odd/costf1_complex_1d" title="f/cosine_transform_odd/costf1_complex_1d"><code class="xref f f-func docutils literal"><span class="pre">costf1_complex_1d()</span></code></a>, <a class="reference internal" href="#f/cosine_transform_even/costf2" title="f/cosine_transform_even/costf2"><code class="xref f f-func docutils literal"><span class="pre">costf2()</span></code></a>, <a class="reference internal" href="#f/cosine_transform_odd/costf1_complex" title="f/cosine_transform_odd/costf1_complex"><code class="xref f f-func docutils literal"><span class="pre">costf1_complex()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -1912,8 +1959,8 @@ info: (output) error message when  /=  0</p>
   <ul>
 <li><a class="reference internal" href="#">Chebyshev polynomials and cosine transforms</a><ul>
 <li><a class="reference internal" href="#f/chebyshev_polynoms_mod"><code class="docutils literal"><span class="pre">chebyshev_polynoms.f90</span></code></a></li>
-<li><a class="reference internal" href="#f/init_costf"><code class="docutils literal"><span class="pre">init_costf.f90</span></code></a></li>
-<li><a class="reference internal" href="#f/cosine_transform"><code class="docutils literal"><span class="pre">cosine_transform.f90</span></code></a></li>
+<li><a class="reference internal" href="#f/cosine_transform_odd"><code class="docutils literal"><span class="pre">cosine_transform_odd.f90</span></code></a></li>
+<li><a class="reference internal" href="#f/cosine_transform_even"><code class="docutils literal"><span class="pre">cosine_transform_even.f90</span></code></a></li>
 <li><a class="reference internal" href="#f/fft_fac_mod"><code class="docutils literal"><span class="pre">fft_fac.f90</span></code></a></li>
 </ul>
 </li>

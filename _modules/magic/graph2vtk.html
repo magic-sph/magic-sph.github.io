@@ -1,0 +1,713 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>magic.graph2vtk &mdash; Magic 5.2 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '5.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="top" title="Magic 5.2 documentation" href="../../contents.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+    <script src="galleria/galleria-1.4.2.min.js"></script>
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body role="document">
+<div class="pageheader">
+  <ul>
+    <li><a href="../../index.html">Home</a></li>
+    <li><a href="../../install.html">Get it/Run it</a></li>
+    <li><a href="../../contribute.html">Contribute!</a></li>
+    <li><a href="../../numerics.html">Numerical methods</a></li>
+    <li><a href="../../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../../index.html">
+      <img src="../../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.2 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for magic.graph2vtk</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">map_coordinates</span>
+<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">interp1d</span>
+<span class="kn">from</span> <span class="nn">magic</span> <span class="kn">import</span> <span class="n">MagicGraph</span><span class="p">,</span> <span class="n">BLayers</span><span class="p">,</span> <span class="n">ExtraPot</span>
+<span class="kn">from</span> <span class="nn">.setup</span> <span class="kn">import</span> <span class="n">labTex</span>
+<span class="kn">from</span> <span class="nn">.libmagic</span> <span class="kn">import</span> <span class="n">symmetrize</span><span class="p">,</span> <span class="n">thetaderavg</span><span class="p">,</span> <span class="n">rderavg</span><span class="p">,</span> <span class="n">phideravg</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">P</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">N</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.vtklib3</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="k">elif</span>  <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.vtklib2</span> <span class="kn">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="sph2cart_scal"><a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.sph2cart_scal">[docs]</a><span class="k">def</span> <span class="nf">sph2cart_scal</span><span class="p">(</span><span class="n">scals</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function interpolates a series of scalar fields from the spherical</span>
+<span class="sd">    coordinates to the cartesian coordinates.</span>
+
+<span class="sd">    :param scals: an array that contains the different scalar quantities</span>
+<span class="sd">    :type scals: numpy.ndarray[nscals,nphi,ntheta,nr]</span>
+<span class="sd">    :param radius: the input radius</span>
+<span class="sd">    :type radius: numpy.ndarray</span>
+<span class="sd">    :param nx: number of grid points in the x direction</span>
+<span class="sd">    :type nx: int</span>
+<span class="sd">    :param ny: number of grid points in the x direction</span>
+<span class="sd">    :type ny: int</span>
+<span class="sd">    :param nz: number of grid points in the x direction</span>
+<span class="sd">    :type nz: int</span>
+<span class="sd">    :param minc: azimuthal symmetry</span>
+<span class="sd">    :type minc: int</span>
+<span class="sd">    :returns: a tuple that contains the scalars, the max of the grid</span>
+<span class="sd">              and the grid spacing</span>
+<span class="sd">    :rtype: (numpy.ndarray[nscals,nz,ny,nx],float,float)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nscals</span><span class="p">,</span> <span class="n">np</span><span class="p">,</span> <span class="n">nt</span><span class="p">,</span> <span class="n">nr</span> <span class="o">=</span> <span class="n">scals</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">N</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">minc</span><span class="p">,</span> <span class="n">N</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">minc</span><span class="p">,</span> <span class="n">np</span><span class="p">)</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">N</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">nt</span><span class="p">)</span>
+    <span class="c"># Cube: take care of the sqrt(3.) !!!</span>
+    <span class="n">gridMax</span> <span class="o">=</span> <span class="n">radius</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">spacing</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">gridMax</span><span class="o">/</span><span class="p">(</span><span class="n">nx</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">Z</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">X</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="n">nz</span><span class="o">*</span><span class="mi">1j</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="n">ny</span><span class="o">*</span><span class="mi">1j</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="n">nx</span><span class="o">*</span><span class="mi">1j</span><span class="p">]</span><span class="o">*</span><span class="n">gridMax</span>
+    <span class="n">new_r</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">Y</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">Z</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="c">#.ravel()</span>
+    <span class="n">new_phi</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span><span class="c">#.ravel()</span>
+    <span class="n">new_theta</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">N</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">Y</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">Z</span><span class="p">)</span><span class="c">#.ravel()</span>
+    <span class="k">del</span> <span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">Z</span>
+
+    <span class="n">ir</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="n">N</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">radius</span><span class="p">)),</span> <span class="n">bounds_error</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">it</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">N</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">theta</span><span class="p">)),</span> <span class="n">bounds_error</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">ip</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">N</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">phi</span><span class="p">)),</span> <span class="n">bounds_error</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="n">new_ir</span> <span class="o">=</span> <span class="n">ir</span><span class="p">(</span><span class="n">new_r</span><span class="p">)</span>
+    <span class="n">new_it</span> <span class="o">=</span> <span class="n">it</span><span class="p">(</span><span class="n">new_theta</span><span class="p">)</span>
+    <span class="n">new_ip</span> <span class="o">=</span> <span class="n">ip</span><span class="p">(</span><span class="n">new_phi</span><span class="p">)</span>
+
+    <span class="n">new_ir</span><span class="p">[</span><span class="n">new_r</span> <span class="o">&lt;</span> <span class="n">radius</span><span class="o">.</span><span class="n">min</span><span class="p">()]</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="n">new_it</span><span class="p">[</span><span class="n">new_r</span> <span class="o">&lt;</span> <span class="n">radius</span><span class="o">.</span><span class="n">min</span><span class="p">()]</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="n">new_it</span><span class="p">[</span><span class="n">new_r</span> <span class="o">&lt;</span> <span class="n">radius</span><span class="o">.</span><span class="n">min</span><span class="p">()]</span> <span class="o">=</span> <span class="mf">0.</span>
+
+    <span class="n">coords</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">new_ip</span><span class="p">,</span> <span class="n">new_it</span><span class="p">,</span> <span class="n">new_ir</span><span class="p">])</span>
+
+    <span class="n">scals_cart</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nscals</span><span class="p">,</span> <span class="n">nz</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nx</span><span class="p">),</span> <span class="s">&#39;f&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">iscal</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nscals</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">iscal</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c"># radius has been already calculated</span>
+            <span class="n">scals_cart</span><span class="p">[</span><span class="n">iscal</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_r</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">scals_cart</span><span class="p">[</span><span class="n">iscal</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">map_coordinates</span><span class="p">(</span><span class="n">scals</span><span class="p">[</span><span class="n">iscal</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">coords</span><span class="p">)</span>
+            <span class="n">scals_cart</span><span class="p">[</span><span class="n">iscal</span><span class="p">,</span> <span class="n">new_r</span> <span class="o">&lt;</span> <span class="n">radius</span><span class="o">.</span><span class="n">min</span><span class="p">()]</span> <span class="o">=</span> <span class="mf">0.</span>
+            <span class="n">scals_cart</span><span class="p">[</span><span class="n">iscal</span><span class="p">,</span> <span class="n">new_r</span> <span class="o">&gt;</span> <span class="n">radius</span><span class="o">.</span><span class="n">max</span><span class="p">()]</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="k">del</span> <span class="n">coords</span>
+
+    <span class="k">del</span> <span class="n">new_theta</span><span class="p">,</span> <span class="n">new_phi</span>
+
+    <span class="k">return</span> <span class="n">scals_cart</span><span class="p">,</span><span class="n">gridMax</span><span class="p">,</span><span class="n">spacing</span>
+</div>
+<div class="viewcode-block" id="sph2cart_vec"><a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.sph2cart_vec">[docs]</a><span class="k">def</span> <span class="nf">sph2cart_vec</span><span class="p">(</span><span class="n">vecr</span><span class="p">,</span> <span class="n">vect</span><span class="p">,</span> <span class="n">vecp</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function interpolates a series of vector fields from the spherical</span>
+<span class="sd">    coordinates to the cartesian coordinates.</span>
+
+<span class="sd">    :param vecr: the radial components of the different vector fields</span>
+<span class="sd">    :type vecr: numpy.ndarray[nvecs,nphi,ntheta,nr]</span>
+<span class="sd">    :param vect: the latitudinal components of the different vector fields</span>
+<span class="sd">    :type vect: numpy.ndarray[nvecs,nphi,ntheta,nr]</span>
+<span class="sd">    :param vecp: the azimuthal components of the different vector fields</span>
+<span class="sd">    :type vecp: numpy.ndarray[nvecs,nphi,ntheta,nr]</span>
+<span class="sd">    :param radius: the input radius</span>
+<span class="sd">    :type radius: numpy.ndarray</span>
+<span class="sd">    :param nx: number of grid points in the x direction</span>
+<span class="sd">    :type nx: int</span>
+<span class="sd">    :param ny: number of grid points in the x direction</span>
+<span class="sd">    :type ny: int</span>
+<span class="sd">    :param nz: number of grid points in the x direction</span>
+<span class="sd">    :type nz: int</span>
+<span class="sd">    :param minc: azimuthal symmetry</span>
+<span class="sd">    :type minc: int</span>
+<span class="sd">    :returns: a tuple that contains the three vectors components</span>
+<span class="sd">    :rtype: (numpy.ndarray[nvecs,nz,ny,nx],...)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nvecs</span><span class="p">,</span> <span class="n">np</span><span class="p">,</span> <span class="n">nt</span><span class="p">,</span> <span class="n">nr</span> <span class="o">=</span> <span class="n">vecr</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">N</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">minc</span><span class="p">,</span> <span class="n">N</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">minc</span><span class="p">,</span> <span class="n">np</span><span class="p">)</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">N</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">nt</span><span class="p">)</span>
+    <span class="c"># Cube: take care of the sqrt(3.) !!!</span>
+    <span class="n">gridMax</span> <span class="o">=</span> <span class="n">radius</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">spacing</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">gridMax</span><span class="o">/</span><span class="p">(</span><span class="n">nx</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">Z</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">X</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="n">nz</span><span class="o">*</span><span class="mi">1j</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="n">ny</span><span class="o">*</span><span class="mi">1j</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="n">nx</span><span class="o">*</span><span class="mi">1j</span><span class="p">]</span><span class="o">*</span><span class="n">gridMax</span>
+    <span class="n">new_r</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">Y</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">Z</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="c">#.ravel()</span>
+    <span class="n">new_phi</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span><span class="c">#.ravel()</span>
+    <span class="n">new_theta</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">N</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">Y</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">Z</span><span class="p">)</span><span class="c">#.ravel()</span>
+    <span class="k">del</span> <span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">Z</span>
+
+    <span class="n">ir</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="n">N</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">radius</span><span class="p">)),</span> <span class="n">bounds_error</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">it</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">N</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">theta</span><span class="p">)),</span> <span class="n">bounds_error</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">ip</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">N</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">phi</span><span class="p">)),</span> <span class="n">bounds_error</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="n">new_ir</span> <span class="o">=</span> <span class="n">ir</span><span class="p">(</span><span class="n">new_r</span><span class="p">)</span>
+    <span class="n">new_it</span> <span class="o">=</span> <span class="n">it</span><span class="p">(</span><span class="n">new_theta</span><span class="p">)</span>
+    <span class="n">new_ip</span> <span class="o">=</span> <span class="n">ip</span><span class="p">(</span><span class="n">new_phi</span><span class="p">)</span>
+
+    <span class="n">new_ir</span><span class="p">[</span><span class="n">new_r</span> <span class="o">&lt;</span> <span class="n">radius</span><span class="o">.</span><span class="n">min</span><span class="p">()]</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="n">new_it</span><span class="p">[</span><span class="n">new_r</span> <span class="o">&lt;</span> <span class="n">radius</span><span class="o">.</span><span class="n">min</span><span class="p">()]</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="n">new_it</span><span class="p">[</span><span class="n">new_r</span> <span class="o">&lt;</span> <span class="n">radius</span><span class="o">.</span><span class="n">min</span><span class="p">()]</span> <span class="o">=</span> <span class="mf">0.</span>
+
+    <span class="n">coords</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">new_ip</span><span class="p">,</span> <span class="n">new_it</span><span class="p">,</span> <span class="n">new_ir</span><span class="p">])</span>
+
+    <span class="n">vecx</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nvecs</span><span class="p">,</span> <span class="n">nz</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nx</span><span class="p">),</span> <span class="s">&#39;f&#39;</span><span class="p">)</span>
+    <span class="n">vecy</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">vecx</span><span class="p">)</span>
+    <span class="n">vecz</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">vecx</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ivec</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nvecs</span><span class="p">):</span>
+        <span class="n">br_cart</span> <span class="o">=</span> <span class="n">map_coordinates</span><span class="p">(</span><span class="n">vecr</span><span class="p">[</span><span class="n">ivec</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">coords</span><span class="p">)</span>
+        <span class="n">bt_cart</span> <span class="o">=</span> <span class="n">map_coordinates</span><span class="p">(</span><span class="n">vect</span><span class="p">[</span><span class="n">ivec</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">coords</span><span class="p">)</span>
+        <span class="n">bp_cart</span> <span class="o">=</span> <span class="n">map_coordinates</span><span class="p">(</span><span class="n">vecp</span><span class="p">[</span><span class="n">ivec</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">coords</span><span class="p">)</span>
+
+        <span class="n">br_cart</span><span class="p">[</span><span class="n">new_r</span> <span class="o">&lt;</span> <span class="n">radius</span><span class="o">.</span><span class="n">min</span><span class="p">()]</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="n">bt_cart</span><span class="p">[</span><span class="n">new_r</span> <span class="o">&lt;</span> <span class="n">radius</span><span class="o">.</span><span class="n">min</span><span class="p">()]</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="n">bp_cart</span><span class="p">[</span><span class="n">new_r</span> <span class="o">&lt;</span> <span class="n">radius</span><span class="o">.</span><span class="n">min</span><span class="p">()]</span> <span class="o">=</span> <span class="mf">0.</span>
+
+        <span class="n">br_cart</span><span class="p">[</span><span class="n">new_r</span> <span class="o">&gt;</span> <span class="n">radius</span><span class="o">.</span><span class="n">max</span><span class="p">()]</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="n">bt_cart</span><span class="p">[</span><span class="n">new_r</span> <span class="o">&gt;</span> <span class="n">radius</span><span class="o">.</span><span class="n">max</span><span class="p">()]</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="n">bp_cart</span><span class="p">[</span><span class="n">new_r</span> <span class="o">&gt;</span> <span class="n">radius</span><span class="o">.</span><span class="n">max</span><span class="p">()]</span> <span class="o">=</span> <span class="mf">0.</span>
+
+        <span class="n">bs</span> <span class="o">=</span> <span class="n">br_cart</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">new_theta</span><span class="p">)</span><span class="o">+</span><span class="n">bt_cart</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">new_theta</span><span class="p">)</span>
+        <span class="n">vecx</span><span class="p">[</span><span class="n">ivec</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">bs</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">new_phi</span><span class="p">)</span> <span class="o">-</span> <span class="n">bp_cart</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">new_phi</span><span class="p">)</span>
+        <span class="n">vecy</span><span class="p">[</span><span class="n">ivec</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">bs</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">new_phi</span><span class="p">)</span> <span class="o">+</span> <span class="n">bp_cart</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">new_phi</span><span class="p">)</span>
+        <span class="n">vecz</span><span class="p">[</span><span class="n">ivec</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">br_cart</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">new_theta</span><span class="p">)</span> <span class="o">-</span> <span class="n">bt_cart</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">new_theta</span><span class="p">)</span>
+
+    <span class="k">del</span> <span class="n">coords</span><span class="p">,</span> <span class="n">br_cart</span><span class="p">,</span> <span class="n">bp_cart</span>
+
+    <span class="k">del</span> <span class="n">new_theta</span><span class="p">,</span> <span class="n">new_phi</span>
+
+    <span class="k">return</span> <span class="n">vecx</span><span class="p">,</span><span class="n">vecy</span><span class="p">,</span><span class="n">vecz</span>
+</div>
+<div class="viewcode-block" id="Graph2Vtk"><a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.Graph2Vtk">[docs]</a><span class="k">class</span> <span class="nc">Graph2Vtk</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class allows to transform an input graphic file to a file format</span>
+<span class="sd">    readable by paraview/visit or mayavi. It also allows to compute a possible</span>
+<span class="sd">    potential extrapolation of the field lines in an arbitrary outer </span>
+<span class="sd">    spherical shell domain</span>
+
+<span class="sd">    &gt;&gt;&gt; # Load a graphic file</span>
+<span class="sd">    &gt;&gt;&gt; gr = MagicGraph(ivar=1)</span>
+<span class="sd">    &gt;&gt;&gt; # store myOut.vts</span>
+<span class="sd">    &gt;&gt;&gt; Graph2Vtk(gr, &#39;myOut&#39;, outType=&#39;vts&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; # store u&#39; and B for the vector fields and vortz and T for the scalars</span>
+<span class="sd">    &gt;&gt;&gt; Graph2Vtk(gr, scals=[&#39;temp&#39;, &#39;vortz&#39;], vecs=[&#39;ufluct&#39;, &#39;B&#39;])</span>
+<span class="sd">    &gt;&gt;&gt; # store only T&#39;</span>
+<span class="sd">    &gt;&gt;&gt; Graph2Vtk(gr, scals=[&#39;tempfluct&#39;], vecs=[])</span>
+<span class="sd">    &gt;&gt;&gt; # store only B with its potential extrapolation up to 3*r_cmb</span>
+<span class="sd">    &gt;&gt;&gt; Graph2Vtk(gr, scals=[], vecs=[&#39;B&#39;], potExtra=True, ratio_out=3)</span>
+<span class="sd">    &gt;&gt;&gt; # Extrapolate on a cartesian grid of size 128^3</span>
+<span class="sd">    &gt;&gt;&gt; Graph2Vtk(gr, outType=&#39;vti&#39;, nx=128, ny=128, nz=128)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Graph2Vtk.__init__"><a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.Graph2Vtk.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gr</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">scals</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;vr&#39;</span><span class="p">,</span> <span class="s">&#39;emag&#39;</span><span class="p">,</span> <span class="s">&#39;tfluct&#39;</span><span class="p">],</span> 
+                 <span class="n">vecs</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="s">&#39;B&#39;</span><span class="p">],</span> <span class="n">potExtra</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">ratio_out</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nrout</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+                 <span class="n">deminc</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">outType</span><span class="o">=</span><span class="s">&#39;vts&#39;</span><span class="p">,</span> <span class="n">nFiles</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="mi">96</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param filename: the file name of the output (without extension)</span>
+<span class="sd">        :type filename: str</span>
+<span class="sd">        :param gr: the input graphic file one wants to transform to vts/vti</span>
+<span class="sd">        :type gr: magic.MagicGraph</span>
+<span class="sd">        :param scals: a list that contains the possible input scalars: &#39;entropy&#39;,</span>
+<span class="sd">                      &#39;vr&#39;, &#39;vp&#39;, &#39;tfluct&#39;, &#39;vortz&#39;, &#39;vortzfluct&#39;, &#39;ekin&#39;,</span>
+<span class="sd">                      &#39;emag&#39;, &#39;vortr&#39;</span>
+<span class="sd">        :type scals: list(str)</span>
+<span class="sd">        :param vecs: a list that contains the possible input vectors: &#39;u&#39;, </span>
+<span class="sd">                     &#39;b&#39;, &#39;ufluct&#39;, &#39;bfluct&#39;</span>
+<span class="sd">        :type vecs: list(str)</span>
+<span class="sd">        :param potExtra: when set to True, calculates the potential extrapolation</span>
+<span class="sd">                         of the magnetic field up to ratio_out*r_cmb</span>
+<span class="sd">        :type potExtra: bool</span>
+<span class="sd">        :param ratio_out: in case of potential extrapolation, this is the ratio</span>
+<span class="sd">                          of the external outer radius to r_cmb (rout/rcmb)</span>
+<span class="sd">        :type ratio_out: float</span>
+<span class="sd">        :param nrout: in case of potential extrapolation, this input allows</span>
+<span class="sd">                      to specify thenumber of radial grid points in the</span>
+<span class="sd">                      outer spherical envelope</span>
+<span class="sd">        :type nrout: integer</span>
+<span class="sd">        :param deminc: a logical to indicate if one wants do get rid of the</span>
+<span class="sd">                       possible azimuthal symmetry</span>
+<span class="sd">        :type deminc: bool</span>
+<span class="sd">        :param outType: nature of the VTK file produced. This can be either</span>
+<span class="sd">                        &#39;vts&#39; for the spherical grid or &#39;vti&#39; for an extrapolation</span>
+<span class="sd">                        on a cartesian grid</span>
+<span class="sd">        :type outType: str</span>
+<span class="sd">        :param nFiles: number of output chunks in case of parallel vts file format</span>
+<span class="sd">                       (pvts)</span>
+<span class="sd">        :type nFiles: int</span>
+<span class="sd">        :param nx: number of grid points in the x direction</span>
+<span class="sd">        :type nx: int</span>
+<span class="sd">        :param ny: number of grid points in the x direction</span>
+<span class="sd">        :type ny: int</span>
+<span class="sd">        :param nz: number of grid points in the x direction</span>
+<span class="sd">        :type nz: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">minc</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">minc</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">minc</span>
+
+        <span class="n">keyScal</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;radius&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;entropy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;temperature&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;temp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;s&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;t&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;T&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;S&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;emag&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;vortz&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;vr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;ur&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;vp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;vphi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;uphi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;vphi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;tfluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;entropyfluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;tempfluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;vortzfluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">7</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;vortr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;flucttemp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">9</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;ekin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scals</span><span class="p">),</span> <span class="s">&#39;i&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">scal</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">scals</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">keyScal</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">scal</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">keyScal</span><span class="p">[</span><span class="n">scal</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c"># Include the radius as the first scalar quantity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c"># Remove the possible 0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="o">!=</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nscals</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">)</span>
+
+        <span class="n">keyVec</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s">&#39;u&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s">&#39;U&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s">&#39;v&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s">&#39;vel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s">&#39;V&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s">&#39;ufluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s">&#39;vfluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s">&#39;Ufluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s">&#39;Vfluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s">&#39;B&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s">&#39;mag&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s">&#39;bfluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s">&#39;Bfluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vecs</span><span class="p">),</span> <span class="s">&#39;i&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">vec</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vecs</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">keyVec</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">vec</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">keyVec</span><span class="p">[</span><span class="n">vec</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c"># Remove the possible 0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span><span class="o">!=</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nvecs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c"># Potential extrapolation</span>
+        <span class="k">if</span> <span class="n">potExtra</span> <span class="ow">and</span> <span class="n">nrout</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">rcmb</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">brCMB</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Br</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="n">pot</span> <span class="o">=</span> <span class="n">ExtraPot</span><span class="p">(</span><span class="n">rcmb</span><span class="p">,</span> <span class="n">brCMB</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">,</span> <span class="n">ratio_out</span><span class="o">=</span><span class="n">ratio_out</span><span class="p">,</span> 
+                           <span class="n">nrout</span><span class="o">=</span><span class="n">nrout</span><span class="p">,</span> <span class="n">cutCMB</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">deminc</span><span class="o">=</span><span class="n">deminc</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">pot</span><span class="o">.</span><span class="n">rout</span><span class="p">))</span>
+        <span class="c">#----------------------------------------</span>
+        <span class="c"># Scalars</span>
+        <span class="c">#----------------------------------------</span>
+        <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">potExtra</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scals</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nscals</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nphi</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="o">+</span><span class="n">nrout</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="s">&#39;f&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scals</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nscals</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nphi</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">),</span> <span class="s">&#39;f&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">potExtra</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scals</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nscals</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">npI</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="o">+</span><span class="n">nrout</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="s">&#39;f&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scals</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nscals</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">npI</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">),</span> <span class="s">&#39;f&#39;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="c"># radius</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c"># entropy</span>
+                <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">entropy</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                              <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">entropy</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span> <span class="c"># magnetic energy</span>
+                <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">Br</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span>\
+                                                        <span class="n">gr</span><span class="o">.</span><span class="n">Btheta</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span>\
+                                                        <span class="n">gr</span><span class="o">.</span><span class="n">Bphi</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">Br</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span>\
+                                                        <span class="n">gr</span><span class="o">.</span><span class="n">Btheta</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span>\
+                                                        <span class="n">gr</span><span class="o">.</span><span class="n">Bphi</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">or</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span> <span class="c"># z-vorticity</span>
+                <span class="n">th3D</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="p">)</span>
+                <span class="n">rr3D</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">):</span>
+                    <span class="n">th3D</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">colatitude</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">):</span>
+                    <span class="n">rr3D</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">s3D</span> <span class="o">=</span> <span class="n">rr3D</span> <span class="o">*</span> <span class="n">N</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span>
+                <span class="n">dtheta</span> <span class="o">=</span> <span class="n">thetaderavg</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="o">*</span><span class="n">s3D</span><span class="p">)</span>
+                <span class="n">dr</span> <span class="o">=</span> <span class="n">rderavg</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="o">*</span><span class="n">s3D</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="n">gr</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="n">spectral</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                             <span class="n">exclude</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+                <span class="n">vs</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">vr</span> <span class="o">*</span> <span class="n">N</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span> <span class="o">+</span> <span class="n">gr</span><span class="o">.</span><span class="n">vtheta</span> <span class="o">*</span> <span class="n">N</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span> <span class="c"># &#39;vs&#39;</span>
+                <span class="n">ds</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span><span class="o">*</span><span class="n">dr</span> <span class="o">+</span> <span class="n">N</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span><span class="o">/</span><span class="n">rr3D</span><span class="o">*</span><span class="n">dtheta</span>
+                <span class="n">vortz</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span><span class="o">/</span><span class="n">s3D</span><span class="o">*</span><span class="n">phideravg</span><span class="p">(</span><span class="n">vs</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span><span class="o">+</span><span class="n">ds</span><span class="o">/</span><span class="n">s3D</span>
+                <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">vortz</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                              <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">vortz</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span> <span class="c"># Fluctuation</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">-</span>\
+                                         <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span> <span class="c"># radial velocity</span>
+                <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vr</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                              <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">vr</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span> <span class="c"># zonal velocity</span>
+                <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                              <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">6</span><span class="p">:</span> <span class="c"># fluctuation of entropy/temperature</span>
+                <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">entropy</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                              <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">entropy</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">-</span>\
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span> <span class="c"># r-vorticity</span>
+                <span class="n">th3D</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="p">)</span>
+                <span class="n">rr3D</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">):</span>
+                    <span class="n">th3D</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">colatitude</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">):</span>
+                    <span class="n">rr3D</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">s3D</span> <span class="o">=</span> <span class="n">rr3D</span> <span class="o">*</span> <span class="n">N</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span>
+                <span class="n">vortr</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">s3D</span><span class="o">*</span><span class="p">(</span><span class="n">thetaderavg</span><span class="p">(</span><span class="n">N</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="p">)</span><span class="o">-</span>\
+                        <span class="n">phideravg</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vtheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">vortr</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                              <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">vortr</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span> <span class="c"># fluctuation of entropy/temperature (substract 1-D time-average)</span>
+                <span class="n">bl</span> <span class="o">=</span> <span class="n">BLayers</span><span class="p">(</span><span class="n">iplot</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">entropy</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                              <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">entropy</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">-</span><span class="n">bl</span><span class="o">.</span><span class="n">ss</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span> <span class="c"># kinetic energy</span>
+                <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vr</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span>\
+                                                        <span class="n">gr</span><span class="o">.</span><span class="n">vtheta</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span>\
+                                                        <span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vr</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span>\
+                                                        <span class="n">gr</span><span class="o">.</span><span class="n">vtheta</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span>\
+                                                        <span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">potExtra</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">:]</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">pot</span><span class="o">.</span><span class="n">brout</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">pot</span><span class="o">.</span><span class="n">btout</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span>\
+                                                       <span class="n">pot</span><span class="o">.</span><span class="n">bpout</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c">#----------------------------------------</span>
+        <span class="c"># Vectors</span>
+        <span class="c">#----------------------------------------</span>
+        <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">potExtra</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nvecs</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nphi</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="o">+</span><span class="n">nrout</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="s">&#39;f&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vect</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nvecs</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nphi</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">),</span> <span class="s">&#39;f&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vect</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">potExtra</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nvecs</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">npI</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="o">+</span><span class="n">nrout</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="s">&#39;f&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vect</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nvecs</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">npI</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">),</span> <span class="s">&#39;f&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vect</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">)</span>
+
+
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vr</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                             <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vtheta</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                             <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                             <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">vr</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">vtheta</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vr</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                             <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vtheta</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                             <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                             <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">vr</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">vtheta</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">Br</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                             <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">Btheta</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                             <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">Bphi</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                             <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Br</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Btheta</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Bphi</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">Br</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                             <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">Btheta</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                             <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">Bphi</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                             <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Br</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Btheta</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Bphi</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">potExtra</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">:]</span> <span class="o">=</span> <span class="n">pot</span><span class="o">.</span><span class="n">brout</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">:]</span> <span class="o">=</span> <span class="n">pot</span><span class="o">.</span><span class="n">btout</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">:]</span> <span class="o">=</span> <span class="n">pot</span><span class="o">.</span><span class="n">bpout</span>
+                <span class="k">elif</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+                    <span class="n">pot</span><span class="o">.</span><span class="n">brout</span> <span class="o">=</span> <span class="n">pot</span><span class="o">.</span><span class="n">brout</span><span class="o">-</span><span class="n">pot</span><span class="o">.</span><span class="n">brout</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="n">pot</span><span class="o">.</span><span class="n">btout</span> <span class="o">=</span> <span class="n">pot</span><span class="o">.</span><span class="n">btout</span><span class="o">-</span><span class="n">pot</span><span class="o">.</span><span class="n">btout</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="n">pot</span><span class="o">.</span><span class="n">bpout</span> <span class="o">=</span> <span class="n">pot</span><span class="o">.</span><span class="n">bpout</span><span class="o">-</span><span class="n">pot</span><span class="o">.</span><span class="n">bpout</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">:]</span> <span class="o">=</span> <span class="n">pot</span><span class="o">.</span><span class="n">brout</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">:]</span> <span class="o">=</span> <span class="n">pot</span><span class="o">.</span><span class="n">btout</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">:]</span> <span class="o">=</span> <span class="n">pot</span><span class="o">.</span><span class="n">bpout</span>
+
+        <span class="k">if</span> <span class="n">outType</span> <span class="o">==</span> <span class="s">&#39;vts&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">writeVTS</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">nFiles</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">outType</span> <span class="o">==</span> <span class="s">&#39;vti&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">writeVTI</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Graph2Vtk.writeVTS"><a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.Graph2Vtk.writeVTS">[docs]</a>    <span class="k">def</span> <span class="nf">writeVTS</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">nFiles</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function stores the output on a structured-grid vts file.</span>
+
+<span class="sd">        :param filename: the file name of the output (without extension)</span>
+<span class="sd">        :type filename: str</span>
+<span class="sd">        :param nFiles: number of outpute files (in case of pvts)</span>
+<span class="sd">        :type nFiles: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nvecs</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">nFiles</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">N</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">)</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">512</span><span class="o">**</span><span class="mi">3</span><span class="p">:</span>
+                <span class="n">vts_scal</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">pvts_scal</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span> 
+                          <span class="mi">8</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">nFiles</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">N</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">)</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">512</span><span class="o">**</span><span class="mi">3</span><span class="p">:</span>
+                <span class="n">vts</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">pvts</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">,</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Graph2Vtk.writeVTI"><a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.Graph2Vtk.writeVTI">[docs]</a>    <span class="k">def</span> <span class="nf">writeVTI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="mi">96</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        In this case, the output is extrapolated on a cartesian grid</span>
+<span class="sd">        and then written in a vti file.</span>
+
+<span class="sd">        :param filename: the file name of the output (without extension)</span>
+<span class="sd">        :type filename: str</span>
+<span class="sd">        :param nx: number of grid points in the x direction</span>
+<span class="sd">        :type nx: int</span>
+<span class="sd">        :param ny: number of grid points in the x direction</span>
+<span class="sd">        :type ny: int</span>
+<span class="sd">        :param nz: number of grid points in the x direction</span>
+<span class="sd">        :type nz: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">scals_cart</span><span class="p">,</span> <span class="n">gridMax</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">=</span> <span class="n">sph2cart_scal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">,</span> \
+                                                     <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span><span class="p">,</span>
+                                                     <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nvecs</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">vti_scal</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">scals_cart</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">,</span> \
+                     <span class="n">gridMax</span><span class="p">,</span> <span class="n">spacing</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">vecx</span><span class="p">,</span> <span class="n">vecy</span><span class="p">,</span> <span class="n">vecz</span> <span class="o">=</span> <span class="n">sph2cart_vec</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">,</span> \
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+            <span class="n">vti</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">vecx</span><span class="p">,</span> <span class="n">vecy</span><span class="p">,</span> <span class="n">vecz</span><span class="p">,</span> <span class="n">scals_cart</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span> 
+                <span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">,</span> <span class="n">gridMax</span><span class="p">,</span> <span class="n">spacing</span><span class="p">)</span>
+
+</div></div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">ivar</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">MagicGraph</span><span class="p">(</span><span class="n">ivar</span><span class="o">=</span><span class="n">ivar</span><span class="p">)</span>
+    <span class="n">Graph2Vtk</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">scals</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;tfluct&#39;</span><span class="p">,</span> <span class="s">&#39;emag&#39;</span><span class="p">],</span> <span class="n">vecs</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">],</span> <span class="n">potExtra</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.2 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>
