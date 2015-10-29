@@ -155,17 +155,89 @@ into your <code class="docutils literal"><span class="pre">.bash_profile</span><
 </div>
 <div class="section" id="setting-up-compiler-options-and-compiling">
 <h2>Setting up compiler options and compiling<a class="headerlink" href="#setting-up-compiler-options-and-compiling" title="Permalink to this headline">¶</a></h2>
-<p>Go to the directory where the source files of MagIC are contained</p>
+<p>The <strong>recommended way of compiling MagIC</strong> is to use the build system <a class="reference external" href="https://cmake.org/">CMake</a> , if available on your platform. Otherwise, a backup
+solution is provided via the manual edition of a <code class="docutils literal"><span class="pre">Makefile</span></code>.</p>
+<div class="section" id="generic-compiling-options">
+<h3>Generic compiling options<a class="headerlink" href="#generic-compiling-options" title="Permalink to this headline">¶</a></h3>
+<p>For both build systems (cmake or make), several build options can be toggled using
+the following available options:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">PRECISION</span></code> Set it to &#8216;dble&#8217; for double-precision calculations or to &#8216;sngl&#8217; for single-precision calculations</li>
+<li><code class="docutils literal"><span class="pre">OUT_PREC</span></code> Set it to &#8216;dble&#8217; for double-precision in binary outputs or to &#8216;sngl&#8217; for single precision</li>
+<li><code class="docutils literal"><span class="pre">USE_MPI</span></code> Set to <code class="docutils literal"><span class="pre">yes</span></code> to use MPI, set it to <code class="docutils literal"><span class="pre">no</span></code> if you want a serial version of the code .</li>
+<li><code class="docutils literal"><span class="pre">USE_OMP</span></code>  Set it to <code class="docutils literal"><span class="pre">yes</span></code> to use the hybrid version of the code, or to <code class="docutils literal"><span class="pre">no</span></code> for a pure MPI (or serial) version.</li>
+<li><code class="docutils literal"><span class="pre">USE_PRECOND</span></code> Set to <code class="docutils literal"><span class="pre">yes</span></code> to perform some pre-conditioning of the matrices.</li>
+<li><code class="docutils literal"><span class="pre">USE_FFTLIB</span></code> This option lets you select the library you want to use for Fast Fourier Transforms. This can be set to &#8216;JW&#8217; or &#8216;MKL&#8217;. &#8216;JW&#8217; refers to the inbuilt library by <strong>J</strong> ohannes <strong>W</strong> icht, while &#8216;MKL&#8217; refers to the <a class="reference external" href="https://software.intel.com/en-us/intel-mkl">Intel Math Kernel Library</a>. Use &#8216;JW&#8217; if you don&#8217;t have Intel MKL installed.</li>
+<li><code class="docutils literal"><span class="pre">USE_LAPACKLIB</span></code> This option allows you to select the library you want to use for LU factorisation. This can be set to &#8216;JW&#8217;, &#8216;MKL&#8217; or &#8216;LAPACK&#8217;. &#8216;JW&#8217; refers to the built-in library, while &#8216;MKL&#8217; refers to the <a class="reference external" href="https://software.intel.com/en-us/intel-mkl">Intel Math Kernel Library</a> and &#8216;LAPACK&#8217; to the <a class="reference external" href="http://www.netlib.org/lapack">Lapack library</a></li>
+<li><code class="docutils literal"><span class="pre">USE_HDF5</span></code> Set to <code class="docutils literal"><span class="pre">yes</span></code> if you want the restart file to be written in the  <a class="reference external" href="http://www.hdfgroup.org/">HDF5</a> format</li>
+<li><code class="docutils literal"><span class="pre">PRODRUN</span></code> Set it to <code class="docutils literal"><span class="pre">yes</span></code> for production run, <code class="docutils literal"><span class="pre">no</span></code> for debugging.</li>
+<li><code class="docutils literal"><span class="pre">DEBUG</span></code>   Set to <code class="docutils literal"><span class="pre">all</span></code> to enable the full debug flags. <em>While running in debugging mode, set</em> <code class="docutils literal"><span class="pre">PRODRUN</span></code> <em>to</em> <code class="docutils literal"><span class="pre">no</span></code>.</li>
+</ul>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">MagIC cannot run with openMP alone, therefore a configuration of the form
+<code class="docutils literal"><span class="pre">USE_MPI=no</span></code>, <code class="docutils literal"><span class="pre">USE_OMP=yes</span></code> will be overwritten to force <code class="docutils literal"><span class="pre">USE_OMP=no</span></code></p>
+</div>
+</div>
+<div class="section" id="using-cmake-recommended">
+<h3>Using <code class="docutils literal"><span class="pre">CMake</span></code> (recommended)<a class="headerlink" href="#using-cmake-recommended" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://cmake.org/">CMake</a>  is a powerful tool that can automatically detects
+and finds the best appropriate configuration for your platform. To use it, you
+just need to create a directory where you want to build the sources. For instance:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>mkdir <span class="nv">$MAGIC_HOME</span>/build
+<span class="nv">$ </span><span class="nb">cd</span> <span class="nv">$MAGIC_HOME</span>/build
+</pre></div>
+</div>
+<p>In a second step, you might want to specify your C and Fortran compilers (in
+case you skip this step, <a class="reference external" href="https://cmake.org/">CMake</a> will look for compilers
+for you but it might pick up another compiler as the one you might have wanted).
+For instance, in case you want to use the <a class="reference external" href="https://software.intel.com/en-us/intel-compilers">Intel compilers</a>, you can export the following
+environment variables</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">export </span><span class="nv">FC</span><span class="o">=</span>mpiifort
+<span class="nv">$ </span><span class="nb">export </span><span class="nv">CC</span><span class="o">=</span>mpiicc
+</pre></div>
+</div>
+<p>for bash/ksh/zsh users and</p>
+<div class="highlight-tcsh"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">setenv </span><span class="nv">FC</span><span class="o">=</span>mpiifort
+<span class="nv">$ </span><span class="nb">setenv </span><span class="nv">CC</span><span class="o">=</span>mpiicc
+</pre></div>
+</div>
+<p>for csh/tcsh users. At this stage you should be ready to build the code. If you simply use:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>cmake ..
+</pre></div>
+</div>
+<p><a class="reference external" href="https://cmake.org/">CMake</a> will try to use the best options available on your
+machine (for instance it will try to locate and link the <a class="reference external" href="https://software.intel.com/en-us/intel-mkl">Intel Math Kernel Library</a>). Otherwise you can
+pass the aforementioned available options to <a class="reference external" href="https://cmake.org/">CMake</a> using the
+generic form <cite>-DOPTION=value</cite>. For instance, in case you want to make use of
+the built-in libraries of MagIC and want to disable OpenMP, simply use</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>cmake .. -DUSE_OMP<span class="o">=</span>no -DUSE_FFTLIB<span class="o">=</span>JW -DUSE_LAPACKLIB<span class="o">=</span>JW
+</pre></div>
+</div>
+<p>Once you&#8217;re happy with your configuration, just compile the code:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>make -j
+</pre></div>
+</div>
+<p>The executable <code class="docutils literal"><span class="pre">magic.exe</span></code> should have been produced in the local directory.</p>
+<p>If you want to recompile the code from scratch do</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>make clean
+</pre></div>
+</div>
+<p>to remove all the files generated by the compiler.</p>
+<p>Once the executable is built, you are now ready to run your first production run!</p>
+</div>
+<div class="section" id="using-make-backup-solution">
+<h3>Using <code class="docutils literal"><span class="pre">make</span></code> (backup solution)<a class="headerlink" href="#using-make-backup-solution" title="Permalink to this headline">¶</a></h3>
+<p>In case <a class="reference external" href="https://cmake.org/">CMake</a>  is not available on your platform, it is
+still possible to compile the code directly.  Go to the directory where the
+source files of MagIC are contained</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> <span class="nv">$MAGIC_HOME</span>/src
 </pre></div>
 </div>
-<p>and edit the <code class="docutils literal"><span class="pre">Makefile</span></code> there to specify your specific compiler options.</p>
-<div class="section" id="makefile-options">
-<h3>Makefile options<a class="headerlink" href="#makefile-options" title="Permalink to this headline">¶</a></h3>
 <p><strong>Select compiler</strong></p>
-<p>Set a suitable compiler in the first line of the <code class="docutils literal"><span class="pre">Makefile</span></code>: <code class="docutils literal"><span class="pre">COMPILER</span> <span class="pre">=</span>
-<span class="pre">&lt;compiler_phrase&gt;</span></code>. The options are <code class="docutils literal"><span class="pre">intel</span></code>, <code class="docutils literal"><span class="pre">gnu</span></code> or <code class="docutils literal"><span class="pre">portland</span></code> - depending
-on your available compilers.</p>
+<p>Edit the file named <code class="docutils literal"><span class="pre">Makefile</span></code> using your favourite editor and set a suitable
+compiler for your platform using the variable: <code class="docutils literal"><span class="pre">COMPILER</span> <span class="pre">=</span> <span class="pre">value</span></code>. The possible
+options are <code class="docutils literal"><span class="pre">intel</span></code>, <code class="docutils literal"><span class="pre">gnu</span></code> or <code class="docutils literal"><span class="pre">portland</span></code> compilers.</p>
 <p><em>List of default compilers</em></p>
 <blockquote>
 <div><table border="1" class="docutils">
@@ -194,46 +266,37 @@ on your available compilers.</p>
 </tbody>
 </table>
 </div></blockquote>
-<p><strong>Select compiling options</strong></p>
-<ul class="simple">
-<li><code class="docutils literal"><span class="pre">PRECISION</span></code> Set it to &#8216;dble&#8217; for double-precision calculations or to &#8216;sngl&#8217; for single-precision calculations</li>
-<li><code class="docutils literal"><span class="pre">OUT_PREC</span></code> Set it to &#8216;dble&#8217; for double-precision in binary outputs or to &#8216;sngl&#8217; for single precision</li>
-<li><code class="docutils literal"><span class="pre">PRODRUN</span></code> Set it to <code class="docutils literal"><span class="pre">yes</span></code> for production run, <code class="docutils literal"><span class="pre">no</span></code> for debugging.</li>
-<li><code class="docutils literal"><span class="pre">DEBUG</span></code>   Set to <code class="docutils literal"><span class="pre">all</span></code> to enable the full debug flags. <em>While running in debugging mode, set</em> <code class="docutils literal"><span class="pre">PRODRUN</span></code> <em>to</em> <code class="docutils literal"><span class="pre">no</span></code>.</li>
-<li><code class="docutils literal"><span class="pre">USE_MPI</span></code> Set to <code class="docutils literal"><span class="pre">yes</span></code> to use MPI, set it to <code class="docutils literal"><span class="pre">no</span></code> if you want a serial version of the code .</li>
-<li><code class="docutils literal"><span class="pre">USE_OMP</span></code>  Set it to <code class="docutils literal"><span class="pre">yes</span></code> to use the hybrid version of the code, or to <code class="docutils literal"><span class="pre">no</span></code> for a pure MPI (or serial) version.</li>
-<li><code class="docutils literal"><span class="pre">USE_PRECOND</span></code> Set to <code class="docutils literal"><span class="pre">yes</span></code> to perform some pre-conditioning of the matrices.</li>
-<li><code class="docutils literal"><span class="pre">USE_FFTLIB</span></code> This option lets you select the library you want to use for Fast Fourier Transforms. This can be set to &#8216;JW&#8217; or &#8216;MKL&#8217;. &#8216;JW&#8217; refers to the inbuilt library by <strong>J</strong> ohannes <strong>W</strong> icht, while &#8216;MKL&#8217; refers to the <a class="reference external" href="https://software.intel.com/en-us/intel-mkl">Intel Math Kernel Library</a>. Use &#8216;JW&#8217; if you don&#8217;t have Intel MKL installed.</li>
-<li><code class="docutils literal"><span class="pre">USE_LAPACKLIB</span></code> This option allows you to select the library you want to use for LU factorisation. This can be set to &#8216;JW&#8217;, &#8216;MKL&#8217; or &#8216;LAPACK&#8217;. &#8216;JW&#8217; refers to the built-in library, while &#8216;MKL&#8217; refers to the <a class="reference external" href="https://software.intel.com/en-us/intel-mkl">Intel Math Kernel Library</a> and &#8216;LAPACK&#8217; to the <a class="reference external" href="http://www.netlib.org/lapack">Lapack library</a></li>
-<li><code class="docutils literal"><span class="pre">USE_HDF5</span></code> Set to <code class="docutils literal"><span class="pre">yes</span></code> if you want the restart file to be written in the  <a class="reference external" href="http://www.hdfgroup.org/">HDF5</a> format</li>
-</ul>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">MagIC cannot run with openMP alone, therefore a configuration of the form
-<code class="docutils literal"><span class="pre">USE_MPI=no</span></code>, <code class="docutils literal"><span class="pre">USE_OMP=yes</span></code> will be overwritten to force <code class="docutils literal"><span class="pre">USE_OMP=no</span></code></p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">In case you want to use intel but <code class="docutils literal"><span class="pre">mpiifort</span></code> and <code class="docutils literal"><span class="pre">mpiicc</span></code> are not available,
+you may also need to adapt the variables <code class="docutils literal"><span class="pre">COMP_MPFC</span></code> and <code class="docutils literal"><span class="pre">COMP_MPCC</span></code>.</p>
 </div>
-<p><strong>Architecture (Intel compilers only)</strong></p>
-<p>By default, MagIC tries to automatically make use of the best available current architecture
-optimisation via the flag <code class="docutils literal"><span class="pre">FFLAG_ARCH_OPT</span> <span class="pre">=</span> <span class="pre">-xHost</span></code> for the Intel compiler or
-<code class="docutils literal"><span class="pre">FFLAG_ARCH_OPT</span> <span class="pre">=</span> <span class="pre">-march=native</span></code> for GNU compiler. In case you want to include additional
-(or more aggressive) optimisations just modify this variable in the Makefile.</p>
+<p><strong>Select compiling options</strong></p>
+<p>You can also modify the different compiling options by editing the values of
+the various parameters defined in the first lines of the <code class="docutils literal"><span class="pre">Makefile</span></code>.
+For instance, in case you want to make use of
+the built-in libraries and want to disable OpenMP, just define</p>
+<div class="highlight-make"><div class="highlight"><pre><span class="nv">USE_OMP</span><span class="o">=</span>no
+<span class="nv">USE_FFTLIB</span><span class="o">=</span>JW
+<span class="nv">USE_LAPACKLIB</span><span class="o">=</span>JW
+</pre></div>
+</div>
 <p><strong>MPI_INCPATH</strong></p>
-<p>This sets the path for your mpi header file <code class="docutils literal"><span class="pre">mpif.h</span></code> . The path depends on
-the computer. For PCs, this is commonly <code class="docutils literal"><span class="pre">/usr/include</span></code> or
-<code class="docutils literal"><span class="pre">/usr/include/mpi</span></code> and should be found by the <code class="docutils literal"><span class="pre">Makefile</span></code> automatically thanks
-to the command <code class="docutils literal"><span class="pre">mpif90</span> <span class="pre">--showme:incdirs</span></code>. In case this doesn&#8217;t work, you may
-need to specify this variable manually in the <code class="docutils literal"><span class="pre">Makefile</span></code>. On supercomputing clusters,
-this variable is in general not used since the <code class="docutils literal"><span class="pre">mpi.mod</span></code> file is usually find
-the standard <code class="docutils literal"><span class="pre">$PATH</span></code>.</p>
+<p>This variable sets the path for your MPI header file <code class="docutils literal"><span class="pre">mpif.h</span></code>. This is in
+general useless if you already use the MPI wrappers such as <code class="docutils literal"><span class="pre">mpiifort</span></code> or
+<code class="docutils literal"><span class="pre">mpif90</span></code> to compile the code. It might be however required to define this
+path for some compiler configurations: <code class="docutils literal"><span class="pre">MPI_INCPATH</span></code> is usually
+<code class="docutils literal"><span class="pre">/usr/include</span></code> or <code class="docutils literal"><span class="pre">/usr/include/mpi</span></code> and should be found by the
+<code class="docutils literal"><span class="pre">Makefile</span></code> automatically thanks to the command <code class="docutils literal"><span class="pre">mpif90</span> <span class="pre">--showme:incdirs</span></code>.
+In case this doesn&#8217;t work, you may need to specify this variable manually in
+the <code class="docutils literal"><span class="pre">Makefile</span></code>. On supercomputing clusters, this variable is in general not
+used.</p>
 <p><strong>Other compilers</strong></p>
 <p>If your available compilers are different from the options provided in the
 <code class="docutils literal"><span class="pre">Makefile</span></code>, then just create a new profile for your desired compiler
 by changing the options <code class="docutils literal"><span class="pre">COMP_FC</span></code> and
 <code class="docutils literal"><span class="pre">COMP_CC</span></code> for serial fortran and C compilers and <code class="docutils literal"><span class="pre">COMP_MPFC</span></code> and
-<code class="docutils literal"><span class="pre">COMP_MPCC</span></code> for compilers with mpi implementation.</p>
-</div>
-<div class="section" id="compiling-the-code">
-<h3>Compiling the code<a class="headerlink" href="#compiling-the-code" title="Permalink to this headline">¶</a></h3>
+<code class="docutils literal"><span class="pre">COMP_MPCC</span></code> for the possible MPI wrappers.</p>
 <p>Once you&#8217;ve set up your compiling options compile the code using</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>make -j
 </pre></div>
@@ -291,8 +354,9 @@ where <a class="reference internal" href="inputNamelists/gridNamelist.html#varn-
 <li><a class="reference internal" href="#download-the-code">Download the code</a></li>
 <li><a class="reference internal" href="#setting-up-the-environment-variables">Setting up the environment variables</a></li>
 <li><a class="reference internal" href="#setting-up-compiler-options-and-compiling">Setting up compiler options and compiling</a><ul>
-<li><a class="reference internal" href="#makefile-options">Makefile options</a></li>
-<li><a class="reference internal" href="#compiling-the-code">Compiling the code</a></li>
+<li><a class="reference internal" href="#generic-compiling-options">Generic compiling options</a></li>
+<li><a class="reference internal" href="#using-cmake-recommended">Using <code class="docutils literal"><span class="pre">CMake</span></code> (recommended)</a></li>
+<li><a class="reference internal" href="#using-make-backup-solution">Using <code class="docutils literal"><span class="pre">make</span></code> (backup solution)</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#preparing-a-production-run">Preparing a production run</a></li>
