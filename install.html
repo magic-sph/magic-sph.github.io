@@ -170,6 +170,7 @@ the following available options:</p>
 <li><code class="docutils literal"><span class="pre">USE_FFTLIB</span></code> This option lets you select the library you want to use for Fast Fourier Transforms. This can be set to &#8216;JW&#8217; or &#8216;MKL&#8217;. &#8216;JW&#8217; refers to the inbuilt library by <strong>J</strong> ohannes <strong>W</strong> icht, while &#8216;MKL&#8217; refers to the <a class="reference external" href="https://software.intel.com/en-us/intel-mkl">Intel Math Kernel Library</a>. Use &#8216;JW&#8217; if you don&#8217;t have Intel MKL installed.</li>
 <li><code class="docutils literal"><span class="pre">USE_LAPACKLIB</span></code> This option allows you to select the library you want to use for LU factorisation. This can be set to &#8216;JW&#8217;, &#8216;MKL&#8217; or &#8216;LAPACK&#8217;. &#8216;JW&#8217; refers to the built-in library, while &#8216;MKL&#8217; refers to the <a class="reference external" href="https://software.intel.com/en-us/intel-mkl">Intel Math Kernel Library</a> and &#8216;LAPACK&#8217; to the <a class="reference external" href="http://www.netlib.org/lapack">Lapack library</a></li>
 <li><code class="docutils literal"><span class="pre">USE_HDF5</span></code> Set to <code class="docutils literal"><span class="pre">yes</span></code> if you want the restart file to be written in the  <a class="reference external" href="http://www.hdfgroup.org/">HDF5</a> format</li>
+<li><code class="docutils literal"><span class="pre">USE_SHTNS</span></code> Set to <code class="docutils literal"><span class="pre">yes</span></code> to use <a class="reference external" href="https://bitbucket.org/bputigny/shtns-magic">SHTns</a> library for spherical harmonics transforms. The helper script <code class="docutils literal"><span class="pre">install-shtns.sh</span></code> is available in the <code class="docutils literal"><span class="pre">bin</span></code> directory to help installing SHTns.</li>
 <li><code class="docutils literal"><span class="pre">PRODRUN</span></code> Set it to <code class="docutils literal"><span class="pre">yes</span></code> for production run, <code class="docutils literal"><span class="pre">no</span></code> for debugging.</li>
 <li><code class="docutils literal"><span class="pre">DEBUG</span></code>   Set to <code class="docutils literal"><span class="pre">all</span></code> to enable the full debug flags. <em>While running in debugging mode, set</em> <code class="docutils literal"><span class="pre">PRODRUN</span></code> <em>to</em> <code class="docutils literal"><span class="pre">no</span></code>.</li>
 </ul>
@@ -331,12 +332,13 @@ MPI ranks:</p>
 <li><p class="first">Running the hybrid code (<code class="docutils literal"><span class="pre">USE_MPI=yes</span></code> and <code class="docutils literal"><span class="pre">USE_OMP=yes</span></code>) with <code class="docutils literal"><span class="pre">&lt;n_mpi&gt;</span></code> MPI ranks
 and <code class="docutils literal"><span class="pre">&lt;n_omp&gt;</span></code> OpenMP threads:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">export </span><span class="nv">OMP_NUM_THREAD</span> <span class="o">=</span> &lt;n_omp&gt;
+<span class="nv">$ </span><span class="nb">export </span><span class="nv">KMP_AFFINITY</span><span class="o">=</span>verbose,granularity<span class="o">=</span>core,compact,1
 <span class="nv">$ </span>mpiexec -n &lt;n_mpi&gt; ./magic.exe input.nml
 </pre></div>
 </div>
 </li>
 </ul>
-<p>Note that the <a class="reference internal" href="inputNamelists/gridNamelist.html#varn-r-max"><span>n_r_max</span></a> must be a multiple of <code class="docutils literal"><span class="pre">&lt;n_mpi&gt;</span></code>,
+<p>Note that the <a class="reference internal" href="inputNamelists/gridNamelist.html#varn-r-max"><span>n_r_max-1</span></a> must be a multiple of <code class="docutils literal"><span class="pre">&lt;n_mpi&gt;</span></code>,
 where <a class="reference internal" href="inputNamelists/gridNamelist.html#varn-r-max"><span>n_r_max</span></a> is the number of radial grid points (see
 <a class="reference internal" href="inputNamelists/gridNamelist.html#secgridnml"><span>here</span></a>).</p>
 </div>

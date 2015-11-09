@@ -321,6 +321,7 @@
 <span class="sd">        :type nz: int</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+
         <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">minc</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
@@ -350,6 +351,17 @@
         <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;vortr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span>
         <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;flucttemp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">9</span>
         <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;ekin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;br&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">11</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s">&#39;Br&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">11</span>
+
+        <span class="c"># Change default scalars and vectors in non-magnetic cases</span>
+        <span class="k">if</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">keyScal</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&#39;emag&#39;</span><span class="p">):</span>
+                <span class="n">keyScal</span><span class="o">.</span><span class="n">__delitem__</span><span class="p">(</span><span class="s">&#39;emag&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">keyScal</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&#39;br&#39;</span><span class="p">):</span>
+                <span class="n">keyScal</span><span class="o">.</span><span class="n">__delitem__</span><span class="p">(</span><span class="s">&#39;br&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">keyScal</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&#39;Br&#39;</span><span class="p">):</span>
+                <span class="n">keyScal</span><span class="o">.</span><span class="n">__delitem__</span><span class="p">(</span><span class="s">&#39;Br&#39;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scals</span><span class="p">),</span> <span class="s">&#39;i&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">scal</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">scals</span><span class="p">):</span>
@@ -378,6 +390,16 @@
         <span class="n">keyVec</span><span class="p">[</span><span class="s">&#39;mag&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
         <span class="n">keyVec</span><span class="p">[</span><span class="s">&#39;bfluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
         <span class="n">keyVec</span><span class="p">[</span><span class="s">&#39;Bfluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+
+        <span class="k">if</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">keyVec</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&#39;bfluct&#39;</span><span class="p">):</span>
+                <span class="n">keyVec</span><span class="o">.</span><span class="n">__delitem__</span><span class="p">(</span><span class="s">&#39;bfluct&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">keyVec</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&#39;Bfluct&#39;</span><span class="p">):</span>
+                <span class="n">keyVec</span><span class="o">.</span><span class="n">__delitem__</span><span class="p">(</span><span class="s">&#39;Bfluct&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">keyVec</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">):</span>
+                <span class="n">keyVec</span><span class="o">.</span><span class="n">__delitem__</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">keyVec</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&#39;B&#39;</span><span class="p">):</span>
+                <span class="n">keyVec</span><span class="o">.</span><span class="n">__delitem__</span><span class="p">(</span><span class="s">&#39;B&#39;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vecs</span><span class="p">),</span> <span class="s">&#39;i&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">vec</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vecs</span><span class="p">):</span>
