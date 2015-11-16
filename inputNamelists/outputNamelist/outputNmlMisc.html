@@ -115,17 +115,12 @@
             
   <div class="section" id="rms-force-balance">
 <span id="secoutnmlmisc"></span><h1>RMS force balance<a class="headerlink" href="#rms-force-balance" title="Permalink to this headline">¶</a></h1>
-<blockquote>
-<div><div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">The RMS calculation is actually wrong in the current version. This needs again to be ported from MagIC 3.44. The RMS contributions to the induction equation are correct, though. A ticket has been opened on github regarding this issue: <a class="reference external" href="https://github.com/magic-sph/magic/issues/1">https://github.com/magic-sph/magic/issues/1</a></p>
-</div>
-</div></blockquote>
-<p>The code can compute the RMS of the force balance and the induction equation.</p>
+<p>The code can compute the RMS contributions of the different forces that
+contribute to the Navier-Stokes equation and the the different terms that enter
+the induction equation.</p>
 <ul class="simple" id="varl-rms">
-<li><strong>l_RMS</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/logic/l_rms" title="f/logic/l_rms"><code class="xref f f-var docutils literal"><span class="pre">l_RMS=.false.</span></code></a>) is a logical, which enables the calculation of RMS force balance, when set to <code class="docutils literal"><span class="pre">.true.</span></code>. The outputs are stored in the <a class="reference internal" href="../../outputFiles/outTimeSeriesSupp.html#secdtvrmsfile"><span>dtVrms.TAG</span></a>, <a class="reference internal" href="../../outputFiles/outTimeSeriesSupp.html#secdtbrmsfile"><span>dtBrms.TAG</span></a> and <a class="reference internal" href="../../outputFiles/outTimeSeriesSupp.html#secdtdrmsfile"><span>dtDrms.TAG</span></a> files.</li>
-<li><strong>l_RMStest</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/logic/l_rmstest" title="f/logic/l_rmstest"><code class="xref f f-var docutils literal"><span class="pre">l_RMStest=.false.</span></code></a>) is a logical. This is a debug flag to check the consistency of the RMS calculation.</li>
-<li><strong>rCut</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/rcut" title="f/output_data/rcut"><code class="xref f f-var docutils literal"><span class="pre">rCut=0.075</span></code></a>) is a float. This is the thickness of the layer which is left out at both boundaries for the RMS calculation. <code class="docutils literal"><span class="pre">rCut=0.075</span></code> actually means that 7.5% below the CMB and above the ICB are disregarded in the force balance calculation.</li>
+<li><strong>l_RMS</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/logic/l_rms" title="f/logic/l_rms"><code class="xref f f-var docutils literal"><span class="pre">l_RMS=.false.</span></code></a>) is a logical, which enables the calculation of RMS force balance, when set to <code class="docutils literal"><span class="pre">.true.</span></code>. The outputs are stored in <a class="reference internal" href="../../outputFiles/outTimeSeriesSupp.html#secdtvrmsfile"><span>dtVrms.TAG</span></a> and <a class="reference internal" href="../../outputFiles/outTimeSeriesSupp.html#secdtbrmsfile"><span>dtBrms.TAG</span></a>.</li>
+<li><strong>rCut</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/rcut" title="f/output_data/rcut"><code class="xref f f-var docutils literal"><span class="pre">rCut=0.0</span></code></a>) is a float. This is the thickness of the layer which is left out at both boundaries for the RMS calculation. <code class="docutils literal"><span class="pre">rCut=0.075</span></code> actually means that 7.5% below the CMB and above the ICB are disregarded in the force balance calculation.</li>
 <li><strong>rDea</strong> (default  <a class="reference internal" href="../../apiFortran/baseModules.html#f/output_data/rdea" title="f/output_data/rdea"><code class="xref f f-var docutils literal"><span class="pre">rDea=0.0</span></code></a>) is a float. This controls the dealiasing in RMS calculations. <code class="docutils literal"><span class="pre">rDea=0.1</span></code> means that the highest 10% of the Chebyshev modes are set to zero.</li>
 </ul>
 </div>

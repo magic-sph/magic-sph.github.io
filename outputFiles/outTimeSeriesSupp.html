@@ -655,19 +655,12 @@ columns of the <code class="docutils literal"><span class="pre">inerP.TAG</span>
 </div>
 <div class="section" id="dtvrms-tag">
 <span id="secdtvrmsfile"></span><h2><code class="docutils literal"><span class="pre">dtVrms.TAG</span></code><a class="headerlink" href="#dtvrms-tag" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">The RMS calculation is actually wrong in the current version. This
-needs again to be ported from MagIC 3.44. This issue only affects
-<code class="docutils literal"><span class="pre">dtVrms.TAG</span></code>, though. A ticket has been opened on github regarding
-this issue: <a class="reference external" href="https://github.com/magic-sph/magic/issues/1">https://github.com/magic-sph/magic/issues/1</a></p>
-</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlMisc.html#varl-rms"><span>l_RMS=.true.</span></a></p>
 </div>
 <p>This files contains the RMS force balance of the Navier Stokes equation. This file is
-written by the subroutine <a class="reference internal" href="../apiFortran/IOAdd.html#f/out_rms/dtvrms" title="f/out_rms/dtvrms"><code class="xref f f-subr docutils literal"><span class="pre">dtVrms</span></code></a>.</p>
+written by the subroutine <a class="reference internal" href="../apiFortran/IOAdd.html#f/rms/dtvrms" title="f/rms/dtvrms"><code class="xref f f-subr docutils literal"><span class="pre">dtVrms</span></code></a>.</p>
 <blockquote>
 <div><table border="1" class="docutils">
 <colgroup>
@@ -684,49 +677,40 @@ written by the subroutine <a class="reference internal" href="../apiFortran/IOAd
 <td>time</td>
 </tr>
 <tr class="row-odd"><td>2</td>
-<td>Poloidal flow changes: inertia&#8211;advection</td>
+<td>Flow changes: inertia&#8211;advection</td>
 </tr>
 <tr class="row-even"><td>3</td>
-<td>Toroidal flow changes: inertia&#8211;advection</td>
+<td>Coriolis force</td>
 </tr>
 <tr class="row-odd"><td>4</td>
-<td>Poloidal Coriolis force</td>
+<td>Lorentz force</td>
 </tr>
 <tr class="row-even"><td>5</td>
-<td>Toroidal Coriolis force</td>
+<td>Advection term</td>
 </tr>
 <tr class="row-odd"><td>6</td>
-<td>Poloidal Lorentz force</td>
+<td>Diffusion term</td>
 </tr>
 <tr class="row-even"><td>7</td>
-<td>Toroidal Lorentz force</td>
-</tr>
-<tr class="row-odd"><td>8</td>
-<td>Poloidal advection term</td>
-</tr>
-<tr class="row-even"><td>9</td>
-<td>Toroidal advection term</td>
-</tr>
-<tr class="row-odd"><td>10</td>
-<td>Poloidal diffusion term</td>
-</tr>
-<tr class="row-even"><td>11</td>
-<td>Toroidal diffusion term</td>
-</tr>
-<tr class="row-odd"><td>12</td>
 <td>Buoyancy term</td>
 </tr>
-<tr class="row-even"><td>13</td>
+<tr class="row-odd"><td>8</td>
 <td>Pressure gradient term</td>
 </tr>
-<tr class="row-odd"><td>14</td>
+<tr class="row-even"><td>9</td>
 <td>Sum of force terms: geostrophic balance</td>
 </tr>
-<tr class="row-even"><td>15</td>
+<tr class="row-odd"><td>10</td>
 <td>Sum of force terms: magnetostrophic balance</td>
 </tr>
-<tr class="row-odd"><td>16</td>
+<tr class="row-even"><td>11</td>
 <td>Sum of force terms: Archemidian balance</td>
+</tr>
+<tr class="row-odd"><td>12</td>
+<td>Sum of force terms: Lorentz/Coriolis</td>
+</tr>
+<tr class="row-even"><td>13</td>
+<td>Sum of force terms: Pressure/Lorentz</td>
 </tr>
 </tbody>
 </table>
@@ -744,7 +728,7 @@ written by the subroutine <a class="reference internal" href="../apiFortran/IOAd
 <p class="last">This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlMisc.html#varl-rms"><span>l_RMS=.true.</span></a></p>
 </div>
 <p>This files contains the RMS terms that enter the induction equation. This file is
-written by the subroutine <a class="reference internal" href="../apiFortran/IOAdd.html#f/out_rms/dtbrms" title="f/out_rms/dtbrms"><code class="xref f f-subr docutils literal"><span class="pre">dtBrms</span></code></a>.</p>
+written by the subroutine <a class="reference internal" href="../apiFortran/IOAdd.html#f/rms/dtbrms" title="f/rms/dtbrms"><code class="xref f f-subr docutils literal"><span class="pre">dtBrms</span></code></a>.</p>
 <blockquote>
 <div><table border="1" class="docutils">
 <colgroup>
@@ -767,16 +751,10 @@ written by the subroutine <a class="reference internal" href="../apiFortran/IOAd
 <td>Changes in magnetic field (toroidal)</td>
 </tr>
 <tr class="row-odd"><td>4</td>
-<td>Poloidal strecthing term</td>
+<td>Poloidal induction term</td>
 </tr>
 <tr class="row-even"><td>5</td>
-<td>Toroidal strecthing term</td>
-</tr>
-<tr class="row-odd"><td>6</td>
-<td>Poloidal field advection term</td>
-</tr>
-<tr class="row-even"><td>7</td>
-<td>Toroidal field advection term</td>
+<td>Toroidal induction term</td>
 </tr>
 <tr class="row-odd"><td>8</td>
 <td>Poloidal diffusion term</td>
@@ -785,16 +763,16 @@ written by the subroutine <a class="reference internal" href="../apiFortran/IOAd
 <td>Toroidal diffusion term</td>
 </tr>
 <tr class="row-odd"><td>10</td>
-<td>Omega effect / toroidal strecthing term</td>
+<td>Omega effect / toroidal induction term</td>
 </tr>
 <tr class="row-even"><td>11</td>
 <td>Omega effect</td>
 </tr>
 <tr class="row-odd"><td>12</td>
-<td>Poloidal field production (stretching+advection)</td>
+<td>Production of the dipole field</td>
 </tr>
 <tr class="row-even"><td>13</td>
-<td>Toroidal field production (stretching+advection)</td>
+<td>Production of the axisymmetric dipole field</td>
 </tr>
 </tbody>
 </table>
@@ -804,42 +782,6 @@ written by the subroutine <a class="reference internal" href="../apiFortran/IOAd
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ts</span> <span class="o">=</span> <span class="n">MagicTs</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s">&#39;dtBrms&#39;</span><span class="p">,</span> <span class="nb">all</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="dtdrms-tag">
-<span id="secdtdrmsfile"></span><h2><code class="docutils literal"><span class="pre">dtDrms.TAG</span></code><a class="headerlink" href="#dtdrms-tag" title="Permalink to this headline">¶</a></h2>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlMisc.html#varl-rms"><span>l_RMS=.true.</span></a></p>
-</div>
-<p>This files contains the RMS terms that enter the induction equation of the
-dipole. This file is written by the subroutine <a class="reference internal" href="../apiFortran/IOAdd.html#f/out_rms/dtbrms" title="f/out_rms/dtbrms"><code class="xref f f-subr docutils literal"><span class="pre">dtBrms</span></code></a>.</p>
-<blockquote>
-<div><table border="1" class="docutils">
-<colgroup>
-<col width="21%" />
-<col width="79%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">No. of column</th>
-<th class="head">Contents</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>1</td>
-<td>time</td>
-</tr>
-<tr class="row-odd"><td>2</td>
-<td>Dipole stretching</td>
-</tr>
-<tr class="row-even"><td>3</td>
-<td>Dipole advection term</td>
-</tr>
-<tr class="row-odd"><td>4</td>
-<td>Dipole diffusion term</td>
-</tr>
-</tbody>
-</table>
-</div></blockquote>
 </div>
 <div class="section" id="perppar-tag">
 <span id="secperpparfile"></span><h2><code class="docutils literal"><span class="pre">perpPar.TAG</span></code><a class="headerlink" href="#perppar-tag" title="Permalink to this headline">¶</a></h2>
@@ -908,7 +850,6 @@ calculated by the subroutine <a class="reference internal" href="../apiFortran/I
 <li><a class="reference internal" href="#sr-ic-ma-tag"><code class="docutils literal"><span class="pre">SR[IC|MA].TAG</span></code></a></li>
 <li><a class="reference internal" href="#dtvrms-tag"><code class="docutils literal"><span class="pre">dtVrms.TAG</span></code></a></li>
 <li><a class="reference internal" href="#dtbrms-tag"><code class="docutils literal"><span class="pre">dtBrms.TAG</span></code></a></li>
-<li><a class="reference internal" href="#dtdrms-tag"><code class="docutils literal"><span class="pre">dtDrms.TAG</span></code></a></li>
 <li><a class="reference internal" href="#perppar-tag"><code class="docutils literal"><span class="pre">perpPar.TAG</span></code></a></li>
 </ul>
 </li>
