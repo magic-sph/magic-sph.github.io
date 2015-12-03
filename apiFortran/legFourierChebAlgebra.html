@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Chebyshev polynomials and cosine transforms &mdash; Magic 5.2 documentation</title>
+    <title>Chebyshev polynomials and cosine transforms &mdash; Magic 5.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.2',
+        VERSION:     '5.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="Magic 5.2 documentation" href="../contents.html" />
+    <link rel="top" title="Magic 5.3 documentation" href="../contents.html" />
     <link rel="up" title="Description of the Fortran modules" href="../api.html" />
     <link rel="next" title="Radial derivatives and integration" href="derInt.html" />
     <link rel="prev" title="Non-linear part of the time stepping (radial loop)" href="timeAdvNonLinear.html" />
@@ -102,7 +102,7 @@
         <li class="right" >
           <a href="timeAdvNonLinear.html" title="Non-linear part of the time stepping (radial loop)"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.2 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.3 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../api.html" accesskey="U">Description of the Fortran modules</a> &raquo;</li> 
       </ul>
     </div>  
@@ -833,7 +833,7 @@ n=2 &#8211; fully normalised.</dd>
 
 <dl class="subroutine">
 <dt id="f/leg_helper_mod/legprepg">
-<em class="property">subroutine  </em><code class="descclassname">leg_helper_mod/</code><code class="descname">legprepg</code><span class="sig-paren">(</span><em>this</em>, <em>nr</em>, <em>nbc</em>, <em>lderiv</em>, <em>lrmscalc</em>, <em>l_frame</em>, <em>ltonext</em>, <em>ltonext2</em>, <em>ltocalc</em><span class="sig-paren">)</span><a class="headerlink" href="#f/leg_helper_mod/legprepg" title="Permalink to this definition">¶</a></dt>
+<em class="property">subroutine  </em><code class="descclassname">leg_helper_mod/</code><code class="descname">legprepg</code><span class="sig-paren">(</span><em>this</em>, <em>nr</em>, <em>nbc</em>, <em>lderiv</em>, <em>lrmscalc</em>, <em>lpresscalc</em>, <em>l_frame</em>, <em>ltonext</em>, <em>ltonext2</em>, <em>ltocalc</em><span class="sig-paren">)</span><a class="headerlink" href="#f/leg_helper_mod/legprepg" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Purpose of this subroutine is to prepare Legendre transforms
 from (r,l,m) space to (r,theta,m) space by calculating
@@ -859,6 +859,7 @@ factors as well as the radial dependence:</p>
 <li><strong>nbc</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: boundary condition</li>
 <li><strong>lderiv</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em> :: get also field derivatives !</li>
 <li><strong>lrmscalc</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em> :: Rms force balance ?</li>
+<li><strong>lpresscalc</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em> :: Pressure ?</li>
 <li><strong>l_frame</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em> :: Calculate movie frame?</li>
 <li><strong>ltonext</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em> :: for TO output</li>
 <li><strong>ltonext2</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
@@ -994,7 +995,7 @@ transform and fftJW for the Fourier transform.</p>
 <p class="rubric">Subroutines and functions</p>
 <dl class="subroutine">
 <dt id="f/legendre_spec_to_grid/legtfg">
-<em class="property">subroutine  </em><code class="descclassname">legendre_spec_to_grid/</code><code class="descname">legtfg</code><span class="sig-paren">(</span><em>nbc</em>, <em>lderiv</em>, <em>lviscbccalc</em>, <em>lfluxprofcalc</em>, <em>lrmscalc</em>, <em>nthetastart</em>, <em>vrc</em>, <em>vtc</em>, <em>vpc</em>, <em>dvrdrc</em>, <em>dvtdrc</em>, <em>dvpdrc</em>, <em>cvrc</em>, <em>dvrdtc</em>, <em>dvrdpc</em>, <em>dvtdpc</em>, <em>dvpdpc</em>, <em>brc</em>, <em>btc</em>, <em>bpc</em>, <em>cbrc</em>, <em>cbtc</em>, <em>cbpc</em>, <em>sc</em>, <em>drsc</em>, <em>dsdtc</em>, <em>dsdpc</em>, <em>pc</em>, <em>leg_helper</em><span class="sig-paren">)</span><a class="headerlink" href="#f/legendre_spec_to_grid/legtfg" title="Permalink to this definition">¶</a></dt>
+<em class="property">subroutine  </em><code class="descclassname">legendre_spec_to_grid/</code><code class="descname">legtfg</code><span class="sig-paren">(</span><em>nbc</em>, <em>lderiv</em>, <em>lviscbccalc</em>, <em>lpresscalc</em>, <em>nthetastart</em>, <em>vrc</em>, <em>vtc</em>, <em>vpc</em>, <em>dvrdrc</em>, <em>dvtdrc</em>, <em>dvpdrc</em>, <em>cvrc</em>, <em>dvrdtc</em>, <em>dvrdpc</em>, <em>dvtdpc</em>, <em>dvpdpc</em>, <em>brc</em>, <em>btc</em>, <em>bpc</em>, <em>cbrc</em>, <em>cbtc</em>, <em>cbpc</em>, <em>sc</em>, <em>drsc</em>, <em>dsdtc</em>, <em>dsdpc</em>, <em>pc</em>, <em>leg_helper</em><span class="sig-paren">)</span><a class="headerlink" href="#f/legendre_spec_to_grid/legtfg" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Legendre transform from (nR,l,m) to (nR,nTheta,m) [spectral to grid]
 where nTheta numbers the colatitudes and l is the degree of
@@ -1049,8 +1050,7 @@ points nThetaStart &lt;= nTheta &lt;= nThetaStart-1+sizeThetaB</p>
 <li><strong>nbc</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>lderiv</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>lviscbccalc</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
-<li><strong>lfluxprofcalc</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
-<li><strong>lrmscalc</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>lpresscalc</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>nthetastart</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>vrc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>vtc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
@@ -1087,7 +1087,7 @@ points nThetaStart &lt;= nTheta &lt;= nThetaStart-1+sizeThetaB</p>
 
 <dl class="subroutine">
 <dt id="f/legendre_spec_to_grid/legtfgnomag">
-<em class="property">subroutine  </em><code class="descclassname">legendre_spec_to_grid/</code><code class="descname">legtfgnomag</code><span class="sig-paren">(</span><em>nbc</em>, <em>lderiv</em>, <em>lviscbccalc</em>, <em>lfluxprofcalc</em>, <em>lrmscalc</em>, <em>nthetastart</em>, <em>vrc</em>, <em>vtc</em>, <em>vpc</em>, <em>dvrdrc</em>, <em>dvtdrc</em>, <em>dvpdrc</em>, <em>cvrc</em>, <em>dvrdtc</em>, <em>dvrdpc</em>, <em>dvtdpc</em>, <em>dvpdpc</em>, <em>sc</em>, <em>drsc</em>, <em>dsdtc</em>, <em>dsdpc</em>, <em>pc</em>, <em>leg_helper</em><span class="sig-paren">)</span><a class="headerlink" href="#f/legendre_spec_to_grid/legtfgnomag" title="Permalink to this definition">¶</a></dt>
+<em class="property">subroutine  </em><code class="descclassname">legendre_spec_to_grid/</code><code class="descname">legtfgnomag</code><span class="sig-paren">(</span><em>nbc</em>, <em>lderiv</em>, <em>lviscbccalc</em>, <em>lpresscalc</em>, <em>nthetastart</em>, <em>vrc</em>, <em>vtc</em>, <em>vpc</em>, <em>dvrdrc</em>, <em>dvtdrc</em>, <em>dvpdrc</em>, <em>cvrc</em>, <em>dvrdtc</em>, <em>dvrdpc</em>, <em>dvtdpc</em>, <em>dvpdpc</em>, <em>sc</em>, <em>drsc</em>, <em>dsdtc</em>, <em>dsdpc</em>, <em>pc</em>, <em>leg_helper</em><span class="sig-paren">)</span><a class="headerlink" href="#f/legendre_spec_to_grid/legtfgnomag" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Same as legTFG for non-magnetic cases</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1098,8 +1098,7 @@ points nThetaStart &lt;= nTheta &lt;= nThetaStart-1+sizeThetaB</p>
 <li><strong>nbc</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>lderiv</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>lviscbccalc</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
-<li><strong>lfluxprofcalc</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
-<li><strong>lrmscalc</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>lpresscalc</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>nthetastart</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>vrc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>vtc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
@@ -1909,7 +1908,7 @@ b: (in/output) rhs-vector on input, solution on output</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="initModules.html#f/init_fields/inits" title="f/init_fields/inits"><code class="xref f f-func docutils literal"><span class="pre">inits()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/updates" title="f/updates_mod/updates"><code class="xref f f-func docutils literal"><span class="pre">updates()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/s_cond" title="f/init_fields/s_cond"><code class="xref f f-func docutils literal"><span class="pre">s_cond()</span></code></a>, <a class="reference internal" href="precalcModules.html#f/radial_functions/getbackground" title="f/radial_functions/getbackground"><code class="xref f f-func docutils literal"><span class="pre">getbackground()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/updates_ala" title="f/updates_mod/updates_ala"><code class="xref f f-func docutils literal"><span class="pre">updates_ala()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="initModules.html#f/init_fields/inits" title="f/init_fields/inits"><code class="xref f f-func docutils literal"><span class="pre">inits()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/updates" title="f/updates_mod/updates"><code class="xref f f-func docutils literal"><span class="pre">updates()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/s_cond" title="f/init_fields/s_cond"><code class="xref f f-func docutils literal"><span class="pre">s_cond()</span></code></a>, <a class="reference internal" href="precalcModules.html#f/radial_functions/getbackground" title="f/radial_functions/getbackground"><code class="xref f f-func docutils literal"><span class="pre">getbackground()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/updatewp" title="f/updatewp_mod/updatewp"><code class="xref f f-func docutils literal"><span class="pre">updatewp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/updates_ala" title="f/updates_mod/updates_ala"><code class="xref f f-func docutils literal"><span class="pre">updates_ala()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -1941,7 +1940,7 @@ info: (output) error message when  /=  0</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="initModules.html#f/init_fields/j_cond" title="f/init_fields/j_cond"><code class="xref f f-func docutils literal"><span class="pre">j_cond()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/get_z10mat" title="f/updatez_mod/get_z10mat"><code class="xref f f-func docutils literal"><span class="pre">get_z10mat()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/inits" title="f/init_fields/inits"><code class="xref f f-func docutils literal"><span class="pre">inits()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/s_cond" title="f/init_fields/s_cond"><code class="xref f f-func docutils literal"><span class="pre">s_cond()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_bmat" title="f/updateb_mod/get_bmat"><code class="xref f f-func docutils literal"><span class="pre">get_bmat()</span></code></a>, <a class="reference internal" href="precalcModules.html#f/radial_functions/getbackground" title="f/radial_functions/getbackground"><code class="xref f f-func docutils literal"><span class="pre">getbackground()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/get_s0mat" title="f/updates_mod/get_s0mat"><code class="xref f f-func docutils literal"><span class="pre">get_s0mat()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/get_smat" title="f/updates_mod/get_smat"><code class="xref f f-func docutils literal"><span class="pre">get_smat()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/get_zmat" title="f/updatez_mod/get_zmat"><code class="xref f f-func docutils literal"><span class="pre">get_zmat()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_wpmat" title="f/updatewp_mod/get_wpmat"><code class="xref f f-func docutils literal"><span class="pre">get_wpmat()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="initModules.html#f/init_fields/j_cond" title="f/init_fields/j_cond"><code class="xref f f-func docutils literal"><span class="pre">j_cond()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/get_z10mat" title="f/updatez_mod/get_z10mat"><code class="xref f f-func docutils literal"><span class="pre">get_z10mat()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/inits" title="f/init_fields/inits"><code class="xref f f-func docutils literal"><span class="pre">inits()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/s_cond" title="f/init_fields/s_cond"><code class="xref f f-func docutils literal"><span class="pre">s_cond()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_bmat" title="f/updateb_mod/get_bmat"><code class="xref f f-func docutils literal"><span class="pre">get_bmat()</span></code></a>, <a class="reference internal" href="precalcModules.html#f/radial_functions/getbackground" title="f/radial_functions/getbackground"><code class="xref f f-func docutils literal"><span class="pre">getbackground()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_p0mat" title="f/updatewp_mod/get_p0mat"><code class="xref f f-func docutils literal"><span class="pre">get_p0mat()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/get_s0mat" title="f/updates_mod/get_s0mat"><code class="xref f f-func docutils literal"><span class="pre">get_s0mat()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/get_smat" title="f/updates_mod/get_smat"><code class="xref f f-func docutils literal"><span class="pre">get_smat()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/get_zmat" title="f/updatez_mod/get_zmat"><code class="xref f f-func docutils literal"><span class="pre">get_zmat()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_wpmat" title="f/updatewp_mod/get_wpmat"><code class="xref f f-func docutils literal"><span class="pre">get_wpmat()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -2031,7 +2030,7 @@ info: (output) error message when  /=  0</p>
         <li class="right" >
           <a href="timeAdvNonLinear.html" title="Non-linear part of the time stepping (radial loop)"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.2 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.3 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../api.html" >Description of the Fortran modules</a> &raquo;</li> 
       </ul>
     </div>

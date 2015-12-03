@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>magic.libmagic &mdash; Magic 5.2 documentation</title>
+    <title>magic.libmagic &mdash; Magic 5.3 documentation</title>
     
     <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '5.2',
+        VERSION:     '5.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="Magic 5.2 documentation" href="../../contents.html" />
+    <link rel="top" title="Magic 5.3 documentation" href="../../contents.html" />
     <link rel="up" title="Module code" href="../index.html" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
           rel='stylesheet' type='text/css' />
@@ -94,7 +94,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.2 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.3 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -144,6 +144,12 @@
             <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;$B_r$&#39;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;Br&#39;</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;pressure&#39;</span><span class="p">,</span> <span class="s">&#39;pre&#39;</span><span class="p">,</span> <span class="s">&#39;Pre&#39;</span><span class="p">,</span> <span class="s">&#39;Pressure&#39;</span><span class="p">,</span> <span class="s">&#39;press&#39;</span><span class="p">,</span> <span class="s">&#39;Press&#39;</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">pre</span>
+        <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;$p$&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;p&#39;</span>
     <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;Vr&#39;</span><span class="p">,</span> <span class="s">&#39;vr&#39;</span><span class="p">,</span> <span class="s">&#39;Ur&#39;</span><span class="p">,</span> <span class="s">&#39;ur&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">vr</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
@@ -694,7 +700,7 @@
     <span class="k">return</span> <span class="n">den</span>
 
 
-<div class="viewcode-block" id="phideravg"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.phideravg">[docs]</a><span class="k">def</span> <span class="nf">phideravg</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="phideravg"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.phideravg">[docs]</a><span class="k">def</span> <span class="nf">phideravg</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    phi-derivative of an input array</span>
 
@@ -705,14 +711,29 @@
 <span class="sd">    :type data: numpy.ndarray</span>
 <span class="sd">    :param minc: azimuthal symmetry</span>
 <span class="sd">    :type minc: int</span>
+<span class="sd">    :param order: order of the finite-difference scheme (possible values are 2 or 4)</span>
+<span class="sd">    :type order: int</span>
 <span class="sd">    :returns: the phi-derivative of the input array</span>
 <span class="sd">    :rtype: numpy.ndarray</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">nphi</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">dphi</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">minc</span><span class="o">/</span><span class="p">(</span><span class="n">nphi</span><span class="o">-</span><span class="mf">1.</span><span class="p">)</span>
-    <span class="n">der</span> <span class="o">=</span> <span class="p">(</span><span class="n">N</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>  <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">-</span><span class="n">N</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">dphi</span><span class="p">)</span>
-    <span class="n">der</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">-</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">dphi</span><span class="p">)</span>
-    <span class="n">der</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">der</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">der</span> <span class="o">=</span> <span class="p">(</span><span class="n">N</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>  <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">-</span><span class="n">N</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">dphi</span><span class="p">)</span>
+        <span class="n">der</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">-</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">dphi</span><span class="p">)</span>
+        <span class="n">der</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">der</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">order</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">der</span> <span class="o">=</span> <span class="p">(</span>   <span class="o">-</span><span class="n">N</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> \
+               <span class="o">+</span><span class="mf">8.</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> \
+               <span class="o">-</span><span class="mf">8.</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  \
+                  <span class="o">+</span><span class="n">N</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>   <span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">12.</span><span class="o">*</span><span class="n">dphi</span><span class="p">)</span>
+        <span class="n">der</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">+</span><span class="mf">8.</span><span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">-</span>\
+                       <span class="mf">8.</span><span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="mf">12.</span><span class="o">*</span><span class="n">dphi</span><span class="p">)</span>
+        <span class="n">der</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">+</span><span class="mf">8.</span><span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">-</span>\
+                       <span class="mf">8.</span><span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="mf">12.</span><span class="o">*</span><span class="n">dphi</span><span class="p">)</span>
+        <span class="n">der</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">+</span><span class="mf">8.</span><span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">-</span>\
+                       <span class="mf">8.</span><span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="mf">12.</span><span class="o">*</span><span class="n">dphi</span><span class="p">)</span>
+        <span class="n">der</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">der</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">der</span>
 </div>
 <div class="viewcode-block" id="rderavg"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.rderavg">[docs]</a><span class="k">def</span> <span class="nf">rderavg</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">spectral</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
@@ -1010,7 +1031,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.2 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.3 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

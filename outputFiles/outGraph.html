@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Graphic files G_#.TAG and G_ave.TAG &mdash; Magic 5.2 documentation</title>
+    <title>Graphic files G_#.TAG and G_ave.TAG &mdash; Magic 5.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.2',
+        VERSION:     '5.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="Magic 5.2 documentation" href="../contents.html" />
+    <link rel="top" title="Magic 5.3 documentation" href="../contents.html" />
     <link rel="up" title="Output files" href="outFiles.html" />
     <link rel="next" title="Movie files *_mov.TAG" href="outMovie.html" />
     <link rel="prev" title="Spectra" href="outSpecFiles.html" />
@@ -102,7 +102,7 @@
         <li class="right" >
           <a href="outSpecFiles.html" title="Spectra"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.2 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.3 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="outFiles.html" accesskey="U">Output files</a> &raquo;</li> 
       </ul>
     </div>  
@@ -132,8 +132,10 @@ file looks like below:</p>
 <span class="c">! Line 1</span>
 <span class="c">!-------------</span>
 
-<span class="n">version</span>               <span class="c">!Graphout_version_9 (using MPI) or</span>
-                      <span class="c">!Graphout_version_7 (without MPI)</span>
+<span class="n">version</span>               <span class="c">!Graphout_version_9 (using MPI without pressure)</span>
+                      <span class="c">!Graphout_version_10 (using MPI, with pressure)</span>
+                      <span class="c">!Graphout_version_7 (without MPI, without pressure)</span>
+                      <span class="c">!Graphout_version_8 (without MPI, with pressure)</span>
 <span class="c">!----------</span>
 <span class="c">! Line 2</span>
 <span class="c">!----------</span>
@@ -157,11 +159,11 @@ file looks like below:</p>
 
 <span class="c">!-----------------------------------------------------------------------</span>
 
-<span class="c">!-------------------</span>
-<span class="c">!Graphout_version_9</span>
-<span class="c">!-------------------</span>
+<span class="c">!---------------------------------------</span>
+<span class="c">!Graphout_version_9/Graphout_version_10</span>
+<span class="c">!---------------------------------------</span>
 
-<span class="c">! This version is written when the code uses MPI (USE_MPI=yes). Parallel</span>
+<span class="c">! These versions are written when the code uses MPI (USE_MPI=yes). Parallel</span>
 <span class="c">! chunks of fields are written for different radial levels. Chunks in theta</span>
 <span class="c">! are written in parallel using OpenMP</span>
 
@@ -207,32 +209,41 @@ file looks like below:</p>
 <span class="n">vp</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n_phi_tot</span><span class="p">,</span> <span class="n">n_theta_start</span><span class="p">:</span><span class="n">n_theta_stop</span><span class="p">,</span> <span class="n">n_r</span><span class="p">)</span>  <span class="c">!Zonal (phi component) of</span>
                                                   <span class="c">!velocity</span>
 
-<span class="k">if</span> <span class="p">(</span><span class="n">l_mag</span><span class="p">):</span>                                         <span class="c">!For a magnetic run</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">l_PressGraph</span><span class="p">):</span>                                <span class="c">!If pressure is stored</span>
 
   <span class="c">!---------------</span>
   <span class="c">! Line 4 + (N+5)</span>
   <span class="c">!---------------</span>
 
+  <span class="n">pr</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n_phi_tot</span><span class="p">,</span> <span class="n">n_theta_start</span><span class="p">:</span><span class="n">n_theta_stop</span><span class="p">,</span> <span class="n">n_r</span><span class="p">)</span>  <span class="c">!pressure</span>
+
+
+<span class="k">if</span> <span class="p">(</span><span class="n">l_mag</span><span class="p">):</span>                                         <span class="c">!For a magnetic run</span>
+
+  <span class="c">!-----------------</span>
+  <span class="c">! Line 4 + (N+5/6)</span>
+  <span class="c">!-----------------</span>
+
   <span class="n">br</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n_phi_tot</span><span class="p">,</span> <span class="n">n_theta_start</span><span class="p">:</span><span class="n">n_theta_stop</span><span class="p">,</span> <span class="n">n_r</span><span class="p">)</span>  <span class="c">!Radial magnetic field</span>
 
-  <span class="c">!---------------</span>
-  <span class="c">! Line 4 + (N+6)</span>
-  <span class="c">!---------------</span>
+  <span class="c">!-----------------</span>
+  <span class="c">! Line 4 + (N+6/7)</span>
+  <span class="c">!-----------------</span>
 
   <span class="n">bt</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n_phi_tot</span><span class="p">,</span> <span class="n">n_theta_start</span><span class="p">:</span><span class="n">n_theta_stop</span><span class="p">,</span> <span class="n">n_r</span><span class="p">)</span>  <span class="c">!Theta component of</span>
                                                     <span class="c">!magnetic field</span>
 
-  <span class="c">!---------------</span>
-  <span class="c">! Line 4 + (N+7)</span>
-  <span class="c">!---------------</span>
+  <span class="c">!-----------------</span>
+  <span class="c">! Line 4 + (N+7/8)</span>
+  <span class="c">!-----------------</span>
 
   <span class="n">bp</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n_phi_tot</span><span class="p">,</span> <span class="n">n_theta_start</span><span class="p">:</span><span class="n">n_theta_stop</span><span class="p">,</span> <span class="n">n_r</span><span class="p">)</span>  <span class="c">!Zonal (phi component)</span>
                                                     <span class="c">!of magnetic field</span>
 
 
-<span class="c">!-------------------</span>
-<span class="c">!Graphout_version_7</span>
-<span class="c">!-------------------</span>
+<span class="c">!--------------------------------------</span>
+<span class="c">!Graphout_version_7/Graphout_version_8</span>
+<span class="c">!--------------------------------------</span>
 
 <span class="c">!This version is written when the code does not use MPI (USE_MPI=no).</span>
 <span class="c">!Chunks in theta are written in parallel with OpenMP.</span>
@@ -325,6 +336,26 @@ file looks like below:</p>
 <span class="n">vp</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>    <span class="c">!n_phi = n_phi_tot, n_theta = n_theta_stop, n_r</span>
 
 
+<span class="k">if</span> <span class="p">(</span><span class="n">l_PressGraph</span><span class="p">):</span>                <span class="c">!If pressure is stored</span>
+
+<span class="c">!-----------</span>
+<span class="c">! Pressure</span>
+<span class="c">!-----------</span>
+
+<span class="n">pr</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>           <span class="c">!n_phi = 1, n_theta = n_theta_start, n_r</span>
+<span class="n">pr</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>           <span class="c">!n_phi = 2, n_theta = n_theta_start, n_r</span>
+<span class="p">...</span>
+<span class="n">pr</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_start</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>   <span class="c">!n_phi = n_phi_tot, n_theta = n_theta_start, n_r</span>
+<span class="n">pr</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_start</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>         <span class="c">!n_phi = 1, n_theta = n_theta_start+1, n_r</span>
+<span class="p">...</span>
+<span class="n">pr</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_start</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>
+<span class="p">...</span>
+<span class="n">pr</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>            <span class="c">!n_phi = 1, n_theta = n_theta_stop, n_r</span>
+<span class="n">pr</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>            <span class="c">!n_phi = 2, n_theta = n_theta_stop, n_r</span>
+<span class="p">...</span>
+<span class="n">pr</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">,</span><span class="n">n_theta_stop</span><span class="p">,</span><span class="n">n_r</span><span class="p">)</span>    <span class="c">!n_phi = n_phi_tot, n_theta = n_theta_stop, n_r</span>
+
+
 <span class="k">if</span> <span class="p">(</span><span class="n">l_mag</span><span class="p">):</span>                       <span class="c">!Only if it is a magnetic case</span>
 
 <span class="c">!----------------------</span>
@@ -397,11 +428,11 @@ file looks like below:</p>
 </pre></div>
 </div>
 <p>They can be visualized using the <a class="reference internal" href="../apiPython/graphMovCoeff.html#magic.Surf" title="magic.Surf"><code class="xref py py-class docutils literal"><span class="pre">Surf</span></code></a> class:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">S</span> <span class="o">=</span> <span class="n">Surf</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s">&#39;TAG&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Surf</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s">&#39;TAG&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># Surface map of radial velocity:</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">S</span><span class="o">.</span><span class="n">surf</span><span class="p">(</span><span class="n">field</span> <span class="o">=</span> <span class="s">&#39;vr&#39;</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s">&#39;jet&#39;</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="mi">50</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">S</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="n">field</span> <span class="o">=</span> <span class="s">&#39;br&#39;</span><span class="p">,</span> <span class="n">lon_0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c"># Longitudinal Slice of radial magnetic field</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">S</span><span class="o">.</span><span class="n">equat</span><span class="p">(</span><span class="n">field</span> <span class="o">=</span> <span class="s">&#39;entropy&#39;</span><span class="p">)</span>         <span class="c"># Equatorial slice of entropy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">surf</span><span class="p">(</span><span class="n">field</span> <span class="o">=</span> <span class="s">&#39;vr&#39;</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s">&#39;jet&#39;</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="n">field</span> <span class="o">=</span> <span class="s">&#39;br&#39;</span><span class="p">,</span> <span class="n">lon_0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c"># Longitudinal Slice of radial magnetic field</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">equat</span><span class="p">(</span><span class="n">field</span> <span class="o">=</span> <span class="s">&#39;entropy&#39;</span><span class="p">)</span>         <span class="c"># Equatorial slice of entropy</span>
 </pre></div>
 </div>
 </div>
@@ -460,7 +491,7 @@ file looks like below:</p>
         <li class="right" >
           <a href="outSpecFiles.html" title="Spectra"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.2 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.3 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="outFiles.html" >Output files</a> &raquo;</li> 
       </ul>
     </div>
