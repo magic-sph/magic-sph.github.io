@@ -152,10 +152,16 @@
 <li><strong>tShift_ma2</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/tshift_ma2" title="f/init_fields/tshift_ma2"><code class="xref f f-var docutils literal"><span class="pre">tShift_ma2=0.0</span></code></a>) is a real which defines the time shift for <code class="docutils literal"><span class="pre">omega_ma2</span></code>.</li>
 </ul>
 <p>The resultant prescribed mantle rotation rate is computed as:</p>
-<div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="n">omega_ma</span> <span class="o">=</span> <span class="n">omega_ma1</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">omegaOsz_ma1</span><span class="o">*</span><span class="p">(</span><span class="nb">time</span><span class="o">+</span><span class="n">tShift_ma1</span><span class="p">))</span> <span class="o">+</span> <span class="p">&amp;</span>
+<div class="highlight-fortran"><div class="highlight"><pre><span class="n">omega_ma</span> <span class="o">=</span> <span class="n">omega_ma1</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">omegaOsz_ma1</span><span class="o">*</span><span class="p">(</span><span class="nb">time</span><span class="o">+</span><span class="n">tShift_ma1</span><span class="p">))</span> <span class="o">+</span> <span class="p">&amp;</span>
            <span class="n">omega_ma2</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">omegaOsz_ma2</span><span class="o">*</span><span class="p">(</span><span class="nb">time</span><span class="o">+</span><span class="n">tShift_ma2</span><span class="p">))</span>
 </pre></div>
 </div>
+<p>The following defines the parameters when one wants to excite inertial modes in the system artificially using the method used in <a class="reference external" href="http://dx.doi.org/10.1103/PhysRevE.86.026304">Rieutord et. al 2012</a> .</p>
+<ul class="simple">
+<li><strong>amp_RiMa</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/special/amp_rima" title="f/special/amp_rima"><code class="xref f f-var docutils literal"><span class="pre">amp_RiMa=0.0</span></code></a>) is a real which defines the amplitude of forcing on the outer boundary</li>
+<li><strong>omega_RiMa</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/special/omega_rima" title="f/special/omega_rima"><code class="xref f f-var docutils literal"><span class="pre">omega_RiMa=0.0</span></code></a>) is a real which defines the frequency of forcing on the outer boundary</li>
+<li><strong>m_RiMa</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/special/m_rima" title="f/special/m_rima"><code class="xref f f-var docutils literal"><span class="pre">m_RiMa=0.0</span></code></a>) is an integer which defines the wavenumber of the mode one wants to excite</li>
+</ul>
 </div>
 <div class="section" id="inner-core-namelist">
 <span id="secinnercore"></span><h2>Inner Core Namelist<a class="headerlink" href="#inner-core-namelist" title="Permalink to this headline">¶</a></h2>
@@ -178,10 +184,16 @@
 </li>
 </ul>
 <p>As with the mantle, the resultant prescribed rotation rate for the inner core is computed as:</p>
-<div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="n">omega_ic</span> <span class="o">=</span> <span class="n">omega_ic1</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">omegaOsz_ic1</span><span class="o">*</span><span class="p">(</span><span class="nb">time</span><span class="o">+</span><span class="n">tShift_ic1</span><span class="p">))</span> <span class="o">+</span> <span class="p">&amp;</span>
+<div class="highlight-fortran"><div class="highlight"><pre><span class="n">omega_ic</span> <span class="o">=</span> <span class="n">omega_ic1</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">omegaOsz_ic1</span><span class="o">*</span><span class="p">(</span><span class="nb">time</span><span class="o">+</span><span class="n">tShift_ic1</span><span class="p">))</span> <span class="o">+</span> <span class="p">&amp;</span>
            <span class="n">omega_ic2</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">omegaOsz_ic2</span><span class="o">*</span><span class="p">(</span><span class="nb">time</span><span class="o">+</span><span class="n">tShift_ic2</span><span class="p">))</span>
 </pre></div>
 </div>
+<p>The following, as for the mantle namelist, is for artificially exciting inertial modes in the spherical shell, but for the inner boundary.</p>
+<ul class="simple">
+<li><strong>amp_RiIc</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/special/amp_riic" title="f/special/amp_riic"><code class="xref f f-var docutils literal"><span class="pre">amp_RiIc=0.0</span></code></a>) is a real which defines the amplitude of forcing on the inner boundary</li>
+<li><strong>omega_RiIc</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/special/omega_riic" title="f/special/omega_riic"><code class="xref f f-var docutils literal"><span class="pre">omega_RiIc=0.0</span></code></a>) is a real which defines the frequency of forcing on the inner boundary</li>
+<li><strong>m_RiIc</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/special/m_riic" title="f/special/m_riic"><code class="xref f f-var docutils literal"><span class="pre">m_RiIc=0.0</span></code></a>) is an integer which defines the wavenumber of the mode one wants to excite</li>
+</ul>
 </div>
 </div>
 
@@ -254,7 +266,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

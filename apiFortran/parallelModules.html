@@ -630,14 +630,14 @@
 <em class="property">function  </em><code class="descclassname">communications/</code><code class="descname">get_global_sum_cmplx_1d</code><span class="sig-paren">(</span><em>arr_local</em><span class="sig-paren">)</span><a class="headerlink" href="#f/communications/get_global_sum_cmplx_1d" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Kahan summation algorithm</p>
-<div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="nf">KahanSum</span><span class="p">(</span><span class="n">input</span><span class="p">)</span>
+<div class="highlight-c"><div class="highlight"><pre><span class="n">function</span> <span class="n">KahanSum</span><span class="p">(</span><span class="n">input</span><span class="p">)</span>
 <span class="n">var</span> <span class="n">sum</span> <span class="o">=</span> <span class="mf">0.0</span>
 <span class="n">var</span> <span class="n">c</span> <span class="o">=</span> <span class="mf">0.0</span>             <span class="c1">//A running compensation for lost low-order bits.</span>
 <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="n">to</span> <span class="n">input</span><span class="p">.</span><span class="n">length</span> <span class="k">do</span>
    <span class="n">y</span> <span class="o">=</span> <span class="n">input</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span>    <span class="c1">//So far, so good: c is zero.</span>
    <span class="n">t</span> <span class="o">=</span> <span class="n">sum</span> <span class="o">+</span> <span class="n">y</span>         <span class="c1">//Alas, sum is big, y small,</span>
                        <span class="c1">//so low-order digits of y are lost.</span>
-   <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">sum</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span>   <span class="o">//</span><span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">sum</span><span class="p">)</span> <span class="n">recovers</span> <span class="n">the</span> <span class="n">high</span><span class="o">-</span><span class="n">order</span> <span class="n">part</span> <span class="n">of</span> <span class="n">y</span><span class="p">;</span>
+   <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">sum</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span>   <span class="c1">//(t - sum) recovers the high-order part of y;</span>
                        <span class="c1">//subtracting y recovers -(low part of y)</span>
    <span class="n">sum</span> <span class="o">=</span> <span class="n">t</span>             <span class="c1">//Algebraically, c should always be zero.</span>
                        <span class="c1">//Beware eagerly optimising compilers!</span>
@@ -1038,7 +1038,7 @@ receiving array has dimension (1:lm_max,1:dim2)</div></blockquote>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>
