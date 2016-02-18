@@ -116,28 +116,28 @@
 <span id="conversion-of-g-tag-files-to-vts-vti-files"></span><span id="secpythonparaview"></span><h1>Conversion of <code class="docutils literal"><span class="pre">G_#.TAG</span></code> files to vts/vti files<a class="headerlink" href="#module-magic.graph2vtk" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="magic.graph2vtk.Graph2Vtk">
-<em class="property">class </em><code class="descclassname">magic.graph2vtk.</code><code class="descname">Graph2Vtk</code><span class="sig-paren">(</span><em>gr, filename='out', scals=['vr', 'emag', 'tfluct'], vecs=['u', 'B'], potExtra=False, ratio_out=2, nrout=32, deminc=True, outType='vts', nFiles=1, nx=96, ny=96, nz=96</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/graph2vtk.html#Graph2Vtk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.graph2vtk.Graph2Vtk" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">magic.graph2vtk.</code><code class="descname">Graph2Vtk</code><span class="sig-paren">(</span><em>gr, filename='out', scals=['vr', 'emag', 'tfluct'], vecs=['u', 'B'], potExtra=False, ratio_out=2, nrout=32, deminc=True, outType='vts', nFiles=1, nx=96, ny=96, nz=96, labFrame=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/graph2vtk.html#Graph2Vtk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.graph2vtk.Graph2Vtk" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class allows to transform an input graphic file to a file format
 readable by paraview/visit or mayavi. It also allows to compute a possible
 potential extrapolation of the field lines in an arbitrary outer 
 spherical shell domain</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Load a graphic file</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Load a graphic file</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">gr</span> <span class="o">=</span> <span class="n">MagicGraph</span><span class="p">(</span><span class="n">ivar</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># store myOut.vts</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Graph2Vtk</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="s">&#39;myOut&#39;</span><span class="p">,</span> <span class="n">outType</span><span class="o">=</span><span class="s">&#39;vts&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># store u&#39; and B for the vector fields and vortz and T for the scalars</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Graph2Vtk</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="n">scals</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;temp&#39;</span><span class="p">,</span> <span class="s">&#39;vortz&#39;</span><span class="p">],</span> <span class="n">vecs</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;ufluct&#39;</span><span class="p">,</span> <span class="s">&#39;B&#39;</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># store only T&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Graph2Vtk</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="n">scals</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;tempfluct&#39;</span><span class="p">],</span> <span class="n">vecs</span><span class="o">=</span><span class="p">[])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># store only B with its potential extrapolation up to 3*r_cmb</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Graph2Vtk</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="n">scals</span><span class="o">=</span><span class="p">[],</span> <span class="n">vecs</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;B&#39;</span><span class="p">],</span> <span class="n">potExtra</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">ratio_out</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># Extrapolate on a cartesian grid of size 128^3</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Graph2Vtk</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="n">outType</span><span class="o">=</span><span class="s">&#39;vti&#39;</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># store myOut.vts</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Graph2Vtk</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="s1">&#39;myOut&#39;</span><span class="p">,</span> <span class="n">outType</span><span class="o">=</span><span class="s1">&#39;vts&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># store u&#39; and B for the vector fields and vortz and T for the scalars</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Graph2Vtk</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="n">scals</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">,</span> <span class="s1">&#39;vortz&#39;</span><span class="p">],</span> <span class="n">vecs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ufluct&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># store only T&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Graph2Vtk</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="n">scals</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;tempfluct&#39;</span><span class="p">],</span> <span class="n">vecs</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># store only B with its potential extrapolation up to 3*r_cmb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Graph2Vtk</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="n">scals</span><span class="o">=</span><span class="p">[],</span> <span class="n">vecs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">],</span> <span class="n">potExtra</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">ratio_out</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Extrapolate on a cartesian grid of size 128^3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Graph2Vtk</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="n">outType</span><span class="o">=</span><span class="s1">&#39;vti&#39;</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="method">
 <dt id="magic.graph2vtk.Graph2Vtk.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>gr, filename='out', scals=['vr', 'emag', 'tfluct'], vecs=['u', 'B'], potExtra=False, ratio_out=2, nrout=32, deminc=True, outType='vts', nFiles=1, nx=96, ny=96, nz=96</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/graph2vtk.html#Graph2Vtk.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.graph2vtk.Graph2Vtk.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>gr, filename='out', scals=['vr', 'emag', 'tfluct'], vecs=['u', 'B'], potExtra=False, ratio_out=2, nrout=32, deminc=True, outType='vts', nFiles=1, nx=96, ny=96, nz=96, labFrame=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/graph2vtk.html#Graph2Vtk.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.graph2vtk.Graph2Vtk.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -167,6 +167,7 @@ on a cartesian grid</li>
 <li><strong>nx</strong> (<em>int</em>) &#8211; number of grid points in the x direction</li>
 <li><strong>ny</strong> (<em>int</em>) &#8211; number of grid points in the x direction</li>
 <li><strong>nz</strong> (<em>int</em>) &#8211; number of grid points in the x direction</li>
+<li><strong>labFrame</strong> (<em>bool</em>) &#8211; when set to True, transform the velocity to the lab frame</li>
 </ul>
 </td>
 </tr>
@@ -405,7 +406,7 @@ Default is True, except for entropy/temperature plots.</li>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>
