@@ -89,9 +89,6 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../../f-modindex.html" title="Fortran Module Index"
-             >fortran modules</a> |</li>
-        <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.3 documentation</a> &raquo;</li>
@@ -105,7 +102,7 @@
           <div class="body" role="main">
             
   <h1>Source code for magic.libmagic</h1><div class="highlight"><pre>
-<span class="c"># -*- coding: utf-8 -*-</span>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="kn">import</span> <span class="nn">scipy.interpolate</span> <span class="kn">as</span> <span class="nn">S</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">N</span>
 <span class="kn">import</span> <span class="nn">glob</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">sys</span>
@@ -126,150 +123,150 @@
 <span class="sd">    :returns: a tuple that contains the selected physical field and its label</span>
 <span class="sd">    :rtype: (numpy.ndarray, str)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;Bp&#39;</span><span class="p">,</span> <span class="s">&#39;bp&#39;</span><span class="p">,</span> <span class="s">&#39;bphi&#39;</span><span class="p">,</span> <span class="s">&#39;Bphi&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;Bp&#39;</span><span class="p">,</span> <span class="s1">&#39;bp&#39;</span><span class="p">,</span> <span class="s1">&#39;bphi&#39;</span><span class="p">,</span> <span class="s1">&#39;Bphi&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">Bphi</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;$B_{\phi}$&#39;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">r&#39;$B_{\phi}$&#39;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;Bphi&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;Bt&#39;</span><span class="p">,</span> <span class="s">&#39;bt&#39;</span><span class="p">,</span> <span class="s">&#39;btheta&#39;</span><span class="p">,</span> <span class="s">&#39;Btheta&#39;</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Bphi&#39;</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;Bt&#39;</span><span class="p">,</span> <span class="s1">&#39;bt&#39;</span><span class="p">,</span> <span class="s1">&#39;btheta&#39;</span><span class="p">,</span> <span class="s1">&#39;Btheta&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">Btheta</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;$B_{\theta}$&#39;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">r&#39;$B_{\theta}$&#39;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;Btheta&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;Br&#39;</span><span class="p">,</span> <span class="s">&#39;br&#39;</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Btheta&#39;</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;Br&#39;</span><span class="p">,</span> <span class="s1">&#39;br&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">Br</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;$B_r$&#39;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">r&#39;$B_r$&#39;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;Br&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;pressure&#39;</span><span class="p">,</span> <span class="s">&#39;pre&#39;</span><span class="p">,</span> <span class="s">&#39;Pre&#39;</span><span class="p">,</span> <span class="s">&#39;Pressure&#39;</span><span class="p">,</span> <span class="s">&#39;press&#39;</span><span class="p">,</span> <span class="s">&#39;Press&#39;</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Br&#39;</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;pressure&#39;</span><span class="p">,</span> <span class="s1">&#39;pre&#39;</span><span class="p">,</span> <span class="s1">&#39;Pre&#39;</span><span class="p">,</span> <span class="s1">&#39;Pressure&#39;</span><span class="p">,</span> <span class="s1">&#39;press&#39;</span><span class="p">,</span> <span class="s1">&#39;Press&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">pre</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;$p$&#39;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">r&#39;$p$&#39;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;p&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;Vr&#39;</span><span class="p">,</span> <span class="s">&#39;vr&#39;</span><span class="p">,</span> <span class="s">&#39;Ur&#39;</span><span class="p">,</span> <span class="s">&#39;ur&#39;</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;p&#39;</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;Vr&#39;</span><span class="p">,</span> <span class="s1">&#39;vr&#39;</span><span class="p">,</span> <span class="s1">&#39;Ur&#39;</span><span class="p">,</span> <span class="s1">&#39;ur&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">vr</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;$v_r$&#39;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">r&#39;$v_r$&#39;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;vr&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;Vtheta&#39;</span><span class="p">,</span> <span class="s">&#39;vtheta&#39;</span><span class="p">,</span> <span class="s">&#39;Utheta&#39;</span><span class="p">,</span> <span class="s">&#39;utheta&#39;</span><span class="p">,</span> <span class="s">&#39;vt&#39;</span><span class="p">,</span> <span class="s">&#39;Vt&#39;</span><span class="p">,</span>
-                   <span class="s">&#39;Ut&#39;</span><span class="p">,</span> <span class="s">&#39;ut&#39;</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;vr&#39;</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;Vtheta&#39;</span><span class="p">,</span> <span class="s1">&#39;vtheta&#39;</span><span class="p">,</span> <span class="s1">&#39;Utheta&#39;</span><span class="p">,</span> <span class="s1">&#39;utheta&#39;</span><span class="p">,</span> <span class="s1">&#39;vt&#39;</span><span class="p">,</span> <span class="s1">&#39;Vt&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;Ut&#39;</span><span class="p">,</span> <span class="s1">&#39;ut&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">vtheta</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;$v_{\theta}$&#39;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">r&#39;$v_{\theta}$&#39;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;vtheta&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;Vphi&#39;</span><span class="p">,</span> <span class="s">&#39;vphi&#39;</span><span class="p">,</span> <span class="s">&#39;Uphi&#39;</span><span class="p">,</span> <span class="s">&#39;uphi&#39;</span><span class="p">,</span> <span class="s">&#39;up&#39;</span><span class="p">,</span> <span class="s">&#39;Up&#39;</span><span class="p">,</span> <span class="s">&#39;Vp&#39;</span><span class="p">,</span> <span class="s">&#39;vp&#39;</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;vtheta&#39;</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;Vphi&#39;</span><span class="p">,</span> <span class="s1">&#39;vphi&#39;</span><span class="p">,</span> <span class="s1">&#39;Uphi&#39;</span><span class="p">,</span> <span class="s1">&#39;uphi&#39;</span><span class="p">,</span> <span class="s1">&#39;up&#39;</span><span class="p">,</span> <span class="s1">&#39;Up&#39;</span><span class="p">,</span> <span class="s1">&#39;Vp&#39;</span><span class="p">,</span> <span class="s1">&#39;vp&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">vphi</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;$v_{\phi}$&#39;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">r&#39;$v_{\phi}$&#39;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;vphi&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;entropy&#39;</span><span class="p">,</span> <span class="s">&#39;s&#39;</span><span class="p">,</span> <span class="s">&#39;S&#39;</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;vphi&#39;</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;entropy&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">entropy</span>
-        <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;Entropy&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;u2&#39;</span><span class="p">):</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Entropy&#39;</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;u2&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">vphi</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">obj</span><span class="o">.</span><span class="n">vr</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">obj</span><span class="o">.</span><span class="n">vtheta</span><span class="o">**</span><span class="mi">2</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;$u^2$&#39;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">r&#39;$u^2$&#39;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;u2&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;nrj&#39;</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;u2&#39;</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;nrj&#39;</span><span class="p">):</span>
         <span class="n">temp0</span><span class="p">,</span> <span class="n">rho0</span><span class="p">,</span> <span class="n">beta</span> <span class="o">=</span> <span class="n">anelprof</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">strat</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">polind</span><span class="p">)</span>
         <span class="n">data</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="mf">2.</span><span class="o">*</span><span class="n">rho0</span><span class="o">*</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">vphi</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">obj</span><span class="o">.</span><span class="n">vr</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">obj</span><span class="o">.</span><span class="n">vtheta</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;$E_{\hbox{kin}}$&#39;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">r&#39;$E_{\hbox{kin}}$&#39;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;Ekin&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;b2&#39;</span><span class="p">,</span> <span class="s">&#39;B2&#39;</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Ekin&#39;</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;b2&#39;</span><span class="p">,</span> <span class="s1">&#39;B2&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">Bphi</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">obj</span><span class="o">.</span><span class="n">Br</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">obj</span><span class="o">.</span><span class="n">Btheta</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;$B^2$&#39;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">r&#39;$B^2$&#39;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;B2&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;vrconv&#39;</span><span class="p">,</span> <span class="s">&#39;vrc&#39;</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;B2&#39;</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;vrconv&#39;</span><span class="p">,</span> <span class="s1">&#39;vrc&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">vr</span><span class="o">-</span><span class="n">obj</span><span class="o">.</span><span class="n">vr</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;$v_{r}$ conv&#39;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">r&#39;$v_{r}$ conv&#39;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;vr conv&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;vtconv&#39;</span><span class="p">,</span> <span class="s">&#39;vtc&#39;</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;vr conv&#39;</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;vtconv&#39;</span><span class="p">,</span> <span class="s1">&#39;vtc&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">vtheta</span><span class="o">-</span><span class="n">obj</span><span class="o">.</span><span class="n">vtheta</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;$v_{\theta}$ conv&#39;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">r&#39;$v_{\theta}$ conv&#39;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;vt conv&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;vpconv&#39;</span><span class="p">,</span> <span class="s">&#39;vpc&#39;</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;vt conv&#39;</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;vpconv&#39;</span><span class="p">,</span> <span class="s1">&#39;vpc&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">vphi</span><span class="o">-</span><span class="n">obj</span><span class="o">.</span><span class="n">vphi</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;$v_{\phi}$ conv&#39;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">r&#39;$v_{\phi}$ conv&#39;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;vp conv&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;bpfluct&#39;</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;vp conv&#39;</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;bpfluct&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">Bphi</span><span class="o">-</span><span class="n">obj</span><span class="o">.</span><span class="n">Bphi</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&quot;$B_{\phi}&#39;$&quot;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s2">r&quot;$B_{\phi}&#39;$&quot;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">&quot;Bp&#39;&quot;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;brfluct&#39;</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Bp&#39;&quot;</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;brfluct&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">Br</span><span class="o">-</span><span class="n">obj</span><span class="o">.</span><span class="n">Br</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&quot;$B_r&#39;$&quot;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s2">r&quot;$B_r&#39;$&quot;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">&quot;Br&#39;&quot;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;entropyfluct&#39;</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Br&#39;&quot;</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;entropyfluct&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">entropy</span><span class="o">-</span><span class="n">obj</span><span class="o">.</span><span class="n">entropy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&quot;$s&#39;$&quot;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s2">r&quot;$s&#39;$&quot;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">&quot;s&#39;&quot;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;vrea&#39;</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;s&#39;&quot;</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;vrea&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">vr</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">ntheta</span><span class="p">):</span>
             <span class="n">data</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">vr</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="p">:]</span><span class="o">-</span><span class="n">obj</span><span class="o">.</span><span class="n">vr</span><span class="p">[:,</span> <span class="o">-</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:])</span><span class="o">/</span><span class="mf">2.</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;$v_{r}$ ea&#39;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">r&#39;$v_{r}$ ea&#39;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;vr ea&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;vra&#39;</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;vr ea&#39;</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;vra&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">vr</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">ntheta</span><span class="p">):</span>
             <span class="n">data</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">vr</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="p">:]</span><span class="o">+</span><span class="n">obj</span><span class="o">.</span><span class="n">vr</span><span class="p">[:,</span> <span class="o">-</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:])</span><span class="o">/</span><span class="mf">2.</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;$v_{r}$ es&#39;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">r&#39;$v_{r}$ es&#39;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;vr es&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;vpea&#39;</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;vr es&#39;</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;vpea&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">vr</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">ntheta</span><span class="p">):</span>
             <span class="n">data</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">vphi</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="p">:]</span><span class="o">-</span><span class="n">obj</span><span class="o">.</span><span class="n">vphi</span><span class="p">[:,</span> <span class="o">-</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:])</span><span class="o">/</span><span class="mf">2.</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;$v_{\phi}$ ea&#39;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">r&#39;$v_{\phi}$ ea&#39;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;vp ea&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;vpa&#39;</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">r&#39;vp ea&#39;</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;vpa&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">vr</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">ntheta</span><span class="p">):</span>
             <span class="n">data</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">vphi</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="p">:]</span><span class="o">+</span><span class="n">obj</span><span class="o">.</span><span class="n">vphi</span><span class="p">[:,</span> <span class="o">-</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:])</span><span class="o">/</span><span class="mf">2.</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;$v_{\phi}$ es&#39;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">r&#39;$v_{\phi}$ es&#39;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;vp es&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;tea&#39;</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">r&#39;vp es&#39;</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;tea&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">vr</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">ntheta</span><span class="p">):</span>
             <span class="n">data</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">entropy</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="p">:]</span><span class="o">-</span><span class="n">obj</span><span class="o">.</span><span class="n">entropy</span><span class="p">[:,</span> <span class="o">-</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:])</span><span class="o">/</span><span class="mf">2.</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;$s$ ea&#39;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">r&#39;$s$ ea&#39;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;s ea&#39;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">r&#39;s ea&#39;</span>
 
-    <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">label</span>
-</div>
+    <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">label</span></div>
+
 <div class="viewcode-block" id="avgField"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.avgField">[docs]</a><span class="k">def</span> <span class="nf">avgField</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">tstart</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This subroutine computes the time-average of a time series</span>
@@ -291,8 +288,8 @@
     <span class="n">ind</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">fac</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">time</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span>
     <span class="n">avgField</span> <span class="o">=</span> <span class="n">fac</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">field</span><span class="p">[</span><span class="n">ind</span><span class="p">:],</span> <span class="n">time</span><span class="p">[</span><span class="n">ind</span><span class="p">:])</span>
-    <span class="k">return</span> <span class="n">avgField</span>
-</div>
+    <span class="k">return</span> <span class="n">avgField</span></div>
+
 <div class="viewcode-block" id="writeVpEq"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.writeVpEq">[docs]</a><span class="k">def</span> <span class="nf">writeVpEq</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="n">tstart</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function computes the time-averaged surface zonal flow (and Rolc) and</span>
@@ -317,11 +314,11 @@
     <span class="n">avgReEq</span> <span class="o">=</span> <span class="n">fac</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">reEquat</span><span class="p">[</span><span class="n">ind</span><span class="p">:],</span> <span class="n">par</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">ind</span><span class="p">:])</span>
     <span class="n">roEq</span> <span class="o">=</span> <span class="n">avgReEq</span><span class="o">*</span><span class="n">par</span><span class="o">.</span><span class="n">ek</span><span class="o">*</span><span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="n">par</span><span class="o">.</span><span class="n">radratio</span><span class="p">)</span>
     <span class="n">avgRolC</span> <span class="o">=</span> <span class="n">fac</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">rolc</span><span class="p">[</span><span class="n">ind</span><span class="p">:],</span> <span class="n">par</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">ind</span><span class="p">:])</span>
-    <span class="n">st</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%10.3e%5.2f%6.2f%11.3e%11.3e%11.3e</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">ek</span><span class="p">,</span> <span class="n">par</span><span class="o">.</span><span class="n">strat</span><span class="p">,</span> <span class="n">par</span><span class="o">.</span><span class="n">pr</span><span class="p">,</span> 
+    <span class="n">st</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%10.3e%5.2f%6.2f%11.3e%11.3e%11.3e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">ek</span><span class="p">,</span> <span class="n">par</span><span class="o">.</span><span class="n">strat</span><span class="p">,</span> <span class="n">par</span><span class="o">.</span><span class="n">pr</span><span class="p">,</span> 
                                                  <span class="n">par</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span> <span class="n">roEq</span><span class="p">,</span> <span class="n">avgRolC</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">st</span>
-</div>
-<div class="viewcode-block" id="progressbar"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.progressbar">[docs]</a><span class="k">def</span> <span class="nf">progressbar</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">st</span></div>
+
+<div class="viewcode-block" id="progressbar"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.progressbar">[docs]</a><span class="k">def</span> <span class="nf">progressbar</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Fancy progress-bar for loops</span>
 
@@ -340,16 +337,16 @@
     <span class="n">count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">_show</span><span class="p">(</span><span class="n">_i</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="o">*</span><span class="n">_i</span><span class="o">/</span><span class="n">count</span><span class="p">)</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">[</span><span class="si">%s%s</span><span class="s">] </span><span class="si">%i</span><span class="s">/</span><span class="si">%i</span><span class="se">\r</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="s">&quot;#&quot;</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;.&quot;</span><span class="o">*</span><span class="p">(</span><span class="n">size</span><span class="o">-</span><span class="n">x</span><span class="p">),</span> <span class="n">_i</span><span class="p">,</span> <span class="n">count</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">[</span><span class="si">%s%s</span><span class="s2">] </span><span class="si">%i</span><span class="s2">/</span><span class="si">%i</span><span class="se">\r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="s2">&quot;#&quot;</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="o">*</span><span class="p">(</span><span class="n">size</span><span class="o">-</span><span class="n">x</span><span class="p">),</span> <span class="n">_i</span><span class="p">,</span> <span class="n">count</span><span class="p">))</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
     
     <span class="n">_show</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">it</span><span class="p">):</span>
         <span class="k">yield</span> <span class="n">item</span>
         <span class="n">_show</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
-</div>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span></div>
+
 <div class="viewcode-block" id="scanDir"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.scanDir">[docs]</a><span class="k">def</span> <span class="nf">scanDir</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">tfix</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function sorts the files which match a given input pattern from the oldest</span>
@@ -375,8 +372,8 @@
                 <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">out</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dat</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">out</span>
-</div>
+    <span class="k">return</span> <span class="n">out</span></div>
+
 <div class="viewcode-block" id="hammer2cart"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.hammer2cart">[docs]</a><span class="k">def</span> <span class="nf">hammer2cart</span><span class="p">(</span><span class="n">ttheta</span><span class="p">,</span> <span class="n">pphi</span><span class="p">,</span> <span class="n">colat</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function is used to define the Hammer projection used when</span>
@@ -400,18 +397,18 @@
 <span class="sd">    :rtype: (numpy.ndarray, numpy.ndarray)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">colat</span><span class="p">:</span> <span class="c"># for lat and phi \in [-pi, pi]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">colat</span><span class="p">:</span> <span class="c1"># for lat and phi \in [-pi, pi]</span>
         <span class="n">xx</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.</span><span class="p">)</span> <span class="o">*</span> <span class="n">N</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ttheta</span><span class="p">)</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">pphi</span><span class="o">/</span><span class="mf">2.</span><span class="p">)</span>\
              <span class="o">/</span><span class="n">N</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">N</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ttheta</span><span class="p">)</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">pphi</span><span class="o">/</span><span class="mf">2.</span><span class="p">))</span>
         <span class="n">yy</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.</span><span class="p">)</span> <span class="o">*</span> <span class="n">N</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ttheta</span><span class="p">)</span>\
              <span class="o">/</span><span class="n">N</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">N</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ttheta</span><span class="p">)</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">pphi</span><span class="o">/</span><span class="mf">2.</span><span class="p">))</span>
-    <span class="k">else</span><span class="p">:</span>  <span class="c"># for colat and phi \in [0, 2pi]</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># for colat and phi \in [0, 2pi]</span>
         <span class="n">xx</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.</span><span class="p">)</span> <span class="o">*</span> <span class="n">N</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ttheta</span><span class="p">)</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">pphi</span><span class="o">/</span><span class="mf">2.</span><span class="p">)</span>\
              <span class="o">/</span><span class="n">N</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">N</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ttheta</span><span class="p">)</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">pphi</span><span class="o">/</span><span class="mf">2.</span><span class="p">))</span>
         <span class="n">yy</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.</span><span class="p">)</span> <span class="o">*</span> <span class="n">N</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ttheta</span><span class="p">)</span>\
              <span class="o">/</span><span class="n">N</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">N</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ttheta</span><span class="p">)</span><span class="o">*</span><span class="n">N</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">pphi</span><span class="o">/</span><span class="mf">2.</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span>
-</div>
+    <span class="k">return</span> <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span></div>
+
 <div class="viewcode-block" id="cut"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.cut">[docs]</a><span class="k">def</span> <span class="nf">cut</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This functions truncates the values of an input array that are beyond </span>
@@ -438,8 +435,8 @@
         <span class="n">mask</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dat</span><span class="o">&lt;=</span><span class="n">vmin</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="n">dat</span> <span class="o">=</span> <span class="n">dat</span><span class="o">*</span><span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">vmin</span><span class="o">*</span><span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">normed</span> <span class="o">=</span> <span class="bp">False</span>
-    <span class="k">return</span> <span class="n">dat</span>
-</div>
+    <span class="k">return</span> <span class="n">dat</span></div>
+
 <div class="viewcode-block" id="symmetrize"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.symmetrize">[docs]</a><span class="k">def</span> <span class="nf">symmetrize</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ms</span><span class="p">,</span> <span class="nb">reversed</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Symmetrise an array which is defined only with an azimuthal symmetry minc=ms</span>
@@ -466,16 +463,17 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">np</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">ms</span> <span class="o">+</span><span class="mi">1</span>
         <span class="n">size</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="p">]</span>
-        <span class="n">size</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">size</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
             <span class="n">size</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ms</span><span class="p">):</span>
             <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
         <span class="n">out</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">out</span>
-</div>
-<div class="viewcode-block" id="fast_read"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.fast_read">[docs]</a><span class="k">def</span> <span class="nf">fast_read</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="n">skiplines</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">binary</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="s">&#39;Float64&#39;</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">out</span></div>
+
+<div class="viewcode-block" id="fast_read"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.fast_read">[docs]</a><span class="k">def</span> <span class="nf">fast_read</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="n">skiplines</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">binary</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="s1">&#39;Float64&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function reads an input ascii table </span>
 <span class="sd">    (can read both formatted or unformatted fortran)</span>
@@ -496,16 +494,16 @@
 <span class="sd">    :rtype: numpy.ndarray</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">binary</span><span class="p">:</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
         <span class="n">X</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()):</span>
-            <span class="n">st</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;D&#39;</span><span class="p">,</span> <span class="s">&#39;E&#39;</span><span class="p">)</span>
+            <span class="n">st</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;=</span> <span class="n">skiplines</span><span class="p">:</span>
                 <span class="n">X</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">precision</span><span class="p">)</span>
         <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="n">npfile</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s">&#39;B&#39;</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">npfile</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
         <span class="n">X</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
@@ -514,10 +512,10 @@
                 <span class="k">break</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">precision</span><span class="p">)</span>
         <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">X</span>
+    <span class="k">return</span> <span class="n">X</span></div>
 
 
-</div>
+
 <div class="viewcode-block" id="anelprof"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.anelprof">[docs]</a><span class="k">def</span> <span class="nf">anelprof</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="n">strat</span><span class="p">,</span> <span class="n">polind</span><span class="p">,</span> <span class="n">g0</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">g1</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">g2</span><span class="o">=</span><span class="mf">1.</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This functions calculates the reference temperature and density profiles</span>
@@ -556,8 +554,8 @@
             <span class="mf">1.</span><span class="o">+</span> <span class="n">ofr</span><span class="o">*</span><span class="n">ro</span><span class="o">*</span><span class="p">(</span><span class="n">g0</span><span class="o">+</span><span class="mf">0.5</span><span class="o">*</span><span class="n">g1</span><span class="o">-</span><span class="n">g2</span><span class="p">)</span>
     <span class="n">rho0</span> <span class="o">=</span> <span class="n">temp0</span><span class="o">**</span><span class="n">polind</span>
     <span class="n">beta</span> <span class="o">=</span> <span class="o">-</span><span class="n">ofr</span><span class="o">*</span><span class="n">grav</span><span class="o">*</span><span class="n">polind</span><span class="o">/</span><span class="n">temp0</span>
-    <span class="k">return</span> <span class="n">temp0</span><span class="p">,</span> <span class="n">rho0</span><span class="p">,</span> <span class="n">beta</span>
-</div>
+    <span class="k">return</span> <span class="n">temp0</span><span class="p">,</span> <span class="n">rho0</span><span class="p">,</span> <span class="n">beta</span></div>
+
 <div class="viewcode-block" id="chebgrid"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.chebgrid">[docs]</a><span class="k">def</span> <span class="nf">chebgrid</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function defines a Gauss-Lobatto grid from a to b.</span>
@@ -576,8 +574,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rst</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="n">a</span><span class="p">)</span>
     <span class="n">rr</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">rst</span><span class="o">+</span><span class="n">N</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">N</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="n">N</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nr</span><span class="o">+</span><span class="mf">1.</span><span class="p">)</span><span class="o">/</span><span class="n">nr</span><span class="p">)))</span><span class="o">*</span><span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="n">a</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">rr</span>
-</div>
+    <span class="k">return</span> <span class="n">rr</span></div>
+
 <div class="viewcode-block" id="matder"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.matder">[docs]</a><span class="k">def</span> <span class="nf">matder</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="n">z1</span><span class="p">,</span> <span class="n">z2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">    This function calculates the derivative in Chebyshev space.</span>
@@ -600,15 +598,15 @@
 <span class="sd">    :rtype: numpy.ndarray</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">nrp</span> <span class="o">=</span> <span class="n">nr</span><span class="o">+</span><span class="mi">1</span>
-    <span class="n">w1</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nrp</span><span class="p">,</span> <span class="n">nrp</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s">&#39;Float64&#39;</span><span class="p">)</span>
+    <span class="n">w1</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nrp</span><span class="p">,</span> <span class="n">nrp</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;Float64&#39;</span><span class="p">)</span>
     <span class="n">zl</span> <span class="o">=</span> <span class="n">z2</span><span class="o">-</span><span class="n">z1</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nrp</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nrp</span><span class="p">):</span>
             <span class="n">w1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">spdel</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">nr</span><span class="p">,</span> <span class="n">zl</span><span class="p">)</span>
      
-    <span class="k">return</span> <span class="n">w1</span>
+    <span class="k">return</span> <span class="n">w1</span></div>
 
-</div>
+
 <div class="viewcode-block" id="intcheb"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.intcheb">[docs]</a><span class="k">def</span> <span class="nf">intcheb</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">nr</span><span class="p">,</span> <span class="n">z1</span><span class="p">,</span> <span class="n">z2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">    This function integrates an input function f defined on the Gauss-Lobatto grid.</span>
@@ -639,9 +637,9 @@
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nr</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
         <span class="nb">int</span> <span class="o">=</span> <span class="nb">int</span><span class="o">-</span><span class="p">(</span><span class="n">z2</span><span class="o">-</span><span class="n">z1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">i</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">w2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
      
-    <span class="k">return</span> <span class="nb">int</span>
+    <span class="k">return</span> <span class="nb">int</span></div>
 
-</div>
+
 <span class="k">def</span> <span class="nf">spdel</span><span class="p">(</span><span class="n">kr</span><span class="p">,</span> <span class="n">jr</span><span class="p">,</span> <span class="n">nr</span><span class="p">,</span> <span class="n">zl</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">kr</span> <span class="o">!=</span> <span class="n">nr</span> <span class="p">:</span>
         <span class="n">fac</span> <span class="o">=</span> <span class="mf">1.</span>
@@ -734,8 +732,8 @@
         <span class="n">der</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">+</span><span class="mf">8.</span><span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">-</span>\
                        <span class="mf">8.</span><span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="mf">12.</span><span class="o">*</span><span class="n">dphi</span><span class="p">)</span>
         <span class="n">der</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">der</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">der</span>
-</div>
+    <span class="k">return</span> <span class="n">der</span></div>
+
 <div class="viewcode-block" id="rderavg"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.rderavg">[docs]</a><span class="k">def</span> <span class="nf">rderavg</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">spectral</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Radial derivative of an input array</span>
@@ -780,8 +778,8 @@
         <span class="n">der</span> <span class="o">=</span> <span class="p">(</span><span class="n">N</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>  <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">N</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="n">denom</span>
         <span class="n">der</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">der</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">data</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">2</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">grid</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">der</span>
-</div>
+    <span class="k">return</span> <span class="n">der</span></div>
+
 <div class="viewcode-block" id="thetaderavg"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.thetaderavg">[docs]</a><span class="k">def</span> <span class="nf">thetaderavg</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Theta-derivative of an input array (finite differences)</span>
@@ -796,7 +794,7 @@
 <span class="sd">    :returns: the theta-derivative of the input array</span>
 <span class="sd">    :rtype: numpy.ndarray</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span> <span class="c"># 3-D</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span> <span class="c1"># 3-D</span>
         <span class="n">ntheta</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">dtheta</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="p">(</span><span class="n">ntheta</span><span class="o">-</span><span class="mf">1.</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
@@ -813,7 +811,7 @@
             <span class="n">der</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span><span class="o">-</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:])</span><span class="o">/</span><span class="n">dtheta</span>
             <span class="n">der</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span><span class="o">-</span><span class="n">data</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="p">:])</span><span class="o">/</span><span class="n">dtheta</span>
 
-    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span> <span class="c">#2-D</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span> <span class="c1">#2-D</span>
         <span class="n">ntheta</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">dtheta</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="p">(</span><span class="n">ntheta</span><span class="o">-</span><span class="mf">1.</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
@@ -828,9 +826,9 @@
             <span class="n">der</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span><span class="o">-</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])</span><span class="o">/</span><span class="n">dtheta</span>
             <span class="n">der</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span><span class="o">-</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="p">:])</span><span class="o">/</span><span class="n">dtheta</span>
 
-    <span class="k">return</span> <span class="n">der</span>
+    <span class="k">return</span> <span class="n">der</span></div>
 
-</div>
+
 <div class="viewcode-block" id="zderavg"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.zderavg">[docs]</a><span class="k">def</span> <span class="nf">zderavg</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">spectral</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">colat</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    z derivative of an input array</span>
@@ -853,7 +851,10 @@
 <span class="sd">    :returns: the z derivative of the input array</span>
 <span class="sd">    :rtype: numpy.ndarray</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">ntheta</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span> <span class="c1"># 3-D</span>
+        <span class="n">ntheta</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span> <span class="c1"># 2-D</span>
+        <span class="n">ntheta</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">nr</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">r1</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="n">eta</span><span class="p">)</span>
     <span class="n">r2</span> <span class="o">=</span> <span class="n">eta</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="n">eta</span><span class="p">)</span>
@@ -862,12 +863,21 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">th</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">N</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">ntheta</span><span class="p">)</span>
     <span class="n">rr</span> <span class="o">=</span> <span class="n">chebgrid</span><span class="p">(</span><span class="n">nr</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
-    <span class="n">rr2D</span><span class="p">,</span> <span class="n">th2D</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span><span class="n">th</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span> <span class="c1"># 3-D</span>
+        <span class="n">thmD</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ntheta</span><span class="p">):</span>
+            <span class="n">thmD</span><span class="p">[:,</span><span class="n">i</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">th</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span> <span class="c1"># 2-D</span>
+        <span class="n">thmD</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">nr</span><span class="p">),</span> <span class="s1">&#39;f&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ntheta</span><span class="p">):</span>
+            <span class="n">thmD</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>  <span class="o">=</span> <span class="n">th</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
     <span class="n">dtheta</span> <span class="o">=</span> <span class="n">thetaderavg</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="n">dr</span> <span class="o">=</span> <span class="n">rderavg</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">spectral</span><span class="p">,</span> <span class="n">exclude</span><span class="p">)</span>
-    <span class="n">dz</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th2D</span><span class="p">)</span><span class="o">*</span><span class="n">dr</span> <span class="o">-</span> <span class="n">N</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th2D</span><span class="p">)</span><span class="o">/</span><span class="n">rr2D</span><span class="o">*</span><span class="n">dtheta</span>
-    <span class="k">return</span> <span class="n">dz</span>
-</div>
+    <span class="n">dz</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">thmD</span><span class="p">)</span><span class="o">*</span><span class="n">dr</span> <span class="o">-</span> <span class="n">N</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">thmD</span><span class="p">)</span><span class="o">/</span><span class="n">rr</span><span class="o">*</span><span class="n">dtheta</span>
+    <span class="k">return</span> <span class="n">dz</span></div>
+
 <div class="viewcode-block" id="sderavg"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.sderavg">[docs]</a><span class="k">def</span> <span class="nf">sderavg</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">spectral</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">colat</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    s derivative of an input array</span>
@@ -903,9 +913,9 @@
     <span class="n">dtheta</span> <span class="o">=</span> <span class="n">thetaderavg</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="n">dr</span> <span class="o">=</span> <span class="n">rderavg</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">spectral</span><span class="p">,</span> <span class="n">exclude</span><span class="p">)</span>
     <span class="n">ds</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th2D</span><span class="p">)</span><span class="o">*</span><span class="n">dr</span> <span class="o">+</span> <span class="n">N</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th2D</span><span class="p">)</span><span class="o">/</span><span class="n">rr2D</span><span class="o">*</span><span class="n">dtheta</span>
-    <span class="k">return</span> <span class="n">ds</span>
+    <span class="k">return</span> <span class="n">ds</span></div>
 
-</div>
+
 <div class="viewcode-block" id="cylSder"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.cylSder">[docs]</a><span class="k">def</span> <span class="nf">cylSder</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function computes the s derivative of an input array defined on</span>
@@ -926,8 +936,8 @@
     <span class="n">der</span> <span class="o">=</span> <span class="p">(</span><span class="n">N</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>  <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">N</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">ds</span><span class="p">)</span>
     <span class="n">der</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">ds</span>
     <span class="n">der</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">])</span><span class="o">/</span><span class="n">ds</span>
-    <span class="k">return</span> <span class="n">der</span>
-</div>
+    <span class="k">return</span> <span class="n">der</span></div>
+
 <div class="viewcode-block" id="cylZder"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.cylZder">[docs]</a><span class="k">def</span> <span class="nf">cylZder</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function computes the z derivative of an input array defined on</span>
@@ -948,8 +958,8 @@
     <span class="n">der</span> <span class="o">=</span> <span class="p">(</span><span class="n">N</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>  <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">N</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">dz</span><span class="p">)</span>
     <span class="n">der</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span><span class="o">-</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:])</span><span class="o">/</span><span class="n">dz</span>
     <span class="n">der</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span><span class="o">-</span><span class="n">data</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="p">:])</span><span class="o">/</span><span class="n">dz</span>
-    <span class="k">return</span> <span class="n">der</span>
-</div>
+    <span class="k">return</span> <span class="n">der</span></div>
+
 <div class="viewcode-block" id="getCpuTime"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.getCpuTime">[docs]</a><span class="k">def</span> <span class="nf">getCpuTime</span><span class="p">(</span><span class="nb">file</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function calculates the CPU time from one given log file</span>
@@ -959,13 +969,13 @@
 <span class="sd">    :returns: the total CPU time</span>
 <span class="sd">    :rtype: float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">threads</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;[\s]*\![\s]*nThreads\:[\s]*(.*)&#39;</span><span class="p">)</span>
-    <span class="n">ranks</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;[\s]*\![\s\w]*ranks[\s\w]*\:[\s]*(.*)&#39;</span><span class="p">)</span>
-    <span class="n">runTime</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;[\s\!\w]*time:[\s]*([0-9]*)d[\s\:]*([0-9]*)h[\s\:]*([0-9]*)m[\s\:]*([0-9]*)s[\s\:]*([0-9]*)ms.*&#39;</span><span class="p">)</span>
-    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">threads</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;[\s]*\![\s]*nThreads\:[\s]*(.*)&#39;</span><span class="p">)</span>
+    <span class="n">ranks</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;[\s]*\![\s\w]*ranks[\s\w]*\:[\s]*(.*)&#39;</span><span class="p">)</span>
+    <span class="n">runTime</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;[\s\!\w]*time:[\s]*([0-9]*)d[\s\:]*([0-9]*)h[\s\:]*([0-9]*)m[\s\:]*([0-9]*)s[\s\:]*([0-9]*)ms.*&#39;</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
     <span class="n">tab</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
-    <span class="n">nThreads</span> <span class="o">=</span> <span class="mi">1</span> <span class="c"># In case a pure MPI version is used</span>
-    <span class="n">nRanks</span> <span class="o">=</span> <span class="mi">1</span> <span class="c"># In case the old OpenMP version is used</span>
+    <span class="n">nThreads</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># In case a pure MPI version is used</span>
+    <span class="n">nRanks</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># In case the old OpenMP version is used</span>
     <span class="n">realTime</span> <span class="o">=</span> <span class="mf">0.</span>
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">tab</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">threads</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
@@ -981,8 +991,8 @@
             <span class="n">realTime</span> <span class="o">=</span> <span class="mi">24</span><span class="o">*</span><span class="n">days</span><span class="o">+</span><span class="n">hours</span><span class="o">+</span><span class="mf">1.</span><span class="o">/</span><span class="mi">60</span><span class="o">*</span><span class="nb">min</span><span class="o">+</span><span class="mf">1.</span><span class="o">/</span><span class="mi">3600</span><span class="o">*</span><span class="n">sec</span><span class="o">+</span><span class="mf">1.</span><span class="o">/</span><span class="mf">3.6e6</span><span class="o">*</span><span class="n">ms</span>
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="n">cpuTime</span> <span class="o">=</span> <span class="n">nThreads</span><span class="o">*</span><span class="n">nRanks</span><span class="o">*</span><span class="n">realTime</span>
-    <span class="k">return</span> <span class="n">cpuTime</span>
-</div>
+    <span class="k">return</span> <span class="n">cpuTime</span></div>
+
 <div class="viewcode-block" id="getTotalRunTime"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.getTotalRunTime">[docs]</a><span class="k">def</span> <span class="nf">getTotalRunTime</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function calculates the total CPU time of one run directory</span>
@@ -990,7 +1000,7 @@
 <span class="sd">    :returns: the total RUN time</span>
 <span class="sd">    :rtype: float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">logFiles</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;log.*&#39;</span><span class="p">)</span>
+    <span class="n">logFiles</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;log.*&#39;</span><span class="p">)</span>
     <span class="n">totCpuTime</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">logFiles</span><span class="p">:</span>
         <span class="n">totCpuTime</span> <span class="o">+=</span> <span class="n">getCpuTime</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span>
@@ -1010,9 +1020,6 @@
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -1026,9 +1033,6 @@
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../../f-modindex.html" title="Fortran Module Index"
-             >fortran modules</a> |</li>
-        <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.3 documentation</a> &raquo;</li>
@@ -1037,7 +1041,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
     </div>
   </body>
 </html>

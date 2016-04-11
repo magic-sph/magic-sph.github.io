@@ -89,9 +89,6 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../../f-modindex.html" title="Fortran Module Index"
-             >fortran modules</a> |</li>
-        <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.3 documentation</a> &raquo;</li>
@@ -105,7 +102,7 @@
           <div class="body" role="main">
             
   <h1>Source code for magic.movie3D</h1><div class="highlight"><pre>
-<span class="c"># -*- coding: utf-8 -*-</span>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="kn">import</span> <span class="nn">glob</span>
 <span class="kn">import</span> <span class="nn">re</span><span class="o">,</span><span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">N</span>
@@ -128,8 +125,8 @@
 <span class="sd">    &gt;&gt;&gt; Movie3D(file=&#39;B_3D.TAG&#39;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Movie3D.__init__"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.Movie3D.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">file</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">lastvar</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">nvar</span><span class="o">=</span><span class="s">&#39;all&#39;</span><span class="p">,</span> <span class="n">nrout</span><span class="o">=</span><span class="mi">48</span><span class="p">,</span>
-                 <span class="n">ratio_out</span><span class="o">=</span><span class="mf">2.</span><span class="p">,</span> <span class="n">potExtra</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="s">&#39;Float32&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="Movie3D.__init__"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.Movie3D.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">file</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">lastvar</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">nvar</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">nrout</span><span class="o">=</span><span class="mi">48</span><span class="p">,</span>
+                 <span class="n">ratio_out</span><span class="o">=</span><span class="mf">2.</span><span class="p">,</span> <span class="n">potExtra</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="s1">&#39;Float32&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param file: file name</span>
 <span class="sd">        :type file: str</span>
@@ -154,25 +151,25 @@
 <span class="sd">        :type nrout: int</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">file</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">dat</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;*_mov.*&#39;</span><span class="p">)</span>
-            <span class="n">str1</span> <span class="o">=</span> <span class="s">&#39;Which movie do you want ?</span><span class="se">\n</span><span class="s">&#39;</span>
+            <span class="n">dat</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*_mov.*&#39;</span><span class="p">)</span>
+            <span class="n">str1</span> <span class="o">=</span> <span class="s1">&#39;Which movie do you want ?</span><span class="se">\n</span><span class="s1">&#39;</span>
             <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">movie</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dat</span><span class="p">):</span>
-                <span class="n">str1</span> <span class="o">+=</span> <span class="s">&#39; </span><span class="si">%i</span><span class="s">) </span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">movie</span><span class="p">)</span>
+                <span class="n">str1</span> <span class="o">+=</span> <span class="s1">&#39; </span><span class="si">%i</span><span class="s1">) </span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">movie</span><span class="p">)</span>
             <span class="n">index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="n">str1</span><span class="p">))</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">filename</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="n">index</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
-                <span class="k">print</span><span class="p">(</span><span class="s">&#39;Non valid index: </span><span class="si">%s</span><span class="s"> has been chosen instead&#39;</span> <span class="o">%</span> <span class="n">dat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Non valid index: </span><span class="si">%s</span><span class="s1"> has been chosen instead&#39;</span> <span class="o">%</span> <span class="n">dat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
                 <span class="n">filename</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
         <span class="k">else</span><span class="p">:</span>
             <span class="n">filename</span> <span class="o">=</span> <span class="nb">file</span>
-        <span class="n">mot</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;.*_mov\.(.*)&#39;</span><span class="p">)</span>
+        <span class="n">mot</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;.*_mov\.(.*)&#39;</span><span class="p">)</span>
         <span class="n">end</span> <span class="o">=</span> <span class="n">mot</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
-        <span class="c"># DETERMINE THE NUMBER OF LINES BY READING THE LOG FILE</span>
-        <span class="n">logfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;log.</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">end</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
-        <span class="n">mot</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;  ! WRITING MOVIE FRAME NO\s*(\d*).*&#39;</span><span class="p">)</span>
+        <span class="c1"># DETERMINE THE NUMBER OF LINES BY READING THE LOG FILE</span>
+        <span class="n">logfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;log.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">end</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">mot</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;  ! WRITING MOVIE FRAME NO\s*(\d*).*&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">logfile</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">mot</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
                  <span class="n">nlines</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">mot</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">line</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
@@ -181,7 +178,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">var2</span> <span class="o">=</span> <span class="n">nlines</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">var2</span> <span class="o">=</span> <span class="n">lastvar</span>
-        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">nvar</span><span class="p">)</span> <span class="o">==</span> <span class="s">&#39;all&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">nvar</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;all&#39;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">nvar</span> <span class="o">=</span> <span class="n">nlines</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">var2</span> <span class="o">=</span> <span class="n">nlines</span>
         <span class="k">else</span><span class="p">:</span>
@@ -190,10 +187,10 @@
         <span class="n">vecNames</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
         <span class="n">scalNames</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
-        <span class="c"># READ the movie file </span>
-        <span class="n">infile</span> <span class="o">=</span> <span class="n">npfile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s">&#39;B&#39;</span><span class="p">)</span>
-        <span class="c"># HEADER</span>
-        <span class="n">version</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="s">&#39;|S64&#39;</span><span class="p">)</span>
+        <span class="c1"># READ the movie file </span>
+        <span class="n">infile</span> <span class="o">=</span> <span class="n">npfile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+        <span class="c1"># HEADER</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="s1">&#39;|S64&#39;</span><span class="p">)</span>
         <span class="n">n_type</span><span class="p">,</span> <span class="n">n_surface</span><span class="p">,</span> <span class="n">const</span><span class="p">,</span> <span class="n">n_fields</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
         <span class="n">n_fields</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_fields</span><span class="p">)</span>
         <span class="n">n_surface</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_surface</span><span class="p">)</span>
@@ -203,8 +200,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">movtype</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
 
-        <span class="c"># RUN PARAMETERS</span>
-        <span class="n">runid</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="s">&#39;|S64&#39;</span><span class="p">)</span>
+        <span class="c1"># RUN PARAMETERS</span>
+        <span class="n">runid</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="s1">&#39;|S64&#39;</span><span class="p">)</span>
         <span class="n">n_r_mov_tot</span><span class="p">,</span> <span class="n">n_r_max</span><span class="p">,</span> <span class="n">n_theta_max</span><span class="p">,</span> <span class="n">n_phi_tot</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> <span class="n">ra</span><span class="p">,</span> \
              <span class="n">ek</span><span class="p">,</span> <span class="n">pr</span><span class="p">,</span> <span class="n">prmag</span><span class="p">,</span> <span class="n">radratio</span><span class="p">,</span> <span class="n">tScale</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
         <span class="n">minc</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">minc</span><span class="p">)</span>
@@ -213,11 +210,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">n_phi_tot</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_phi_tot</span><span class="p">)</span>
         <span class="n">n_r_mov_tot</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_r_mov_tot</span><span class="p">)</span>
 
-        <span class="c"># GRID</span>
+        <span class="c1"># GRID</span>
         <span class="k">if</span> <span class="n">potExtra</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_r_mov_tot</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="n">nrout</span><span class="p">),</span> <span class="s">&#39;f&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_r_mov_tot</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="n">nrout</span><span class="p">),</span> <span class="s1">&#39;f&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_r_mov_tot</span><span class="o">+</span><span class="mi">2</span><span class="p">),</span> <span class="s">&#39;f&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_r_mov_tot</span><span class="o">+</span><span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;f&#39;</span><span class="p">)</span>
         <span class="n">tmp</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="n">radratio</span><span class="p">)</span>
         <span class="n">rcmb</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="n">n_r_mov_tot</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -229,25 +226,25 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nvar</span><span class="p">,</span> <span class="n">precision</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">potExtra</span><span class="p">:</span>
             <span class="n">scals</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_r_mov_tot</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="n">nrout</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">,</span> 
-                             <span class="bp">self</span><span class="o">.</span><span class="n">n_phi_tot</span><span class="o">*</span><span class="n">minc</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="s">&#39;f&#39;</span><span class="p">)</span>
+                             <span class="bp">self</span><span class="o">.</span><span class="n">n_phi_tot</span><span class="o">*</span><span class="n">minc</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">scals</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_r_mov_tot</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_phi_tot</span><span class="o">*</span><span class="n">minc</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="s">&#39;f&#39;</span><span class="p">)</span>
+            <span class="n">scals</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_r_mov_tot</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_phi_tot</span><span class="o">*</span><span class="n">minc</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
         <span class="n">vecr</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">scals</span><span class="p">)</span>
         <span class="n">vect</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">scals</span><span class="p">)</span>
         <span class="n">vecp</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">scals</span><span class="p">)</span>
 
 
-        <span class="c"># Potential extrapolation</span>
+        <span class="c1"># Potential extrapolation</span>
         <span class="n">radii</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span>
         <span class="n">scals</span> <span class="o">=</span> <span class="n">scals</span><span class="o">.</span><span class="n">T</span>
         <span class="n">scals</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">radii</span>
 
         <span class="n">startdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&#39;vtsFiles&#39;</span><span class="p">):</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s">&#39;vtsFiles&#39;</span><span class="p">)</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">&#39;vtsFiles&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;vtsFiles&#39;</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s1">&#39;vtsFiles&#39;</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;vtsFiles&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">&#39;vtsFiles&#39;</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;vtsFiles&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var2</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">nvar</span><span class="p">):</span>
             <span class="n">n_frame</span><span class="p">,</span> <span class="n">t_movieS</span><span class="p">,</span> <span class="n">omega_ic</span><span class="p">,</span> <span class="n">omega_ma</span><span class="p">,</span> <span class="n">movieDipColat</span><span class="p">,</span> \
                  <span class="n">movieDipLon</span><span class="p">,</span> <span class="n">movieDipStrength</span><span class="p">,</span> \
@@ -264,9 +261,9 @@
                  <span class="n">movieDipStrengthGeo</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">t_movieS</span>
             <span class="k">if</span> <span class="n">k</span> <span class="o">%</span> <span class="n">step</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="c">#print(k+self.var2-self.nvar)</span>
+                <span class="c1">#print(k+self.var2-self.nvar)</span>
                 <span class="n">tmp</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
-                <span class="n">brCMB</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_phi_tot</span><span class="p">),</span> <span class="s">&#39;f&#39;</span><span class="p">)</span>
+                <span class="n">brCMB</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_phi_tot</span><span class="p">),</span> <span class="s1">&#39;f&#39;</span><span class="p">)</span>
                 <span class="n">brCMB</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
                 <span class="n">brCMB</span> <span class="o">=</span> <span class="n">brCMB</span><span class="o">.</span><span class="n">T</span>
                 <span class="k">if</span> <span class="n">potExtra</span><span class="p">:</span>
@@ -284,7 +281,7 @@
                     <span class="n">vect</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">n_r_mov_tot</span><span class="o">+</span><span class="mi">2</span><span class="p">,:,:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> <span class="nb">reversed</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
                     <span class="n">tmp</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
                     <span class="n">vecp</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">n_r_mov_tot</span><span class="o">+</span><span class="mi">2</span><span class="p">,:,:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> <span class="nb">reversed</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-                <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;B3D_</span><span class="si">%05d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">k</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;B3D_</span><span class="si">%05d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">k</span>
                 <span class="n">vecr</span> <span class="o">=</span> <span class="n">vecr</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
                 <span class="n">vect</span> <span class="o">=</span> <span class="n">vect</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
                 <span class="n">vecp</span> <span class="o">=</span> <span class="n">vecp</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
@@ -301,19 +298,20 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">radii</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span>
                 <span class="n">vts</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">radii</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">bt</span><span class="p">,</span> <span class="n">bp</span><span class="p">,</span> <span class="n">scals</span><span class="p">,</span> <span class="n">scalNames</span><span class="p">,</span> <span class="n">vecNames</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-                <span class="k">print</span><span class="p">(</span><span class="s">&#39;write </span><span class="si">%s</span><span class="s">.vts&#39;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span> <span class="c"># Otherwise we read</span>
+                <span class="k">print</span><span class="p">(</span><span class="s1">&#39;write </span><span class="si">%s</span><span class="s1">.vts&#39;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span> <span class="c1"># Otherwise we read</span>
                 <span class="n">vecr</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
                 <span class="n">vect</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
                 <span class="n">vecp</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
 
-        <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">startdir</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">startdir</span><span class="p">)</span></div></div>
 
-</div></div>
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">magic</span> <span class="kn">import</span> <span class="n">MagicGraph</span>
 
-    <span class="n">t1</span> <span class="o">=</span> <span class="n">Movie3D</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s">&#39;B_3D_mov.CJ2&#39;</span><span class="p">)</span>
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">Movie3D</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s1">&#39;B_3D_mov.CJ2&#39;</span><span class="p">)</span>
+
 </pre></div>
 
           </div>
@@ -329,9 +327,6 @@
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -345,9 +340,6 @@
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../../f-modindex.html" title="Fortran Module Index"
-             >fortran modules</a> |</li>
-        <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.3 documentation</a> &raquo;</li>
@@ -356,7 +348,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
     </div>
   </body>
 </html>

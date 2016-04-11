@@ -91,9 +91,6 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../f-modindex.html" title="Fortran Module Index"
-             >fortran modules</a> |</li>
-        <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
@@ -116,17 +113,17 @@
 <span id="secrbspecfiles"></span><h1>Radial spectra <code class="docutils literal"><span class="pre">rB[r|p]Spec.TAG</span></code><a class="headerlink" href="#radial-spectra-rb-r-p-spec-tag" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This files are <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlMisc.html#varl-rmagspec"><span>l_rMagSpec=.true.</span></a></p>
+<p class="last">This files are <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlMisc.html#varl-rmagspec"><span class="std std-ref">l_rMagSpec=.true.</span></a></p>
 </div>
 <p>Those files contain the time-evolution of the poloidal (<strong>rBrSpec.TAG</strong>) and
 the toroidal (<strong>rBpSpec.TAG</strong>) magnetic energies for all radii including the
 inner core and for spherical harmonic degrees from <span class="math">\(\ell=1\)</span> to
 <span class="math">\(\ell=6\)</span>.  The calculations are done in the subroutines
-<a class="reference internal" href="../apiFortran/IOAdd.html#f/radial_spectra/rbrspec" title="f/radial_spectra/rbrspec"><code class="xref f f-subr docutils literal"><span class="pre">rBrSpec</span></code></a> and <a class="reference internal" href="../apiFortran/IOAdd.html#f/radial_spectra/rbpspec" title="f/radial_spectra/rbpspec"><code class="xref f f-subr docutils literal"><span class="pre">rBpSpec</span></code></a>,
+<code class="xref f f-subr docutils literal"><span class="pre">rBrSpec</span></code> and <code class="xref f f-subr docutils literal"><span class="pre">rBpSpec</span></code>,
 respectively. The outputs are stored as a fortran unformatted file which
 follows the following structure for <code class="docutils literal"><span class="pre">rBrSpec.TAG</span></code>:</p>
 <blockquote>
-<div><div class="highlight-fortran"><div class="highlight"><pre><span class="c">!-------------</span>
+<div><div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="c">!-------------</span>
 <span class="c">! Line N</span>
 <span class="c">!-------------</span>
 
@@ -159,15 +156,15 @@ follows the following structure for <code class="docutils literal"><span class="
 energy by its toroidal counterpart).</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">Be careful that in this file, <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_r_tot" title="f/truncation/n_r_tot"><code class="xref f f-var docutils literal"><span class="pre">n_r_tot</span></code></a> is the <strong>total</strong> number of grid
+<p class="last">Be careful that in this file, <code class="xref f f-var docutils literal"><span class="pre">n_r_tot</span></code> is the <strong>total</strong> number of grid
 points (thus including the inner core).</p>
 </div>
 <p>Those files can be read using the python class <a class="reference internal" href="../apiPython/graphMovCoeff.html#magic.MagicRSpec" title="magic.MagicRSpec"><code class="xref py py-class docutils literal"><span class="pre">MagicRSpec</span></code></a> with
 the following options:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Read the files BrSpec.testa, BrSpec.testb and BrSpec.testc and stack them</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">rsp</span> <span class="o">=</span> <span class="n">MagicRSpec</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s">&#39;test[a-c]&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s">&#39;Br&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># Print time and the time evolution of e_pol(\ell=4) at the 10th radial grid point</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">rsp</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">rsp</span><span class="o">.</span><span class="n">e_pol</span><span class="p">[:,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Read the files BrSpec.testa, BrSpec.testb and BrSpec.testc and stack them</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rsp</span> <span class="o">=</span> <span class="n">MagicRSpec</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;test[a-c]&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;Br&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Print time and the time evolution of e_pol(\ell=4) at the 10th radial grid point</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">rsp</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">rsp</span><span class="o">.</span><span class="n">e_pol</span><span class="p">[:,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -199,9 +196,6 @@ the following options:</p>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -214,9 +208,6 @@ the following options:</p>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="../f-modindex.html" title="Fortran Module Index"
-             >fortran modules</a> |</li>
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
@@ -232,7 +223,7 @@ the following options:</p>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
     </div>
   </body>
 </html>
