@@ -126,7 +126,9 @@
 <span class="sd">       * Dipole information: :ref:`dipole.TAG &lt;secDipoleFile&gt;`</span>
 <span class="sd">       * Rotation: :ref:`rot.TAG &lt;secRotFile&gt;`</span>
 <span class="sd">       * Diagnostic parameters: :ref:`par.TAG &lt;secParFile&gt;`</span>
-<span class="sd">       * Miscellaneous: :ref:`misc.TAG &lt;secMiscFile&gt;`</span>
+<span class="sd">       * Geostrophy: :ref:`geos.TAG &lt;secGeosFile&gt;`</span>
+<span class="sd">       * Heat transfer: :ref:`heat.TAG &lt;secHeatFile&gt;`</span>
+<span class="sd">       * Helicity: :ref:`helicity.TAG &lt;secHelicityFile&gt;`</span>
 <span class="sd">       * Velocity square: :ref:`u_square.TAG &lt;secu_squareFile&gt;`</span>
 <span class="sd">       * Angular momentum: :ref:`AM.TAG &lt;secAMFile&gt;`</span>
 <span class="sd">       * Power budget: :ref:`power.TAG &lt;secpowerFile&gt;`</span>
@@ -144,8 +146,8 @@
 <span class="sd">    &gt;&gt;&gt; ts = MagicTs(field=&#39;power&#39;, all=True)</span>
 <span class="sd">    &gt;&gt;&gt; print(ts.time, ts.buoPower) # print time and buoyancy power </span>
 <span class="sd">    &gt;&gt;&gt;</span>
-<span class="sd">    &gt;&gt;&gt; # If you only want to read the file ``misc.N0m2z``</span>
-<span class="sd">    &gt;&gt;&gt; ts = MagicTs(field=&#39;misc&#39;, tag=&#39;N0m2z&#39;, iplot=False)</span>
+<span class="sd">    &gt;&gt;&gt; # If you only want to read the file ``heat.N0m2z``</span>
+<span class="sd">    &gt;&gt;&gt; ts = MagicTs(field=&#39;heat&#39;, tag=&#39;N0m2z&#39;, iplot=False)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="MagicTs.__init__"><a class="viewcode-back" href="../../apiPython/timeSeries.html#magic.MagicTs.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;e_kin&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="nb">all</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
@@ -346,6 +348,32 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">topflux</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">17</span><span class="p">]</span>
             <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
                 <span class="k">pass</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">==</span> <span class="s1">&#39;geos&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">geos</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lpar</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">8</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lperp</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">9</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">==</span> <span class="s1">&#39;heat&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">botnuss</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">topnuss</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">deltaTnuss</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bottemp</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">toptemp</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bots</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tops</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">7</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">toppress</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">8</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">9</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">==</span> <span class="s1">&#39;helicity&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">helN</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">helS</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">helRMSN</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">helRMSS</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">helnaN</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">helnaS</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">helnaRMSN</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">7</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">helnaRMSS</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">8</span><span class="p">]</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">==</span> <span class="s1">&#39;u_square&#39;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ekin_pol</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
@@ -522,7 +550,22 @@
                 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">helrms</span><span class="p">)</span>
                 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
                 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Helicity&#39;</span><span class="p">)</span>
-
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">==</span> <span class="s1">&#39;heat&#39;</span><span class="p">:</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">topnuss</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Top Nusselt&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">botnuss</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Bottom Nusselt&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower right&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Nusselt number&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">==</span> <span class="s1">&#39;helicity&#39;</span><span class="p">:</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">helRMSN</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Northern Hemisphere&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">helRMSS</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Southern Hemisphere&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower right&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Helicity&#39;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">==</span> <span class="s1">&#39;u_square&#39;</span><span class="p">:</span>
             <span class="n">fig</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
             <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
@@ -732,7 +775,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dmV</span> <span class="o">=</span> <span class="n">fac</span> <span class="o">*</span> <span class="n">trapz</span><span class="p">(</span><span class="n">ts2</span><span class="o">.</span><span class="n">dmV</span><span class="p">[</span><span class="n">ind</span><span class="p">:],</span> <span class="n">ts2</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">ind</span><span class="p">:])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dlVc</span> <span class="o">=</span> <span class="n">fac</span> <span class="o">*</span> <span class="n">trapz</span><span class="p">(</span><span class="n">ts2</span><span class="o">.</span><span class="n">dlVc</span><span class="p">[</span><span class="n">ind</span><span class="p">:],</span> <span class="n">ts2</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">ind</span><span class="p">:])</span>
 
-        <span class="n">ts3</span> <span class="o">=</span> <span class="n">MagicTs</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;misc&#39;</span><span class="p">,</span> <span class="nb">all</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;heat.*&#39;</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ts3</span> <span class="o">=</span> <span class="n">MagicTs</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;heat&#39;</span><span class="p">,</span> <span class="nb">all</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ts3</span> <span class="o">=</span> <span class="n">MagicTs</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;misc&#39;</span><span class="p">,</span> <span class="nb">all</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
         <span class="n">mask</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">ts3</span><span class="o">.</span><span class="n">time</span><span class="o">-</span><span class="n">tstart</span><span class="p">)</span> <span class="o">==</span> <span class="nb">min</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">ts3</span><span class="o">.</span><span class="n">time</span><span class="o">-</span><span class="n">tstart</span><span class="p">)),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="n">ind</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">fac</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="n">ts3</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">ts3</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span>
@@ -882,6 +929,9 @@
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -906,7 +956,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>

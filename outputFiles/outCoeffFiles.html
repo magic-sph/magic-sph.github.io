@@ -158,15 +158,15 @@ derivative of <a class="reference internal" href="../apiFortran/baseModules.html
 <span id="seccmbfile"></span><h2><code class="docutils literal"><span class="pre">B_coeff_cmb.TAG</span></code><a class="headerlink" href="#b-coeff-cmb-tag" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-cmb-field"><span class="std std-ref">l_cmb_field=.true.</span></a></p>
+<p class="last">This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-cmb-field"><span>l_cmb_field=.true.</span></a></p>
 </div>
 <p>This file contains time series of spherical harmonic coefficients for the
 poloidal potential of the magnetic field at the outer boundary (CMB) up to a
-spherical harmonic degree given by <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-cmb"><span class="std std-ref">l_max_cmb</span></a>.
+spherical harmonic degree given by <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-cmb"><span>l_max_cmb</span></a>.
 The detailed calculations are done in the subroutine <a class="reference internal" href="../apiFortran/IOBinaryOutputs.html#f/out_coeff/write_bcmb" title="f/out_coeff/write_bcmb"><code class="xref f f-subr docutils literal"><span class="pre">write_Bcmb</span></code></a>. The contents of the file look as follows:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>Header</strong> The file header consists of the information: <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-cmb"><span class="std std-ref">l_max_cmb</span></a>, <a class="reference internal" href="../inputNamelists/gridNamelist.html#varminc"><span class="std std-ref">minc</span></a> and the number of data points <code class="docutils literal"><span class="pre">n_data</span></code>.</li>
+<li><strong>Header</strong> The file header consists of the information: <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-cmb"><span>l_max_cmb</span></a>, <a class="reference internal" href="../inputNamelists/gridNamelist.html#varminc"><span>minc</span></a> and the number of data points <code class="docutils literal"><span class="pre">n_data</span></code>.</li>
 <li><strong>Data</strong> Each chunk of data after the header has the same pattern of <code class="docutils literal"><span class="pre">time</span></code> followed by a list of real and imaginary values of coefficients.</li>
 </ul>
 </div></blockquote>
@@ -206,19 +206,19 @@ The detailed calculations are done in the subroutine <a class="reference interna
 </div>
 </div></blockquote>
 <p>This file can be read using <a class="reference internal" href="../apiPython/graphMovCoeff.html#magic.coeff.MagicCoeffCmb" title="magic.coeff.MagicCoeffCmb"><code class="xref py py-class docutils literal"><span class="pre">MagicCoeffCmb</span></code></a> with the following options:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># To stack the files B_cmb_coeff.testc to B_cmb_coeff.testf</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># To stack the files B_cmb_coeff.testc to B_cmb_coeff.testf</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">cmb</span> <span class="o">=</span> <span class="n">MagicCoeffCmb</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;test[c-f]&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># print Gauss coefficient for (\ell=10, m=3)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">cmb</span><span class="o">.</span><span class="n">glm</span><span class="p">[:,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">cmb</span><span class="o">.</span><span class="n">glm</span><span class="p">[:,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="coefficients-at-desired-radii">
 <span id="seccoeffrfiles"></span><h2>Coefficients at desired radii<a class="headerlink" href="#coefficients-at-desired-radii" title="Permalink to this headline">¶</a></h2>
 <p>The following files <strong>[B|V|T]_coeff_r#.TAG</strong> save coefficients at specified
-depths and are written by the subroutine <a class="reference internal" href="../apiFortran/IOBinaryOutputs.html#f/out_coeff/write_coeff_r" title="f/out_coeff/write_coeff_r"><code class="xref f f-subr docutils literal"><span class="pre">write_coeff_r</span></code></a>. See the section on <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#secoutnmlcoeff"><span class="std std-ref">CMB and radial
-coefficients</span></a> in the <a class="reference internal" href="../inputNamelists/outNamelist.html#secoutputnml"><span class="std std-ref">ouput control namelist</span></a> for details of specifying depth, using <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varn-r-step"><span class="std std-ref">n_r_step</span></a> or <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varn-r-array"><span class="std std-ref">n_r_array</span></a> and desired maximum degree of
-output <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-r"><span class="std std-ref">l_max_r</span></a>. A separate file for each desired radius
+depths and are written by the subroutine <a class="reference internal" href="../apiFortran/IOBinaryOutputs.html#f/out_coeff/write_coeff_r" title="f/out_coeff/write_coeff_r"><code class="xref f f-subr docutils literal"><span class="pre">write_coeff_r</span></code></a>. See the section on <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#secoutnmlcoeff"><span>CMB and radial
+coefficients</span></a> in the <a class="reference internal" href="../inputNamelists/outNamelist.html#secoutputnml"><span>ouput control namelist</span></a> for details of specifying depth, using <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varn-r-step"><span>n_r_step</span></a> or <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varn-r-array"><span>n_r_array</span></a> and desired maximum degree of
+output <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-r"><span>l_max_r</span></a>. A separate file for each desired radius
 is written, numbered suitably as <code class="docutils literal"><span class="pre">[B|V|T]_coeff_r1.TAG</span></code>,
 <code class="docutils literal"><span class="pre">[B|V|T]_coeff_r2.TAG</span></code> etc.</p>
 </div>
@@ -226,16 +226,16 @@ is written, numbered suitably as <code class="docutils literal"><span class="pre
 <span id="secbcoeffrfile"></span><h2><code class="docutils literal"><span class="pre">B_coeff_r#.TAG</span></code><a class="headerlink" href="#b-coeff-r-tag" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-r-field"><span class="std std-ref">l_r_field=.true.</span></a>.</p>
+<p class="last">This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-r-field"><span>l_r_field=.true.</span></a>.</p>
 </div>
 <p>This file contains output of time series of the spherical harmonic coefficients
 of the poloidal and toroidal magnetic field potentials and the first and second
 derivatives of the poloidal potential coefficients in the order <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/b" title="f/fields/b"><code class="xref f f-var docutils literal"><span class="pre">b</span></code></a>,
 <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/db" title="f/fields/db"><code class="xref f f-var docutils literal"><span class="pre">db</span></code></a>, <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/aj" title="f/fields/aj"><code class="xref f f-var docutils literal"><span class="pre">aj</span></code></a> and <code class="xref f f-var docutils literal"><span class="pre">ddb</span></code>.  The output is for a specific
-radius, <span class="math">\(r\)</span> up to degree <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-cmb"><span class="std std-ref">l_max_r</span></a>.</p>
+radius, <span class="math">\(r\)</span> up to degree <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-cmb"><span>l_max_r</span></a>.</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>Header</strong> The file header consists of the information: <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-r"><span class="std std-ref">l_max_r</span></a>, <a class="reference internal" href="../inputNamelists/gridNamelist.html#varminc"><span class="std std-ref">minc</span></a>,  the number of data points <code class="docutils literal"><span class="pre">n_data</span></code>
+<li><strong>Header</strong> The file header consists of the information: <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-r"><span>l_max_r</span></a>, <a class="reference internal" href="../inputNamelists/gridNamelist.html#varminc"><span>minc</span></a>,  the number of data points <code class="docutils literal"><span class="pre">n_data</span></code>
 and the radius, <a class="reference internal" href="../apiFortran/precalcModules.html#f/radial_functions/r" title="f/radial_functions/r"><code class="xref f f-var docutils literal"><span class="pre">r</span></code></a>.</li>
 <li><strong>Data</strong> Each chunk of data after the header contains the <code class="docutils literal"><span class="pre">time</span></code> at which
 the coefficients are stored, followed by the real and imaginary parts of:
@@ -304,10 +304,10 @@ coefficient <a class="reference internal" href="../apiFortran/baseModules.html#f
 </div>
 </div></blockquote>
 <p>This file can be read using <a class="reference internal" href="../apiPython/graphMovCoeff.html#magic.coeff.MagicCoeffR" title="magic.coeff.MagicCoeffR"><code class="xref py py-class docutils literal"><span class="pre">MagicCoeffR</span></code></a> with the following options:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># To stack the files B_coeff_r3.test* from the working directory</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># To stack the files B_coeff_r3.test* from the working directory</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">cr</span> <span class="o">=</span> <span class="n">MagicCoeffR</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;test*&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># print the time and the poloidal potential for (\ell=3, m=3)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">cr</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">cr</span><span class="o">.</span><span class="n">wlm</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">cr</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">cr</span><span class="o">.</span><span class="n">wlm</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -315,16 +315,16 @@ coefficient <a class="reference internal" href="../apiFortran/baseModules.html#f
 <span id="secvcoeffrfile"></span><h2><code class="docutils literal"><span class="pre">V_coeff_r#.TAG</span></code><a class="headerlink" href="#v-coeff-r-tag" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-r-field"><span class="std std-ref">l_r_field=.true.</span></a></p>
+<p class="last">This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-r-field"><span>l_r_field=.true.</span></a></p>
 </div>
 <p>This file contains output of time series of the spherical harmonic coefficients
 of the poloidal and toroidal velocity field potentials and the first
 derivatives of the poloidal potential coefficients in the order <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/w" title="f/fields/w"><code class="xref f f-var docutils literal"><span class="pre">w</span></code></a>,
 <code class="xref f f-var docutils literal"><span class="pre">dw</span></code>, and <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/z" title="f/fields/z"><code class="xref f f-var docutils literal"><span class="pre">z</span></code></a>.  The output is for a specific radius, <span class="math">\(r\)</span> up
-to degree <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-cmb"><span class="std std-ref">l_max_r</span></a>.</p>
+to degree <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-cmb"><span>l_max_r</span></a>.</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>Header</strong> The file header consists of the information: <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-r"><span class="std std-ref">l_max_r</span></a>, <a class="reference internal" href="../inputNamelists/gridNamelist.html#varminc"><span class="std std-ref">minc</span></a>,  the number of data points <code class="docutils literal"><span class="pre">n_data</span></code>
+<li><strong>Header</strong> The file header consists of the information: <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-r"><span>l_max_r</span></a>, <a class="reference internal" href="../inputNamelists/gridNamelist.html#varminc"><span>minc</span></a>,  the number of data points <code class="docutils literal"><span class="pre">n_data</span></code>
 and the radius, <a class="reference internal" href="../apiFortran/precalcModules.html#f/radial_functions/r" title="f/radial_functions/r"><code class="xref f f-var docutils literal"><span class="pre">r</span></code></a>.</li>
 <li><strong>Data</strong> Each chunk of data after the header contains the <code class="docutils literal"><span class="pre">time</span></code> at which
 the coefficients are stored, followed by the real and imaginary parts of:
@@ -384,10 +384,10 @@ toroidal coefficient <a class="reference internal" href="../apiFortran/baseModul
 </div>
 </div></blockquote>
 <p>This file can be read using <a class="reference internal" href="../apiPython/graphMovCoeff.html#magic.coeff.MagicCoeffR" title="magic.coeff.MagicCoeffR"><code class="xref py py-class docutils literal"><span class="pre">MagicCoeffR</span></code></a> with the following options:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># To stack the files V_coeff_r3.test* from the working directory</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># To stack the files V_coeff_r3.test* from the working directory</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">cr</span> <span class="o">=</span> <span class="n">MagicCoeffR</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;test*&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;V&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># print the poloidal and toroidal potentials for (\ell=6, m=0)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">cr</span><span class="o">.</span><span class="n">wlm</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">cr</span><span class="o">.</span><span class="n">zlm</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">cr</span><span class="o">.</span><span class="n">wlm</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">cr</span><span class="o">.</span><span class="n">zlm</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -395,14 +395,14 @@ toroidal coefficient <a class="reference internal" href="../apiFortran/baseModul
 <span id="sectcoeffrfile"></span><h2><code class="docutils literal"><span class="pre">T_coeff_r#.TAG</span></code><a class="headerlink" href="#t-coeff-r-tag" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-r-fieldt"><span class="std std-ref">l_r_fieldT=.true.</span></a></p>
+<p class="last">This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-r-fieldt"><span>l_r_fieldT=.true.</span></a></p>
 </div>
 <p>This file contains output of time series of the spherical harmonic coefficients
 of the temperature (or entropy) field. The output is for a specific radius,
-<span class="math">\(r\)</span> up to degree <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-cmb"><span class="std std-ref">l_max_r</span></a>.</p>
+<span class="math">\(r\)</span> up to degree <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-cmb"><span>l_max_r</span></a>.</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>Header</strong> The file header consists of the information: <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-r"><span class="std std-ref">l_max_r</span></a>, <a class="reference internal" href="../inputNamelists/gridNamelist.html#varminc"><span class="std std-ref">minc</span></a>,  the number of data points <code class="docutils literal"><span class="pre">n_data</span></code>
+<li><strong>Header</strong> The file header consists of the information: <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlCoeff.html#varl-max-r"><span>l_max_r</span></a>, <a class="reference internal" href="../inputNamelists/gridNamelist.html#varminc"><span>minc</span></a>,  the number of data points <code class="docutils literal"><span class="pre">n_data</span></code>
 and the radius, <a class="reference internal" href="../apiFortran/precalcModules.html#f/radial_functions/r" title="f/radial_functions/r"><code class="xref f f-var docutils literal"><span class="pre">r</span></code></a>.</li>
 <li><strong>Data</strong> Each chunk of data after the header contains the <code class="docutils literal"><span class="pre">time</span></code> at which
 the coefficients are stored, followed by the real and imaginary parts of the
@@ -487,6 +487,9 @@ coefficient <a class="reference internal" href="../apiFortran/baseModules.html#f
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -517,7 +520,7 @@ coefficient <a class="reference internal" href="../apiFortran/baseModules.html#f
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>

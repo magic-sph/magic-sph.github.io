@@ -144,6 +144,16 @@
 <div class="math">
 \[N_\rho = \ln \frac{\tilde{\rho}(r_i)}{\tilde{\rho}(r_o)}\]</div>
 </li>
+<li><p class="first"><strong>DissNb</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/dissnb" title="f/physical_parameters/dissnb"><code class="xref f f-var docutils literal"><span class="pre">DissNb=0.0</span></code></a>) is a real. This is the dissipation number:</p>
+<div class="math">
+\[Di = \frac{\alpha_o g_o d}{c_p}\]</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This can only be provided  as a <strong>replacement</strong> input of <strong>strat</strong>.
+I.E., when one wants to define a reference state, one has to specify
+<strong>either</strong> <code class="docutils literal"><span class="pre">strat</span></code> <strong>or</strong> <code class="docutils literal"><span class="pre">DissNb</span></code> in the input namelist.</p>
+</div>
+</li>
 <li><p class="first"><strong>polind</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/polind" title="f/physical_parameters/polind"><code class="xref f f-var docutils literal"><span class="pre">polind=1.5</span></code></a>) is a real. This is the polytropic index, which relates the background temperature to the background density:</p>
 <div class="math">
 \[\tilde{\rho} = \tilde{T}^m\]</div>
@@ -399,7 +409,13 @@ be changed in the future.</p>
 <td>Fixed entropy at outer boundary: <span class="math">\(s(r_o)=s_{top}\)</span></td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">ktops=2</span></code></td>
-<td>Fixed entropy flux at outer boundary: <span class="math">\(\partial s(r_o)/\partial r = s_{top}\)</span></td>
+<td>Fixed entropy flux at outer boundary: <span class="math">\(\partial s(r_o)/\partial r = q_t\)</span></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">ktops=3</span></code></td>
+<td>Fixed temperature at outer boundary: <span class="math">\(T(r_o)=T_{top}\)</span></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">ktops=4</span></code></td>
+<td>Fixed temperature flux at outer boundary: <span class="math">\(\partial T(r_o)/\partial r = q_t\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -606,6 +622,9 @@ Z_{\ell m}=0\end{split}\]</div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -636,7 +655,7 @@ Z_{\ell m}=0\end{split}\]</div>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>
