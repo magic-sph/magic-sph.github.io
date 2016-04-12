@@ -91,6 +91,9 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
@@ -111,14 +114,585 @@
             
   <div class="section" id="time-stepping">
 <span id="secfortrantimestep"></span><h1>Time stepping<a class="headerlink" href="#time-stepping" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="step-time-f90">
-<h2><code class="docutils literal"><span class="pre">step_time.f90</span></code><a class="headerlink" href="#step-time-f90" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="f/step_time_mod">
+<span id="step-time-f90"></span><h2><code class="docutils literal"><span class="pre">step_time.f90</span></code><a class="headerlink" href="#f/step_time_mod" title="Permalink to this headline">¶</a></h2>
+<p class="rubric">Quick access</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><a class="reference internal" href="#f/step_time_mod/dbdt_cmb_lmloc" title="f/step_time_mod/dbdt_cmb_lmloc"><code class="xref f f-var docutils literal"><span class="pre">dbdt_cmb_lmloc</span></code></a>, <a class="reference internal" href="#f/step_time_mod/dbdt_lmloc" title="f/step_time_mod/dbdt_lmloc"><code class="xref f f-var docutils literal"><span class="pre">dbdt_lmloc</span></code></a>, <a class="reference internal" href="#f/step_time_mod/djdt_lmloc" title="f/step_time_mod/djdt_lmloc"><code class="xref f f-var docutils literal"><span class="pre">djdt_lmloc</span></code></a>, <a class="reference internal" href="#f/step_time_mod/djdt_rloc" title="f/step_time_mod/djdt_rloc"><code class="xref f f-var docutils literal"><span class="pre">djdt_rloc</span></code></a>, <a class="reference internal" href="#f/step_time_mod/dpdt_lmloc" title="f/step_time_mod/dpdt_lmloc"><code class="xref f f-var docutils literal"><span class="pre">dpdt_lmloc</span></code></a>, <a class="reference internal" href="#f/step_time_mod/dpdt_rloc" title="f/step_time_mod/dpdt_rloc"><code class="xref f f-var docutils literal"><span class="pre">dpdt_rloc</span></code></a>, <a class="reference internal" href="#f/step_time_mod/dsdt_lmloc" title="f/step_time_mod/dsdt_lmloc"><code class="xref f f-var docutils literal"><span class="pre">dsdt_lmloc</span></code></a>, <a class="reference internal" href="#f/step_time_mod/dsdt_rloc" title="f/step_time_mod/dsdt_rloc"><code class="xref f f-var docutils literal"><span class="pre">dsdt_rloc</span></code></a>, <a class="reference internal" href="#f/step_time_mod/dvsrlm_lmloc" title="f/step_time_mod/dvsrlm_lmloc"><code class="xref f f-var docutils literal"><span class="pre">dvsrlm_lmloc</span></code></a>, <a class="reference internal" href="#f/step_time_mod/dvsrlm_rloc" title="f/step_time_mod/dvsrlm_rloc"><code class="xref f f-var docutils literal"><span class="pre">dvsrlm_rloc</span></code></a>, <a class="reference internal" href="#f/step_time_mod/dvxbhlm_lmloc" title="f/step_time_mod/dvxbhlm_lmloc"><code class="xref f f-var docutils literal"><span class="pre">dvxbhlm_lmloc</span></code></a>, <a class="reference internal" href="#f/step_time_mod/dvxbhlm_rloc" title="f/step_time_mod/dvxbhlm_rloc"><code class="xref f f-var docutils literal"><span class="pre">dvxbhlm_rloc</span></code></a>, <a class="reference internal" href="#f/step_time_mod/dwdt_lmloc" title="f/step_time_mod/dwdt_lmloc"><code class="xref f f-var docutils literal"><span class="pre">dwdt_lmloc</span></code></a>, <a class="reference internal" href="#f/step_time_mod/dwdt_rloc" title="f/step_time_mod/dwdt_rloc"><code class="xref f f-var docutils literal"><span class="pre">dwdt_rloc</span></code></a>, <a class="reference internal" href="#f/step_time_mod/dzdt_lmloc" title="f/step_time_mod/dzdt_lmloc"><code class="xref f f-var docutils literal"><span class="pre">dzdt_lmloc</span></code></a>, <a class="reference internal" href="#f/step_time_mod/dzdt_rloc" title="f/step_time_mod/dzdt_rloc"><code class="xref f f-var docutils literal"><span class="pre">dzdt_rloc</span></code></a>, <a class="reference internal" href="#f/step_time_mod/dbdt_rloc" title="f/step_time_mod/dbdt_rloc"><code class="xref f f-var docutils literal"><span class="pre">dbdt_rloc</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Routines:</th><td class="field-body"><a class="reference internal" href="#f/step_time_mod/initialize_step_time" title="f/step_time_mod/initialize_step_time"><code class="xref f f-func docutils literal"><span class="pre">initialize_step_time()</span></code></a>, <a class="reference internal" href="#f/step_time_mod/check_time_hits" title="f/step_time_mod/check_time_hits"><code class="xref f f-func docutils literal"><span class="pre">check_time_hits()</span></code></a>, <a class="reference internal" href="#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal"><span class="pre">step_time()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Needed modules</p>
+<ul class="simple">
+<li><a class="reference internal" href="IOBinaryOutputs.html#f/movie_data" title="f/movie_data"><code class="xref f f-mod docutils literal"><span class="pre">movie_data</span></code></a> (<a class="reference internal" href="IOBinaryOutputs.html#f/movie_data/t_movies" title="f/movie_data/t_movies"><code class="xref f f-func docutils literal"><span class="pre">t_movies()</span></code></a>)</li>
+<li><a class="reference internal" href="misc.html#f/useful" title="f/useful: library with several useful subroutines"><code class="xref f f-mod docutils literal"><span class="pre">useful</span></code></a> (<a class="reference internal" href="misc.html#f/useful/safeclose" title="f/useful/safeclose"><code class="xref f f-func docutils literal"><span class="pre">safeclose()</span></code></a>, <a class="reference internal" href="misc.html#f/useful/l_correct_step" title="f/useful/l_correct_step"><code class="xref f f-func docutils literal"><span class="pre">l_correct_step()</span></code></a>, <a class="reference internal" href="misc.html#f/useful/safeopen" title="f/useful/safeopen"><code class="xref f f-func docutils literal"><span class="pre">safeopen()</span></code></a>, <a class="reference internal" href="misc.html#f/useful/logwrite" title="f/useful/logwrite"><code class="xref f f-func docutils literal"><span class="pre">logwrite()</span></code></a>): library with several useful subroutines</li>
+<li><a class="reference internal" href="timeAdvLinear.html#f/lmloop_mod" title="f/lmloop_mod"><code class="xref f f-mod docutils literal"><span class="pre">lmloop_mod</span></code></a> (<a class="reference internal" href="timeAdvLinear.html#f/lmloop_mod/lmloop" title="f/lmloop_mod/lmloop"><code class="xref f f-func docutils literal"><span class="pre">lmloop()</span></code></a>)</li>
+<li><a class="reference internal" href="parallelModules.html#f/lmloop_data" title="f/lmloop_data"><code class="xref f f-mod docutils literal"><span class="pre">lmloop_data</span></code></a> (<a class="reference internal" href="parallelModules.html#f/lmloop_data/llmmag" title="f/lmloop_data/llmmag"><code class="xref f f-func docutils literal"><span class="pre">llmmag()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/lmloop_data/lm_per_rank" title="f/lmloop_data/lm_per_rank"><code class="xref f f-func docutils literal"><span class="pre">lm_per_rank()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/lmloop_data/lm_on_last_rank" title="f/lmloop_data/lm_on_last_rank"><code class="xref f f-func docutils literal"><span class="pre">lm_on_last_rank()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/lmloop_data/ulm" title="f/lmloop_data/ulm"><code class="xref f f-func docutils literal"><span class="pre">ulm()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/lmloop_data/llm" title="f/lmloop_data/llm"><code class="xref f f-func docutils literal"><span class="pre">llm()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/lmloop_data/ulmmag" title="f/lmloop_data/ulmmag"><code class="xref f f-func docutils literal"><span class="pre">ulmmag()</span></code></a>)</li>
+<li><a class="reference internal" href="#f/timing" title="f/timing: Useful functions for time-stepping"><code class="xref f f-mod docutils literal"><span class="pre">timing</span></code></a>: Useful functions for time-stepping</li>
+<li><a class="reference internal" href="IOGeneral.html#f/output_mod" title="f/output_mod"><code class="xref f f-mod docutils literal"><span class="pre">output_mod</span></code></a> (<a class="reference internal" href="IOGeneral.html#f/output_mod/output" title="f/output_mod/output"><code class="xref f f-func docutils literal"><span class="pre">output()</span></code></a>)</li>
+<li><a class="reference internal" href="timeAdvNonLinear.html#f/radialloop" title="f/radialloop"><code class="xref f f-mod docutils literal"><span class="pre">radialloop</span></code></a> (<a class="reference internal" href="timeAdvNonLinear.html#f/radialloop/radialloopg" title="f/radialloop/radialloopg"><code class="xref f f-func docutils literal"><span class="pre">radialloopg()</span></code></a>)</li>
+<li><a class="reference internal" href="parallelModules.html#f/parallel_mod" title="f/parallel_mod: This module contains the blocking information"><code class="xref f f-mod docutils literal"><span class="pre">parallel_mod</span></code></a>: This module contains the blocking information</li>
+<li><a class="reference internal" href="baseModules.html#f/constants" title="f/constants: module containing constants and parameters used in the code."><code class="xref f f-mod docutils literal"><span class="pre">constants</span></code></a> (<a class="reference internal" href="baseModules.html#f/constants/zero" title="f/constants/zero"><code class="xref f f-func docutils literal"><span class="pre">zero()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/half" title="f/constants/half"><code class="xref f f-func docutils literal"><span class="pre">half()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/one" title="f/constants/one"><code class="xref f f-func docutils literal"><span class="pre">one()</span></code></a>): module containing constants and parameters used in the code.</li>
+<li><a class="reference internal" href="baseModules.html#f/num_param" title="f/num_param: Module containing numerical and control parameters"><code class="xref f f-mod docutils literal"><span class="pre">num_param</span></code></a> (<a class="reference internal" href="baseModules.html#f/num_param/tscale" title="f/num_param/tscale"><code class="xref f f-func docutils literal"><span class="pre">tscale()</span></code></a>, <a class="reference internal" href="baseModules.html#f/num_param/n_time_steps" title="f/num_param/n_time_steps"><code class="xref f f-func docutils literal"><span class="pre">n_time_steps()</span></code></a>, <a class="reference internal" href="baseModules.html#f/num_param/tend" title="f/num_param/tend"><code class="xref f f-func docutils literal"><span class="pre">tend()</span></code></a>, <a class="reference internal" href="baseModules.html#f/num_param/runtimelimit" title="f/num_param/runtimelimit"><code class="xref f f-func docutils literal"><span class="pre">runtimelimit()</span></code></a>, <a class="reference internal" href="baseModules.html#f/num_param/alpha" title="f/num_param/alpha"><code class="xref f f-func docutils literal"><span class="pre">alpha()</span></code></a>, <a class="reference internal" href="baseModules.html#f/num_param/dtmax" title="f/num_param/dtmax"><code class="xref f f-func docutils literal"><span class="pre">dtmax()</span></code></a>, <a class="reference internal" href="baseModules.html#f/num_param/dtmin" title="f/num_param/dtmin"><code class="xref f f-func docutils literal"><span class="pre">dtmin()</span></code></a>, <a class="reference internal" href="baseModules.html#f/num_param/runtime" title="f/num_param/runtime"><code class="xref f f-func docutils literal"><span class="pre">runtime()</span></code></a>): Module containing numerical and control parameters</li>
+<li><a class="reference internal" href="baseModules.html#f/fieldslast" title="f/fieldslast: This module contains time-derivaties array of the previous time-step They are needed in the time-stepping scheme."><code class="xref f f-mod docutils literal"><span class="pre">fieldslast</span></code></a>: This module contains time-derivaties array of the previous time-step They are needed in the time-stepping scheme.</li>
+<li><a class="reference internal" href="baseModules.html#f/logic" title="f/logic: Module containing the logicals that control the run"><code class="xref f f-mod docutils literal"><span class="pre">logic</span></code></a> (<a class="reference internal" href="baseModules.html#f/logic/l_time_hits" title="f/logic/l_time_hits"><code class="xref f f-func docutils literal"><span class="pre">l_time_hits()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_hel" title="f/logic/l_hel"><code class="xref f f-func docutils literal"><span class="pre">l_hel()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_to" title="f/logic/l_to"><code class="xref f f-func docutils literal"><span class="pre">l_to()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_dtrmagspec" title="f/logic/l_dtrmagspec"><code class="xref f f-func docutils literal"><span class="pre">l_dtrmagspec()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_storetpot" title="f/logic/l_storetpot"><code class="xref f f-func docutils literal"><span class="pre">l_storetpot()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/lverbose" title="f/logic/lverbose"><code class="xref f f-func docutils literal"><span class="pre">lverbose()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_heat" title="f/logic/l_heat"><code class="xref f f-func docutils literal"><span class="pre">l_heat()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_mag_lf" title="f/logic/l_mag_lf"><code class="xref f f-func docutils literal"><span class="pre">l_mag_lf()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_perppar" title="f/logic/l_perppar"><code class="xref f f-func docutils literal"><span class="pre">l_perppar()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_b_nl_icb" title="f/logic/l_b_nl_icb"><code class="xref f f-func docutils literal"><span class="pre">l_b_nl_icb()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_tomovie" title="f/logic/l_tomovie"><code class="xref f f-func docutils literal"><span class="pre">l_tomovie()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_mag" title="f/logic/l_mag"><code class="xref f f-func docutils literal"><span class="pre">l_mag()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_dtbmovie" title="f/logic/l_dtbmovie"><code class="xref f f-func docutils literal"><span class="pre">l_dtbmovie()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_htmovie" title="f/logic/l_htmovie"><code class="xref f f-func docutils literal"><span class="pre">l_htmovie()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_storevpot" title="f/logic/l_storevpot"><code class="xref f f-func docutils literal"><span class="pre">l_storevpot()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_runtimelimit" title="f/logic/l_runtimelimit"><code class="xref f f-func docutils literal"><span class="pre">l_runtimelimit()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_fluxprofs" title="f/logic/l_fluxprofs"><code class="xref f f-func docutils literal"><span class="pre">l_fluxprofs()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_storebpot" title="f/logic/l_storebpot"><code class="xref f f-func docutils literal"><span class="pre">l_storebpot()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_viscbccalc" title="f/logic/l_viscbccalc"><code class="xref f f-func docutils literal"><span class="pre">l_viscbccalc()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_conv" title="f/logic/l_conv"><code class="xref f f-func docutils literal"><span class="pre">l_conv()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_movie" title="f/logic/l_movie"><code class="xref f f-func docutils literal"><span class="pre">l_movie()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_cmb_field" title="f/logic/l_cmb_field"><code class="xref f f-func docutils literal"><span class="pre">l_cmb_field()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_true_time" title="f/logic/l_true_time"><code class="xref f f-func docutils literal"><span class="pre">l_true_time()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_ht" title="f/logic/l_ht"><code class="xref f f-func docutils literal"><span class="pre">l_ht()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_dt_cmb_field" title="f/logic/l_dt_cmb_field"><code class="xref f f-func docutils literal"><span class="pre">l_dt_cmb_field()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_dtb" title="f/logic/l_dtb"><code class="xref f f-func docutils literal"><span class="pre">l_dtb()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_save_out" title="f/logic/l_save_out"><code class="xref f f-func docutils literal"><span class="pre">l_save_out()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_b_nl_cmb" title="f/logic/l_b_nl_cmb"><code class="xref f f-func docutils literal"><span class="pre">l_b_nl_cmb()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_rms" title="f/logic/l_rms"><code class="xref f f-func docutils literal"><span class="pre">l_rms()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_r_field" title="f/logic/l_r_field"><code class="xref f f-func docutils literal"><span class="pre">l_r_field()</span></code></a>): Module containing the logicals that control the run</li>
+<li><a class="reference internal" href="baseModules.html#f/precision_mod" title="f/precision_mod: This module controls the precision used in MagIC"><code class="xref f f-mod docutils literal"><span class="pre">precision_mod</span></code></a>: This module controls the precision used in MagIC</li>
+<li><a class="reference internal" href="#f/courant_mod" title="f/courant_mod"><code class="xref f f-mod docutils literal"><span class="pre">courant_mod</span></code></a> (<a class="reference internal" href="#f/courant_mod/dt_courant" title="f/courant_mod/dt_courant"><code class="xref f f-func docutils literal"><span class="pre">dt_courant()</span></code></a>)</li>
+<li><a class="reference internal" href="misc.html#f/charmanip" title="f/charmanip: This module contains several useful routines to manipule character strings"><code class="xref f f-mod docutils literal"><span class="pre">charmanip</span></code></a> (<a class="reference internal" href="misc.html#f/charmanip/dble2str" title="f/charmanip/dble2str"><code class="xref f f-func docutils literal"><span class="pre">dble2str()</span></code></a>, <a class="reference internal" href="misc.html#f/charmanip/capitalize" title="f/charmanip/capitalize"><code class="xref f f-func docutils literal"><span class="pre">capitalize()</span></code></a>): This module contains several useful routines to manipule character strings</li>
+<li><a class="reference internal" href="blocking.html#f/blocking" title="f/blocking: Module containing blocking information"><code class="xref f f-mod docutils literal"><span class="pre">blocking</span></code></a> (<a class="reference internal" href="blocking.html#f/blocking/nlmbs" title="f/blocking/nlmbs"><code class="xref f f-func docutils literal"><span class="pre">nlmbs()</span></code></a>, <a class="reference internal" href="blocking.html#f/blocking/lmstartb" title="f/blocking/lmstartb"><code class="xref f f-func docutils literal"><span class="pre">lmstartb()</span></code></a>, <a class="reference internal" href="blocking.html#f/blocking/lmstopb" title="f/blocking/lmstopb"><code class="xref f f-func docutils literal"><span class="pre">lmstopb()</span></code></a>): Module containing blocking information</li>
+<li><a class="reference internal" href="timeAdvNonLinear.html#f/nonlinear_bcs" title="f/nonlinear_bcs"><code class="xref f f-mod docutils literal"><span class="pre">nonlinear_bcs</span></code></a> (<a class="reference internal" href="timeAdvNonLinear.html#f/nonlinear_bcs/get_b_nl_bcs" title="f/nonlinear_bcs/get_b_nl_bcs"><code class="xref f f-func docutils literal"><span class="pre">get_b_nl_bcs()</span></code></a>)</li>
+<li><a class="reference internal" href="baseModules.html#f/truncation" title="f/truncation: This module defines the grid points and the truncation"><code class="xref f f-mod docutils literal"><span class="pre">truncation</span></code></a> (<a class="reference internal" href="baseModules.html#f/truncation/l_max" title="f/truncation/l_max"><code class="xref f f-func docutils literal"><span class="pre">l_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/lm_maxmag" title="f/truncation/lm_maxmag"><code class="xref f f-func docutils literal"><span class="pre">lm_maxmag()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/lmp_max" title="f/truncation/lmp_max"><code class="xref f f-func docutils literal"><span class="pre">lmp_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/l_maxmag" title="f/truncation/l_maxmag"><code class="xref f f-func docutils literal"><span class="pre">l_maxmag()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max"><code class="xref f f-func docutils literal"><span class="pre">n_r_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max"><code class="xref f f-func docutils literal"><span class="pre">lm_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/n_r_maxmag" title="f/truncation/n_r_maxmag"><code class="xref f f-func docutils literal"><span class="pre">n_r_maxmag()</span></code></a>): This module defines the grid points and the truncation</li>
+<li><code class="xref f f-mod docutils literal"><span class="pre">mem_alloc</span></code> (<code class="xref f f-func docutils literal"><span class="pre">bytes_allocated()</span></code>, <code class="xref f f-func docutils literal"><span class="pre">memwrite()</span></code>): This little module is used to estimate the global memory allocation used in MagIC</li>
+<li><a class="reference internal" href="baseModules.html#f/output_data" title="f/output_data: This module contains the parameters for output control"><code class="xref f f-mod docutils literal"><span class="pre">output_data</span></code></a> (<a class="reference internal" href="baseModules.html#f/output_data/n_cmb_step" title="f/output_data/n_cmb_step"><code class="xref f f-func docutils literal"><span class="pre">n_cmb_step()</span></code></a>, <code class="xref f f-func docutils literal"><span class="pre">()</span></code>, <a class="reference internal" href="baseModules.html#f/output_data/n_t_to" title="f/output_data/n_t_to"><code class="xref f f-func docutils literal"><span class="pre">n_t_to()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_tozs" title="f/output_data/n_tozs"><code class="xref f f-func docutils literal"><span class="pre">n_tozs()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_graphs" title="f/output_data/n_graphs"><code class="xref f f-func docutils literal"><span class="pre">n_graphs()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_tomovie_step" title="f/output_data/n_tomovie_step"><code class="xref f f-func docutils literal"><span class="pre">n_tomovie_step()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_r_field_step" title="f/output_data/n_r_field_step"><code class="xref f f-func docutils literal"><span class="pre">n_r_field_step()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_vpots" title="f/output_data/n_vpots"><code class="xref f f-func docutils literal"><span class="pre">n_vpots()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/tag" title="f/output_data/tag"><code class="xref f f-func docutils literal"><span class="pre">tag()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_tpots" title="f/output_data/n_tpots"><code class="xref f f-func docutils literal"><span class="pre">n_tpots()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_cmbs" title="f/output_data/n_cmbs"><code class="xref f f-func docutils literal"><span class="pre">n_cmbs()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_t_cmb" title="f/output_data/n_t_cmb"><code class="xref f f-func docutils literal"><span class="pre">n_t_cmb()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/t_to" title="f/output_data/t_to"><code class="xref f f-func docutils literal"><span class="pre">t_to()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_logs" title="f/output_data/n_logs"><code class="xref f f-func docutils literal"><span class="pre">n_logs()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/t_cmb" title="f/output_data/t_cmb"><code class="xref f f-func docutils literal"><span class="pre">t_cmb()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_tomovie_frames" title="f/output_data/n_tomovie_frames"><code class="xref f f-func docutils literal"><span class="pre">n_tomovie_frames()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_bpot_step" title="f/output_data/n_bpot_step"><code class="xref f f-func docutils literal"><span class="pre">n_bpot_step()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/t_log" title="f/output_data/t_log"><code class="xref f f-func docutils literal"><span class="pre">t_log()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_tos" title="f/output_data/n_tos"><code class="xref f f-func docutils literal"><span class="pre">n_tos()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_tpot_step" title="f/output_data/n_tpot_step"><code class="xref f f-func docutils literal"><span class="pre">n_tpot_step()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_t_bpot" title="f/output_data/n_t_bpot"><code class="xref f f-func docutils literal"><span class="pre">n_t_bpot()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_rsts" title="f/output_data/n_rsts"><code class="xref f f-func docutils literal"><span class="pre">n_rsts()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/t_graph" title="f/output_data/t_graph"><code class="xref f f-func docutils literal"><span class="pre">t_graph()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_t_graph" title="f/output_data/n_t_graph"><code class="xref f f-func docutils literal"><span class="pre">n_t_graph()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_t_rst" title="f/output_data/n_t_rst"><code class="xref f f-func docutils literal"><span class="pre">n_t_rst()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_t_toz" title="f/output_data/n_t_toz"><code class="xref f f-func docutils literal"><span class="pre">n_t_toz()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_toz_step" title="f/output_data/n_toz_step"><code class="xref f f-func docutils literal"><span class="pre">n_toz_step()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/t_toz" title="f/output_data/t_toz"><code class="xref f f-func docutils literal"><span class="pre">t_toz()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_rst_step" title="f/output_data/n_rst_step"><code class="xref f f-func docutils literal"><span class="pre">n_rst_step()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_spec_step" title="f/output_data/n_spec_step"><code class="xref f f-func docutils literal"><span class="pre">n_spec_step()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_stores" title="f/output_data/n_stores"><code class="xref f f-func docutils literal"><span class="pre">n_stores()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_t_vpot" title="f/output_data/n_t_vpot"><code class="xref f f-func docutils literal"><span class="pre">n_t_vpot()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/t_bpot" title="f/output_data/t_bpot"><code class="xref f f-func docutils literal"><span class="pre">t_bpot()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_t_spec" title="f/output_data/n_t_spec"><code class="xref f f-func docutils literal"><span class="pre">n_t_spec()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_movie_frames" title="f/output_data/n_movie_frames"><code class="xref f f-func docutils literal"><span class="pre">n_movie_frames()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/graph_file" title="f/output_data/graph_file"><code class="xref f f-func docutils literal"><span class="pre">graph_file()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_specs" title="f/output_data/n_specs"><code class="xref f f-func docutils literal"><span class="pre">n_specs()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/t_tomovie" title="f/output_data/t_tomovie"><code class="xref f f-func docutils literal"><span class="pre">t_tomovie()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_graph_step" title="f/output_data/n_graph_step"><code class="xref f f-func docutils literal"><span class="pre">n_graph_step()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/t_spec" title="f/output_data/t_spec"><code class="xref f f-func docutils literal"><span class="pre">t_spec()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_bpots" title="f/output_data/n_bpots"><code class="xref f f-func docutils literal"><span class="pre">n_bpots()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/t_tpot" title="f/output_data/t_tpot"><code class="xref f f-func docutils literal"><span class="pre">t_tpot()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/t_movie" title="f/output_data/t_movie"><code class="xref f f-func docutils literal"><span class="pre">t_movie()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_t_tpot" title="f/output_data/n_t_tpot"><code class="xref f f-func docutils literal"><span class="pre">n_t_tpot()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_t_tomovie" title="f/output_data/n_t_tomovie"><code class="xref f f-func docutils literal"><span class="pre">n_t_tomovie()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_to_step" title="f/output_data/n_to_step"><code class="xref f f-func docutils literal"><span class="pre">n_to_step()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_t_log" title="f/output_data/n_t_log"><code class="xref f f-func docutils literal"><span class="pre">n_t_log()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/t_vpot" title="f/output_data/t_vpot"><code class="xref f f-func docutils literal"><span class="pre">t_vpot()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/l_graph_time" title="f/output_data/l_graph_time"><code class="xref f f-func docutils literal"><span class="pre">l_graph_time()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_log_step" title="f/output_data/n_log_step"><code class="xref f f-func docutils literal"><span class="pre">n_log_step()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_r_fields" title="f/output_data/n_r_fields"><code class="xref f f-func docutils literal"><span class="pre">n_r_fields()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_movie_step" title="f/output_data/n_movie_step"><code class="xref f f-func docutils literal"><span class="pre">n_movie_step()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/t_r_field" title="f/output_data/t_r_field"><code class="xref f f-func docutils literal"><span class="pre">t_r_field()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_vpot_step" title="f/output_data/n_vpot_step"><code class="xref f f-func docutils literal"><span class="pre">n_vpot_step()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_t_r_field" title="f/output_data/n_t_r_field"><code class="xref f f-func docutils literal"><span class="pre">n_t_r_field()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/t_rst" title="f/output_data/t_rst"><code class="xref f f-func docutils literal"><span class="pre">t_rst()</span></code></a>, <a class="reference internal" href="baseModules.html#f/output_data/n_t_movie" title="f/output_data/n_t_movie"><code class="xref f f-func docutils literal"><span class="pre">n_t_movie()</span></code></a>): This module contains the parameters for output control</li>
+<li><a class="reference internal" href="parallelModules.html#f/radial_data" title="f/radial_data"><code class="xref f f-mod docutils literal"><span class="pre">radial_data</span></code></a> (<a class="reference internal" href="parallelModules.html#f/radial_data/n_r_cmb" title="f/radial_data/n_r_cmb"><code class="xref f f-func docutils literal"><span class="pre">n_r_cmb()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/radial_data/n_r_icb" title="f/radial_data/n_r_icb"><code class="xref f f-func docutils literal"><span class="pre">n_r_icb()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/radial_data/nrstopmag" title="f/radial_data/nrstopmag"><code class="xref f f-func docutils literal"><span class="pre">nrstopmag()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/radial_data/nrstartmag" title="f/radial_data/nrstartmag"><code class="xref f f-func docutils literal"><span class="pre">nrstartmag()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop"><code class="xref f f-func docutils literal"><span class="pre">nrstop()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart"><code class="xref f f-func docutils literal"><span class="pre">nrstart()</span></code></a>)</li>
+<li><a class="reference internal" href="parallelModules.html#f/communications" title="f/communications"><code class="xref f f-mod docutils literal"><span class="pre">communications</span></code></a> (<a class="reference internal" href="parallelModules.html#f/communications/lo2r_redist_wait" title="f/communications/lo2r_redist_wait"><code class="xref f f-func docutils literal"><span class="pre">lo2r_redist_wait()</span></code></a>, <code class="xref f f-func docutils literal"><span class="pre">lm2r_type()</span></code>, <a class="reference internal" href="parallelModules.html#f/communications/lo2r_z" title="f/communications/lo2r_z"><code class="xref f f-func docutils literal"><span class="pre">lo2r_z()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/lo2r_w" title="f/communications/lo2r_w"><code class="xref f f-func docutils literal"><span class="pre">lo2r_w()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/lo2r_p" title="f/communications/lo2r_p"><code class="xref f f-func docutils literal"><span class="pre">lo2r_p()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/scatter_from_rank0_to_lo" title="f/communications/scatter_from_rank0_to_lo"><code class="xref f f-func docutils literal"><span class="pre">scatter_from_rank0_to_lo()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/lo2r_s" title="f/communications/lo2r_s"><code class="xref f f-func docutils literal"><span class="pre">lo2r_s()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/r2lo_redist" title="f/communications/r2lo_redist"><code class="xref f f-func docutils literal"><span class="pre">r2lo_redist()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/get_global_sum" title="f/communications/get_global_sum"><code class="xref f f-func docutils literal"><span class="pre">get_global_sum()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/lo2r_aj" title="f/communications/lo2r_aj"><code class="xref f f-func docutils literal"><span class="pre">lo2r_aj()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/lo2r_redist_start" title="f/communications/lo2r_redist_start"><code class="xref f f-func docutils literal"><span class="pre">lo2r_redist_start()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/lo2r_b" title="f/communications/lo2r_b"><code class="xref f f-func docutils literal"><span class="pre">lo2r_b()</span></code></a>)</li>
+<li><a class="reference internal" href="baseModules.html#f/fields" title="f/fields: This module contains the potential fields and their radial derivatives"><code class="xref f f-mod docutils literal"><span class="pre">fields</span></code></a>: This module contains the potential fields and their radial derivatives</li>
+</ul>
+<p class="rubric">Variables</p>
+<ul>
+<li><dl class="variable">
+<dt id="f/step_time_mod/dbdt_lmloc">
+<code class="descclassname">step_time_mod/</code><code class="descname">dbdt_lmloc</code> (:,:)<em> [</em><em>complex</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/step_time_mod/dbdt_lmloc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/step_time_mod/dzdt_lmloc">
+<code class="descclassname">step_time_mod/</code><code class="descname">dzdt_lmloc</code> (:,:)<em> [</em><em>complex</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/step_time_mod/dzdt_lmloc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/step_time_mod/dvsrlm_lmloc">
+<code class="descclassname">step_time_mod/</code><code class="descname">dvsrlm_lmloc</code> (:,:)<em> [</em><em>complex</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/step_time_mod/dvsrlm_lmloc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/step_time_mod/dbdt_rloc">
+<code class="descclassname">step_time_mod/</code><code class="descname">dbdt_rloc</code> (:,:)<em> [</em><em>complex</em><em>,</em><em>private/target/allocatable</em><em>]</em><a class="headerlink" href="#f/step_time_mod/dbdt_rloc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/step_time_mod/dpdt_rloc">
+<code class="descclassname">step_time_mod/</code><code class="descname">dpdt_rloc</code> (:,:)<em> [</em><em>complex</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/step_time_mod/dpdt_rloc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/step_time_mod/dwdt_rloc">
+<code class="descclassname">step_time_mod/</code><code class="descname">dwdt_rloc</code> (:,:)<em> [</em><em>complex</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/step_time_mod/dwdt_rloc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/step_time_mod/dsdt_rloc">
+<code class="descclassname">step_time_mod/</code><code class="descname">dsdt_rloc</code> (:,:)<em> [</em><em>complex</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/step_time_mod/dsdt_rloc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/step_time_mod/djdt_rloc">
+<code class="descclassname">step_time_mod/</code><code class="descname">djdt_rloc</code> (:,:)<em> [</em><em>complex</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/step_time_mod/djdt_rloc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/step_time_mod/dsdt_lmloc">
+<code class="descclassname">step_time_mod/</code><code class="descname">dsdt_lmloc</code> (:,:)<em> [</em><em>complex</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/step_time_mod/dsdt_lmloc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/step_time_mod/dvxbhlm_rloc">
+<code class="descclassname">step_time_mod/</code><code class="descname">dvxbhlm_rloc</code> (:,:)<em> [</em><em>complex</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/step_time_mod/dvxbhlm_rloc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/step_time_mod/dzdt_rloc">
+<code class="descclassname">step_time_mod/</code><code class="descname">dzdt_rloc</code> (:,:)<em> [</em><em>complex</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/step_time_mod/dzdt_rloc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/step_time_mod/dpdt_lmloc">
+<code class="descclassname">step_time_mod/</code><code class="descname">dpdt_lmloc</code> (:,:)<em> [</em><em>complex</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/step_time_mod/dpdt_lmloc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/step_time_mod/dvxbhlm_lmloc">
+<code class="descclassname">step_time_mod/</code><code class="descname">dvxbhlm_lmloc</code> (:,:)<em> [</em><em>complex</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/step_time_mod/dvxbhlm_lmloc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/step_time_mod/dwdt_lmloc">
+<code class="descclassname">step_time_mod/</code><code class="descname">dwdt_lmloc</code> (:,:)<em> [</em><em>complex</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/step_time_mod/dwdt_lmloc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/step_time_mod/dvsrlm_rloc">
+<code class="descclassname">step_time_mod/</code><code class="descname">dvsrlm_rloc</code> (:,:)<em> [</em><em>complex</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/step_time_mod/dvsrlm_rloc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/step_time_mod/dbdt_cmb_lmloc">
+<code class="descclassname">step_time_mod/</code><code class="descname">dbdt_cmb_lmloc</code> (:)<em> [</em><em>complex</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/step_time_mod/dbdt_cmb_lmloc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/step_time_mod/djdt_lmloc">
+<code class="descclassname">step_time_mod/</code><code class="descname">djdt_lmloc</code> (:,:)<em> [</em><em>complex</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/step_time_mod/djdt_lmloc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
+<p class="rubric">Subroutines and functions</p>
+<dl class="subroutine">
+<dt id="f/step_time_mod/initialize_step_time">
+<em class="property">subroutine  </em><code class="descclassname">step_time_mod/</code><code class="descname">initialize_step_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#f/step_time_mod/initialize_step_time" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><a class="reference internal" href="magic.html#f/magic" title="f/magic"><code class="xref f f-prog docutils literal"><span class="pre">magic</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Call to:</th><td class="field-body"><code class="xref f f-func docutils literal"><span class="pre">memwrite()</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/step_time_mod/step_time">
+<em class="property">subroutine  </em><code class="descclassname">step_time_mod/</code><code class="descname">step_time</code><span class="sig-paren">(</span><em>time</em>, <em>dt</em>, <em>dtnew</em>, <em>n_time_step</em><span class="sig-paren">)</span><a class="headerlink" href="#f/step_time_mod/step_time" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>This subroutine performs the actual time-stepping.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>time</strong><em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em></li>
+<li><strong>dt</strong><em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em></li>
+<li><strong>dtnew</strong><em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em></li>
+<li><strong>n_time_step</strong><em> [</em><em>integer</em><em>,</em><em>inout</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="magic.html#f/magic" title="f/magic"><code class="xref f f-prog docutils literal"><span class="pre">magic</span></code></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/timing/walltime" title="f/timing/walltime"><code class="xref f f-func docutils literal"><span class="pre">walltime()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/lo2r_redist_wait" title="f/communications/lo2r_redist_wait"><code class="xref f f-func docutils literal"><span class="pre">lo2r_redist_wait()</span></code></a>, <a class="reference internal" href="misc.html#f/charmanip/capitalize" title="f/charmanip/capitalize"><code class="xref f f-func docutils literal"><span class="pre">capitalize()</span></code></a>, <a class="reference internal" href="#f/timing/time2ms" title="f/timing/time2ms"><code class="xref f f-func docutils literal"><span class="pre">time2ms()</span></code></a>, <a class="reference internal" href="#f/timing/ms2time" title="f/timing/ms2time"><code class="xref f f-func docutils literal"><span class="pre">ms2time()</span></code></a>, <a class="reference internal" href="#f/timing/ltimelimit" title="f/timing/ltimelimit"><code class="xref f f-func docutils literal"><span class="pre">ltimelimit()</span></code></a>, <a class="reference internal" href="misc.html#f/useful/logwrite" title="f/useful/logwrite"><code class="xref f f-func docutils literal"><span class="pre">logwrite()</span></code></a>, <a class="reference internal" href="misc.html#f/useful/l_correct_step" title="f/useful/l_correct_step"><code class="xref f f-func docutils literal"><span class="pre">l_correct_step()</span></code></a>, <a class="reference internal" href="misc.html#f/charmanip/dble2str" title="f/charmanip/dble2str"><code class="xref f f-func docutils literal"><span class="pre">dble2str()</span></code></a>, <a class="reference internal" href="misc.html#f/useful/safeopen" title="f/useful/safeopen"><code class="xref f f-func docutils literal"><span class="pre">safeopen()</span></code></a>, <a class="reference internal" href="misc.html#f/useful/safeclose" title="f/useful/safeclose"><code class="xref f f-func docutils literal"><span class="pre">safeclose()</span></code></a>, <a class="reference internal" href="timeAdvNonLinear.html#f/radialloop/radialloopg" title="f/radialloop/radialloopg"><code class="xref f f-func docutils literal"><span class="pre">radialloopg()</span></code></a>, <a class="reference internal" href="#f/timing/lnegtime" title="f/timing/lnegtime"><code class="xref f f-func docutils literal"><span class="pre">lnegtime()</span></code></a>, <a class="reference internal" href="#f/timing/subtime" title="f/timing/subtime"><code class="xref f f-func docutils literal"><span class="pre">subtime()</span></code></a>, <a class="reference internal" href="#f/timing/addtime" title="f/timing/addtime"><code class="xref f f-func docutils literal"><span class="pre">addtime()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/r2lo_redist" title="f/communications/r2lo_redist"><code class="xref f f-func docutils literal"><span class="pre">r2lo_redist()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/scatter_from_rank0_to_lo" title="f/communications/scatter_from_rank0_to_lo"><code class="xref f f-func docutils literal"><span class="pre">scatter_from_rank0_to_lo()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/output_mod/output" title="f/output_mod/output"><code class="xref f f-func docutils literal"><span class="pre">output()</span></code></a>, <a class="reference internal" href="timeAdvNonLinear.html#f/nonlinear_bcs/get_b_nl_bcs" title="f/nonlinear_bcs/get_b_nl_bcs"><code class="xref f f-func docutils literal"><span class="pre">get_b_nl_bcs()</span></code></a>, <a class="reference internal" href="#f/courant_mod/dt_courant" title="f/courant_mod/dt_courant"><code class="xref f f-func docutils literal"><span class="pre">dt_courant()</span></code></a>, <a class="reference internal" href="#f/step_time_mod/check_time_hits" title="f/step_time_mod/check_time_hits"><code class="xref f f-func docutils literal"><span class="pre">check_time_hits()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/lmloop_mod/lmloop" title="f/lmloop_mod/lmloop"><code class="xref f f-func docutils literal"><span class="pre">lmloop()</span></code></a>, <a class="reference internal" href="#f/timing/meantime" title="f/timing/meantime"><code class="xref f f-func docutils literal"><span class="pre">meantime()</span></code></a>, <a class="reference internal" href="#f/timing/writetime" title="f/timing/writetime"><code class="xref f f-func docutils literal"><span class="pre">writetime()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/step_time_mod/check_time_hits">
+<em class="property">subroutine  </em><code class="descclassname">step_time_mod/</code><code class="descname">check_time_hits</code><span class="sig-paren">(</span><em>l_new_dt</em>, <em>time</em>, <em>dt</em>, <em>dt_new</em><span class="sig-paren">)</span><a class="headerlink" href="#f/step_time_mod/check_time_hits" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Checks whether a certain dt is required to hit a
+specific output-time.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l_new_dt</strong><em> [</em><em>logical</em><em>,</em><em>out</em><em>]</em> :: signfies change of dt !</li>
+<li><strong>time</strong><em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em></li>
+<li><strong>dt</strong><em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em></li>
+<li><strong>dt_new</strong><em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal"><span class="pre">step_time()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
-<div class="section" id="courant-f90">
-<h2><code class="docutils literal"><span class="pre">courant.f90</span></code><a class="headerlink" href="#courant-f90" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="f/courant_mod">
+<span id="courant-f90"></span><h2><code class="docutils literal"><span class="pre">courant.f90</span></code><a class="headerlink" href="#f/courant_mod" title="Permalink to this headline">¶</a></h2>
+<p class="rubric">Quick access</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Routines:</th><td class="field-body"><a class="reference internal" href="#f/courant_mod/dt_courant" title="f/courant_mod/dt_courant"><code class="xref f f-func docutils literal"><span class="pre">dt_courant()</span></code></a>, <a class="reference internal" href="#f/courant_mod/courant" title="f/courant_mod/courant"><code class="xref f f-func docutils literal"><span class="pre">courant()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Needed modules</p>
+<ul class="simple">
+<li><a class="reference internal" href="precalcModules.html#f/horizontal_data" title="f/horizontal_data: Module containing functions depending on longitude and latitude plus help arrays depending on degree and order"><code class="xref f f-mod docutils literal"><span class="pre">horizontal_data</span></code></a> (<a class="reference internal" href="precalcModules.html#f/horizontal_data/osn2" title="f/horizontal_data/osn2"><code class="xref f f-func docutils literal"><span class="pre">osn2()</span></code></a>): Module containing functions depending on longitude and latitude plus help arrays depending on degree and order</li>
+<li><a class="reference internal" href="baseModules.html#f/precision_mod" title="f/precision_mod: This module controls the precision used in MagIC"><code class="xref f f-mod docutils literal"><span class="pre">precision_mod</span></code></a>: This module controls the precision used in MagIC</li>
+<li><a class="reference internal" href="misc.html#f/useful" title="f/useful: library with several useful subroutines"><code class="xref f f-mod docutils literal"><span class="pre">useful</span></code></a> (<a class="reference internal" href="misc.html#f/useful/logwrite" title="f/useful/logwrite"><code class="xref f f-func docutils literal"><span class="pre">logwrite()</span></code></a>): library with several useful subroutines</li>
+<li><a class="reference internal" href="baseModules.html#f/logic" title="f/logic: Module containing the logicals that control the run"><code class="xref f f-mod docutils literal"><span class="pre">logic</span></code></a> (<a class="reference internal" href="baseModules.html#f/logic/l_mag" title="f/logic/l_mag"><code class="xref f f-func docutils literal"><span class="pre">l_mag()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_mag_kin" title="f/logic/l_mag_kin"><code class="xref f f-func docutils literal"><span class="pre">l_mag_kin()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_mag_lf" title="f/logic/l_mag_lf"><code class="xref f f-func docutils literal"><span class="pre">l_mag_lf()</span></code></a>): Module containing the logicals that control the run</li>
+<li><a class="reference internal" href="parallelModules.html#f/radial_data" title="f/radial_data"><code class="xref f f-mod docutils literal"><span class="pre">radial_data</span></code></a> (<a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart"><code class="xref f f-func docutils literal"><span class="pre">nrstart()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop"><code class="xref f f-func docutils literal"><span class="pre">nrstop()</span></code></a>)</li>
+<li><a class="reference internal" href="parallelModules.html#f/parallel_mod" title="f/parallel_mod: This module contains the blocking information"><code class="xref f f-mod docutils literal"><span class="pre">parallel_mod</span></code></a>: This module contains the blocking information</li>
+<li><a class="reference internal" href="baseModules.html#f/num_param" title="f/num_param: Module containing numerical and control parameters"><code class="xref f f-mod docutils literal"><span class="pre">num_param</span></code></a> (<a class="reference internal" href="baseModules.html#f/num_param/delxh2" title="f/num_param/delxh2"><code class="xref f f-func docutils literal"><span class="pre">delxh2()</span></code></a>, <a class="reference internal" href="baseModules.html#f/num_param/delxr2" title="f/num_param/delxr2"><code class="xref f f-func docutils literal"><span class="pre">delxr2()</span></code></a>, <a class="reference internal" href="baseModules.html#f/num_param/courfac" title="f/num_param/courfac"><code class="xref f f-func docutils literal"><span class="pre">courfac()</span></code></a>, <a class="reference internal" href="baseModules.html#f/num_param/alffac" title="f/num_param/alffac"><code class="xref f f-func docutils literal"><span class="pre">alffac()</span></code></a>): Module containing numerical and control parameters</li>
+<li><a class="reference internal" href="baseModules.html#f/physical_parameters" title="f/physical_parameters: Module containing the physical parameters"><code class="xref f f-mod docutils literal"><span class="pre">physical_parameters</span></code></a> (<a class="reference internal" href="baseModules.html#f/physical_parameters/opm" title="f/physical_parameters/opm"><code class="xref f f-func docutils literal"><span class="pre">opm()</span></code></a>, <a class="reference internal" href="baseModules.html#f/physical_parameters/lffac" title="f/physical_parameters/lffac"><code class="xref f f-func docutils literal"><span class="pre">lffac()</span></code></a>): Module containing the physical parameters</li>
+<li><a class="reference internal" href="baseModules.html#f/truncation" title="f/truncation: This module defines the grid points and the truncation"><code class="xref f f-mod docutils literal"><span class="pre">truncation</span></code></a> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp"><code class="xref f f-func docutils literal"><span class="pre">nrp()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/n_phi_max" title="f/truncation/n_phi_max"><code class="xref f f-func docutils literal"><span class="pre">n_phi_max()</span></code></a>): This module defines the grid points and the truncation</li>
+<li><a class="reference internal" href="blocking.html#f/blocking" title="f/blocking: Module containing blocking information"><code class="xref f f-mod docutils literal"><span class="pre">blocking</span></code></a> (<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs"><code class="xref f f-func docutils literal"><span class="pre">nfs()</span></code></a>): Module containing blocking information</li>
+<li><a class="reference internal" href="baseModules.html#f/constants" title="f/constants: module containing constants and parameters used in the code."><code class="xref f f-mod docutils literal"><span class="pre">constants</span></code></a> (<a class="reference internal" href="baseModules.html#f/constants/one" title="f/constants/one"><code class="xref f f-func docutils literal"><span class="pre">one()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/two" title="f/constants/two"><code class="xref f f-func docutils literal"><span class="pre">two()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/half" title="f/constants/half"><code class="xref f f-func docutils literal"><span class="pre">half()</span></code></a>): module containing constants and parameters used in the code.</li>
+<li><a class="reference internal" href="precalcModules.html#f/radial_functions" title="f/radial_functions: This module initiates all the radial functions (transport properties, density, temperature, cheb transforms, etc.)"><code class="xref f f-mod docutils literal"><span class="pre">radial_functions</span></code></a> (<a class="reference internal" href="precalcModules.html#f/radial_functions/or2" title="f/radial_functions/or2"><code class="xref f f-func docutils literal"><span class="pre">or2()</span></code></a>, <a class="reference internal" href="precalcModules.html#f/radial_functions/or4" title="f/radial_functions/or4"><code class="xref f f-func docutils literal"><span class="pre">or4()</span></code></a>, <a class="reference internal" href="precalcModules.html#f/radial_functions/orho1" title="f/radial_functions/orho1"><code class="xref f f-func docutils literal"><span class="pre">orho1()</span></code></a>, <a class="reference internal" href="precalcModules.html#f/radial_functions/orho2" title="f/radial_functions/orho2"><code class="xref f f-func docutils literal"><span class="pre">orho2()</span></code></a>): This module initiates all the radial functions (transport properties, density, temperature, cheb transforms, etc.)</li>
+</ul>
+<p class="rubric">Variables</p>
+<p class="rubric">Subroutines and functions</p>
+<dl class="subroutine">
+<dt id="f/courant_mod/courant">
+<em class="property">subroutine  </em><code class="descclassname">courant_mod/</code><code class="descname">courant</code><span class="sig-paren">(</span><em>n_r</em>, <em>dtrkc</em>, <em>dthkc</em>, <em>vr</em>, <em>vt</em>, <em>vp</em>, <em>br</em>, <em>bt</em>, <em>bp</em>, <em>n_theta_min</em>, <em>n_theta_block</em><span class="sig-paren">)</span><a class="headerlink" href="#f/courant_mod/courant" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>n_r</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: radial level</li>
+<li><strong>dtrkc</strong><em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em> :: Courant step (based on radial advection)</li>
+<li><strong>dthkc</strong><em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em> :: Courant step based on horizontal advection</li>
+<li><strong>vr</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: radial velocity</li>
+<li><strong>vt</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: longitudinal velocity</li>
+<li><strong>vp</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: azimuthal velocity</li>
+<li><strong>br</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: radial magnetic field</li>
+<li><strong>bt</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: longitudinal magnetic field</li>
+<li><strong>bp</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: azimuthal magnetic field</li>
+<li><strong>n_theta_min</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: first theta in block stored in fields</li>
+<li><strong>n_theta_block</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: size of theta block</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="timeAdvNonLinear.html#f/riterthetablocking_openmp_mod/do_iteration_thetablocking_openmp" title="f/riterthetablocking_openmp_mod/do_iteration_thetablocking_openmp"><code class="xref f f-func docutils literal"><span class="pre">do_iteration_thetablocking_openmp()</span></code></a>, <code class="xref f f-func docutils literal"><span class="pre">do_iteration_thetablocking_seq()</span></code>, <code class="xref f f-func docutils literal"><span class="pre">do_iteration_thetablocking_shtns()</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/courant_mod/dt_courant">
+<em class="property">subroutine  </em><code class="descclassname">courant_mod/</code><code class="descname">dt_courant</code><span class="sig-paren">(</span><em>dt_r</em>, <em>dt_h</em>, <em>l_new_dt</em>, <em>dt</em>, <em>dt_new</em>, <em>dtmax</em>, <em>dtrkc</em>, <em>dthkc</em><span class="sig-paren">)</span><a class="headerlink" href="#f/courant_mod/dt_courant" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Check if Courant criterion based on combined
+fluid and Alfven velocity is satisfied
+Returns new value of time step dtnew</p>
+<p>dtr,dth: (output) radial/horizontal Courant time step
+n_time_step: (input) time step number
+l_new_dt: (output) flag indicating that time step is changed (=1) or not (=0)
+dt: (input) old time step
+dtnew: (output) new time step
+dtMin: (input) lower limit for time step (termination if dtnew &lt; dtMin)
+dtMax: (input) upper limit for time step
+dtrkc: (input) radial Courant time step as function of radial level
+dthkc: (input) horizontal Courant time step as function of radial level</p>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dt_r</strong><em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>dt_h</strong><em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>l_new_dt</strong><em> [</em><em>logical</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>dt</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>dt_new</strong><em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>dtmax</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>dtrkc</strong> (<a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>-(<a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a>)+1)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>dthkc</strong> (<a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>-(<a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a>)+1)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal"><span class="pre">step_time()</span></code></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="misc.html#f/useful/logwrite" title="f/useful/logwrite"><code class="xref f f-func docutils literal"><span class="pre">logwrite()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
-<div class="section" id="timing-f90">
-<h2><code class="docutils literal"><span class="pre">timing.f90</span></code><a class="headerlink" href="#timing-f90" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="f/timing">
+<span id="timing-f90"></span><h2><code class="docutils literal"><span class="pre">timing.f90</span></code><a class="headerlink" href="#f/timing" title="Permalink to this headline">¶</a></h2>
+<p class="rubric">Description</p>
+<p>Useful functions for time-stepping</p>
+<p class="rubric">Quick access</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><a class="reference internal" href="#f/timing/msecsecond" title="f/timing/msecsecond"><code class="xref f f-var docutils literal"><span class="pre">msecsecond</span></code></a>, <a class="reference internal" href="#f/timing/msechour" title="f/timing/msechour"><code class="xref f f-var docutils literal"><span class="pre">msechour</span></code></a>, <a class="reference internal" href="#f/timing/msecminute" title="f/timing/msecminute"><code class="xref f f-var docutils literal"><span class="pre">msecminute</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Routines:</th><td class="field-body"><a class="reference internal" href="#f/timing/ms2time" title="f/timing/ms2time"><code class="xref f f-func docutils literal"><span class="pre">ms2time()</span></code></a>, <a class="reference internal" href="#f/timing/writetime" title="f/timing/writetime"><code class="xref f f-func docutils literal"><span class="pre">writetime()</span></code></a>, <a class="reference internal" href="#f/timing/walltime" title="f/timing/walltime"><code class="xref f f-func docutils literal"><span class="pre">walltime()</span></code></a>, <a class="reference internal" href="#f/timing/meantime" title="f/timing/meantime"><code class="xref f f-func docutils literal"><span class="pre">meantime()</span></code></a>, <a class="reference internal" href="#f/timing/addtime" title="f/timing/addtime"><code class="xref f f-func docutils literal"><span class="pre">addtime()</span></code></a>, <a class="reference internal" href="#f/timing/subtime" title="f/timing/subtime"><code class="xref f f-func docutils literal"><span class="pre">subtime()</span></code></a>, <a class="reference internal" href="#f/timing/time2ms" title="f/timing/time2ms"><code class="xref f f-func docutils literal"><span class="pre">time2ms()</span></code></a>, <a class="reference internal" href="#f/timing/ltimelimit" title="f/timing/ltimelimit"><code class="xref f f-func docutils literal"><span class="pre">ltimelimit()</span></code></a>, <a class="reference internal" href="#f/timing/lnegtime" title="f/timing/lnegtime"><code class="xref f f-func docutils literal"><span class="pre">lnegtime()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Needed modules</p>
+<ul class="simple">
+<li><a class="reference internal" href="baseModules.html#f/precision_mod" title="f/precision_mod: This module controls the precision used in MagIC"><code class="xref f f-mod docutils literal"><span class="pre">precision_mod</span></code></a>: This module controls the precision used in MagIC</li>
+<li><a class="reference internal" href="parallelModules.html#f/parallel_mod" title="f/parallel_mod: This module contains the blocking information"><code class="xref f f-mod docutils literal"><span class="pre">parallel_mod</span></code></a> (<code class="xref f f-func docutils literal"><span class="pre">rank()</span></code>): This module contains the blocking information</li>
+<li><code class="xref f f-mod docutils literal"><span class="pre">mpi</span></code></li>
+</ul>
+<p class="rubric">Variables</p>
+<ul>
+<li><dl class="variable">
+<dt id="f/timing/msechour">
+<code class="descclassname">timing/</code><code class="descname">msechour</code><em> [</em><em>integer</em><em>,</em><em>private/parameter=3600000</em><em>]</em><a class="headerlink" href="#f/timing/msechour" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/timing/msecsecond">
+<code class="descclassname">timing/</code><code class="descname">msecsecond</code><em> [</em><em>integer</em><em>,</em><em>private/parameter=1000</em><em>]</em><a class="headerlink" href="#f/timing/msecsecond" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="variable">
+<dt id="f/timing/msecminute">
+<code class="descclassname">timing/</code><code class="descname">msecminute</code><em> [</em><em>integer</em><em>,</em><em>private/parameter=60000</em><em>]</em><a class="headerlink" href="#f/timing/msecminute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
+<p class="rubric">Subroutines and functions</p>
+<dl class="subroutine">
+<dt id="f/timing/walltime">
+<em class="property">subroutine  </em><code class="descclassname">timing/</code><code class="descname">walltime</code><span class="sig-paren">(</span><em>time</em><span class="sig-paren">)</span><a class="headerlink" href="#f/timing/walltime" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>This routine returns the wallclock time in four
+integer arguments.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>time</strong> (4)<em> [</em><em>integer</em><em>,</em><em>out</em><em>]</em></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><a class="reference internal" href="#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal"><span class="pre">step_time()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/lmloop_mod/lmloop" title="f/lmloop_mod/lmloop"><code class="xref f f-func docutils literal"><span class="pre">lmloop()</span></code></a>, <a class="reference internal" href="magic.html#f/magic" title="f/magic"><code class="xref f f-prog docutils literal"><span class="pre">magic</span></code></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><a class="reference internal" href="#f/timing/ms2time" title="f/timing/ms2time"><code class="xref f f-func docutils literal"><span class="pre">ms2time()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/timing/ms2time">
+<em class="property">subroutine  </em><code class="descclassname">timing/</code><code class="descname">ms2time</code><span class="sig-paren">(</span><em>ms</em>, <em>time</em><span class="sig-paren">)</span><a class="headerlink" href="#f/timing/ms2time" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Transforms accumulated milliseconds ms into an four-element
+integer arrays time(4) containing the time in
+hours=time(1), minutes=time(2), seconds=time(3),
+and milliseconds=time(4).</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ms</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>time</strong> (4)<em> [</em><em>integer</em><em>,</em><em>out</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal"><span class="pre">step_time()</span></code></a>, <a class="reference internal" href="#f/timing/addtime" title="f/timing/addtime"><code class="xref f f-func docutils literal"><span class="pre">addtime()</span></code></a>, <a class="reference internal" href="#f/timing/meantime" title="f/timing/meantime"><code class="xref f f-func docutils literal"><span class="pre">meantime()</span></code></a>, <a class="reference internal" href="#f/timing/walltime" title="f/timing/walltime"><code class="xref f f-func docutils literal"><span class="pre">walltime()</span></code></a>, <a class="reference internal" href="#f/timing/subtime" title="f/timing/subtime"><code class="xref f f-func docutils literal"><span class="pre">subtime()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="f/timing/time2ms">
+<em class="property">function  </em><code class="descclassname">timing/</code><code class="descname">time2ms</code><span class="sig-paren">(</span><em>time</em><span class="sig-paren">)</span><a class="headerlink" href="#f/timing/time2ms" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Transforms a four-element integer arrays time(4) containing the
+time in hours=time(1), minutes=time(2), seconds=time(3),
+and milliseconds=time(4) into accumulated milliseconds.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>time</strong> (4)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return:</th><td class="field-body"><strong>time2ms</strong><em> [</em><em>integer</em><em>]</em></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><a class="reference internal" href="#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal"><span class="pre">step_time()</span></code></a>, <a class="reference internal" href="#f/timing/lnegtime" title="f/timing/lnegtime"><code class="xref f f-func docutils literal"><span class="pre">lnegtime()</span></code></a>, <a class="reference internal" href="#f/timing/addtime" title="f/timing/addtime"><code class="xref f f-func docutils literal"><span class="pre">addtime()</span></code></a>, <a class="reference internal" href="#f/timing/meantime" title="f/timing/meantime"><code class="xref f f-func docutils literal"><span class="pre">meantime()</span></code></a>, <a class="reference internal" href="#f/timing/subtime" title="f/timing/subtime"><code class="xref f f-func docutils literal"><span class="pre">subtime()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/timing/subtime">
+<em class="property">subroutine  </em><code class="descclassname">timing/</code><code class="descname">subtime</code><span class="sig-paren">(</span><em>timestart</em>, <em>timestop</em>, <em>timed</em><span class="sig-paren">)</span><a class="headerlink" href="#f/timing/subtime" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Returns time passed between timeStop and timeStart.
+Note timeStop has to be younger than timeStart, otherwise
+24 hours are added. This is necessary on systems like the IBM
+where the time counter as reset every day at midnight.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>timestart</strong> (4)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>timestop</strong> (4)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>timed</strong> (4)<em> [</em><em>integer</em><em>,</em><em>out</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal"><span class="pre">step_time()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/lmloop_mod/lmloop" title="f/lmloop_mod/lmloop"><code class="xref f f-func docutils literal"><span class="pre">lmloop()</span></code></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/timing/time2ms" title="f/timing/time2ms"><code class="xref f f-func docutils literal"><span class="pre">time2ms()</span></code></a>, <a class="reference internal" href="#f/timing/ms2time" title="f/timing/ms2time"><code class="xref f f-func docutils literal"><span class="pre">ms2time()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="f/timing/ltimelimit">
+<em class="property">function  </em><code class="descclassname">timing/</code><code class="descname">ltimelimit</code><span class="sig-paren">(</span><em>time</em>, <em>timemax</em><span class="sig-paren">)</span><a class="headerlink" href="#f/timing/ltimelimit" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>True when time exeeds timeMax</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>time</strong> (4)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>timemax</strong> (4)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return:</th><td class="field-body"><p class="first"><strong>ltimelimit</strong><em> [</em><em>logical</em><em>]</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal"><span class="pre">step_time()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/timing/addtime">
+<em class="property">subroutine  </em><code class="descclassname">timing/</code><code class="descname">addtime</code><span class="sig-paren">(</span><em>time1</em>, <em>time2</em><span class="sig-paren">)</span><a class="headerlink" href="#f/timing/addtime" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>time1</strong> (4)<em> [</em><em>integer</em><em>]</em></li>
+<li><strong>time2</strong> (4)<em> [</em><em>integer</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal"><span class="pre">step_time()</span></code></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/timing/time2ms" title="f/timing/time2ms"><code class="xref f f-func docutils literal"><span class="pre">time2ms()</span></code></a>, <a class="reference internal" href="#f/timing/ms2time" title="f/timing/ms2time"><code class="xref f f-func docutils literal"><span class="pre">ms2time()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/timing/meantime">
+<em class="property">subroutine  </em><code class="descclassname">timing/</code><code class="descname">meantime</code><span class="sig-paren">(</span><em>time</em>, <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#f/timing/meantime" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>time</strong> (4)<em> [</em><em>integer</em><em>]</em></li>
+<li><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal"><span class="pre">step_time()</span></code></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/timing/time2ms" title="f/timing/time2ms"><code class="xref f f-func docutils literal"><span class="pre">time2ms()</span></code></a>, <a class="reference internal" href="#f/timing/ms2time" title="f/timing/ms2time"><code class="xref f f-func docutils literal"><span class="pre">ms2time()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="f/timing/lnegtime">
+<em class="property">function  </em><code class="descclassname">timing/</code><code class="descname">lnegtime</code><span class="sig-paren">(</span><em>time1</em>, <em>time2</em><span class="sig-paren">)</span><a class="headerlink" href="#f/timing/lnegtime" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Negative passed time? Means we have passed midnight.
+The wallclock time is reset to zero on some
+computers at midnight.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>time1</strong> (4)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>time2</strong> (4)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return:</th><td class="field-body"><p class="first"><strong>lnegtime</strong><em> [</em><em>logical</em><em>]</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal"><span class="pre">step_time()</span></code></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/timing/time2ms" title="f/timing/time2ms"><code class="xref f f-func docutils literal"><span class="pre">time2ms()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="subroutine">
+<dt id="f/timing/writetime">
+<em class="property">subroutine  </em><code class="descclassname">timing/</code><code class="descname">writetime</code><span class="sig-paren">(</span><em>nout</em>, <em>text</em>, <em>time</em><span class="sig-paren">)</span><a class="headerlink" href="#f/timing/writetime" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Returns time passed between timeStop and timeStart.
+Note timeStop has to be younger than timeStart, otherwise
+24 hours are added. This is necessary on systems like the IBM
+where the time counter are reset every day at midnight.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>nout</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>text</strong><em> [</em><em>character</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>time</strong> (4)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal"><span class="pre">step_time()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/lmloop_mod/lmloop" title="f/lmloop_mod/lmloop"><code class="xref f f-func docutils literal"><span class="pre">lmloop()</span></code></a>, <a class="reference internal" href="magic.html#f/magic" title="f/magic"><code class="xref f f-prog docutils literal"><span class="pre">magic</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 </div>
 
@@ -131,9 +705,9 @@
   <h3><a href="../contents.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Time stepping</a><ul>
-<li><a class="reference internal" href="#step-time-f90"><code class="docutils literal"><span class="pre">step_time.f90</span></code></a></li>
-<li><a class="reference internal" href="#courant-f90"><code class="docutils literal"><span class="pre">courant.f90</span></code></a></li>
-<li><a class="reference internal" href="#timing-f90"><code class="docutils literal"><span class="pre">timing.f90</span></code></a></li>
+<li><a class="reference internal" href="#f/step_time_mod"><code class="docutils literal"><span class="pre">step_time.f90</span></code></a></li>
+<li><a class="reference internal" href="#f/courant_mod"><code class="docutils literal"><span class="pre">courant.f90</span></code></a></li>
+<li><a class="reference internal" href="#f/timing"><code class="docutils literal"><span class="pre">timing.f90</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -171,6 +745,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
