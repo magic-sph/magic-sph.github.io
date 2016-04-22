@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Numerical technique &mdash; Magic 5.3 documentation</title>
+    <title>Numerical technique &mdash; Magic 5.4 documentation</title>
     
     <link rel="stylesheet" href="_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '5.3',
+        VERSION:     '5.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
-    <link rel="top" title="Magic 5.3 documentation" href="contents.html" />
+    <link rel="top" title="Magic 5.4 documentation" href="contents.html" />
     <link rel="next" title="Contributing to the code" href="contribute.html" />
     <link rel="prev" title="Formulation of the (magneto)-hydrodynamics problem" href="equations.html" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
@@ -101,7 +101,7 @@
         <li class="right" >
           <a href="equations.html" title="Formulation of the (magneto)-hydrodynamics problem"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="contents.html">Magic 5.3 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="contents.html">Magic 5.4 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -231,7 +231,7 @@ P_\ell^m(\cos{\theta}),\]</div>
 <span class="math">\(g_{\ell m}^\star(r)=g_{\ell,-m}(r)\)</span>, where the asterisk denotes the complex conjugate.
 Thus, only coefficients with <span class="math">\(m \ge 0\)</span> have to be considered. The same kind of
 expansion is made for the toroidal magnetic potential, the mass flux potentials,
-pressure and entropy (or temperature).</p>
+pressure, entropy (or temperature) and chemical composition.</p>
 <p>The equations <a href="#equation-eqLegTF1">(8)</a> and <a href="#equation-eqLegTF2">(9)</a> define a two-step transform
 from the longitude/latitude representation to the spherical harmonic
 representation <span class="math">\((r,\theta,\phi)\longrightarrow(r,\ell,m)\)</span>.  The equation
@@ -480,6 +480,7 @@ E\,\dfrac{\ell(\ell+1)}{r^2}\left[\left\lbrace\dfrac{\partial}{\partial t} +
 -\nu &amp; \,{\cal C}''_n \left. \phantom{\dfrac{d\nu}{dr}}\right]&amp; W_{\ell m n} \\
 + \left[{\cal C}'_n -\dfrac{d\ln\tilde{\rho}}{dr}{\cal C}_n\right] &amp; &amp; P_{\ell m n} \\
 - \left[\dfrac{Ra\,E}{Pr}\,\tilde{\rho}\,g(r)\right] &amp; \,{\cal C}_n &amp; s_{\ell m n} \\
+- \left[\dfrac{Ra_\xi\,E}{Sc}\,\tilde{\rho}\,g(r)\right] &amp; \,{\cal C}_n &amp; \xi_{\ell m n} \\
 = {\cal N}^W_{\ell m} = \int d\Omega\,{Y_{\ell}^{m}}^\star\,{\cal N}^W =\int d\Omega\,{Y_{\ell}^{m}}^\star\,\vec{e_r}\cdot \vec{F}\,. &amp; &amp;
 \end{aligned}}\end{split}\]</div>
 <p>Here, <span class="math">\(d\Omega\)</span> is the spherical surface element. We use the summation convention
@@ -675,6 +676,30 @@ discussed <a class="reference internal" href="#secnonlinears"><span>below</span>
 the subroutines <a class="reference internal" href="apiFortran/timeAdvLinear.html#f/updates_mod/get_smat" title="f/updates_mod/get_smat"><code class="xref f f-subr docutils literal"><span class="pre">get_sMat</span></code></a></p>
 </div>
 </div>
+<div class="section" id="equation-for-chemical-composition">
+<h3>Equation for chemical composition <span class="math">\(\xi\)</span><a class="headerlink" href="#equation-for-chemical-composition" title="Permalink to this headline">¶</a></h3>
+<p>The equation for the chemical composition is given by</p>
+<div class="math" id="equation-eqSpecXi">
+<span class="eqno">(25)</span>\[\begin{split}\boxed{
+\begin{aligned}
+\dfrac{1}{Sc}\left[\left(Sc\dfrac{\partial}{\partial t} +
+\kappa_\xi\,\dfrac{\ell(\ell+1)}{r^2}
+\right)\right. &amp; \,{\cal C}_n  &amp; \\
+-\kappa_\xi\,\left(\dfrac{d\ln\kappa_\xi}{dr}+\dfrac{d\ln\tilde{\rho}}{dr}+
++\dfrac{2}{r}\right)
+&amp;\,{\cal C}'_n &amp; \\
+-\kappa_\xi &amp; \,{\cal C}''_n \left. \phantom{\dfrac{d\nu}{dr}}\right]&amp; \xi_{\ell m n} \\
+= {\cal N}^\xi_{\ell m} = \int d\Omega\,{Y_{\ell}^{m}}^\star\,{\cal N}^\xi = \int d\Omega\,{Y_{\ell}^{m}}^\star\,\left[-\vec{u}\cdot\vec{\nabla}\xi
+\right]\,. &amp; &amp;
+\end{aligned}}\end{split}\]</div>
+<p>Once again, the numerical evaluation of the right-hand-side (i.e. the
+non-linear term) is discussed <a class="reference internal" href="#secnonlinearxi"><span>below</span></a>.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">The exact computation of the linear terms of <a href="#equation-eqSpecXi">(25)</a> are coded in
+the subroutines <a class="reference internal" href="apiFortran/timeAdvLinear.html#f/updatexi_mod/get_ximat" title="f/updatexi_mod/get_ximat"><code class="xref f f-subr docutils literal"><span class="pre">get_xiMat</span></code></a></p>
+</div>
+</div>
 <div class="section" id="equation-for-the-poloidal-magnetic-potential">
 <h3>Equation for the poloidal magnetic potential <span class="math">\(g\)</span><a class="headerlink" href="#equation-for-the-poloidal-magnetic-potential" title="Permalink to this headline">¶</a></h3>
 <p>The equation for the poloidal magnetic potential is the radial
@@ -685,7 +710,7 @@ component of the dynamo equation since</p>
  g}{\partial t}.\]</div>
 <p>The spectral form then reads</p>
 <div class="math" id="equation-eqSpecG">
-<span class="eqno">(25)</span>\[\begin{split}\boxed{
+<span class="eqno">(26)</span>\[\begin{split}\boxed{
 \begin{aligned}
 \dfrac{\ell(\ell+1)}{r^2}\left[\left(\dfrac{\partial}{\partial t} +
 \dfrac{1}{Pm}\lambda\,\dfrac{\ell(\ell+1)}{r^2}
@@ -695,7 +720,7 @@ component of the dynamo equation since</p>
 \end{aligned}}\end{split}\]</div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last">The exact computation of the linear terms of <a href="#equation-eqSpecG">(25)</a> are coded in
+<p class="last">The exact computation of the linear terms of <a href="#equation-eqSpecG">(26)</a> are coded in
 the subroutines <a class="reference internal" href="apiFortran/timeAdvLinear.html#f/updateb_mod/get_bmat" title="f/updateb_mod/get_bmat"><code class="xref f f-subr docutils literal"><span class="pre">get_bMat</span></code></a></p>
 </div>
 </div>
@@ -703,7 +728,7 @@ the subroutines <a class="reference internal" href="apiFortran/timeAdvLinear.htm
 <h3>Equation for the toroidal magnetic potential <span class="math">\(h\)</span><a class="headerlink" href="#equation-for-the-toroidal-magnetic-potential" title="Permalink to this headline">¶</a></h3>
 <p>The equation for the toroidal magnetic field coefficient reads</p>
 <div class="math" id="equation-eqSpecH">
-<span class="eqno">(26)</span>\[\begin{split}\boxed{
+<span class="eqno">(27)</span>\[\begin{split}\boxed{
 \begin{aligned}
 \dfrac{\ell(\ell+1)}{r^2}\left[\left(\dfrac{\partial}{\partial t} +
 \dfrac{1}{Pm}\lambda\,\dfrac{\ell(\ell+1)}{r^2}
@@ -714,22 +739,22 @@ the subroutines <a class="reference internal" href="apiFortran/timeAdvLinear.htm
 \end{aligned}}\end{split}\]</div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last">The exact computation of the linear terms of <a href="#equation-eqSpecH">(26)</a> are coded in
+<p class="last">The exact computation of the linear terms of <a href="#equation-eqSpecH">(27)</a> are coded in
 the subroutines <a class="reference internal" href="apiFortran/timeAdvLinear.html#f/updateb_mod/get_bmat" title="f/updateb_mod/get_bmat"><code class="xref f f-subr docutils literal"><span class="pre">get_bMat</span></code></a></p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>We note that the terms on the left hand side of <a href="#equation-eqSpecG">(25)</a> and <a href="#equation-eqSpecH">(26)</a>
+<p>We note that the terms on the left hand side of <a href="#equation-eqSpecG">(26)</a> and <a href="#equation-eqSpecH">(27)</a>
 resulting from the magnetic diffusion term
 and the explicit time derivative completely decouple
 in spherical harmonic degree and order.</p>
 <p>The dynamo term does not decouple:</p>
 <div class="last math" id="equation-eqDynamoTerm">
-<span class="eqno">(27)</span>\[\vec{D}=\vec{\nabla}\times\left(\vec{u}\times\vec{B}\right)\,.\]</div>
+<span class="eqno">(28)</span>\[\vec{D}=\vec{\nabla}\times\left(\vec{u}\times\vec{B}\right)\,.\]</div>
 </div>
 <p>We have now derived a full set of equations
-<a href="#equation-eqSpecW">(20)</a>, <a href="#equation-eqSpecZ">(21)</a>, <a href="#equation-eqSpecP">(22)</a>, <a href="#equation-eqSpecS">(24)</a>, <a href="#equation-eqSpecG">(25)</a> and
-<a href="#equation-eqSpecH">(26)</a>,
+<a href="#equation-eqSpecW">(20)</a>, <a href="#equation-eqSpecZ">(21)</a>, <a href="#equation-eqSpecP">(22)</a>, <a href="#equation-eqSpecS">(24)</a>, <a href="#equation-eqSpecG">(26)</a> and
+<a href="#equation-eqSpecH">(27)</a>,
 each describing the evolution of a single spherical harmonic mode of the
 six unknown fields (assuming that the terms on the right hand side
 are given). Each equation couples <span class="math">\(N+1\)</span> Chebyshev coefficients
@@ -791,7 +816,7 @@ be solved with standard methods for the different spectral contributions.</p>
 <p>For example the respective system of equations for the modes of the poloidal magnetic potential <span class="math">\(g\)</span>
 results from considering the radial component of the dynamo equation:</p>
 <div class="math" id="equation-imex">
-<span class="eqno">(28)</span>\[\left( \mathcal{A}_{kn} + \alpha\;\mathcal{I}_{kn}\right)\;g_{\ell mn}(t+\delta t) =
+<span class="eqno">(29)</span>\[\left( \mathcal{A}_{kn} + \alpha\;\mathcal{I}_{kn}\right)\;g_{\ell mn}(t+\delta t) =
 \left( \mathcal{A}_{kn} - (1 - \alpha)\;\mathcal{I}_{kn} \right)\;g_{\ell mn}(t) +
 \frac{3}{2}\;\mathcal{E}_{k\ell m}(t) - \frac{1}{2}\;\mathcal{E}_{k\ell m}(t-\delta t)\]</div>
 <p>with</p>
@@ -826,7 +851,7 @@ time <span class="math">\(t-\delta t\)</span> is combined into one two-dimension
 The explicit time step part is called <code class="docutils literal"><span class="pre">dbdt</span></code> in MagIC:</p>
 <div class="math">
 \[\texttt{dbdt}(k,\ell m) = \mathcal{E}_{k\ell m}.\]</div>
-<p>The combination of left hand side of <a href="#equation-imex">(28)</a> provides the time stepping matrix for <span class="math">\(g\)</span>:</p>
+<p>The combination of left hand side of <a href="#equation-imex">(29)</a> provides the time stepping matrix for <span class="math">\(g\)</span>:</p>
 <div class="math">
 \[\texttt{bmat}(k,n,\ell) = {A}_{kn} + \alpha \mathcal{I}_{kn}\;.\]</div>
 <p>There is a different time stepping matrix for each spherical harmonic degree <span class="math">\(\ell\)</span>.
@@ -873,7 +898,7 @@ additional safety factor in the choice of <span class="math">\(\delta t\)</span>
 <a href="#equation-eqSpecW">(20)</a> contains the radial component of the advection, the Lorentz force
 and Coriolis force. In spherical coordinate, the two first contributions read:</p>
 <div class="math" id="equation-eqAdvection">
-<span class="eqno">(29)</span>\[\begin{split}\tilde{\rho}\left(\vec{u}\cdot\vec{\nabla}\vec{u}\right)=
+<span class="eqno">(30)</span>\[\begin{split}\tilde{\rho}\left(\vec{u}\cdot\vec{\nabla}\vec{u}\right)=
 \left\lbrace
 \begin{aligned}
 {\cal A}_r \\
@@ -919,7 +944,7 @@ reads:</p>
 operator <span class="math">\(\vartheta_2\)</span> defined in <a href="#equation-eqOpTheta1">(12)</a>. Using the recurrence
 relation, one thus finally gets in spherical harmonic space:</p>
 <div class="math" id="equation-eqNLW">
-<span class="eqno">(30)</span>\[\boxed{
+<span class="eqno">(31)</span>\[\boxed{
 {\cal N}^W_{\ell m}  = \dfrac{2}{r}\left[i m \dfrac{\partial W_\ell^m}{\partial r}-(\ell-1)c_\ell^m
 Z_{\ell-1}^m+(\ell+2)c_{\ell+1}^m Z_{\ell+1}^m\right]
 +{{\cal A}_r}_\ell^m\, .
@@ -930,7 +955,7 @@ the module <code class="xref f f-mod docutils literal"><span class="pre">grid_sp
 spectral space by using a Legendre and a Fourier transform to produce <span class="math">\({{\cal A}_r}_\ell^m\)</span>.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last">The final calculations of <a href="#equation-eqNLW">(30)</a> are done in the subroutine
+<p class="last">The final calculations of <a href="#equation-eqNLW">(31)</a> are done in the subroutine
 <a class="reference internal" href="apiFortran/timeAdvNonLinear.html#f/nonlinear_lm_mod/get_td" title="f/nonlinear_lm_mod/get_td"><code class="xref f f-subr docutils literal"><span class="pre">get_td</span></code></a>.</p>
 </div>
 </div>
@@ -955,7 +980,7 @@ W)+\dfrac{\sin\theta}{r^2}\dfrac{\partial^2 W}{\partial r\partial \theta}+
 <p>Using the <span class="math">\(\vartheta\)</span> operators defined in <a href="#equation-eqOpTheta1">(12)</a>-<a href="#equation-eqOpTheta4">(15)</a> then
 allows to rewrite the Coriolis force in the following way:</p>
 <div class="math" id="equation-eqCorZNL">
-<span class="eqno">(31)</span>\[\vec{e_r}\cdot\vec{\nabla}\times\left[(2\tilde{\rho}\vec{u})\times
+<span class="eqno">(32)</span>\[\vec{e_r}\cdot\vec{\nabla}\times\left[(2\tilde{\rho}\vec{u})\times
 \vec{e_z}\right]=\dfrac{2}{r^2}\left(\vartheta_3\,\dfrac{\partial W}{\partial r}
 -\dfrac{1}{r}\,\vartheta_4\,W+ \dfrac{\partial Z}{\partial \phi} \right)\,.\]</div>
 <p>The contributions of nonlinear advection and Lorentz forces that enter the equation
@@ -980,12 +1005,12 @@ this step <span class="math">\({{\cal A}t}_{\ell}^m\)</span> and <span class="ma
 </li>
 <li><p class="first">Calculate the colatitude and theta derivatives using the recurrence relations:</p>
 <div class="math" id="equation-eqAdvZNL">
-<span class="eqno">(32)</span>\[\vartheta_1\,{{\cal A}p}_{\ell}^m-\dfrac{\partial {{\cal A}t}_{\ell}^m}{\partial \phi}\,.\]</div>
+<span class="eqno">(33)</span>\[\vartheta_1\,{{\cal A}p}_{\ell}^m-\dfrac{\partial {{\cal A}t}_{\ell}^m}{\partial \phi}\,.\]</div>
 </li>
 </ol>
-<p>Using <a href="#equation-eqCorZNL">(31)</a> and <a href="#equation-eqAdvZNL">(32)</a>, one thus finally gets</p>
+<p>Using <a href="#equation-eqCorZNL">(32)</a> and <a href="#equation-eqAdvZNL">(33)</a>, one thus finally gets</p>
 <div class="math" id="equation-eqNLZ">
-<span class="eqno">(33)</span>\[\begin{split}\boxed{
+<span class="eqno">(34)</span>\[\begin{split}\boxed{
 \begin{aligned}
 {\cal N}^Z_{\ell m}  = &amp; \dfrac{2}{r^2}\left[(\ell-1)(\ell+1)\,c_\ell^m\,
 \dfrac{\partial W_{\ell-1}^m}{\partial r}+\ell(\ell+2)\,c_{\ell+1}^m\,
@@ -1000,7 +1025,7 @@ im\,Z_\ell^m\right] \\
 }\end{split}\]</div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last">The final calculations of <a href="#equation-eqNLZ">(33)</a> are done in the subroutine
+<p class="last">The final calculations of <a href="#equation-eqNLZ">(34)</a> are done in the subroutine
 <a class="reference internal" href="apiFortran/timeAdvNonLinear.html#f/nonlinear_lm_mod/get_td" title="f/nonlinear_lm_mod/get_td"><code class="xref f f-subr docutils literal"><span class="pre">get_td</span></code></a>.</p>
 </div>
 </div>
@@ -1035,7 +1060,7 @@ The Coriolis force can be rewritten as a function of <span class="math">\(W\)</s
 <p>Using the <span class="math">\(\vartheta\)</span> operators defined in <a href="#equation-eqOpTheta3">(14)</a>-<a href="#equation-eqOpTheta4">(15)</a> then
 allows to rewrite the Coriolis force in the following way:</p>
 <div class="math" id="equation-eqCorPNL">
-<span class="eqno">(34)</span>\[\vec{\nabla}_H\cdot\left[(2\tilde{\rho}\vec{u})\times
+<span class="eqno">(35)</span>\[\vec{\nabla}_H\cdot\left[(2\tilde{\rho}\vec{u})\times
 \vec{e_z}\right]=\dfrac{2}{r^2}\left(-\dfrac{L_H}{r}\,\dfrac{\partial W}{\partial \phi}
 -\dfrac{\partial^2 W}{\partial\phi\partial r}+\vartheta_3\, Z
 \right)\,.\]</div>
@@ -1049,10 +1074,10 @@ for pressure are written this way:</p>
 <p>To make use of the recurrence relations <a href="#equation-eqOpTheta1">(12)</a>-<a href="#equation-eqOpTheta4">(15)</a>, we then follow
 the same three steps as for the advection term entering the equation for <span class="math">\(Z\)</span>.</p>
 <div class="math" id="equation-eqAdvPNL">
-<span class="eqno">(35)</span>\[\vartheta_1\,{{\cal A}t}_{\ell}^m+\dfrac{\partial {{\cal A}p}_{\ell}^m}{\partial \phi}\,.\]</div>
-<p>Using <a href="#equation-eqCorPNL">(34)</a> and <a href="#equation-eqAdvPNL">(35)</a>, one thus finally gets</p>
+<span class="eqno">(36)</span>\[\vartheta_1\,{{\cal A}t}_{\ell}^m+\dfrac{\partial {{\cal A}p}_{\ell}^m}{\partial \phi}\,.\]</div>
+<p>Using <a href="#equation-eqCorPNL">(35)</a> and <a href="#equation-eqAdvPNL">(36)</a>, one thus finally gets</p>
 <div class="math" id="equation-eqNLP">
-<span class="eqno">(36)</span>\[\begin{split}\boxed{
+<span class="eqno">(37)</span>\[\begin{split}\boxed{
 \begin{aligned}
 {\cal N}^P_{\ell m}  = &amp; \dfrac{2}{r^2}\left[-im\,\dfrac{\ell(\ell+1)}{r}\,W_\ell^m
 -im\,\dfrac{\partial W_\ell^m}{\partial r}+(\ell-1)(\ell+1)\,c_\ell^m\,
@@ -1065,7 +1090,7 @@ Z_{\ell+1}^m \right] \\
 }\end{split}\]</div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last">The final calculations of <a href="#equation-eqNLP">(36)</a> are done in the subroutine
+<p class="last">The final calculations of <a href="#equation-eqNLP">(37)</a> are done in the subroutine
 <a class="reference internal" href="apiFortran/timeAdvNonLinear.html#f/nonlinear_lm_mod/get_td" title="f/nonlinear_lm_mod/get_td"><code class="xref f f-subr docutils literal"><span class="pre">get_td</span></code></a>.</p>
 </div>
 </div>
@@ -1083,7 +1108,7 @@ of the viscous and Ohmic heating terms.</p>
 \dfrac{\lambda}{Pm^2\,E}\,j^2\right)\,.\]</div>
 <p>Expanding this term leads to:</p>
 <div class="math" id="equation-eqHeatingEntropy">
-<span class="eqno">(37)</span>\[\begin{split}\begin{aligned}
+<span class="eqno">(38)</span>\[\begin{split}\begin{aligned}
 {\cal H}=&amp; \dfrac{Pr\,Di}{Ra}\dfrac{1}{\tilde{\rho}\tilde{T}}\left[
 \tilde{\rho}\nu\left\lbrace 2\left(\dfrac{\partial u_r}{ \partial r}\right)^2
 +2\left(\dfrac{1}{r}\dfrac{\partial u_\theta}{\partial\theta}+\dfrac{u_r}{r}
@@ -1110,7 +1135,7 @@ It is in a first step rearranged as follows</p>
 <div class="math">
 \[-\vec{u}\cdot\vec{\nabla}s = -\dfrac{1}{\tilde{\rho}}\left[
 \vec{\nabla}\cdot\left(\tilde{\rho}s\vec{u} \right)-
-\underbrace{\vec{\nabla}\cdot\left(\tilde{\rho}\vec{u} \right)}_{=0}\right]\,.\]</div>
+s\underbrace{\vec{\nabla}\cdot\left(\tilde{\rho}\vec{u} \right)}_{=0}\right]\,.\]</div>
 <p>The quantities that are calculated in the physical space are thus simply the product of
 entropy/temperature <span class="math">\(s\)</span> by the velocity components. This defines three variables
 defined in the grid space that are computed in the subroutine <code class="xref f f-subr docutils literal"><span class="pre">get_nl</span></code>:</p>
@@ -1140,15 +1165,15 @@ and <span class="math">\({\mathcal{US}p}_{\ell}^m\)</span> are defined.</p>
 </li>
 <li><p class="first">Calculate the colatitude and theta derivatives using the recurrence relations:</p>
 <div class="math" id="equation-eqAdvSNL">
-<span class="eqno">(38)</span>\[-\dfrac{1}{\tilde{\rho}}\left[
+<span class="eqno">(39)</span>\[-\dfrac{1}{\tilde{\rho}}\left[
 \dfrac{1}{r^2}\dfrac{\partial\, {\mathcal{US}r}_\ell^m}{\partial r}+
 \vartheta_1\,{\mathcal{US}t}_\ell^m+
 \dfrac{\partial\,{\mathcal{US}p}_\ell^m}{\partial \phi}\right]\,.\]</div>
 </li>
 </ol>
-<p>Using <a href="#equation-eqHeatingEntropy">(37)</a> and <a href="#equation-eqAdvSNL">(38)</a>, one thus finally gets</p>
+<p>Using <a href="#equation-eqHeatingEntropy">(38)</a> and <a href="#equation-eqAdvSNL">(39)</a>, one thus finally gets</p>
 <div class="math" id="equation-eqNLS">
-<span class="eqno">(39)</span>\[\boxed{
+<span class="eqno">(40)</span>\[\boxed{
 {\cal N}^S_{\ell m}  = -\dfrac{1}{\tilde{\rho}}\left[
 \dfrac{1}{r^2}\dfrac{\partial\, {\mathcal{US}r}_\ell^m}{\partial r}
 + (\ell+1)\,c_\ell^m\,{\mathcal{US}t}_{\ell-1}^m-
@@ -1157,17 +1182,82 @@ and <span class="math">\({\mathcal{US}p}_{\ell}^m\)</span> are defined.</p>
 }\]</div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last">The <span class="math">\(\theta\)</span> and <span class="math">\(\phi\)</span> derivatives that enter <a href="#equation-eqNLS">(39)</a>
+<p class="last">The <span class="math">\(\theta\)</span> and <span class="math">\(\phi\)</span> derivatives that enter <a href="#equation-eqNLS">(40)</a>
 are done in the subroutine
 <a class="reference internal" href="apiFortran/timeAdvNonLinear.html#f/nonlinear_lm_mod/get_td" title="f/nonlinear_lm_mod/get_td"><code class="xref f f-subr docutils literal"><span class="pre">get_td</span></code></a>. The radial derivative
 is computed afterwards at the very beginning of
 <a class="reference internal" href="apiFortran/timeAdvLinear.html#f/updates_mod/updates" title="f/updates_mod/updates"><code class="xref f f-subr docutils literal"><span class="pre">updateS</span></code></a>.</p>
 </div>
 </div>
+<div class="section" id="secnonlinearxi">
+<span id="id4"></span><h3>Nonlinear terms entering the equation for <span class="math">\(\xi\)</span><a class="headerlink" href="#secnonlinearxi" title="Permalink to this headline">¶</a></h3>
+<p>The nonlinear term that enters the equation for chemical composition
+<a href="#equation-eqSpecXi">(25)</a> is the advection term. This term is treated the same way
+as the advection term that enters the entropy equation.
+It is in a first step rearranged as follows</p>
+<div class="math">
+\[-\vec{u}\cdot\vec{\nabla}\xi = -\dfrac{1}{\tilde{\rho}}\left[
+\vec{\nabla}\cdot\left(\tilde{\rho}\xi\vec{u} \right)-
+\xi\underbrace{\vec{\nabla}\cdot\left(\tilde{\rho}\vec{u} \right)}_{=0}\right]\,.\]</div>
+<p>The quantities that are calculated in the physical space are thus simply the
+product of composition <span class="math">\(\xi\)</span> by the velocity components. This
+defines three variables defined in the grid space that are computed in the
+subroutine <code class="xref f f-subr docutils literal"><span class="pre">get_nl</span></code>:</p>
+<div class="math">
+\[\mathcal{UX}_r = \tilde{\rho}\xi u_r,\quad  \mathcal{US}_\theta = \tilde{\rho}\xi u_\theta,
+\quad \mathcal{UX}_\phi = \tilde{\rho}\xi u_\phi,\]</div>
+<p>To get the actual advection term, one must then apply the divergence operator
+to get:</p>
+<div class="math">
+\[-\vec{u}\cdot\vec{\nabla}\xi = -\dfrac{1}{\tilde{\rho}}\left[
+\dfrac{1}{r^2}\dfrac{\partial}{\partial r}\left(r^2\,\mathcal{UX}_r\right)+
+\dfrac{1}{r\sin\theta}\dfrac{\partial}{\partial\theta}\left(\sin\theta\,\mathcal{UX}_\theta
+\right)+\dfrac{1}{r\sin\theta}\dfrac{\partial\,\mathcal{UX}_\phi}{\partial\phi}\right]\,.\]</div>
+<p>To make use of the recurrence relations <a href="#equation-eqOpTheta1">(12)</a>-<a href="#equation-eqOpTheta4">(15)</a>, the actual
+strategy is then to follow the following steps:</p>
+<ol class="arabic">
+<li><p class="first">Compute the quantities <span class="math">\(r^2\,\mathcal{UX}_r\)</span>, <span class="math">\(\mathcal{UX}_\phi/r\sin\theta\)</span>
+and <span class="math">\(\mathcal{UX}_\theta/r\sin\theta\)</span> in the physical space. In the code, this step
+is computed in the subroutine <code class="xref f f-subr docutils literal"><span class="pre">get_nl</span></code> in
+the module <code class="xref f f-mod docutils literal"><span class="pre">grid_space_arrays_mod</span></code>.</p>
+</li>
+<li><p class="first">Transform <span class="math">\(r^2\,\mathcal{UX}_r\)</span>, <span class="math">\(\mathcal{UX}_\phi/r\sin\theta\)</span>
+and <span class="math">\(\mathcal{UX}_\theta/r\sin\theta\)</span> to
+the spectral space (thanks to a Legendre and a Fourier transform). In MagIC, this step
+is computed in the modules <a class="reference internal" href="apiFortran/legFourierChebAlgebra.html#f/legendre_grid_to_spec" title="f/legendre_grid_to_spec"><code class="xref f f-mod docutils literal"><span class="pre">legendre_grid_to_spec</span></code></a> and <a class="reference internal" href="apiFortran/legFourierChebAlgebra.html#f/fft" title="f/fft: This file contains the subroutines called by fftJW: fft99a, fft99b, wpass2, wpass3, wpass4 and wpass5"><code class="xref f f-mod docutils literal"><span class="pre">fft</span></code></a>. After
+this step <span class="math">\({\mathcal{UX}r}_{\ell}^m\)</span>, <span class="math">\({\mathcal{UX}t}_{\ell}^m\)</span>
+and <span class="math">\({\mathcal{UX}p}_{\ell}^m\)</span> are defined.</p>
+</li>
+<li><p class="first">Calculate the colatitude and theta derivatives using the recurrence relations:</p>
+<div class="math">
+\[-\dfrac{1}{\tilde{\rho}}\left[
+\dfrac{1}{r^2}\dfrac{\partial\, {\mathcal{UX}r}_\ell^m}{\partial r}+
+\vartheta_1\,{\mathcal{UX}t}_\ell^m+
+\dfrac{\partial\,{\mathcal{UX}p}_\ell^m}{\partial \phi}\right]\,.\]</div>
+</li>
+</ol>
+<p>One thus finally gets</p>
+<div class="math" id="equation-eqNLXi">
+<span class="eqno">(41)</span>\[\boxed{
+{\cal N}^\xi_{\ell m}  = -\dfrac{1}{\tilde{\rho}}\left[
+\dfrac{1}{r^2}\dfrac{\partial\, {\mathcal{UX}r}_\ell^m}{\partial r}
++ (\ell+1)\,c_\ell^m\,{\mathcal{UX}t}_{\ell-1}^m-
+\ell\,c_{\ell+1}^m\,{\mathcal{UX}t}_{\ell+1}^m
++im\,{\mathcal{UX}p}_\ell^m\right]\,.
+}\]</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">The <span class="math">\(\theta\)</span> and <span class="math">\(\phi\)</span> derivatives that enter <a href="#equation-eqNLXi">(41)</a>
+are done in the subroutine
+<a class="reference internal" href="apiFortran/timeAdvNonLinear.html#f/nonlinear_lm_mod/get_td" title="f/nonlinear_lm_mod/get_td"><code class="xref f f-subr docutils literal"><span class="pre">get_td</span></code></a>. The radial derivative
+is computed afterwards at the very beginning of
+<a class="reference internal" href="apiFortran/timeAdvLinear.html#f/updatexi_mod/updatexi" title="f/updatexi_mod/updatexi"><code class="xref f f-subr docutils literal"><span class="pre">updateXi</span></code></a>.</p>
+</div>
+</div>
 <div class="section" id="secnonlinearg">
-<span id="id4"></span><h3>Nonlinear terms entering the equation for <span class="math">\(g\)</span><a class="headerlink" href="#secnonlinearg" title="Permalink to this headline">¶</a></h3>
+<span id="id5"></span><h3>Nonlinear terms entering the equation for <span class="math">\(g\)</span><a class="headerlink" href="#secnonlinearg" title="Permalink to this headline">¶</a></h3>
 <p>The nonlinear term that enters the equation for the poloidal potential of the magnetic
-field <a href="#equation-eqSpecG">(25)</a> is the radial component of the induction term <a href="#equation-eqDynamoTerm">(27)</a>.
+field <a href="#equation-eqSpecG">(26)</a> is the radial component of the induction term <a href="#equation-eqDynamoTerm">(28)</a>.
 In the following we introduce the electromotive force
 <span class="math">\({\cal F} = \vec{u}\times\vec{B}\)</span> with its three components</p>
 <div class="math">
@@ -1202,22 +1292,22 @@ and <span class="math">\({\mathcal{F}_\phi}_{\ell}^m\)</span> are defined.</p>
 </ol>
 <p>We thus finally get</p>
 <div class="math" id="equation-eqNLG">
-<span class="eqno">(40)</span>\[\boxed{
+<span class="eqno">(42)</span>\[\boxed{
 {\cal N}^g_{\ell m}  =
 (\ell+1)\,c_\ell^m\,{\mathcal{F}_\phi}_{\ell-1}^m-\ell\,c_{\ell+1}^m\,
 {\mathcal{F}_\phi}_{\ell+1}^m -im\,{\mathcal{F}_\theta}_{\ell}^m\,.
 }\]</div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last">The final calculations of <a href="#equation-eqNLG">(40)</a> are done in the subroutine
+<p class="last">The final calculations of <a href="#equation-eqNLG">(42)</a> are done in the subroutine
 <a class="reference internal" href="apiFortran/timeAdvNonLinear.html#f/nonlinear_lm_mod/get_td" title="f/nonlinear_lm_mod/get_td"><code class="xref f f-subr docutils literal"><span class="pre">get_td</span></code></a>.</p>
 </div>
 </div>
 <div class="section" id="secnonlinearh">
-<span id="id5"></span><h3>Nonlinear terms entering the equation for <span class="math">\(h\)</span><a class="headerlink" href="#secnonlinearh" title="Permalink to this headline">¶</a></h3>
+<span id="id6"></span><h3>Nonlinear terms entering the equation for <span class="math">\(h\)</span><a class="headerlink" href="#secnonlinearh" title="Permalink to this headline">¶</a></h3>
 <p>The nonlinear term that enters the equation for the toroidal potential of the magnetic
-field <a href="#equation-eqSpecH">(26)</a> is the radial component of the curl of the
-induction term <a href="#equation-eqDynamoTerm">(27)</a>:</p>
+field <a href="#equation-eqSpecH">(27)</a> is the radial component of the curl of the
+induction term <a href="#equation-eqDynamoTerm">(28)</a>:</p>
 <div class="math">
 \[\begin{split}\begin{aligned}
 {\cal N}^h = \vec{e_r}\cdot\left[\vec{\nabla}\times\vec{\nabla}\times\left(\vec{u}\times\vec{B}\right)
@@ -1245,7 +1335,7 @@ of the magnetic field <span class="math">\(g\)</span>:</p>
 +L_H\, {\mathcal{F}r}_\ell^m\,.\]</div>
 <p>We thus finally get</p>
 <div class="math" id="equation-eqNLH">
-<span class="eqno">(41)</span>\[\boxed{
+<span class="eqno">(43)</span>\[\boxed{
 {\cal N}^h_{\ell m}  =\ell(\ell+1)\,{\mathcal{F}r}_{\ell}^m+
 \dfrac{1}{r^2}\dfrac{\partial}{\partial r}\left[r^2\left\lbrace
 (\ell+1)\,c_\ell^m\,{\mathcal{F}t}_{\ell-1}^m-\ell\,c_{\ell+1}^m\,
@@ -1254,7 +1344,7 @@ of the magnetic field <span class="math">\(g\)</span>:</p>
 }\]</div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last">The <span class="math">\(\theta\)</span> and <span class="math">\(\phi\)</span> derivatives that enter <a href="#equation-eqNLH">(41)</a>
+<p class="last">The <span class="math">\(\theta\)</span> and <span class="math">\(\phi\)</span> derivatives that enter <a href="#equation-eqNLH">(43)</a>
 are computed in the subroutine
 <a class="reference internal" href="apiFortran/timeAdvNonLinear.html#f/nonlinear_lm_mod/get_td" title="f/nonlinear_lm_mod/get_td"><code class="xref f f-subr docutils literal"><span class="pre">get_td</span></code></a>. The remaining radial derivative
 is computed afterwards at the very beginning of
@@ -1273,7 +1363,7 @@ The condition of zero radial flow on the boundaries implies that the poloidal
 potential has to vanish, i.e. <span class="math">\(W(r_o)=0\)</span> and <span class="math">\(W(r_i)=0\)</span>.
 In Chebychev representation this implies</p>
 <div class="math" id="equation-eqBcRigid1">
-<span class="eqno">(42)</span>\[{\cal C}_n(r) W_{\ell mn} = 0 \;\;\mbox{at}\;\; r=r_i,r_o\;\;.\]</div>
+<span class="eqno">(44)</span>\[{\cal C}_n(r) W_{\ell mn} = 0 \;\;\mbox{at}\;\; r=r_i,r_o\;\;.\]</div>
 <p>Note that the summation convention with respect to
 radial modes <span class="math">\(n\)</span> is used again.
 <strong>The no-slip</strong> condition further requires that the
@@ -1283,18 +1373,18 @@ the two boundaries are at rest. This condition is fulfilled for</p>
 \[\dfrac{\partial W}{\partial r}=0\;\;\mbox{and}\;\; Z=0,\]</div>
 <p>at the respective boundary. In spectral space these conditions read</p>
 <div class="math" id="equation-eqBcRigid2">
-<span class="eqno">(43)</span>\[{\cal C}'_n(r) W_{\ell mn} = 0\;\;\mbox{at}\;\; r=r_i,r_o\,,\]</div>
+<span class="eqno">(45)</span>\[{\cal C}'_n(r) W_{\ell mn} = 0\;\;\mbox{at}\;\; r=r_i,r_o\,,\]</div>
 <p>and</p>
 <div class="math" id="equation-eqBcRigid3">
-<span class="eqno">(44)</span>\[{\cal C}_n(r) Z_{\ell mn} = 0\;\;\mbox{at}\;\; r=r_i,r_o\,,\]</div>
+<span class="eqno">(46)</span>\[{\cal C}_n(r) Z_{\ell mn} = 0\;\;\mbox{at}\;\; r=r_i,r_o\,,\]</div>
 <p>for all spherical harmonic modes <span class="math">\((\ell,m)\)</span>.
-The conditions <a href="#equation-eqBcRigid1">(42)</a>-<a href="#equation-eqBcRigid3">(44)</a>
+The conditions <a href="#equation-eqBcRigid1">(44)</a>-<a href="#equation-eqBcRigid3">(46)</a>
 replace the poloidal flow potential equations <a href="#equation-eqSpecW">(20)</a>
 and the pressure equation <a href="#equation-eqSpecP">(22)</a>, respectively, at
 the collocation points <span class="math">\(r_i\)</span> and <span class="math">\(r_o\)</span>.</p>
 <p>If the inner-core and/or the mantle are allowed to react to torques,
 a condition based on the conservation of
-angular momentum replaces condition <a href="#equation-eqBcRigid3">(44)</a> for the mode
+angular momentum replaces condition <a href="#equation-eqBcRigid3">(46)</a> for the mode
 <span class="math">\((\ell =1,m=0)\)</span>:</p>
 <div class="math">
 \[\mathsf{I} \dfrac{\partial\vec{\omega}}{\partial t}= \vec{\Gamma}\;\;.\]</div>
@@ -1335,8 +1425,8 @@ In terms of poloidal and toroidal components this implies</p>
 \left({\cal C}'_n - \frac{2}{r}{\cal C}_n
 \right) Z_{\ell mn} = 0\;.\]</div>
 </div>
-<div class="section" id="thermodynamic-boundary-conditions">
-<h3>Thermodynamic boundary conditions<a class="headerlink" href="#thermodynamic-boundary-conditions" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="thermal-boundary-conditions">
+<h3>Thermal boundary conditions<a class="headerlink" href="#thermal-boundary-conditions" title="Permalink to this headline">¶</a></h3>
 <p>For Entropy or temperature in the Boussinesq approximation either fixed value of fixed flux conditions are used.
 The former implies</p>
 <div class="math">
@@ -1350,6 +1440,19 @@ The former implies</p>
 <p>Appropriate constant values need to be chosen and are instrumental in driving the dynamo when
 flux conditions are imposed.</p>
 </div>
+<div class="section" id="boundary-conditions-for-chemical-composition">
+<h3>Boundary conditions for chemical composition<a class="headerlink" href="#boundary-conditions-for-chemical-composition" title="Permalink to this headline">¶</a></h3>
+<p>For the chemical composition, either the value or the flux is imposed at the
+boundaries. The former implies:</p>
+<div class="math">
+\[\xi=\mbox{const.}\]</div>
+<p>at <span class="math">\(r_i\)</span> and/or <span class="math">\(r_o\)</span>, while the latter means</p>
+<div class="math">
+\[\dfrac{\partial}{\partial r} \xi=\mbox{const.}\]</div>
+<p>In spectral representation, this then reads</p>
+<div class="math">
+\[{\cal C}_n \xi_{\ell mn}=\mbox{const.}\;\;\mbox{or}\;\;{\cal C'}_n \xi_{\ell mn}=\mbox{const.}\]</div>
+</div>
 <div class="section" id="magnetic-boundary-conditions-and-inner-core">
 <h3>Magnetic boundary conditions and inner core<a class="headerlink" href="#magnetic-boundary-conditions-and-inner-core" title="Permalink to this headline">¶</a></h3>
 <p>Three different magnetic boundary conditions are implemented in MagIC.
@@ -1359,14 +1462,14 @@ field from penetrating so that the field has to vanish at the boundary.
 The condition are thus the same as for a rigid flow (with boundaries at rest).
 We only provide the spectral representation here:</p>
 <div class="math" id="equation-eqBcMagRigid">
-<span class="eqno">(45)</span>\[{\cal C}_n(r) W_{\ell mn} = 0 \;\;\mbox{at}\;\; r=r_i,r_o\;\;.\]</div>
+<span class="eqno">(47)</span>\[{\cal C}_n(r) W_{\ell mn} = 0 \;\;\mbox{at}\;\; r=r_i,r_o\;\;.\]</div>
 <p>Note that the summation convention with respect to
 radial modes <span class="math">\(n\)</span> is used again.
 <strong>The no-slip</strong> condition further requires that the
 horizontal flow components also have to vanish, provided
 the two boundaries are at rest. This condition is fulfilled for</p>
 <div class="math" id="equation-eqBcMag0">
-<span class="eqno">(46)</span>\[{\cal C}_n(r) g_{\ell mn} = 0\;\;,\;\;{\cal C}'_n(r) g_{\ell mn} = 0
+<span class="eqno">(48)</span>\[{\cal C}_n(r) g_{\ell mn} = 0\;\;,\;\;{\cal C}'_n(r) g_{\ell mn} = 0
  \;\;\mbox{and}\;\;{\cal C}_n(r) h_{\ell mn} = 0.\]</div>
 <p>More complex are the conditions to an electrical insulator.
 Here we actually use matching condition to a potential field condition
@@ -1411,11 +1514,11 @@ flow mode <span class="math">\((\ell=1,m=0)\)</span>. The resulting nonlinear te
 spherical harmonic expansion, where the superscript <span class="math">\(I\)</span> denotes values in the
 inner core and <span class="math">\(\omega_I\)</span> its differential rotation rate:</p>
 <div class="math" id="equation-glmnI">
-<span class="eqno">(47)</span>\[\int d\Omega\; {Y_{\ell}^{m}}^\star\;\vec{e_r}\cdot\left[\vec{\nabla}\times
+<span class="eqno">(49)</span>\[\int d\Omega\; {Y_{\ell}^{m}}^\star\;\vec{e_r}\cdot\left[\vec{\nabla}\times
 \left(\vec{u^I}\times\vec{B^I}\right)\right] =
 - i\,\omega_I\,m\,\dfrac{\ell(\ell+1)}{r^2}\;g_{\ell m}^I(r)\; ,\]</div>
 <div class="math" id="equation-hlmnI">
-<span class="eqno">(48)</span>\[\int d\Omega\; {Y_{\ell}^{m}}^\star\;\vec{e_r}\cdot\left[\vec{\nabla}\times
+<span class="eqno">(50)</span>\[\int d\Omega\; {Y_{\ell}^{m}}^\star\;\vec{e_r}\cdot\left[\vec{\nabla}\times
 \vec{\nabla}\times\left(\vec{u^I}\times\vec{B^I}\right)\right] =
 - i\,\omega_I\,m\,\dfrac{\ell(\ell+1)}{r^2} \;h_{\ell m}^I(r)\;.\]</div>
 <p>The expensive back and forth transformations between spherical
@@ -1426,14 +1529,14 @@ expanded into Chebyshev polynomials. The Chebyshev variable <span class="math">\
 spans the whole diameter of the inner core, so that grid points are dense
 near the inner-core boundary but sparse in the center. The mapping is given by:</p>
 <div class="math" id="equation-mapRIC">
-<span class="eqno">(49)</span>\[x(r)=  \dfrac{r}{r_i}\;\;,\;\;-r_i\le r\le r_i\;\;.\]</div>
+<span class="eqno">(51)</span>\[x(r)=  \dfrac{r}{r_i}\;\;,\;\;-r_i\le r\le r_i\;\;.\]</div>
 <p>Each point in the inner core is thus represented twice, by
 grid points <span class="math">\(({r,\theta,\phi})\)</span> and <span class="math">\(({-r,\pi-\theta,\phi+\pi})\)</span>.
 Since both representations must be identical, this imposes a symmetry
 constraint that can be fulfilled when the radial expansion
 comprises only polynomials of even order:</p>
 <div class="math" id="equation-radI">
-<span class="eqno">(50)</span>\[g_{\ell m}^I(r) = \left(\dfrac{r}{r_i}\right)^{\ell+1}
+<span class="eqno">(52)</span>\[g_{\ell m}^I(r) = \left(\dfrac{r}{r_i}\right)^{\ell+1}
                   \,\sum_{i=0}^{M-1} g_{\ell m\,2i}^I\;{\cal C}_{2i}(r)\;\;.\]</div>
 <p>An equivalent expression holds for the toroidal potential in the inner core.
 FFTs can again by employed efficiently
@@ -1450,8 +1553,8 @@ the radial derivative of the toroidal potential is continuous, provided
 that the horizontal flow and the electrical conductivity are continuous
 at the interface.
 These four conditions replace the spectral equations
-<a href="#equation-eqSpecG">(25)</a>, <a href="#equation-eqSpecH">(26)</a> on the outer-core side and
-equations <a href="#equation-glmnI">(47)</a>, <a href="#equation-hlmnI">(48)</a> on the inner-core side.
+<a href="#equation-eqSpecG">(26)</a>, <a href="#equation-eqSpecH">(27)</a> on the outer-core side and
+equations <a href="#equation-glmnI">(49)</a>, <a href="#equation-hlmnI">(50)</a> on the inner-core side.
 Employing free-slip conditions or allowing for electrical conductivity differences
 between inner and outer core leads to more complicated and even non-linear matching
 conditions.</p>
@@ -1479,6 +1582,7 @@ conditions.</p>
 <li><a class="reference internal" href="#equation-for-the-toroidal-potential">Equation for the toroidal potential <span class="math">\(Z\)</span></a></li>
 <li><a class="reference internal" href="#equation-for-pressure">Equation for pressure <span class="math">\(P\)</span></a></li>
 <li><a class="reference internal" href="#equation-for-entropy">Equation for entropy <span class="math">\(s\)</span></a></li>
+<li><a class="reference internal" href="#equation-for-chemical-composition">Equation for chemical composition <span class="math">\(\xi\)</span></a></li>
 <li><a class="reference internal" href="#equation-for-the-poloidal-magnetic-potential">Equation for the poloidal magnetic potential <span class="math">\(g\)</span></a></li>
 <li><a class="reference internal" href="#equation-for-the-toroidal-magnetic-potential">Equation for the toroidal magnetic potential <span class="math">\(h\)</span></a></li>
 </ul>
@@ -1489,13 +1593,15 @@ conditions.</p>
 <li><a class="reference internal" href="#secnonlinearz">Nonlinear terms entering the equation for <span class="math">\(Z\)</span></a></li>
 <li><a class="reference internal" href="#secnonlinearp">Nonlinear terms entering the equation for <span class="math">\(P\)</span></a></li>
 <li><a class="reference internal" href="#secnonlinears">Nonlinear terms entering the equation for <span class="math">\(s\)</span></a></li>
+<li><a class="reference internal" href="#secnonlinearxi">Nonlinear terms entering the equation for <span class="math">\(\xi\)</span></a></li>
 <li><a class="reference internal" href="#secnonlinearg">Nonlinear terms entering the equation for <span class="math">\(g\)</span></a></li>
 <li><a class="reference internal" href="#secnonlinearh">Nonlinear terms entering the equation for <span class="math">\(h\)</span></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#boundary-conditions-and-inner-core">Boundary conditions and inner core</a><ul>
 <li><a class="reference internal" href="#mechanical-boundary-conditions">Mechanical boundary conditions</a></li>
-<li><a class="reference internal" href="#thermodynamic-boundary-conditions">Thermodynamic boundary conditions</a></li>
+<li><a class="reference internal" href="#thermal-boundary-conditions">Thermal boundary conditions</a></li>
+<li><a class="reference internal" href="#boundary-conditions-for-chemical-composition">Boundary conditions for chemical composition</a></li>
 <li><a class="reference internal" href="#magnetic-boundary-conditions-and-inner-core">Magnetic boundary conditions and inner core</a></li>
 </ul>
 </li>
@@ -1551,7 +1657,7 @@ conditions.</p>
         <li class="right" >
           <a href="equations.html" title="Formulation of the (magneto)-hydrodynamics problem"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="contents.html">Magic 5.3 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="contents.html">Magic 5.4 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

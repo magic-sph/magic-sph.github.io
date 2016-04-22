@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Start field namelist &mdash; Magic 5.3 documentation</title>
+    <title>Start field namelist &mdash; Magic 5.4 documentation</title>
     
     <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.3',
+        VERSION:     '5.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="Magic 5.3 documentation" href="../contents.html" />
+    <link rel="top" title="Magic 5.4 documentation" href="../contents.html" />
     <link rel="up" title="Input parameters" href="namelists.html" />
     <link rel="next" title="Output control namelist" href="outNamelist.html" />
     <link rel="prev" title="External Magnetic Field Namelist" href="BextNamelist.html" />
@@ -102,7 +102,7 @@
         <li class="right" >
           <a href="BextNamelist.html" title="External Magnetic Field Namelist"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.3 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.4 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="namelists.html" accesskey="U">Input parameters</a> &raquo;</li> 
       </ul>
     </div>  
@@ -146,6 +146,8 @@
 </table>
 </li>
 <li><p class="first"><strong>scale_s</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/scale_s" title="f/init_fields/scale_s"><code class="xref f f-var docutils literal"><span class="pre">scale_s=1.0</span></code></a>) is a real. It can be possibly used to multiply the input entropy field from  <code class="docutils literal"><span class="pre">start_file</span></code> by a constant factor <code class="docutils literal"><span class="pre">scale_s</span></code>.</p>
+</li>
+<li><p class="first"><strong>scale_xi</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/scale_xi" title="f/init_fields/scale_xi"><code class="xref f f-var docutils literal"><span class="pre">scale_xi=1.0</span></code></a>) is a real. It can be possibly used to multiply the input chemical composition field from <code class="docutils literal"><span class="pre">start_file</span></code> by a constant factor <code class="docutils literal"><span class="pre">scale_xi</span></code>.</p>
 </li>
 <li><p class="first"><strong>scale_v</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/scale_v" title="f/init_fields/scale_v"><code class="xref f f-var docutils literal"><span class="pre">scale_v=1.0</span></code></a>) is a real. It can be possibly used to multiply the input velocity field from <code class="docutils literal"><span class="pre">start_file</span></code> by a constant factor <code class="docutils literal"><span class="pre">scale_v</span></code>.</p>
 </li>
@@ -200,6 +202,26 @@
 </li>
 <li><p class="first"><strong>amp_s2</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/amp_s2" title="f/init_fields/amp_s2"><code class="xref f f-var docutils literal"><span class="pre">amp_s2=0.0</span></code></a>) is a real used to contol the amplitude of the perturbation defined by <code class="docutils literal"><span class="pre">init_s2</span></code>.</p>
 </li>
+</ul>
+</div>
+<div class="section" id="initialisation-of-chemical-composition">
+<h3>Initialisation of chemical composition<a class="headerlink" href="#initialisation-of-chemical-composition" title="Permalink to this headline">¶</a></h3>
+<p>The chemical composition equation with possible volumetric sources and sinks
+given by <a class="reference internal" href="physNamelist.html#varepsc0"><span>epscxi0</span></a> is solved for the spherically-symmetric
+term <span class="math">\((\ell=0,m=0)\)</span> to get its radial dependence. In addition to this
+initial state, two other laterally varying terms can be initialized. Their
+radial dependence are assumed to follow:</p>
+<div class="math">
+\[\xi(r) = 1-2\,x^2+3\,x^4-x^6,\]</div>
+<p>where</p>
+<div class="math">
+\[x = 2\,r-r_o-r_i\, .\]</div>
+<p>The initial perturbation is thus set to zero at both boundaries <span class="math">\(r_i\)</span> and <span class="math">\(r_o\)</span>, and reaches its maximum amplitude of <code class="docutils literal"><span class="pre">amp_xi1</span></code> or <code class="docutils literal"><span class="pre">amp_xi2</span></code> at the mid-shell radius <span class="math">\(r_i+1/2\)</span>.</p>
+<ul class="simple">
+<li><strong>init_xi1</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/init_xi1" title="f/init_fields/init_xi1"><code class="xref f f-var docutils literal"><span class="pre">init_xi1=0</span></code></a>) is an integer that controls the initial chemical composition. It follows the same specifications as <code class="docutils literal"><span class="pre">init_s1</span></code>.</li>
+<li><strong>amp_xi1</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/amp_xi1" title="f/init_fields/amp_xi1"><code class="xref f f-var docutils literal"><span class="pre">amp_xi1=0.0</span></code></a>) is a real used to contol the amplitude of the perturbation defined by <code class="docutils literal"><span class="pre">init_xi1</span></code>.</li>
+<li><strong>init_xi2</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/init_xi2" title="f/init_fields/init_xi2"><code class="xref f f-var docutils literal"><span class="pre">init_xi2=0</span></code></a>) is an integer that controls a second spherical harmonic degee. It follows the same specifications as <code class="docutils literal"><span class="pre">init_s1</span></code>.</li>
+<li><strong>amp_xi2</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/amp_xi2" title="f/init_fields/amp_xi2"><code class="xref f f-var docutils literal"><span class="pre">amp_xi2=0.0</span></code></a>) is a real used to contol the amplitude of the perturbation defined by <code class="docutils literal"><span class="pre">init_xi2</span></code>.</li>
 </ul>
 </div>
 <div class="section" id="initialisation-of-magnetic-field">
@@ -273,6 +295,7 @@
 <li><a class="reference internal" href="#reading-an-input-file-of-start-fields">Reading an input file of start fields</a></li>
 <li><a class="reference internal" href="#defining-the-starting-conditions">Defining the starting conditions</a><ul>
 <li><a class="reference internal" href="#initialisation-of-entropy">Initialisation of entropy</a></li>
+<li><a class="reference internal" href="#initialisation-of-chemical-composition">Initialisation of chemical composition</a></li>
 <li><a class="reference internal" href="#initialisation-of-magnetic-field">Initialisation of magnetic field</a></li>
 <li><a class="reference internal" href="#initialisation-of-velocity-field">Initialisation of velocity field</a></li>
 </ul>
@@ -329,7 +352,7 @@
         <li class="right" >
           <a href="BextNamelist.html" title="External Magnetic Field Namelist"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.3 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.4 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="namelists.html" >Input parameters</a> &raquo;</li> 
       </ul>
     </div>
