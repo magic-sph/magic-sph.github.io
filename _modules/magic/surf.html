@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>magic.surf &mdash; Magic 5.4 documentation</title>
+    <title>magic.surf &mdash; Magic 5.5 documentation</title>
     
     <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '5.4',
+        VERSION:     '5.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="Magic 5.4 documentation" href="../../contents.html" />
+    <link rel="top" title="Magic 5.5 documentation" href="../../contents.html" />
     <link rel="up" title="Module code" href="../index.html" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
           rel='stylesheet' type='text/css' />
@@ -94,7 +94,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.4 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.5 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -107,7 +107,7 @@
   <h1>Source code for magic.surf</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="kn">from</span> <span class="nn">magic</span> <span class="kn">import</span> <span class="n">MagicGraph</span><span class="p">,</span> <span class="n">MagicSetup</span><span class="p">,</span> <span class="n">MagicRadial</span>
-<span class="kn">from</span> <span class="nn">magic.setup</span> <span class="kn">import</span> <span class="n">labTex</span>
+<span class="kn">from</span> <span class="nn">magic.setup</span> <span class="kn">import</span> <span class="n">labTex</span><span class="p">,</span> <span class="n">defaultCm</span><span class="p">,</span> <span class="n">defaultLevels</span>
 <span class="kn">from</span> <span class="nn">.libmagic</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -176,7 +176,7 @@
             <span class="k">del</span> <span class="n">dr</span><span class="p">,</span> <span class="n">dtheta</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">rr3D</span><span class="p">,</span> <span class="n">th3D</span><span class="p">,</span> <span class="n">s3D</span></div>
 
 <div class="viewcode-block" id="Surf.surf"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.Surf.surf">[docs]</a>    <span class="k">def</span> <span class="nf">surf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;Bphi&#39;</span><span class="p">,</span> <span class="n">proj</span><span class="o">=</span><span class="s1">&#39;hammer&#39;</span><span class="p">,</span> <span class="n">lon_0</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> 
-             <span class="n">vmin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">lat_0</span><span class="o">=</span><span class="mf">30.</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">,</span> <span class="n">lon_shift</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+             <span class="n">vmin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">lat_0</span><span class="o">=</span><span class="mf">30.</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">defaultLevels</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="n">defaultCm</span><span class="p">,</span> <span class="n">lon_shift</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
              <span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">tit</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot the surface distribution of an input field at a given</span>
@@ -566,7 +566,7 @@
             <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="o">-</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">rprof</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">rprof</span><span class="o">.</span><span class="n">min</span><span class="p">())),</span> 
                          <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">rprof</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">rprof</span><span class="o">.</span><span class="n">min</span><span class="p">())))</span></div>
 
-<div class="viewcode-block" id="Surf.equat"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.Surf.equat">[docs]</a>    <span class="k">def</span> <span class="nf">equat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;vr&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+<div class="viewcode-block" id="Surf.equat"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.Surf.equat">[docs]</a>    <span class="k">def</span> <span class="nf">equat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;vr&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">defaultLevels</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="n">defaultCm</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
               <span class="n">vmax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">tit</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">avg</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">normRad</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot the equatorial cut of a given field</span>
@@ -767,7 +767,7 @@
             <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
             <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">max</span><span class="p">())</span></div>
 
-<div class="viewcode-block" id="Surf.avg"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.Surf.avg">[docs]</a>    <span class="k">def</span> <span class="nf">avg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;vphi&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+<div class="viewcode-block" id="Surf.avg"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.Surf.avg">[docs]</a>    <span class="k">def</span> <span class="nf">avg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;vphi&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">defaultLevels</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="n">defaultCm</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
             <span class="n">vmax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">tit</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
             <span class="n">pol</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">tor</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">mer</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
             <span class="n">merLevels</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">polLevels</span><span class="o">=</span><span class="mi">16</span><span class="p">):</span>
@@ -1409,7 +1409,7 @@
             <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="o">-</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">min</span><span class="p">())),</span> 
                          <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">min</span><span class="p">())))</span></div>
 
-<div class="viewcode-block" id="Surf.slice"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.Surf.slice">[docs]</a>    <span class="k">def</span> <span class="nf">slice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;Bphi&#39;</span><span class="p">,</span> <span class="n">lon_0</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">,</span> 
+<div class="viewcode-block" id="Surf.slice"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.Surf.slice">[docs]</a>    <span class="k">def</span> <span class="nf">slice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;Bphi&#39;</span><span class="p">,</span> <span class="n">lon_0</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">defaultLevels</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="n">defaultCm</span><span class="p">,</span> 
               <span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">tit</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
               <span class="n">grid</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">nGridLevs</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">normRad</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1781,7 +1781,7 @@
                              <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">phislice</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">phislice</span><span class="o">.</span><span class="n">min</span><span class="p">())))</span></div></div>
 
 
-<span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="n">nvar</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">lclean</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="n">nvar</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">defaultLevels</span><span class="p">,</span> <span class="n">lclean</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This subroutine prepares a pdf document that gather some important diagnostics</span>
 
@@ -1932,7 +1932,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.4 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.5 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

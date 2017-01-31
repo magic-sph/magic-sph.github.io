@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Control namelist &mdash; Magic 5.4 documentation</title>
+    <title>Control namelist &mdash; Magic 5.5 documentation</title>
     
     <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.4',
+        VERSION:     '5.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="Magic 5.4 documentation" href="../contents.html" />
+    <link rel="top" title="Magic 5.5 documentation" href="../contents.html" />
     <link rel="up" title="Input parameters" href="namelists.html" />
     <link rel="next" title="Physical parameters namelist" href="physNamelist.html" />
     <link rel="prev" title="Grid namelist" href="gridNamelist.html" />
@@ -102,7 +102,7 @@
         <li class="right" >
           <a href="gridNamelist.html" title="Grid namelist"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.4 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.5 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="namelists.html" accesskey="U">Input parameters</a> &raquo;</li> 
       </ul>
     </div>  
@@ -271,9 +271,28 @@ input variables:</p>
 <li><strong>l_correct_AMz</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/logic/l_correct_amz" title="f/logic/l_correct_amz"><code class="xref f f-var docutils literal"><span class="pre">l_correct_AMz=.false.</span></code></a>) is a logical. This is used to correct the axial angular momentum.</li>
 </ul>
 </div>
-<div class="section" id="mapping-of-the-gauss-lobatto-grid">
-<span id="varl-newmap"></span><h2>Mapping of the Gauss-Lobatto grid<a class="headerlink" href="#mapping-of-the-gauss-lobatto-grid" title="Permalink to this headline">¶</a></h2>
-<p>Non-linear mapping function to concentrate/diperse grid points around a point inside the domain. For full description, see Bayliss and Turkel (1990). The function that re-distributes the collocation points is</p>
+<div class="section" id="radial-scheme-and-mapping-of-the-gauss-lobatto-grid">
+<span id="varl-newmap"></span><h2>Radial scheme and mapping of the Gauss-Lobatto grid<a class="headerlink" href="#radial-scheme-and-mapping-of-the-gauss-lobatto-grid" title="Permalink to this headline">¶</a></h2>
+<p>In MagIC, one can either use finite differences or Chebyshev polynomials for the radial integration scheme. This choice is controlled by the following input parameter:</p>
+<ul>
+<li><p class="first"><strong>radial_scheme</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/radial_scheme" title="f/truncation/radial_scheme"><code class="xref f f-var docutils literal"><span class="pre">radial_scheme='CHEB'</span></code></a>) is a character string.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="42%" />
+<col width="58%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>radial_scheme=&#8217;CHEB&#8217;</td>
+<td>Use Chebyshev polynomials</td>
+</tr>
+<tr class="row-even"><td>radial_scheme=&#8217;FD&#8217;</td>
+<td>Use finite differences</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<p>When Chebyshev polynomials are used, it is also possible to use a non-linear mapping function to concentrate/diperse grid points around a point inside the domain. For a full description, see Bayliss and Turkel (1990). The function that re-distributes the collocation points is</p>
 <div class="math">
 \[r=\alpha_2+\left[ \frac{\textrm{tan}^{-1}\left(\lambda(r_{cheb}-x_0)\right)}{\alpha_1} \right] \textrm{ ,}\]</div>
 <p>where the Gauss-Lobatto collocation points are</p>
@@ -300,24 +319,60 @@ K&amp;=\frac{\textrm{tan}^{-1}\left(\alpha_1(1+\alpha_2)\right)}{\textrm{tan}^{-
 <blockquote>
 <div><table border="1" class="docutils">
 <colgroup>
-<col width="46%" />
-<col width="54%" />
+<col width="43%" />
+<col width="57%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">anelastic_flavour='LBR'</span></code></td>
+<tr class="row-odd"><td>anelastic_flavour=&#8217;LBR&#8217;</td>
 <td>Entropy diffusion</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">anelastic_flavour='ENT'</span></code></td>
+<tr class="row-even"><td>anelastic_flavour=&#8217;ENT&#8217;</td>
 <td>Entropy diffusion</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">anelastic_flavour='ALA'</span></code></td>
+<tr class="row-odd"><td>anelastic_flavour=&#8217;ALA&#8217;</td>
 <td>Anelastic liquid approximation</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">anelastic_flavour='TDIFF'</span></code></td>
+<tr class="row-even"><td>anelastic_flavour=&#8217;TDIFF&#8217;</td>
 <td>Temperature diffusion</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">anelastic_flavour='TEMP'</span></code></td>
+<tr class="row-odd"><td>anelastic_flavour=&#8217;TEMP&#8217;</td>
 <td>Temperature diffusion</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>thermo_variable</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/num_param/thermo_variable" title="f/num_param/thermo_variable"><code class="xref f f-var docutils literal"><span class="pre">thermo_variable=&quot;S&quot;</span></code></a>) is a character string. This allows to change the default thermodynamic variable (and hence change the entropy/temperature equation used). This switch only matters when one wants to run an anelastic model. Possible values are:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="36%" />
+<col width="64%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>thermo_variable=&#8217;S&#8217;</td>
+<td>Use entropy as a primitive variable</td>
+</tr>
+<tr class="row-even"><td>thermo_variable=&#8217;T&#8217;</td>
+<td>Use temperature as a primitive variable</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>polo_flow_eq</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/num_param/polo_flow_eq" title="f/num_param/polo_flow_eq"><code class="xref f f-var docutils literal"><span class="pre">polo_flow_eq=&quot;WP&quot;</span></code></a>) is a character string. This allows to change how the equation for the poloidal flow potential is constructed. One can either use the radial component of the Navier-Stokes equation and hence keep a coupled system that involve the poloidal potential <span class="math">\(W\)</span> and the pressure <span class="math">\(p\)</span>, or take the radial component of the double-curl of the Navier-Stokes equation to suppress pressure.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>polo_flow_eq=&#8217;WP&#8217;</td>
+<td>Use the pressure formulation</td>
+</tr>
+<tr class="row-even"><td>polo_flow_eq=&#8217;DC&#8217;</td>
+<td>Use the double-curl formulation</td>
 </tr>
 </tbody>
 </table>
@@ -342,7 +397,7 @@ K&amp;=\frac{\textrm{tan}^{-1}\left(\alpha_1(1+\alpha_2)\right)}{\textrm{tan}^{-
 <li><a class="reference internal" href="#run-time">Run time</a></li>
 <li><a class="reference internal" href="#hyperdiffusivity">Hyperdiffusivity</a></li>
 <li><a class="reference internal" href="#angular-momentum-correction">Angular momentum correction</a></li>
-<li><a class="reference internal" href="#mapping-of-the-gauss-lobatto-grid">Mapping of the Gauss-Lobatto grid</a></li>
+<li><a class="reference internal" href="#radial-scheme-and-mapping-of-the-gauss-lobatto-grid">Radial scheme and mapping of the Gauss-Lobatto grid</a></li>
 <li><a class="reference internal" href="#miscellaneous">Miscellaneous</a></li>
 </ul>
 </li>
@@ -396,7 +451,7 @@ K&amp;=\frac{\textrm{tan}^{-1}\left(\alpha_1(1+\alpha_2)\right)}{\textrm{tan}^{-
         <li class="right" >
           <a href="gridNamelist.html" title="Grid namelist"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.4 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.5 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="namelists.html" >Input parameters</a> &raquo;</li> 
       </ul>
     </div>

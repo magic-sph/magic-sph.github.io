@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Grid namelist &mdash; Magic 5.4 documentation</title>
+    <title>Grid namelist &mdash; Magic 5.5 documentation</title>
     
     <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.4',
+        VERSION:     '5.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="Magic 5.4 documentation" href="../contents.html" />
+    <link rel="top" title="Magic 5.5 documentation" href="../contents.html" />
     <link rel="up" title="Input parameters" href="namelists.html" />
     <link rel="next" title="Control namelist" href="controlNamelist.html" />
     <link rel="prev" title="Input parameters" href="namelists.html" />
@@ -102,7 +102,7 @@
         <li class="right" >
           <a href="namelists.html" title="Input parameters"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.4 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.5 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="namelists.html" accesskey="U">Input parameters</a> &raquo;</li> 
       </ul>
     </div>  
@@ -118,13 +118,13 @@
 <div class="section" id="outer-core">
 <h2>Outer Core<a class="headerlink" href="#outer-core" title="Permalink to this headline">¶</a></h2>
 <ul id="varn-r-max">
-<li><p class="first"><strong>n_r_max</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max"><code class="xref f f-var docutils literal"><span class="pre">n_r_max=33</span></code></a>) is an integer which gives the number of grid points in the radial direction in the outer core (<span class="math">\([r_i,r_o]\)</span>). It must be of the form <code class="docutils literal"><span class="pre">4*n+1</span></code>, where <code class="docutils literal"><span class="pre">n</span></code> is an integer.</p>
+<li><p class="first"><strong>n_r_max</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max"><code class="xref f f-var docutils literal"><span class="pre">n_r_max=33</span></code></a>) is an integer which gives the number of grid points in the radial direction in the outer core (<span class="math">\([r_i,r_o]\)</span>). If Chebyshev polynomials are used for the radial integration scheme, there are some constraints on the value of <cite>n_r_max</cite>: first of all it must be of the form <code class="docutils literal"><span class="pre">4*n+1</span></code>, where <code class="docutils literal"><span class="pre">n</span></code> is an integer; and second the prime decomposition of <cite>n_r_max</cite> should only contain multiple of 3, 4 and 5 (this second condition comes from the Chebyshev transforms). This constraint does not exist when finite differences are used.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The possible values for <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max"><code class="xref f f-var docutils literal"><span class="pre">n_r_max</span></code></a> are thus: 17, 21, 25, 33, 37, 41, 49, 61, 65, 73? 81, 97, 101, 121, 129, 145, 161, 257, 401, 513, ...</p>
+<p class="last">If Chebyshev polynomials are used, the possible values for <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max"><code class="xref f f-var docutils literal"><span class="pre">n_r_max</span></code></a> below 220 are hence: 17, 21, 25, 33, 37, 41, 49, 61, 65, 73, 81, 97, 101, 109, 121, 129, 145, 161, 181, 193, 201, 217,...</p>
 </div>
 </li>
-<li><p class="first"><strong>n_cheb_max</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_cheb_max" title="f/truncation/n_cheb_max"><code class="xref f f-var docutils literal"><span class="pre">n_cheb_max=31</span></code></a>) is an integer which is the number of terms in the Chebyshev polynomial expansion to be used in the radial direction - the highest degree of Chebyshev polynomial used being <code class="docutils literal"><span class="pre">n_cheb_max-1</span></code>. Note that <code class="docutils literal"><span class="pre">n_cheb_max</span> <span class="pre">&lt;=</span> <span class="pre">n_r_max</span></code>.</p>
+<li><p class="first"><strong>n_cheb_max</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_cheb_max" title="f/truncation/n_cheb_max"><code class="xref f f-var docutils literal"><span class="pre">n_cheb_max=31</span></code></a>) is an integer which is the number of terms in the Chebyshev polynomial expansion to be used in the radial direction - the highest degree of Chebyshev polynomial used being <code class="docutils literal"><span class="pre">n_cheb_max-1</span></code>. Note that <code class="docutils literal"><span class="pre">n_cheb_max</span> <span class="pre">&lt;=</span> <span class="pre">n_r_max</span></code>. This quantity will not be used if finite differences are used.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Adopting <code class="docutils literal"><span class="pre">n_cheb_max=n_r_max-2</span></code> is usually a good choice</p>
@@ -139,6 +139,22 @@
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The possible values for <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_phi_max" title="f/truncation/n_phi_max"><code class="xref f f-var docutils literal"><span class="pre">n_phi_max</span></code></a> are thus: 16, 32, 48, 64, 96, 128, 192, 256, 288? 320, 384, 400, 512, 576, 640, 768, 864, 1024, 1280, 1536, 1792, 2048, ...</p>
+</div>
+</li>
+<li><p class="first"><strong>l_axi</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/l_axi" title="f/truncation/l_axi"><code class="xref f f-var docutils literal"><span class="pre">l_axi=.false.</span></code></a>) is a logical. When set to true, one considers only the axisymmetric mode (i.e. MagIC becomes a 2-D axisymmetric code).</p>
+</li>
+<li><p class="first"><strong>n_theta_axi</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_theta_axi" title="f/truncation/n_theta_axi"><code class="xref f f-var docutils literal"><span class="pre">n_theta_axi=0</span></code></a>) is an integer which gives the number of latitudinal grid points when MagIC computes only the axisymmetric mode.</p>
+</li>
+<li><p class="first"><strong>fd_order</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/fd_order" title="f/truncation/fd_order"><code class="xref f f-var docutils literal"><span class="pre">fd_order=2</span></code></a>) is an integer. This is the order of the finite difference scheme for the bulk points (possible values are 2, 4, 6).</p>
+</li>
+<li><p class="first"><strong>fd_order_bound</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/fd_order_bound" title="f/truncation/fd_order_bound"><code class="xref f f-var docutils literal"><span class="pre">fd_order_bound=2</span></code></a>) is an integer. This is the order of the finite difference scheme for the boundary points (possible values are 1,2,3,4,5,6, ...).</p>
+</li>
+<li><p class="first"><strong>fd_stretch</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/fd_stretch" title="f/truncation/fd_stretch"><code class="xref f f-var docutils literal"><span class="pre">fd_stretch=0.3</span></code></a>) is a real. It controls the ratio between the number of points in the boundary layers and in the bulk.</p>
+</li>
+<li><p class="first"><strong>fd_ratio</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/fd_ratio" title="f/truncation/fd_ratio"><code class="xref f f-var docutils literal"><span class="pre">fd_ratio=0.1</span></code></a>) is a real. It controls the ratio between the smallest grid spacing and the largest grid spacing.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When <cite>fd_ratio</cite> is set to 1, the radial grid is regularly-spaced.</p>
 </div>
 </li>
 </ul>
@@ -231,7 +247,7 @@ harmonic expansion are determined by <a class="reference internal" href="../apiF
         <li class="right" >
           <a href="namelists.html" title="Input parameters"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.4 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.5 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="namelists.html" >Input parameters</a> &raquo;</li> 
       </ul>
     </div>
