@@ -210,37 +210,6 @@ and the log-derivative of the density profile versus radius</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="magic.libmagic.cut">
-<code class="descclassname">magic.libmagic.</code><code class="descname">cut</code><span class="sig-paren">(</span><em>dat</em>, <em>vmax=None</em>, <em>vmin=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#cut"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.cut" title="Permalink to this definition">¶</a></dt>
-<dd><p>This functions truncates the values of an input array that are beyond 
-vmax or below vmin and replace them by vmax and vmin, respectively.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Keep only values between -1e3 and 1e3</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">datNew</span> <span class="o">=</span> <span class="n">cut</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">1e3</span><span class="p">)</span>
-</pre></div>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>dat</strong> (<em>numpy.ndarray</em>) &#8211; an input array</li>
-<li><strong>vmax</strong> (<em>float</em>) &#8211; maximum upper bound</li>
-<li><strong>vmin</strong> (<em>float</em>) &#8211; minimum lower bound</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array where the values &gt;=vmax have been replaced by vmax
-and the values &lt;=vmin have been replaced by vmin</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
 <dt id="magic.libmagic.cylSder">
 <code class="descclassname">magic.libmagic.</code><code class="descname">cylSder</code><span class="sig-paren">(</span><em>radius</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#cylSder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.cylSder" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function computes the s derivative of an input array defined on
@@ -359,42 +328,6 @@ a regularly-spaced cylindrical grid.</p>
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the total RUN time</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">float</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="magic.libmagic.hammer2cart">
-<code class="descclassname">magic.libmagic.</code><code class="descname">hammer2cart</code><span class="sig-paren">(</span><em>ttheta</em>, <em>pphi</em>, <em>colat=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#hammer2cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.hammer2cart" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function is used to define the Hammer projection used when
-plotting surface contours in <a class="reference internal" href="graphMovCoeff.html#magic.Surf" title="magic.Surf"><code class="xref py py-class docutils literal"><span class="pre">magic.Surf</span></code></a></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Load Graphic file</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">gr</span> <span class="o">=</span> <span class="n">MagicGraph</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Meshgrid</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pphi</span><span class="p">,</span> <span class="n">ttheta</span> <span class="o">=</span> <span class="n">mgrid</span><span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nphi</span><span class="o">*</span><span class="mi">1j</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mf">2.</span><span class="p">:</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mf">2.</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="o">*</span><span class="mi">1j</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">hammer2cart</span><span class="p">(</span><span class="n">ttheta</span><span class="p">,</span> <span class="n">pphi</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Contour plots</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">contourf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="p">)</span>
-</pre></div>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>ttheta</strong> (<em>numpy.ndarray</em>) &#8211; meshgrid [nphi, ntheta] for the latitudinal direction</li>
-<li><strong>pphi</strong> &#8211; meshgrid [nphi, ntheta] for the azimuthal direction</li>
-<li><strong>colat</strong> (<em>numpy.ndarray</em>) &#8211; colatitudes (when not specified a regular grid is assumed)</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a tuple that contains two [nphi, ntheta] arrays: the x, y meshgrid
-used in contour plots</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray, numpy.ndarray)</p>
-</td>
 </tr>
 </tbody>
 </table>
@@ -757,6 +690,167 @@ and replace them by a spline extrapolation (default is False)</li>
 </dd></dl>
 
 </div>
+<div class="section" id="module-magic.plotlib">
+<span id="plotting-functions"></span><h1>Plotting functions<a class="headerlink" href="#module-magic.plotlib" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="magic.plotlib.cut">
+<code class="descclassname">magic.plotlib.</code><code class="descname">cut</code><span class="sig-paren">(</span><em>dat</em>, <em>vmax=None</em>, <em>vmin=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/plotlib.html#cut"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.plotlib.cut" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions truncates the values of an input array that are beyond 
+vmax or below vmin and replace them by vmax and vmin, respectively.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Keep only values between -1e3 and 1e3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">datNew</span> <span class="o">=</span> <span class="n">cut</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">1e3</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dat</strong> (<em>numpy.ndarray</em>) &#8211; an input array</li>
+<li><strong>vmax</strong> (<em>float</em>) &#8211; maximum upper bound</li>
+<li><strong>vmin</strong> (<em>float</em>) &#8211; minimum lower bound</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array where the values &gt;=vmax have been replaced by vmax
+and the values &lt;=vmin have been replaced by vmin</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.plotlib.equatContour">
+<code class="descclassname">magic.plotlib.</code><code class="descname">equatContour</code><span class="sig-paren">(</span><em>data</em>, <em>radius</em>, <em>label=None</em>, <em>levels=65</em>, <em>cm='seismic'</em>, <em>normed=True</em>, <em>vmax=None</em>, <em>vmin=None</em>, <em>cbar=True</em>, <em>tit=True</em>, <em>normRad=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/plotlib.html#equatContour"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.plotlib.equatContour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the equatorial cut of a given field</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; the input data (an array of size (nphi,nr))</li>
+<li><strong>radius</strong> (<em>numpy.ndarray</em>) &#8211; the input radius</li>
+<li><strong>label</strong> (<em>str</em>) &#8211; the name of the input physical quantity you want to
+display</li>
+<li><strong>normRad</strong> (<em>bool</em>) &#8211; when set to True, the contour levels are normalised
+radius by radius (default is False)</li>
+<li><strong>levels</strong> (<em>int</em>) &#8211; the number of levels in the contour</li>
+<li><strong>cm</strong> (<em>str</em>) &#8211; name of the colormap (&#8216;jet&#8217;, &#8216;seismic&#8217;, &#8216;RdYlBu_r&#8217;, etc.)</li>
+<li><strong>tit</strong> (<em>bool</em>) &#8211; display the title of the figure when set to True</li>
+<li><strong>cbar</strong> (<em>bool</em>) &#8211; display the colorbar when set to True</li>
+<li><strong>vmax</strong> (<em>float</em>) &#8211; maximum value of the contour levels</li>
+<li><strong>vmin</strong> (<em>float</em>) &#8211; minimum value of the contour levels</li>
+<li><strong>normed</strong> (<em>bool</em>) &#8211; when set to True, the colormap is centered around zero.
+Default is True, except for entropy/temperature plots.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.plotlib.hammer2cart">
+<code class="descclassname">magic.plotlib.</code><code class="descname">hammer2cart</code><span class="sig-paren">(</span><em>ttheta</em>, <em>pphi</em>, <em>colat=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/plotlib.html#hammer2cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.plotlib.hammer2cart" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is used to define the Hammer projection used when
+plotting surface contours in <a class="reference internal" href="graphMovCoeff.html#magic.Surf" title="magic.Surf"><code class="xref py py-class docutils literal"><span class="pre">magic.Surf</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Load Graphic file</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gr</span> <span class="o">=</span> <span class="n">MagicGraph</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Meshgrid</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pphi</span><span class="p">,</span> <span class="n">ttheta</span> <span class="o">=</span> <span class="n">mgrid</span><span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nphi</span><span class="o">*</span><span class="mi">1j</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mf">2.</span><span class="p">:</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mf">2.</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="o">*</span><span class="mi">1j</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">hammer2cart</span><span class="p">(</span><span class="n">ttheta</span><span class="p">,</span> <span class="n">pphi</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Contour plots</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">contourf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ttheta</strong> (<em>numpy.ndarray</em>) &#8211; meshgrid [nphi, ntheta] for the latitudinal direction</li>
+<li><strong>pphi</strong> &#8211; meshgrid [nphi, ntheta] for the azimuthal direction</li>
+<li><strong>colat</strong> (<em>numpy.ndarray</em>) &#8211; colatitudes (when not specified a regular grid is assumed)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a tuple that contains two [nphi, ntheta] arrays: the x, y meshgrid
+used in contour plots</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray, numpy.ndarray)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.plotlib.merContour">
+<code class="descclassname">magic.plotlib.</code><code class="descname">merContour</code><span class="sig-paren">(</span><em>data</em>, <em>radius</em>, <em>label=None</em>, <em>levels=65</em>, <em>cm='seismic'</em>, <em>normed=True</em>, <em>vmax=None</em>, <em>vmin=None</em>, <em>cbar=True</em>, <em>tit=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/plotlib.html#merContour"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.plotlib.merContour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot a meridional cut of a given field</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; the input data (an array of size (ntheta,nr))</li>
+<li><strong>radius</strong> (<em>numpy.ndarray</em>) &#8211; the input radius</li>
+<li><strong>label</strong> (<em>str</em>) &#8211; the name of the input physical quantity you want to
+display</li>
+<li><strong>levels</strong> (<em>int</em>) &#8211; the number of levels in the contour</li>
+<li><strong>cm</strong> (<em>str</em>) &#8211; name of the colormap (&#8216;jet&#8217;, &#8216;seismic&#8217;, &#8216;RdYlBu_r&#8217;, etc.)</li>
+<li><strong>tit</strong> (<em>bool</em>) &#8211; display the title of the figure when set to True</li>
+<li><strong>cbar</strong> (<em>bool</em>) &#8211; display the colorbar when set to True</li>
+<li><strong>vmax</strong> (<em>float</em>) &#8211; maximum value of the contour levels</li>
+<li><strong>vmin</strong> (<em>float</em>) &#8211; minimum value of the contour levels</li>
+<li><strong>normed</strong> (<em>bool</em>) &#8211; when set to True, the colormap is centered around zero.
+Default is True, except for entropy/temperature plots.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="magic.plotlib.radialContour">
+<code class="descclassname">magic.plotlib.</code><code class="descname">radialContour</code><span class="sig-paren">(</span><em>data</em>, <em>rad=0.85</em>, <em>label=None</em>, <em>proj='hammer'</em>, <em>lon_0=0.0</em>, <em>vmax=None</em>, <em>vmin=None</em>, <em>lat_0=30.0</em>, <em>levels=65</em>, <em>cm='seismic'</em>, <em>normed=True</em>, <em>cbar=True</em>, <em>tit=True</em>, <em>lines=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/plotlib.html#radialContour"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.plotlib.radialContour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the radial cut of a given field</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; the input data (an array of size (nphi,ntheta))</li>
+<li><strong>rad</strong> (<em>float</em>) &#8211; the value of the selected radius</li>
+<li><strong>label</strong> (<em>str</em>) &#8211; the name of the input physical quantity you want to
+display</li>
+<li><strong>proj</strong> (<em>str</em>) &#8211; the type of projection. Default is Hammer, in case
+you want to use &#8216;ortho&#8217; or &#8216;moll&#8217;, then Basemap is
+required.</li>
+<li><strong>levels</strong> (<em>int</em>) &#8211; the number of levels in the contour</li>
+<li><strong>cm</strong> (<em>str</em>) &#8211; name of the colormap (&#8216;jet&#8217;, &#8216;seismic&#8217;, &#8216;RdYlBu_r&#8217;, etc.)</li>
+<li><strong>tit</strong> (<em>bool</em>) &#8211; display the title of the figure when set to True</li>
+<li><strong>cbar</strong> (<em>bool</em>) &#8211; display the colorbar when set to True</li>
+<li><strong>lines</strong> (<em>bool</em>) &#8211; when set to True, over-plot solid lines to highlight
+the limits between two adjacent contour levels</li>
+<li><strong>vmax</strong> (<em>float</em>) &#8211; maximum value of the contour levels</li>
+<li><strong>vmin</strong> (<em>float</em>) &#8211; minimum value of the contour levels</li>
+<li><strong>normed</strong> (<em>bool</em>) &#8211; when set to True, the colormap is centered around zero.
+Default is True, except for entropy/temperature plots.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 
 
           </div>
@@ -764,6 +858,12 @@ and replace them by a spline extrapolation (default is False)</li>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Various useful functions</a></li>
+<li><a class="reference internal" href="#module-magic.plotlib">Plotting functions</a></li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="misc.html"
                         title="previous chapter">Additional possible analyses</a></p>

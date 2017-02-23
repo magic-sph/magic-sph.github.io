@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Potential files [V|B|T]pot_#.TAG &mdash; Magic 5.6 documentation</title>
+    <title>Potential files [V|B|T]_lmr_#.TAG &mdash; Magic 5.6 documentation</title>
     
     <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -112,26 +112,26 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="potential-files-v-b-t-pot-tag">
-<h1>Potential files <code class="docutils literal"><span class="pre">[V|B|T]pot_#.TAG</span></code><a class="headerlink" href="#potential-files-v-b-t-pot-tag" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="vpot-tag-and-vpot-ave-tag">
-<span id="secvpotfile"></span><h2><code class="docutils literal"><span class="pre">Vpot_#.TAG</span></code> and <code class="docutils literal"><span class="pre">Vpot_ave.TAG</span></code><a class="headerlink" href="#vpot-tag-and-vpot-ave-tag" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="potential-files-v-b-t-lmr-tag">
+<span id="secpotfiles"></span><h1>Potential files <code class="docutils literal"><span class="pre">[V|B|T]_lmr_#.TAG</span></code><a class="headerlink" href="#potential-files-v-b-t-lmr-tag" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="v-lmr-tag-and-v-lmr-ave-tag">
+<span id="secvpotfile"></span><h2><code class="docutils literal"><span class="pre">V_lmr_#.TAG</span></code> and <code class="docutils literal"><span class="pre">V_lmr_ave.TAG</span></code><a class="headerlink" href="#v-lmr-tag-and-v-lmr-ave-tag" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">These output files are <strong>only</strong> written when either when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlPot.html#varl-storepot"><span>l_storePot=.true.</span></a> or when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlPot.html#varl-storevpot"><span>l_storeVpot=.true.</span></a>.</p>
 </div>
 <p>These files contain a snapshot of the poloidal and toroidal flow potentials
-<a class="reference internal" href="../apiFortran/baseModules.html#f/fields/w" title="f/fields/w"><code class="xref f f-var docutils literal"><span class="pre">w</span></code></a> and <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/z" title="f/fields/z"><code class="xref f f-var docutils literal"><span class="pre">z</span></code></a> in the Chebyshev space for all spherical harmonic
+<a class="reference internal" href="../apiFortran/baseModules.html#f/fields/w" title="f/fields/w"><code class="xref f f-var docutils literal"><span class="pre">w</span></code></a> and <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/z" title="f/fields/z"><code class="xref f f-var docutils literal"><span class="pre">z</span></code></a> in the radial space for all spherical harmonic
 degrees and orders. They basically contain two arrays of dimension
-(<a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max"><code class="xref f f-var docutils literal"><span class="pre">lm_max</span></code></a>, <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_cheb_max" title="f/truncation/n_cheb_max"><code class="xref f f-var docutils literal"><span class="pre">n_cheb_max</span></code></a>).  The detailed calculations are done in
-the subroutine <a class="reference internal" href="../apiFortran/IOBinaryOutputs.html#f/store_pot_mod/storepot" title="f/store_pot_mod/storepot"><code class="xref f f-subr docutils literal"><span class="pre">storePot</span></code></a>. The outputs are
+(<a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max"><code class="xref f f-var docutils literal"><span class="pre">lm_max</span></code></a>, <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max"><code class="xref f f-var docutils literal"><span class="pre">n_r_max</span></code></a>).  The detailed calculations are done in
+the subroutine <a class="reference internal" href="../apiFortran/IOBinaryOutputs.html#f/out_coeff/write_pot" title="f/out_coeff/write_pot"><code class="xref f f-subr docutils literal"><span class="pre">write_Pot</span></code></a>. The outputs are
 stored as a fortran unformatted file which follows the following structure:</p>
 <blockquote>
 <div><div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="c">!-------------</span>
 <span class="c">! Line 1</span>
 <span class="c">!-------------</span>
 
-<span class="n">l_max</span><span class="p">,</span> <span class="n">n_cheb_max</span><span class="p">,</span> <span class="n">n_cheb_ic_max</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> <span class="n">lm_max</span>     <span class="c">! Header (truncation)</span>
+<span class="n">l_max</span><span class="p">,</span> <span class="n">n_r_max</span><span class="p">,</span> <span class="n">n_r_ic_max</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> <span class="n">lm_max</span>           <span class="c">! Header (truncation)</span>
 
 <span class="c">!-------------</span>
 <span class="c">! Line 2</span>
@@ -143,40 +143,65 @@ stored as a fortran unformatted file which follows the following structure:</p>
 <span class="c">! Line 3</span>
 <span class="c">!-------------</span>
 
-<span class="nb">time</span><span class="p">,</span>                                              <span class="c">! Time and poloidal potential</span>
-<span class="n">w</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_cheb</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">w</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_cheb</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="p">...,</span> <span class="n">w</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">n_cheb</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-<span class="p">...</span>
-<span class="n">w</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_cheb</span><span class="o">=</span><span class="n">n_cheb_max</span><span class="p">,</span> <span class="p">...,</span> <span class="n">w</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span><span class="n">n_cheb</span><span class="o">=</span><span class="n">n_cheb_max</span><span class="p">)</span>
+<span class="nb">time</span>                                               <span class="c">! Header (time)</span>
 
 <span class="c">!------------</span>
 <span class="c">! Line 4</span>
 <span class="c">!-------------</span>
 
-<span class="nb">time</span><span class="p">,</span>                                              <span class="c">! Time and toroidal potential</span>
-<span class="n">z</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_cheb</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">z</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_cheb</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="p">...,</span> <span class="n">z</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">n_cheb</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+<span class="n">r</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="p">...,</span> <span class="n">r</span><span class="p">(</span><span class="n">n_r_max</span><span class="p">),</span><span class="n">rho0</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="p">...,</span> <span class="n">rho0</span><span class="p">(</span><span class="n">n_r_max</span><span class="p">)</span>  <span class="c">! Radius, Density</span>
+
+<span class="c">!------------</span>
+<span class="c">! Line 5</span>
+<span class="c">!-------------</span>
+
+                                                   <span class="c">! Poloidal potential</span>
+<span class="n">w</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">w</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_r</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="p">...,</span> <span class="n">w</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">n_r</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
 <span class="p">...</span>
-<span class="n">z</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_cheb</span><span class="o">=</span><span class="n">n_cheb_max</span><span class="p">,</span> <span class="p">...,</span> <span class="n">z</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span><span class="n">n_cheb</span><span class="o">=</span><span class="n">n_cheb_max</span><span class="p">)</span>
+<span class="n">w</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="o">=</span><span class="n">n_r_max</span><span class="p">),</span> <span class="p">...,</span> <span class="n">w</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span><span class="n">n_r</span><span class="o">=</span><span class="n">n_r_max</span><span class="p">)</span>
+
+<span class="c">!------------</span>
+<span class="c">! Line 6</span>
+<span class="c">!-------------</span>
+
+                                                   <span class="c">! Toroidal potential</span>
+<span class="n">z</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">z</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_r</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="p">...,</span> <span class="n">z</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">n_r</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+<span class="p">...</span>
+<span class="n">z</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="o">=</span><span class="n">n_r_max</span><span class="p">),</span> <span class="p">...,</span> <span class="n">z</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span><span class="n">n_r</span><span class="o">=</span><span class="n">n_r_max</span><span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
+<p>The potential files that contain the poloidal and toroidal potentials for the momentum
+can be read and transformed to the physical space using the python class <a class="reference internal" href="../apiPython/graphMovCoeff.html#magic.MagicPotential" title="magic.MagicPotential"><code class="xref py py-class docutils literal"><span class="pre">MagicPotential</span></code></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">MagicPotential</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;V&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">pol</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">idex</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="mi">32</span><span class="p">])</span> <span class="c1"># print w(l=3,m=2,n_r=32)</span>
+</pre></div>
 </div>
-<div class="section" id="bpot-tag-bpot-ave-tag">
-<span id="secbpotfile"></span><h2><code class="docutils literal"><span class="pre">Bpot_#.TAG</span></code>, <code class="docutils literal"><span class="pre">Bpot_ave.TAG</span></code><a class="headerlink" href="#bpot-tag-bpot-ave-tag" title="Permalink to this headline">¶</a></h2>
+<p>Once transformed to the physical space using a Fourier and a Legendre transform, they
+can be displayed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">equat</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;vr&#39;</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span> <span class="c1"># Equatorial cut of vr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;vp&#39;</span><span class="p">)</span> <span class="c1"># Azimuthal average of vphi</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">surf</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;vt&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span> <span class="c1"># Radial cut of vtheta at r=0.8r_o</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="b-lmr-tag-b-lmr-ave-tag">
+<span id="secbpotfile"></span><h2><code class="docutils literal"><span class="pre">B_lmr_#.TAG</span></code>, <code class="docutils literal"><span class="pre">B_lmr_ave.TAG</span></code><a class="headerlink" href="#b-lmr-tag-b-lmr-ave-tag" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">These output files are <strong>only</strong> written when either when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlPot.html#varl-storepot"><span>l_storePot=.true.</span></a> or when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlPot.html#varl-storebpot"><span>l_storeBpot=.true.</span></a>.</p>
 </div>
 <p>These files contain a snapshot of the poloidal and toroidal magnetic potentials
-<a class="reference internal" href="../apiFortran/baseModules.html#f/fields/b" title="f/fields/b"><code class="xref f f-var docutils literal"><span class="pre">b</span></code></a> and <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/aj" title="f/fields/aj"><code class="xref f f-var docutils literal"><span class="pre">aj</span></code></a> in the Chebyshev space for all spherical harmonic
+<a class="reference internal" href="../apiFortran/baseModules.html#f/fields/b" title="f/fields/b"><code class="xref f f-var docutils literal"><span class="pre">b</span></code></a> and <a class="reference internal" href="../apiFortran/baseModules.html#f/fields/aj" title="f/fields/aj"><code class="xref f f-var docutils literal"><span class="pre">aj</span></code></a> in the radial space for all spherical harmonic
 degrees and orders.  The detailed calculations are done in
-the subroutine <a class="reference internal" href="../apiFortran/IOBinaryOutputs.html#f/store_pot_mod/storepot" title="f/store_pot_mod/storepot"><code class="xref f f-subr docutils literal"><span class="pre">storePot</span></code></a>. The outputs are
+the subroutine <a class="reference internal" href="../apiFortran/IOBinaryOutputs.html#f/out_coeff/write_pot" title="f/out_coeff/write_pot"><code class="xref f f-subr docutils literal"><span class="pre">write_Pot</span></code></a>. The outputs are
 stored as a fortran unformatted file which follows the following structure:</p>
 <blockquote>
 <div><div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="c">!-------------</span>
 <span class="c">! Line 1</span>
 <span class="c">!-------------</span>
 
-<span class="n">l_max</span><span class="p">,</span> <span class="n">n_cheb_max</span><span class="p">,</span> <span class="n">n_cheb_ic_max</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> <span class="n">lm_max</span>     <span class="c">! Header (truncation)</span>
+<span class="n">l_max</span><span class="p">,</span> <span class="n">n_r_max</span><span class="p">,</span> <span class="n">n_r_ic_max</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> <span class="n">lm_max</span>           <span class="c">! Header (truncation)</span>
 
 <span class="c">!-------------</span>
 <span class="c">! Line 2</span>
@@ -188,19 +213,31 @@ stored as a fortran unformatted file which follows the following structure:</p>
 <span class="c">! Line 3</span>
 <span class="c">!-------------</span>
 
-<span class="nb">time</span><span class="p">,</span>                                              <span class="c">! Time and poloidal potential</span>
-<span class="n">b</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_cheb</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">b</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_cheb</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="p">...,</span> <span class="n">b</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">n_cheb</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-<span class="p">...</span>
-<span class="n">b</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_cheb</span><span class="o">=</span><span class="n">n_cheb_max</span><span class="p">,</span> <span class="p">...,</span> <span class="n">b</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span><span class="n">n_cheb</span><span class="o">=</span><span class="n">n_cheb_max</span><span class="p">)</span>
+<span class="nb">time</span>                                               <span class="c">! Header (time)</span>
 
 <span class="c">!------------</span>
 <span class="c">! Line 4</span>
 <span class="c">!-------------</span>
 
-<span class="nb">time</span><span class="p">,</span>                                              <span class="c">! Time and toroidal potential</span>
-<span class="n">aj</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_cheb</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">aj</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_cheb</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="p">...,</span> <span class="n">aj</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">n_cheb</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+<span class="n">r</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="p">...,</span> <span class="n">r</span><span class="p">(</span><span class="n">n_r_max</span><span class="p">),</span><span class="n">rho0</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="p">...,</span> <span class="n">rho0</span><span class="p">(</span><span class="n">n_r_max</span><span class="p">)</span>  <span class="c">! Radius, Density</span>
+
+<span class="c">!------------</span>
+<span class="c">! Line 5</span>
+<span class="c">!-------------</span>
+
+                                                   <span class="c">! Poloidal potential</span>
+<span class="n">b</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">b</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_r</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="p">...,</span> <span class="n">b</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">n_r</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
 <span class="p">...</span>
-<span class="n">aj</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_cheb</span><span class="o">=</span><span class="n">n_cheb_max</span><span class="p">,</span> <span class="p">...,</span> <span class="n">aj</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span><span class="n">n_cheb</span><span class="o">=</span><span class="n">n_cheb_max</span><span class="p">)</span>
+<span class="n">b</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="o">=</span><span class="n">n_r_max</span><span class="p">),</span> <span class="p">...,</span> <span class="n">b</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span><span class="n">n_r</span><span class="o">=</span><span class="n">n_r_max</span><span class="p">)</span>
+
+<span class="c">!------------</span>
+<span class="c">! Line 6</span>
+<span class="c">!-------------</span>
+
+                                                   <span class="c">! Toroidal potential</span>
+<span class="n">aj</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">aj</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_r</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="p">...,</span> <span class="n">aj</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">n_r</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+<span class="p">...</span>
+<span class="n">aj</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="o">=</span><span class="n">n_r_max</span><span class="p">),</span> <span class="p">...,</span> <span class="n">aj</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span><span class="n">n_r</span><span class="o">=</span><span class="n">n_r_max</span><span class="p">)</span>
 
 <span class="c">!**************************************************************************!</span>
 <span class="c">! The two following lines are optional and are only written when there is  !</span>
@@ -208,44 +245,56 @@ stored as a fortran unformatted file which follows the following structure:</p>
 <span class="c">!**************************************************************************!</span>
 
 <span class="c">!------------</span>
-<span class="c">! Line 5</span>
+<span class="c">! Line 7</span>
 <span class="c">!-------------</span>
 
 <span class="nb">time</span><span class="p">,</span>                                              <span class="c">! Time and poloidal potential</span>
-<span class="n">b_ic</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_cheb</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">b_ic</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_cheb</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="p">...,</span> <span class="n">b_ic</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">n_cheb</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+<span class="n">b_ic</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">b_ic</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_r</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="p">...,</span> <span class="n">b_ic</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">n_r</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
 <span class="p">...</span>
-<span class="n">b_ic</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_cheb</span><span class="o">=</span><span class="n">n_cheb_max</span><span class="p">,</span> <span class="p">...,</span> <span class="n">b_ic</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span><span class="n">n_cheb</span><span class="o">=</span><span class="n">n_cheb_max</span><span class="p">)</span>
+<span class="n">b_ic</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="o">=</span><span class="n">n_r_max</span><span class="p">),</span> <span class="p">...,</span> <span class="n">b_ic</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span><span class="n">n_r</span><span class="o">=</span><span class="n">n_r_max</span><span class="p">)</span>
 
 <span class="c">!------------</span>
-<span class="c">! Line 6</span>
+<span class="c">! Line 8</span>
 <span class="c">!-------------</span>
 
 <span class="nb">time</span><span class="p">,</span>                                              <span class="c">! Time and toroidal potential</span>
-<span class="n">aj_ic</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_cheb</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">aj_ic</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_cheb</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="p">...,</span> <span class="n">aj_ic</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">n_cheb</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+<span class="n">aj_ic</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">aj_ic</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_r</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="p">...,</span> <span class="n">aj_ic</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">n_r</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
 <span class="p">...</span>
-<span class="n">aj_ic</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_cheb</span><span class="o">=</span><span class="n">n_cheb_max</span><span class="p">,</span> <span class="p">...,</span> <span class="n">aj_ic</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span><span class="n">n_cheb</span><span class="o">=</span><span class="n">n_cheb_max</span><span class="p">)</span>
+<span class="n">aj_ic</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="o">=</span><span class="n">n_r_max</span><span class="p">),</span> <span class="p">...,</span> <span class="n">aj_ic</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span><span class="n">n_r</span><span class="o">=</span><span class="n">n_r_max</span><span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
+<p>The potential files that contain the poloidal and toroidal potentials for the magnetic field can be read and transformed to the physical space using the python class <a class="reference internal" href="../apiPython/graphMovCoeff.html#magic.MagicPotential" title="magic.MagicPotential"><code class="xref py py-class docutils literal"><span class="pre">MagicPotential</span></code></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">MagicPotential</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">tor</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">idex</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="mi">32</span><span class="p">])</span> <span class="c1"># print aj(l=3,m=2,n_r=32)</span>
+</pre></div>
 </div>
-<div class="section" id="tpot-tag-tpot-ave-tag">
-<span id="sectpotfile"></span><h2><code class="docutils literal"><span class="pre">Tpot_#.TAG</span></code>, <code class="docutils literal"><span class="pre">Tpot_ave.TAG</span></code><a class="headerlink" href="#tpot-tag-tpot-ave-tag" title="Permalink to this headline">¶</a></h2>
+<p>Once transformed to the physical space using a Fourier and a Legendre transform, they
+can be displayed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">equat</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;Br&#39;</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span> <span class="c1"># Equatorial cut of Br</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;Bp&#39;</span><span class="p">)</span> <span class="c1"># Azimuthal average of Bphi</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">surf</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;Bt&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span> <span class="c1"># Radial cut of Btheta at r=0.8r_o</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="t-lmr-tag-t-lmr-ave-tag">
+<span id="sectpotfile"></span><h2><code class="docutils literal"><span class="pre">T_lmr_#.TAG</span></code>, <code class="docutils literal"><span class="pre">T_lmr_ave.TAG</span></code><a class="headerlink" href="#t-lmr-tag-t-lmr-ave-tag" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">These output files are <strong>only</strong> written when either when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlPot.html#varl-storepot"><span>l_storePot=.true.</span></a> or when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlPot.html#varl-storetpot"><span>l_storeTpot=.true.</span></a>.</p>
 </div>
 <p>These files contain a snapshot of the temperature/entropy
-<a class="reference internal" href="../apiFortran/baseModules.html#f/fields/s" title="f/fields/s"><code class="xref f f-var docutils literal"><span class="pre">s</span></code></a> in the spectral and Chebyshev spaces for all spherical harmonic
+<a class="reference internal" href="../apiFortran/baseModules.html#f/fields/s" title="f/fields/s"><code class="xref f f-var docutils literal"><span class="pre">s</span></code></a> in the spectral and radial spaces for all spherical harmonic
 degrees and orders. They basically contain one array of dimension
-(<a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max"><code class="xref f f-var docutils literal"><span class="pre">lm_max</span></code></a>, <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_cheb_max" title="f/truncation/n_cheb_max"><code class="xref f f-var docutils literal"><span class="pre">n_cheb_max</span></code></a>).  The detailed calculations are done in
-the subroutine <a class="reference internal" href="../apiFortran/IOBinaryOutputs.html#f/store_pot_mod/storepot" title="f/store_pot_mod/storepot"><code class="xref f f-subr docutils literal"><span class="pre">storePot</span></code></a>. The outputs are
+(<a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max"><code class="xref f f-var docutils literal"><span class="pre">lm_max</span></code></a>, <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max"><code class="xref f f-var docutils literal"><span class="pre">n_r_max</span></code></a>).  The detailed calculations are done in
+the subroutine <a class="reference internal" href="../apiFortran/IOBinaryOutputs.html#f/out_coeff/write_pot" title="f/out_coeff/write_pot"><code class="xref f f-subr docutils literal"><span class="pre">write_Pot</span></code></a>. The outputs are
 stored as a fortran unformatted file which follows the following structure:</p>
 <blockquote>
 <div><div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="c">!-------------</span>
 <span class="c">! Line 1</span>
 <span class="c">!-------------</span>
 
-<span class="n">l_max</span><span class="p">,</span> <span class="n">n_cheb_max</span><span class="p">,</span> <span class="n">n_cheb_ic_max</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> <span class="n">lm_max</span>     <span class="c">! Header (truncation)</span>
+<span class="n">l_max</span><span class="p">,</span> <span class="n">n_r_max</span><span class="p">,</span> <span class="n">n_r_ic_max</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> <span class="n">lm_max</span>           <span class="c">! Header (truncation)</span>
 
 <span class="c">!-------------</span>
 <span class="c">! Line 2</span>
@@ -257,13 +306,36 @@ stored as a fortran unformatted file which follows the following structure:</p>
 <span class="c">! Line 3</span>
 <span class="c">!-------------</span>
 
-<span class="nb">time</span><span class="p">,</span>                                              <span class="c">! Time and temperature/entropy</span>
-<span class="n">s</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_cheb</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">s</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_cheb</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="p">...,</span> <span class="n">s</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">n_cheb</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+<span class="nb">time</span>                                               <span class="c">! Header (time)</span>
+
+<span class="c">!------------</span>
+<span class="c">! Line 4</span>
+<span class="c">!-------------</span>
+
+<span class="n">r</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="p">...,</span> <span class="n">r</span><span class="p">(</span><span class="n">n_r_max</span><span class="p">),</span><span class="n">rho0</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="p">...,</span> <span class="n">rho0</span><span class="p">(</span><span class="n">n_r_max</span><span class="p">)</span>  <span class="c">! Radius, Density</span>
+
+<span class="c">!------------</span>
+<span class="c">! Line 5</span>
+<span class="c">!-------------</span>
+
+                                                   <span class="c">! Temperature/entropy</span>
+<span class="n">s</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">s</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_r</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="p">...,</span> <span class="n">s</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">n_r</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
 <span class="p">...</span>
-<span class="n">s</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_cheb</span><span class="o">=</span><span class="n">n_cheb_max</span><span class="p">,</span> <span class="p">...,</span> <span class="n">s</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span><span class="n">n_cheb</span><span class="o">=</span><span class="n">n_cheb_max</span><span class="p">)</span>
+<span class="n">s</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n_r</span><span class="o">=</span><span class="n">n_r_max</span><span class="p">),</span> <span class="p">...,</span> <span class="n">s</span><span class="p">(</span><span class="n">lm</span><span class="o">=</span><span class="n">lm_max</span><span class="p">,</span><span class="n">n_r</span><span class="o">=</span><span class="n">n_r_max</span><span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
+<p>The potential files that contain the temperature/entropy in the spectral space can be read and transformed to the physical space using the python class <a class="reference internal" href="../apiPython/graphMovCoeff.html#magic.MagicPotential" title="magic.MagicPotential"><code class="xref py py-class docutils literal"><span class="pre">MagicPotential</span></code></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">MagicPotential</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;T&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">pol</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">idex</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="mi">10</span><span class="p">])</span> <span class="c1"># print s(l=0,m=0,n_r=10)</span>
+</pre></div>
+</div>
+<p>Once transformed to the physical space using a Fourier and a Legendre transform, they
+can be displayed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">equat</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span> <span class="c1"># Equatorial cut of temperature/entropy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;T&#39;</span><span class="p">)</span> <span class="c1"># Azimuthal average of temperature/entropy</span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -275,10 +347,10 @@ stored as a fortran unformatted file which follows the following structure:</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Potential files <code class="docutils literal"><span class="pre">[V|B|T]pot_#.TAG</span></code></a><ul>
-<li><a class="reference internal" href="#vpot-tag-and-vpot-ave-tag"><code class="docutils literal"><span class="pre">Vpot_#.TAG</span></code> and <code class="docutils literal"><span class="pre">Vpot_ave.TAG</span></code></a></li>
-<li><a class="reference internal" href="#bpot-tag-bpot-ave-tag"><code class="docutils literal"><span class="pre">Bpot_#.TAG</span></code>, <code class="docutils literal"><span class="pre">Bpot_ave.TAG</span></code></a></li>
-<li><a class="reference internal" href="#tpot-tag-tpot-ave-tag"><code class="docutils literal"><span class="pre">Tpot_#.TAG</span></code>, <code class="docutils literal"><span class="pre">Tpot_ave.TAG</span></code></a></li>
+<li><a class="reference internal" href="#">Potential files <code class="docutils literal"><span class="pre">[V|B|T]_lmr_#.TAG</span></code></a><ul>
+<li><a class="reference internal" href="#v-lmr-tag-and-v-lmr-ave-tag"><code class="docutils literal"><span class="pre">V_lmr_#.TAG</span></code> and <code class="docutils literal"><span class="pre">V_lmr_ave.TAG</span></code></a></li>
+<li><a class="reference internal" href="#b-lmr-tag-b-lmr-ave-tag"><code class="docutils literal"><span class="pre">B_lmr_#.TAG</span></code>, <code class="docutils literal"><span class="pre">B_lmr_ave.TAG</span></code></a></li>
+<li><a class="reference internal" href="#t-lmr-tag-t-lmr-ave-tag"><code class="docutils literal"><span class="pre">T_lmr_#.TAG</span></code>, <code class="docutils literal"><span class="pre">T_lmr_ave.TAG</span></code></a></li>
 </ul>
 </li>
 </ul>

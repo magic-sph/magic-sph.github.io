@@ -154,13 +154,13 @@
 </li>
 <li><dl class="variable">
 <dt id="f/radial_der/work">
-<code class="descclassname">radial_der/</code><code class="descname">work</code> (:,:)<em> [</em><em>complex</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/radial_der/work" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">radial_der/</code><code class="descname">work</code> (*,*)<em> [</em><em>complex</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/radial_der/work" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
 <li><dl class="variable">
 <dt id="f/radial_der/work_1d_real">
-<code class="descclassname">radial_der/</code><code class="descname">work_1d_real</code> (:)<em> [</em><em>real</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/radial_der/work_1d_real" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">radial_der/</code><code class="descname">work_1d_real</code> (*)<em> [</em><em>real</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/radial_der/work_1d_real" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
@@ -225,19 +225,23 @@ work arrays of size (lm_max,n_r_max) any longer</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></li>
-<li><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: first derivative of f</li>
-<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: first dim of f</li>
-<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: first function to be treated</li>
-<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: last function to be treated</li>
-<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: number of radial grid points</li>
+<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em> :: last function to be treated</li>
+<li><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>n_cheb_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: max number of cheb modes</li>
-<li><strong>work1</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: work array needed for costf</li>
+<li><strong>work1</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>r_scheme</strong><em> [</em><em>real</em><em>]</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="IOAdd.html#f/out_dtb_frame/write_dtb_frame" title="f/out_dtb_frame/write_dtb_frame"><code class="xref f f-func docutils literal"><span class="pre">write_dtb_frame()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><ul class="first simple">
+<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,0)</em><em>]</em></li>
+<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,1)</em><em>]</em> :: first derivative of f</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="IOAdd.html#f/out_dtb_frame/write_dtb_frame" title="f/out_dtb_frame/write_dtb_frame"><code class="xref f f-func docutils literal"><span class="pre">write_dtb_frame()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -247,19 +251,27 @@ work arrays of size (lm_max,n_r_max) any longer</p>
 <dl class="subroutine">
 <dt id="f/radial_der/get_dcheb_complex">
 <em class="property">subroutine  </em><code class="descclassname">radial_der/</code><code class="descname">get_dcheb_complex</code><span class="sig-paren">(</span><em>f</em>, <em>df</em>, <em>n_f_max</em>, <em>n_f_start</em>, <em>n_f_stop</em>, <em>n_r_max</em>, <em>n_cheb_max</em>, <em>d_fac</em><span class="sig-paren">)</span><a class="headerlink" href="#f/radial_der/get_dcheb_complex" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><blockquote>
+<div>Returns chebychev coeffitiens of first derivative df and second
+derivative ddf for a function whose cheb-coeff. are given as
+columns in array f(n_f_max,n_r_max).</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</li>
 <li><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
-<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: Max no of functions</li>
-<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: No of function to start with</li>
-<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: No of function to stop with</li>
-<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: second dimension of f,df,ddf</li>
+<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>n_cheb_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Number of cheb modes</li>
-<li><strong>d_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</li>
+<li><strong>d_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><ul class="first last simple">
+<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,0)</em><em>]</em></li>
+<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,1)</em><em>]</em> :: second dimension of f,df,ddf</li>
 </ul>
 </td>
 </tr>
@@ -274,13 +286,15 @@ work arrays of size (lm_max,n_r_max) any longer</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>f</strong> (<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>f</strong> (<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</li>
 <li><strong>df</strong> (<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
-<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: Dimension of f,df,ddf</li>
 <li><strong>n_cheb_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Number of cheb modes</li>
-<li><strong>d_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</li>
+<li><strong>d_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><p class="first last"><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=len(f)</em><em>]</em> :: Dimension of f,df,ddf</p>
 </td>
 </tr>
 </tbody>
@@ -299,19 +313,23 @@ columns in array f(n_c_tot,n_r_max).</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</li>
 <li><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
-<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: First dimension of f,df,ddf</li>
-<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: No of column to start with</li>
-<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: No of column to stop with</li>
-<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: second dimension of f,df,ddf</li>
+<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>n_cheb_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Number of cheb modes</li>
-<li><strong>d_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</li>
+<li><strong>d_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/radial_der/get_ddr" title="f/radial_der/get_ddr"><code class="xref f f-func docutils literal"><span class="pre">get_ddr()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><ul class="first simple">
+<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,0)</em><em>]</em></li>
+<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,1)</em><em>]</em> :: second dimension of f,df,ddf</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/radial_der/get_ddr" title="f/radial_der/get_ddr"><code class="xref f f-func docutils literal"><span class="pre">get_ddr()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -321,25 +339,33 @@ columns in array f(n_c_tot,n_r_max).</div></blockquote>
 <dl class="subroutine">
 <dt id="f/radial_der/get_dddcheb">
 <em class="property">subroutine  </em><code class="descclassname">radial_der/</code><code class="descname">get_dddcheb</code><span class="sig-paren">(</span><em>f</em>, <em>df</em>, <em>ddf</em>, <em>dddf</em>, <em>n_f_max</em>, <em>n_f_start</em>, <em>n_f_stop</em>, <em>n_r_max</em>, <em>n_cheb_max</em>, <em>d_fac</em><span class="sig-paren">)</span><a class="headerlink" href="#f/radial_der/get_dddcheb" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><blockquote>
+<div>Returns chebychev coeffitiens of first derivative df and second
+derivative ddf for a function whose cheb-coeff. are given as
+columns in array f(n_c_tot,n_r_max).</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</li>
 <li><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>dddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
-<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: First dimension of f,df,ddf</li>
-<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: No of column to start with</li>
-<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: No of column to stop with</li>
-<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: second dimension of f,df,ddf</li>
+<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>n_cheb_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Number of cheb modes</li>
-<li><strong>d_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</li>
+<li><strong>d_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/radial_der/get_dddr" title="f/radial_der/get_dddr"><code class="xref f f-func docutils literal"><span class="pre">get_dddr()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><ul class="first simple">
+<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,0)</em><em>]</em></li>
+<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,1)</em><em>]</em> :: second dimension of f,df,ddf</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/radial_der/get_dddr" title="f/radial_der/get_dddr"><code class="xref f f-func docutils literal"><span class="pre">get_dddr()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -353,12 +379,14 @@ columns in array f(n_c_tot,n_r_max).</div></blockquote>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>f</strong> (<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
-<li><strong>df</strong> (<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em> :: first derivative of f</li>
-<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: number of radial grid points</li>
+<li><strong>df</strong> (<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>r_scheme</strong><em> [</em><em>real</em><em>]</em></li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><p class="first last"><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=len(f)</em><em>]</em> :: first derivative of f</p>
 </td>
 </tr>
 </tbody>
@@ -379,17 +407,19 @@ to a Chebychev representation using n_r_max radial grid points .</div></blockquo
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></li>
-<li><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: first derivative of f</li>
-<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: first dim of f</li>
-<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: first function to be treated</li>
-<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: last function to be treated</li>
-<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: number of radial grid points</li>
+<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em> :: last function to be treated</li>
+<li><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>r_scheme</strong><em> [</em><em>real</em><em>]</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><p class="first last"><strong>nocopy</strong><em> [</em><em>logical</em><em>,</em><em>in,optional</em><em>]</em></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><ul class="first last simple">
+<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,0)</em><em>]</em></li>
+<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,1)</em><em>]</em> :: first derivative of f</li>
+<li><strong>nocopy</strong><em> [</em><em>logical</em><em>,</em><em>in,optional</em><em>]</em></li>
+</ul>
 </td>
 </tr>
 </tbody>
@@ -411,21 +441,25 @@ to a Chebychev representation using n_r_max radial grid points.</div></blockquot
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
-<li><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: first derivative of f</li>
-<li><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: second derivative of f</li>
-<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: first dim of f</li>
-<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: first function to be treated</li>
-<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: last function to be treated</li>
-<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: number of radial grid points</li>
+<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em> :: last function to be treated</li>
+<li><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>r_scheme</strong><em> [</em><em>real</em><em>]</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="initModules.html#f/start_fields/getstartfields" title="f/start_fields/getstartfields"><code class="xref f f-func docutils literal"><span class="pre">getstartfields()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/updateb" title="f/updateb_mod/updateb"><code class="xref f f-func docutils literal"><span class="pre">updateb()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/updates" title="f/updates_mod/updates"><code class="xref f f-func docutils literal"><span class="pre">updates()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/updatexi" title="f/updatexi_mod/updatexi"><code class="xref f f-func docutils literal"><span class="pre">updatexi()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewpt_mod/updatewpt" title="f/updatewpt_mod/updatewpt"><code class="xref f f-func docutils literal"><span class="pre">updatewpt()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/updatewps" title="f/updatewps_mod/updatewps"><code class="xref f f-func docutils literal"><span class="pre">updatewps()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/updatez" title="f/updatez_mod/updatez"><code class="xref f f-func docutils literal"><span class="pre">updatez()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/updatewp" title="f/updatewp_mod/updatewp"><code class="xref f f-func docutils literal"><span class="pre">updatewp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/updates_ala" title="f/updates_mod/updates_ala"><code class="xref f f-func docutils literal"><span class="pre">updates_ala()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><ul class="first simple">
+<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,0)</em><em>]</em></li>
+<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,1)</em><em>]</em> :: second derivative of f</li>
+</ul>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/radial_der/get_ddcheb" title="f/radial_der/get_ddcheb"><code class="xref f f-func docutils literal"><span class="pre">get_ddcheb()</span></code></a></p>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="initModules.html#f/start_fields/getstartfields" title="f/start_fields/getstartfields"><code class="xref f f-func docutils literal"><span class="pre">getstartfields()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/updateb" title="f/updateb_mod/updateb"><code class="xref f f-func docutils literal"><span class="pre">updateb()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/updates" title="f/updates_mod/updates"><code class="xref f f-func docutils literal"><span class="pre">updates()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/updatexi" title="f/updatexi_mod/updatexi"><code class="xref f f-func docutils literal"><span class="pre">updatexi()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewpt_mod/updatewpt" title="f/updatewpt_mod/updatewpt"><code class="xref f f-func docutils literal"><span class="pre">updatewpt()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/updatewps" title="f/updatewps_mod/updatewps"><code class="xref f f-func docutils literal"><span class="pre">updatewps()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/updatez" title="f/updatez_mod/updatez"><code class="xref f f-func docutils literal"><span class="pre">updatez()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/updatewp" title="f/updatewp_mod/updatewp"><code class="xref f f-func docutils literal"><span class="pre">updatewp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/updates_ala" title="f/updates_mod/updates_ala"><code class="xref f f-func docutils literal"><span class="pre">updates_ala()</span></code></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/radial_der/get_ddcheb" title="f/radial_der/get_ddcheb"><code class="xref f f-func docutils literal"><span class="pre">get_ddcheb()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -447,22 +481,26 @@ to a Chebychev representation using n_r_max radial grid points.</div></blockquot
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
-<li><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: first derivative of f</li>
-<li><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: second derivative of f</li>
-<li><strong>dddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: third derivative of f</li>
-<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: first dim of f</li>
-<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: first function to be treated</li>
-<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: last function to be treated</li>
-<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: number of radial grid points</li>
+<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em> :: last function to be treated</li>
+<li><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>dddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>r_scheme</strong><em> [</em><em>real</em><em>]</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="timeAdvLinear.html#f/updatewpt_mod/updatewpt" title="f/updatewpt_mod/updatewpt"><code class="xref f f-func docutils literal"><span class="pre">updatewpt()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/updatewps" title="f/updatewps_mod/updatewps"><code class="xref f f-func docutils literal"><span class="pre">updatewps()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/updatewp" title="f/updatewp_mod/updatewp"><code class="xref f f-func docutils literal"><span class="pre">updatewp()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><ul class="first simple">
+<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,0)</em><em>]</em></li>
+<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,1)</em><em>]</em> :: third derivative of f</li>
+</ul>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/radial_der/get_dddcheb" title="f/radial_der/get_dddcheb"><code class="xref f f-func docutils literal"><span class="pre">get_dddcheb()</span></code></a></p>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="timeAdvLinear.html#f/updatewpt_mod/updatewpt" title="f/updatewpt_mod/updatewpt"><code class="xref f f-func docutils literal"><span class="pre">updatewpt()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/updatewps" title="f/updatewps_mod/updatewps"><code class="xref f f-func docutils literal"><span class="pre">updatewps()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/updatewp" title="f/updatewp_mod/updatewp"><code class="xref f f-func docutils literal"><span class="pre">updatewp()</span></code></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/radial_der/get_dddcheb" title="f/radial_der/get_dddcheb"><code class="xref f f-func docutils literal"><span class="pre">get_dddcheb()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -507,26 +545,30 @@ init_costf1 and init_costf2.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
-<li><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: first derivative of f</li>
-<li><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: second derivative of f</li>
-<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: first dim of f</li>
-<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: first function to be treated</li>
-<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: last function to be treated</li>
-<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: number of radial grid points</li>
+<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em> :: mapping factor</li>
+<li><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>n_cheb_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: number of cheb modes</li>
-<li><strong>dr_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: mapping factor</li>
-<li><strong>work1</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: work array needed for costf</li>
-<li><strong>work2</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: work array needed for costf</li>
+<li><strong>dr_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>work1</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>work2</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>chebt_odd</strong><em> [</em><em>costf_odd_t</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>chebt_even</strong><em> [</em><em>costf_even_t</em><em>,</em><em>in</em><em>]</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="initModules.html#f/start_fields/getstartfields" title="f/start_fields/getstartfields"><code class="xref f f-func docutils literal"><span class="pre">getstartfields()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/updateb" title="f/updateb_mod/updateb"><code class="xref f f-func docutils literal"><span class="pre">updateb()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><ul class="first simple">
+<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,0)</em><em>]</em></li>
+<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,1)</em><em>]</em> :: second derivative of f</li>
+</ul>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/radial_der_even/get_ddcheb_even" title="f/radial_der_even/get_ddcheb_even"><code class="xref f f-func docutils literal"><span class="pre">get_ddcheb_even()</span></code></a></p>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="initModules.html#f/start_fields/getstartfields" title="f/start_fields/getstartfields"><code class="xref f f-func docutils literal"><span class="pre">getstartfields()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/updateb" title="f/updateb_mod/updateb"><code class="xref f f-func docutils literal"><span class="pre">updateb()</span></code></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/radial_der_even/get_ddcheb_even" title="f/radial_der_even/get_ddcheb_even"><code class="xref f f-func docutils literal"><span class="pre">get_ddcheb_even()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -550,24 +592,28 @@ init_costf1 and init_costf2.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></li>
-<li><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: first derivative of f</li>
-<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: first dim of f</li>
-<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: first function to be treated</li>
-<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: last function to be treated</li>
-<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: number of radial grid points</li>
+<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em> :: mapping factor</li>
+<li><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>n_cheb_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: number of cheb modes</li>
-<li><strong>dr_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: mapping factor</li>
-<li><strong>work1</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: work array needed for costf</li>
+<li><strong>dr_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>work1</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>chebt_odd</strong><em> [</em><em>costf_odd_t</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>chebt_even</strong><em> [</em><em>costf_even_t</em><em>,</em><em>in</em><em>]</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="IOBinaryOutputs.html#f/fields_average_mod/fields_average" title="f/fields_average_mod/fields_average"><code class="xref f f-func docutils literal"><span class="pre">fields_average()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/out_dtb_frame/write_dtb_frame" title="f/out_dtb_frame/write_dtb_frame"><code class="xref f f-func docutils literal"><span class="pre">write_dtb_frame()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><ul class="first simple">
+<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,0)</em><em>]</em></li>
+<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,1)</em><em>]</em> :: first derivative of f</li>
+</ul>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/radial_der_even/get_dcheb_even" title="f/radial_der_even/get_dcheb_even"><code class="xref f f-func docutils literal"><span class="pre">get_dcheb_even()</span></code></a></p>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="IOBinaryOutputs.html#f/fields_average_mod/fields_average" title="f/fields_average_mod/fields_average"><code class="xref f f-func docutils literal"><span class="pre">fields_average()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/out_dtb_frame/write_dtb_frame" title="f/out_dtb_frame/write_dtb_frame"><code class="xref f f-func docutils literal"><span class="pre">write_dtb_frame()</span></code></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/radial_der_even/get_dcheb_even" title="f/radial_der_even/get_dcheb_even"><code class="xref f f-func docutils literal"><span class="pre">get_dcheb_even()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -591,25 +637,29 @@ init_costf1 and init_costf2.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></li>
-<li><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: first derivative of f</li>
-<li><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: second derivative of f</li>
-<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: first dim of f</li>
-<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: first function to be treated</li>
-<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: last function to be treated</li>
-<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: number of radial grid points</li>
+<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em> :: mapping factor</li>
+<li><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>n_cheb_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: number of cheb modes</li>
-<li><strong>dr_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: mapping factor</li>
-<li><strong>work1</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: work array needed for costf</li>
+<li><strong>dr_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>work1</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>chebt_odd</strong><em> [</em><em>costf_odd_t</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>chebt_even</strong><em> [</em><em>costf_even_t</em><em>,</em><em>in</em><em>]</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="IOBinaryOutputs.html#f/fields_average_mod/fields_average" title="f/fields_average_mod/fields_average"><code class="xref f f-func docutils literal"><span class="pre">fields_average()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><ul class="first simple">
+<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,0)</em><em>]</em></li>
+<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,1)</em><em>]</em> :: second derivative of f</li>
+</ul>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/radial_der_even/get_ddcheb_even" title="f/radial_der_even/get_ddcheb_even"><code class="xref f f-func docutils literal"><span class="pre">get_ddcheb_even()</span></code></a></p>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="IOBinaryOutputs.html#f/fields_average_mod/fields_average" title="f/fields_average_mod/fields_average"><code class="xref f f-func docutils literal"><span class="pre">fields_average()</span></code></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/radial_der_even/get_ddcheb_even" title="f/radial_der_even/get_ddcheb_even"><code class="xref f f-func docutils literal"><span class="pre">get_ddcheb_even()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -619,23 +669,31 @@ init_costf1 and init_costf2.</div></blockquote>
 <dl class="subroutine">
 <dt id="f/radial_der_even/get_dcheb_even">
 <em class="property">subroutine  </em><code class="descclassname">radial_der_even/</code><code class="descname">get_dcheb_even</code><span class="sig-paren">(</span><em>f</em>, <em>df</em>, <em>n_f_max</em>, <em>n_f_start</em>, <em>n_f_stop</em>, <em>n_r_max</em>, <em>n_cheb_max</em>, <em>d_fac</em><span class="sig-paren">)</span><a class="headerlink" href="#f/radial_der_even/get_dcheb_even" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><blockquote>
+<div>Returns chebychev coeffitiens of first derivative df and second
+derivative ddf for a function whose cheb-coeff. are given as
+columns in array f(n_f_max,n_r_max).</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</li>
 <li><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
-<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: First dimension of f,df</li>
-<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: No of function to start with</li>
-<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: No of function to stop with</li>
-<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: second dimension of f,df</li>
+<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>n_cheb_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Number of cheb modes</li>
-<li><strong>d_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</li>
+<li><strong>d_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/radial_der_even/get_drns_even" title="f/radial_der_even/get_drns_even"><code class="xref f f-func docutils literal"><span class="pre">get_drns_even()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><ul class="first simple">
+<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,0)</em><em>]</em></li>
+<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,1)</em><em>]</em> :: second dimension of f,df</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/radial_der_even/get_drns_even" title="f/radial_der_even/get_drns_even"><code class="xref f f-func docutils literal"><span class="pre">get_drns_even()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -645,24 +703,32 @@ init_costf1 and init_costf2.</div></blockquote>
 <dl class="subroutine">
 <dt id="f/radial_der_even/get_ddcheb_even">
 <em class="property">subroutine  </em><code class="descclassname">radial_der_even/</code><code class="descname">get_ddcheb_even</code><span class="sig-paren">(</span><em>f</em>, <em>df</em>, <em>ddf</em>, <em>n_f_max</em>, <em>n_f_start</em>, <em>n_f_stop</em>, <em>n_r_max</em>, <em>n_cheb_max</em>, <em>d_fac</em><span class="sig-paren">)</span><a class="headerlink" href="#f/radial_der_even/get_ddcheb_even" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><blockquote>
+<div>Returns chebychev coeffitiens of first derivative df and second
+derivative ddf for a function whose cheb-coeff. are given as
+columns in array f(n_f_max,n_r_max).</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</li>
 <li><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
-<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: First dimension of f,df,ddf</li>
-<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: No of function to start with</li>
-<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: No of function to stop with</li>
-<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: second dimension of f,df,ddf</li>
+<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>n_cheb_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Number of cheb modes</li>
-<li><strong>d_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</li>
+<li><strong>d_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/radial_der_even/get_ddr_even" title="f/radial_der_even/get_ddr_even"><code class="xref f f-func docutils literal"><span class="pre">get_ddr_even()</span></code></a>, <a class="reference internal" href="#f/radial_der_even/get_ddrns_even" title="f/radial_der_even/get_ddrns_even"><code class="xref f f-func docutils literal"><span class="pre">get_ddrns_even()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><ul class="first simple">
+<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,0)</em><em>]</em></li>
+<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,1)</em><em>]</em> :: second dimension of f,df,ddf</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/radial_der_even/get_ddr_even" title="f/radial_der_even/get_ddr_even"><code class="xref f f-func docutils literal"><span class="pre">get_ddr_even()</span></code></a>, <a class="reference internal" href="#f/radial_der_even/get_ddrns_even" title="f/radial_der_even/get_ddrns_even"><code class="xref f f-func docutils literal"><span class="pre">get_ddrns_even()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -704,17 +770,19 @@ radial Chebychev grid points.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>f</strong> (nrmax)<em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em></li>
-<li><strong>nrmax</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></li>
+<li><strong>f</strong> (nrmax)<em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em> :: This is zero order contribution</li>
 <li><strong>drfac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>chebt</strong><em> [</em><em>costf_odd_t</em><em>,</em><em>in</em><em>]</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return:</th><td class="field-body"><p class="first"><strong>rintic</strong><em> [</em><em>real</em><em>]</em></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><p class="first"><strong>nrmax</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=len(f)</em><em>]</em> :: Only even chebs for IC</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="IOGeneral.html#f/power/get_power" title="f/power/get_power"><code class="xref f f-func docutils literal"><span class="pre">get_power()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/magnetic_energy/get_e_mag" title="f/magnetic_energy/get_e_mag"><code class="xref f f-func docutils literal"><span class="pre">get_e_mag()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/spectra/spectrum" title="f/spectra/spectrum"><code class="xref f f-func docutils literal"><span class="pre">spectrum()</span></code></a></p>
+<tr class="field-odd field"><th class="field-name">Return:</th><td class="field-body"><p class="first"><strong>rintic</strong><em> [</em><em>real</em><em>]</em></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="IOGeneral.html#f/power/get_power" title="f/power/get_power"><code class="xref f f-func docutils literal"><span class="pre">get_power()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/magnetic_energy/get_e_mag" title="f/magnetic_energy/get_e_mag"><code class="xref f f-func docutils literal"><span class="pre">get_e_mag()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/spectra/spectrum" title="f/spectra/spectrum"><code class="xref f f-func docutils literal"><span class="pre">spectrum()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -732,8 +800,8 @@ dr_fac2.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>f</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
-<li><strong>r</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>f</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: This is zero order contribution</li>
+<li><strong>r</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: Odd number (Simpson ok)</li>
 <li><strong>r_scheme</strong><em> [</em><em>real</em><em>]</em> :: Radial scheme (FD or Cheb)</li>
 </ul>
 </td>

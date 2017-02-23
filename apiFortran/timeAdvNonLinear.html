@@ -446,10 +446,10 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>this</strong><em> [</em><em>real</em><em>]</em></li>
+<li><strong>this</strong><em> [</em><em>real</em><em>]</em> :: Stress free</li>
 <li><strong>nthetastart</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>nthetastop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
-<li><strong>gsa</strong><em> [</em><em>grid_space_arrays_t</em><em>]</em></li>
+<li><strong>gsa</strong><em> [</em><em>grid_space_arrays_t</em><em>]</em> :: ,sum(vtc(:,nTheta)),sum(vpc(:,nTheta))</li>
 </ul>
 </td>
 </tr>
@@ -614,10 +614,10 @@
 <li><strong>dvsrlm</strong> (*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>dvprlm</strong> (*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>dvxirlm</strong> (*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
-<li><strong>br_vt_lm_cmb</strong> (*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
-<li><strong>br_vp_lm_cmb</strong> (*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
-<li><strong>br_vt_lm_icb</strong> (*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
-<li><strong>br_vp_lm_icb</strong> (*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>br_vt_lm_cmb</strong> (*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: product br*vt at CMB</li>
+<li><strong>br_vp_lm_cmb</strong> (*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: product br*vp at CMB</li>
+<li><strong>br_vt_lm_icb</strong> (*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: product br*vt at ICB</li>
+<li><strong>br_vp_lm_icb</strong> (*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: product br*vp at ICB</li>
 <li><strong>lorentz_torque_ic</strong><em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>lorentz_torque_ma</strong><em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>hellmr</strong> (*)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
@@ -804,16 +804,16 @@ contained in flmw1-3,flms1-3, flmb1-3 (input)</div></blockquote>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>this</strong><em> [</em><em>real</em><em>]</em></li>
-<li><strong>nr</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>nr</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: +opr/epsS*divKtemp0(nR)</li>
 <li><strong>nbc</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: signifies boundary conditions</li>
-<li><strong>lrmscalc</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>lrmscalc</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em> :: RMS force balance</li>
 <li><strong>lpresscalc</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>dvsrlm</strong> (*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>dvprlm</strong> (*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>dvxirlm</strong> (*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>dvxvhlm</strong> (*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>dvxbhlm</strong> (*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
-<li><strong>dwdt</strong> (*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>dwdt</strong> (*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: +CorPol_loc</li>
 <li><strong>dzdt</strong> (*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>dpdt</strong> (*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>dsdt</strong> (*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
@@ -886,7 +886,7 @@ Output is [r/sin(theta)*Br*U]=[(0,br_vt_lm,br_vp_lm)]</p>
 <li><strong>omega</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: rotation rate of mantle or IC</li>
 <li><strong>o_r_e_2</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: 1/r**2</li>
 <li><strong>o_rho</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: 1/rho0 (anelastic)</li>
-<li><strong>n_theta_min</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: start of theta block</li>
+<li><strong>n_theta_min</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: absolute number of theta</li>
 <li><strong>n_theta_block</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: size of theta_block</li>
 <li><strong>br_vt_lm</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lmp_max" title="f/truncation/lmp_max">lmp_max</a>)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></li>
 <li><strong>br_vp_lm</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lmp_max" title="f/truncation/lmp_max">lmp_max</a>)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></li>
@@ -906,7 +906,17 @@ Output is [r/sin(theta)*Br*U]=[(0,br_vt_lm,br_vp_lm)]</p>
 <dl class="subroutine">
 <dt id="f/nonlinear_bcs/get_b_nl_bcs">
 <em class="property">subroutine  </em><code class="descclassname">nonlinear_bcs/</code><code class="descname">get_b_nl_bcs</code><span class="sig-paren">(</span><em>bc</em>, <em>br_vt_lm</em>, <em>br_vp_lm</em>, <em>lm_min_b</em>, <em>lm_max_b</em>, <em>b_nl_bc</em>, <em>aj_nl_bc</em><span class="sig-paren">)</span><a class="headerlink" href="#f/nonlinear_bcs/get_b_nl_bcs" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><blockquote>
+<div><p>Purpose of this subroutine is to calculate the nonlinear term
+of the magnetic boundary condition for a conducting mantle in
+physical space (phi,theta), assuming that the conductance
+of the mantle is much smaller than that of the core.
+Calculation is performed for the theta block:</p>
+<div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="n">n_theta_min</span><span class="o">&lt;=</span><span class="n">n_theta</span><span class="o">&lt;=</span><span class="n">n_theta_min</span><span class="o">+</span><span class="n">n_theta_block</span><span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -914,7 +924,7 @@ Output is [r/sin(theta)*Br*U]=[(0,br_vt_lm,br_vp_lm)]</p>
 <li><strong>bc</strong><em> [</em><em>character</em><em>,</em><em>in</em><em>]</em> :: Distinguishes &#8216;CMB&#8217; and &#8216;ICB&#8217;</li>
 <li><strong>br_vt_lm</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lmp_max" title="f/truncation/lmp_max">lmp_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em> :: [br*vt/(r**2*sin(theta)**2)]</li>
 <li><strong>br_vp_lm</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lmp_max" title="f/truncation/lmp_max">lmp_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em> :: [br*vp/(r**2*sin(theta)**2)</li>
-<li><strong>lm_min_b</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: limits of lm-block</li>
+<li><strong>lm_min_b</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>lm_max_b</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: nonlinear bc for aj</li>
 <li><strong>b_nl_bc</strong> (lm_max_b-lm_min_b+1)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>aj_nl_bc</strong> (lm_max_b-lm_min_b+1)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>

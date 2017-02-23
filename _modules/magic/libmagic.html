@@ -405,69 +405,6 @@
         <span class="n">out</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dat</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">out</span></div>
 
-<div class="viewcode-block" id="hammer2cart"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.hammer2cart">[docs]</a><span class="k">def</span> <span class="nf">hammer2cart</span><span class="p">(</span><span class="n">ttheta</span><span class="p">,</span> <span class="n">pphi</span><span class="p">,</span> <span class="n">colat</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This function is used to define the Hammer projection used when</span>
-<span class="sd">    plotting surface contours in :py:class:`magic.Surf`</span>
-
-<span class="sd">    &gt;&gt;&gt; # Load Graphic file</span>
-<span class="sd">    &gt;&gt;&gt; gr = MagicGraph()</span>
-<span class="sd">    &gt;&gt;&gt; # Meshgrid</span>
-<span class="sd">    &gt;&gt;&gt; pphi, ttheta = mgrid[-np.pi:np.pi:gr.nphi*1j, np.pi/2.:-np.pi/2.:gr.ntheta*1j]</span>
-<span class="sd">    &gt;&gt;&gt; x,y = hammer2cart(ttheta, pphi)</span>
-<span class="sd">    &gt;&gt;&gt; # Contour plots</span>
-<span class="sd">    &gt;&gt;&gt; contourf(x, y, gr.vphi)</span>
-
-<span class="sd">    :param ttheta: meshgrid [nphi, ntheta] for the latitudinal direction</span>
-<span class="sd">    :type ttheta: numpy.ndarray</span>
-<span class="sd">    :param pphi: meshgrid [nphi, ntheta] for the azimuthal direction</span>
-<span class="sd">    :param colat: colatitudes (when not specified a regular grid is assumed)</span>
-<span class="sd">    :type colat: numpy.ndarray</span>
-<span class="sd">    :returns: a tuple that contains two [nphi, ntheta] arrays: the x, y meshgrid</span>
-<span class="sd">              used in contour plots</span>
-<span class="sd">    :rtype: (numpy.ndarray, numpy.ndarray)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">colat</span><span class="p">:</span> <span class="c1"># for lat and phi \in [-pi, pi]</span>
-        <span class="n">xx</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ttheta</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">pphi</span><span class="o">/</span><span class="mf">2.</span><span class="p">)</span>\
-             <span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ttheta</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">pphi</span><span class="o">/</span><span class="mf">2.</span><span class="p">))</span>
-        <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ttheta</span><span class="p">)</span>\
-             <span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ttheta</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">pphi</span><span class="o">/</span><span class="mf">2.</span><span class="p">))</span>
-    <span class="k">else</span><span class="p">:</span>  <span class="c1"># for colat and phi \in [0, 2pi]</span>
-        <span class="n">xx</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ttheta</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">pphi</span><span class="o">/</span><span class="mf">2.</span><span class="p">)</span>\
-             <span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ttheta</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">pphi</span><span class="o">/</span><span class="mf">2.</span><span class="p">))</span>
-        <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ttheta</span><span class="p">)</span>\
-             <span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ttheta</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">pphi</span><span class="o">/</span><span class="mf">2.</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span></div>
-
-<div class="viewcode-block" id="cut"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.cut">[docs]</a><span class="k">def</span> <span class="nf">cut</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This functions truncates the values of an input array that are beyond </span>
-<span class="sd">    vmax or below vmin and replace them by vmax and vmin, respectively.</span>
-
-<span class="sd">    &gt;&gt;&gt; # Keep only values between -1e3 and 1e3</span>
-<span class="sd">    &gt;&gt;&gt; datNew = cut(dat, vmin=-1e3, vmax=1e3)</span>
-
-<span class="sd">    :param dat: an input array</span>
-<span class="sd">    :type dat: numpy.ndarray</span>
-<span class="sd">    :param vmax: maximum upper bound</span>
-<span class="sd">    :type vmax: float</span>
-<span class="sd">    :param vmin: minimum lower bound</span>
-<span class="sd">    :type vmin: float</span>
-<span class="sd">    :returns: an array where the values &gt;=vmax have been replaced by vmax</span>
-<span class="sd">              and the values &lt;=vmin have been replaced by vmin</span>
-<span class="sd">    :rtype: numpy.ndarray</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">vmax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dat</span><span class="o">&gt;=</span><span class="n">vmax</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">dat</span> <span class="o">=</span> <span class="n">dat</span><span class="o">*</span><span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">vmax</span><span class="o">*</span><span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">normed</span> <span class="o">=</span> <span class="bp">False</span>
-    <span class="k">if</span> <span class="n">vmin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dat</span><span class="o">&lt;=</span><span class="n">vmin</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">dat</span> <span class="o">=</span> <span class="n">dat</span><span class="o">*</span><span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">vmin</span><span class="o">*</span><span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">normed</span> <span class="o">=</span> <span class="bp">False</span>
-    <span class="k">return</span> <span class="n">dat</span></div>
-
 <div class="viewcode-block" id="symmetrize"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.symmetrize">[docs]</a><span class="k">def</span> <span class="nf">symmetrize</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ms</span><span class="p">,</span> <span class="nb">reversed</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Symmetrise an array which is defined only with an azimuthal symmetry minc=ms</span>

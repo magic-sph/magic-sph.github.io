@@ -199,6 +199,10 @@ I.E., when one wants to define a reference state, one has to specify
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">nVarEps=1</span></code></td>
 <td>Proportional to density, i.e. <span class="math">\(f(r)=\tilde{\rho}(r)\)</span>.</td>
 </tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">nVarEps=2</span></code></td>
+<td>Proportional to density times temperature,
+i.e. <span class="math">\(f(r)=\tilde{\rho}(r)\tilde{T}\)</span>.</td>
+</tr>
 </tbody>
 </table>
 </li>
@@ -434,7 +438,7 @@ be changed in the future.</p>
 </li>
 <li><p class="first"><strong>kbots</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/kbots" title="f/physical_parameters/kbots"><code class="xref f f-var docutils literal"><span class="pre">ktops=1</span></code></a>) is an  integer to specify the inner boundary entropy (or temperature) boundary condition.</p>
 </li>
-<li><p class="first"><strong>s_top</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/s_top" title="f/init_fields/s_top"><code class="xref f f-var docutils literal"><span class="pre">s_top=</span> <span class="pre">0</span> <span class="pre">0</span> <span class="pre">0.0</span> <span class="pre">0.0</span></code></a>) is a real array of lateraly varying outer heat boundary conditions. Each four consecutive numbers are interpreted as follows:</p>
+<li><p class="first"><strong>s_top</strong> (default <code class="xref f f-var docutils literal"><span class="pre">s_top=</span> <span class="pre">0</span> <span class="pre">0</span> <span class="pre">0.0</span> <span class="pre">0.0</span></code>) is a real array of lateraly varying outer heat boundary conditions. Each four consecutive numbers are interpreted as follows:</p>
 <ol class="arabic simple">
 <li>Spherical harmonic degree <span class="math">\(\ell\)</span></li>
 <li>Spherical harmonic order <span class="math">\(m\)</span></li>
@@ -446,7 +450,7 @@ be changed in the future.</p>
 </pre></div>
 </div>
 </li>
-<li><p class="first"><strong>s_bot</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/s_bot" title="f/init_fields/s_bot"><code class="xref f f-var docutils literal"><span class="pre">s_bot=0</span> <span class="pre">0</span> <span class="pre">0.0</span> <span class="pre">0.0</span></code></a>) is a real array. This is the same as <code class="docutils literal"><span class="pre">s_top</span></code> but for the bottom boundary.</p>
+<li><p class="first"><strong>s_bot</strong> (default <code class="xref f f-var docutils literal"><span class="pre">s_bot=0</span> <span class="pre">0</span> <span class="pre">0.0</span> <span class="pre">0.0</span></code>) is a real array. This is the same as <code class="docutils literal"><span class="pre">s_top</span></code> but for the bottom boundary.</p>
 </li>
 <li><p class="first"><strong>impS</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/imps" title="f/physical_parameters/imps"><code class="xref f f-var docutils literal"><span class="pre">impS=0</span></code></a>) is an integer. This is a  flag to indicate if there is a localized entropy disturbance, imposed at the CMB. The number of these input boundary conditions is stored in <code class="docutils literal"><span class="pre">n_impS</span></code> (the maximum allowed is 20), and it&#8217;s given by the number of <code class="docutils literal"><span class="pre">sCMB</span></code> defined in the same namelist. The default value of <code class="docutils literal"><span class="pre">impS</span></code> is zero (no entropy disturbance). If it is set in the namelist for an integer greater than zero, then <code class="docutils literal"><span class="pre">sCMB</span></code> has to be also defined in the namelist, as shown below.</p>
 </li>
@@ -481,7 +485,7 @@ be changed in the future.</p>
 </li>
 <li><p class="first"><strong>kbotxi</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/kbotxi" title="f/physical_parameters/kbotxi"><code class="xref f f-var docutils literal"><span class="pre">ktopxi=1</span></code></a>) is an  integer to specify the inner boundary chemical composition boundary condition.</p>
 </li>
-<li><p class="first"><strong>xi_top</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/xi_top" title="f/init_fields/xi_top"><code class="xref f f-var docutils literal"><span class="pre">xi_top=</span> <span class="pre">0</span> <span class="pre">0</span> <span class="pre">0.0</span> <span class="pre">0.0</span></code></a>) is a real array of lateraly varying outer chemical composition boundary conditions. Each four consecutive numbers are interpreted as follows:</p>
+<li><p class="first"><strong>xi_top</strong> (default <code class="xref f f-var docutils literal"><span class="pre">xi_top=</span> <span class="pre">0</span> <span class="pre">0</span> <span class="pre">0.0</span> <span class="pre">0.0</span></code>) is a real array of lateraly varying outer chemical composition boundary conditions. Each four consecutive numbers are interpreted as follows:</p>
 <ol class="arabic simple">
 <li>Spherical harmonic degree <span class="math">\(\ell\)</span></li>
 <li>Spherical harmonic order <span class="math">\(m\)</span></li>
@@ -493,7 +497,7 @@ be changed in the future.</p>
 </pre></div>
 </div>
 </li>
-<li><p class="first"><strong>xi_bot</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/xi_bot" title="f/init_fields/xi_bot"><code class="xref f f-var docutils literal"><span class="pre">xi_bot=0</span> <span class="pre">0</span> <span class="pre">0.0</span> <span class="pre">0.0</span></code></a>) is a real array. This is the same as <code class="docutils literal"><span class="pre">xi_top</span></code> but for the bottom boundary.</p>
+<li><p class="first"><strong>xi_bot</strong> (default <code class="xref f f-var docutils literal"><span class="pre">xi_bot=0</span> <span class="pre">0</span> <span class="pre">0.0</span> <span class="pre">0.0</span></code>) is a real array. This is the same as <code class="docutils literal"><span class="pre">xi_top</span></code> but for the bottom boundary.</p>
 </li>
 <li><p class="first"><strong>impXi</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/physical_parameters/impxi" title="f/physical_parameters/impxi"><code class="xref f f-var docutils literal"><span class="pre">impXi=0</span></code></a>) is an integer. This is a  flag to indicate if there is a localized chemical composition disturbance, imposed at the CMB. The number of these input boundary conditions is stored in <code class="docutils literal"><span class="pre">n_impXi</span></code> (the maximum allowed is 20), and it&#8217;s given by the number of <code class="docutils literal"><span class="pre">xiCMB</span></code> defined in the same namelist. The default value of <code class="docutils literal"><span class="pre">impXi</span></code> is zero (no chemical composiiton disturbance). If it is set in the namelist for an integer greater than zero, then <code class="docutils literal"><span class="pre">xiCMB</span></code> has to be also defined in the namelist, as shown below.</p>
 </li>

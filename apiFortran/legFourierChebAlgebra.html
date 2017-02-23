@@ -155,19 +155,21 @@ y=0 is not used, which helps to avoid singularities.</div></blockquote>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>n_r</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: number of grid points</li>
-<li><strong>a</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: interval boundaries [a,b]</li>
+<li><strong>a</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: maping factor to transfrom y-derivatives</li>
 <li><strong>b</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
-<li><strong>y</strong> (<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: n_r grid points in interval [a,b]</li>
-<li><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: max number of radial points, dims of y</li>
-<li><strong>cheb</strong> (dim1,dim2)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em> :: cheb(i,j) is Chebychev pol.</li>
-<li><strong>dcheb</strong> (dim1,dim2)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em> :: first derivative of cheb</li>
-<li><strong>d2cheb</strong> (dim1,dim2)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em> :: second derivative o cheb</li>
-<li><strong>dim1</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: dimensions of cheb,dcheb,......</li>
-<li><strong>dim2</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>y</strong> (<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>cheb</strong> (dim1,dim2)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>dcheb</strong> (dim1,dim2)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>d2cheb</strong> (dim1,dim2)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>dim1</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>dim2</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: second derivative o cheb</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="precalcModules.html#f/radial_functions/radial" title="f/radial_functions/radial"><code class="xref f f-func docutils literal"><span class="pre">radial()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><p class="first"><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=len(y)</em><em>]</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="precalcModules.html#f/radial_functions/radial" title="f/radial_functions/radial"><code class="xref f f-func docutils literal"><span class="pre">radial()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -196,8 +198,8 @@ x(1)=b, x(n+1)=a, y(1)=1, y(n+1)=-1</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: interval boundaries</li>
-<li><strong>b</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>a</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>b</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: interval boundaries</li>
 <li><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: degree of Cheb polynomial to be represented by the grid points</li>
 <li><strong>x</strong> (*)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em> :: grid points in interval [a,b]</li>
 <li><strong>y</strong> (*)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em> :: grid points in interval [-1,1]</li>
@@ -306,14 +308,16 @@ coeffs or data are returned in f.</div></blockquote>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>this</strong><em> [</em><em>real</em><em>]</em></li>
 <li><strong>f</strong> (n_f_max,*)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></li>
-<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></li>
 <li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>f2</strong> (n_f_max,*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/fft_fac_mod/fft_fac_complex" title="f/fft_fac_mod/fft_fac_complex"><code class="xref f f-func docutils literal"><span class="pre">fft_fac_complex()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><p class="first"><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,0)</em><em>]</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/fft_fac_mod/fft_fac_complex" title="f/fft_fac_mod/fft_fac_complex"><code class="xref f f-func docutils literal"><span class="pre">fft_fac_complex()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -351,14 +355,16 @@ coeffs or data are returned in f.</div></blockquote>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>this</strong><em> [</em><em>real</em><em>]</em></li>
 <li><strong>f</strong> (n_f_max,*)<em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em></li>
-<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></li>
 <li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>f2</strong> (n_f_max,*)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/fft_fac_mod/fft_fac_real" title="f/fft_fac_mod/fft_fac_real"><code class="xref f f-func docutils literal"><span class="pre">fft_fac_real()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><p class="first"><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,0)</em><em>]</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/fft_fac_mod/fft_fac_real" title="f/fft_fac_mod/fft_fac_real"><code class="xref f f-func docutils literal"><span class="pre">fft_fac_real()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -484,16 +490,18 @@ coeffs or data are returned in y.</div></blockquote>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>this</strong><em> [</em><em>real</em><em>]</em></li>
-<li><strong>f</strong> (n_f_max,*)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em> :: data/coeff input</li>
-<li><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: number of columns in y,y2</li>
-<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: columns to be transformed</li>
+<li><strong>f</strong> (n_f_max,*)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em> :: loop over factors</li>
+<li><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
-<li><strong>f2</strong> (n_f_max,*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: work array of the same size as y</li>
-<li><strong>isign</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: = +1 (-1) for forward (backward) transform</li>
+<li><strong>f2</strong> (n_f_max,*)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: data are on f2</li>
+<li><strong>isign</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Inverse transform:</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/fft_fac_mod/fft_fac_complex" title="f/fft_fac_mod/fft_fac_complex"><code class="xref f f-func docutils literal"><span class="pre">fft_fac_complex()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><p class="first"><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,0)</em><em>]</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/fft_fac_mod/fft_fac_complex" title="f/fft_fac_mod/fft_fac_complex"><code class="xref f f-func docutils literal"><span class="pre">fft_fac_complex()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -529,7 +537,7 @@ called in costf1, costf2</div></blockquote>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>a</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>b</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>c</strong> (*)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
@@ -538,10 +546,12 @@ called in costf1, costf2</div></blockquote>
 <li><strong>nv</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>l1</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>l2</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
-<li><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></li>
 <li><strong>ifac</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>la</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><p class="first last"><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(len(trigs))/(2)</em><em>]</em></p>
 </td>
 </tr>
 </tbody>
@@ -567,13 +577,15 @@ called in costf1, costf2</div></blockquote>
 <li><strong>nv</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>l1</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>l2</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
-<li><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></li>
 <li><strong>ifac</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>la</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/cosine_transform_even/costf2" title="f/cosine_transform_even/costf2"><code class="xref f f-func docutils literal"><span class="pre">costf2()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><p class="first"><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(len(trigs))/(2)</em><em>]</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/cosine_transform_even/costf2" title="f/cosine_transform_even/costf2"><code class="xref f f-func docutils literal"><span class="pre">costf2()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -591,7 +603,7 @@ called in costf1, costf2</div></blockquote>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Routines:</th><td class="field-body"><a class="reference internal" href="#f/plms_theta/plm_theta" title="f/plms_theta/plm_theta"><code class="xref f f-func docutils literal"><span class="pre">plm_theta()</span></code></a>, <a class="reference internal" href="#f/plms_theta/plm_thetaas" title="f/plms_theta/plm_thetaas"><code class="xref f f-func docutils literal"><span class="pre">plm_thetaas()</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Routines:</th><td class="field-body"><a class="reference internal" href="#f/plms_theta/plm_theta" title="f/plms_theta/plm_theta"><code class="xref f f-func docutils literal"><span class="pre">plm_theta()</span></code></a></td>
 </tr>
 </tbody>
 </table>
@@ -605,56 +617,47 @@ called in costf1, costf2</div></blockquote>
 <dl class="subroutine">
 <dt id="f/plms_theta/plm_theta">
 <em class="property">subroutine  </em><code class="descclassname">plms_theta/</code><code class="descname">plm_theta</code><span class="sig-paren">(</span><em>theta</em>, <em>max_degree</em>, <em>max_order</em>, <em>m0</em>, <em>plma</em>, <em>dtheta_plma</em>, <em>ndim_plma</em>, <em>norm</em><span class="sig-paren">)</span><a class="headerlink" href="#f/plms_theta/plm_theta" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>theta</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: angle in degrees</li>
-<li><strong>max_degree</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: required max degree of plm</li>
-<li><strong>max_order</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: required max order of plm</li>
-<li><strong>m0</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: basic wave number</li>
-<li><strong>plma</strong> (ndim_plma)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em> :: ass. legendres at theta</li>
-<li><strong>dtheta_plma</strong> (ndim_plma)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em> :: their theta derivative</li>
-<li><strong>ndim_plma</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: dimension of plma and dtheta_plma</li>
-<li><strong>norm</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: =0 fully normalised</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="IOAdd.html#f/outto_mod/outto" title="f/outto_mod/outto"><code class="xref f f-func docutils literal"><span class="pre">outto()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/omega/lnpas2tr" title="f/omega/lnpas2tr"><code class="xref f f-func docutils literal"><span class="pre">lnpas2tr()</span></code></a>, <a class="reference internal" href="precalcModules.html#f/horizontal_data/horizontal" title="f/horizontal_data/horizontal"><code class="xref f f-func docutils literal"><span class="pre">horizontal()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/geos_mod/outpv" title="f/geos_mod/outpv"><code class="xref f f-func docutils literal"><span class="pre">outpv()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/geos_mod/getegeos" title="f/geos_mod/getegeos"><code class="xref f f-func docutils literal"><span class="pre">getegeos()</span></code></a></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="subroutine">
-<dt id="f/plms_theta/plm_thetaas">
-<em class="property">subroutine  </em><code class="descclassname">plms_theta/</code><code class="descname">plm_thetaas</code><span class="sig-paren">(</span><em>theta</em>, <em>max_degree</em>, <em>plma</em>, <em>dtheta_plma</em>, <em>ndim_plma</em>, <em>norm</em><span class="sig-paren">)</span><a class="headerlink" href="#f/plms_theta/plm_thetaas" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
-<div><p>The produces the plm for all degrees and order=0 for a given theta
-plus dtheta_plma=sin(theta)* (d plm)/(d theta)</p>
-<dl class="docutils">
-<dt>Norm determins the normalisation: n=0 &#8211; surface normalised,</dt>
-<dd>n=1 &#8211; Schmidt normalised,
-n=2 &#8211; fully normalised.</dd>
-</dl>
+<div><p>The produces the plm for all degrees and orders for a given theta
+plus dtheta_plma=sin(theta)* (d plm)/(d theta)
+ndim_plma is the dimension of plma and dtheta_plma in the calling routine.
+max_degree is the required maximum degree of plm.
+The order is as follows:  plma(1)=plm(l=0,m=0),</p>
+<blockquote>
+<div><p>plma(2)=plm(l=1,m=0),
+plma(3)=plm(l=2,m=0),</p>
+<blockquote>
+<div></div></blockquote>
+<p>plma(max_degree+1)=plm(l=max_degree,m=0),
+plma(max_degree+2)=plm(l=1,m=m0),
+plma(max_degree+3)=plm(l=2,m=m0),</p>
+<blockquote>
+<div></div></blockquote>
+</div></blockquote>
+<p>Same for dtheta_plma !
+Norm determins the normalisation: n=0 &#8211; surface normalised,</p>
+<blockquote>
+<div>n=1 &#8211; Schmidt normalised,
+n=2 &#8211; fully normalised.</div></blockquote>
 </div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>theta</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: angle in degrees</li>
+<li><strong>theta</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: <p>&#8216;</p>
+</li>
 <li><strong>max_degree</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: required max degree of plm</li>
-<li><strong>plma</strong> (ndim_plma)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em> :: ass. legendres at theta</li>
-<li><strong>dtheta_plma</strong> (ndim_plma)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em> :: their theta derivative</li>
-<li><strong>ndim_plma</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: dimension of plma and dtheta_plma</li>
+<li><strong>max_order</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: required max order of plm</li>
+<li><strong>m0</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: basic wave number</li>
+<li><strong>plma</strong> (ndim_plma)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em> :: their theta derivative</li>
+<li><strong>dtheta_plma</strong> (ndim_plma)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>ndim_plma</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>norm</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: =0 fully normalised</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="precalcModules.html#f/horizontal_data/horizontal" title="f/horizontal_data/horizontal"><code class="xref f f-func docutils literal"><span class="pre">horizontal()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="IOAdd.html#f/outto_mod/outto" title="f/outto_mod/outto"><code class="xref f f-func docutils literal"><span class="pre">outto()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/omega/lnpas2tr" title="f/omega/lnpas2tr"><code class="xref f f-func docutils literal"><span class="pre">lnpas2tr()</span></code></a>, <a class="reference internal" href="precalcModules.html#f/horizontal_data/horizontal" title="f/horizontal_data/horizontal"><code class="xref f f-func docutils literal"><span class="pre">horizontal()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/geos_mod/outpv" title="f/geos_mod/outpv"><code class="xref f f-func docutils literal"><span class="pre">outpv()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/geos_mod/getegeos" title="f/geos_mod/getegeos"><code class="xref f f-func docutils literal"><span class="pre">getegeos()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -744,7 +747,7 @@ n=2 &#8211; fully normalised.</dd>
 <li><strong>this</strong><em> [</em><em>real</em><em>]</em></li>
 <li><strong>lm_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>lm_maxmag</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
-<li><strong>l_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>l_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: used in TO</li>
 </ul>
 </td>
 </tr>
@@ -788,9 +791,9 @@ factors as well as the radial dependence:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>this</strong><em> [</em><em>real</em><em>]</em></li>
-<li><strong>nr</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: radial level</li>
-<li><strong>nbc</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: boundary condition</li>
+<li><strong>this</strong><em> [</em><em>real</em><em>]</em> :: used in s_store_movie_frame.f</li>
+<li><strong>nr</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: used for movie output of surface field</li>
+<li><strong>nbc</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: nBc=2 is flag for fixed boundary</li>
 <li><strong>lderiv</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em> :: get also field derivatives !</li>
 <li><strong>lrmscalc</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em> :: Rms force balance ?</li>
 <li><strong>lpresscalc</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em> :: Pressure ?</li>
@@ -827,7 +830,6 @@ factors as well as possible the radial dependencies.</p>
 <li><strong>z</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>dz</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>dlh</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
-<li><strong>lm_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></li>
 <li><strong>l_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>minc</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>r</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
@@ -842,7 +844,10 @@ factors as well as possible the radial dependencies.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="IOBinaryOutputs.html#f/fields_average_mod/fields_average" title="f/fields_average_mod/fields_average"><code class="xref f f-func docutils literal"><span class="pre">fields_average()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><p class="first"><strong>lm_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=len(w)</em><em>]</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="IOBinaryOutputs.html#f/fields_average_mod/fields_average" title="f/fields_average_mod/fields_average"><code class="xref f f-func docutils literal"><span class="pre">fields_average()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -872,17 +877,16 @@ transform and fftJW for the Fourier transform.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>w</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>w</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em> :: Only poloidal</li>
 <li><strong>dw</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>ddw</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>z</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>dz</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>dlh</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
-<li><strong>lm_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></li>
 <li><strong>l_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>minc</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>r</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
-<li><strong>r_icb</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>r_icb</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: rDep2=rDep/r</li>
 <li><strong>lderiv</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>lhor</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>lcondic</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
@@ -895,7 +899,10 @@ transform and fftJW for the Fourier transform.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="IOBinaryOutputs.html#f/graphout_mod/graphout_ic" title="f/graphout_mod/graphout_ic"><code class="xref f f-func docutils literal"><span class="pre">graphout_ic()</span></code></a>, <a class="reference internal" href="IOBinaryOutputs.html#f/out_movie_ic/store_movie_frame_ic" title="f/out_movie_ic/store_movie_frame_ic"><code class="xref f f-func docutils literal"><span class="pre">store_movie_frame_ic()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><p class="first"><strong>lm_max</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=len(w)</em><em>]</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="IOBinaryOutputs.html#f/graphout_mod/graphout_ic" title="f/graphout_mod/graphout_ic"><code class="xref f f-func docutils literal"><span class="pre">graphout_ic()</span></code></a>, <a class="reference internal" href="IOBinaryOutputs.html#f/out_movie_ic/store_movie_frame_ic" title="f/out_movie_ic/store_movie_frame_ic"><code class="xref f f-func docutils literal"><span class="pre">store_movie_frame_ic()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -982,7 +989,7 @@ points nThetaStart &lt;= nTheta &lt;= nThetaStart-1+sizeThetaB</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>nbc</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
-<li><strong>lderiv</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>lderiv</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em> :: not a boundary or derivs required</li>
 <li><strong>lviscbccalc</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>lpresscalc</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>nthetastart</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
@@ -1003,7 +1010,7 @@ points nThetaStart &lt;= nTheta &lt;= nThetaStart-1+sizeThetaB</p>
 <li><strong>cbrc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>cbtc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>cbpc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
-<li><strong>sc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>sc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em> :: For movie output !</li>
 <li><strong>drsc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>dsdtc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>dsdpc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
@@ -1031,7 +1038,7 @@ points nThetaStart &lt;= nTheta &lt;= nThetaStart-1+sizeThetaB</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>nbc</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
-<li><strong>lderiv</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>lderiv</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em> :: not a boundary or derivs required</li>
 <li><strong>lviscbccalc</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>lpresscalc</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>nthetastart</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
@@ -1046,7 +1053,7 @@ points nThetaStart &lt;= nTheta &lt;= nThetaStart-1+sizeThetaB</p>
 <li><strong>dvrdpc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>dvtdpc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>dvpdpc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
-<li><strong>sc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
+<li><strong>sc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em> :: For movie output !</li>
 <li><strong>drsc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>dsdtc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>dsdpc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
@@ -1114,7 +1121,7 @@ points nThetaStart &lt;= nTheta &lt;= nThetaStart-1+sizeThetaB</li>
 <li><strong>l_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>minc</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>nthetastart</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
-<li><strong>sizethetab</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>sizethetab</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Loop over thetas for north HS</li>
 <li><strong>plm</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>dplm</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>lhor</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></li>
@@ -1150,7 +1157,7 @@ alm contains only m=0 coefficients</div></blockquote>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>alm</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: field in (l,m)-space</li>
 <li><strong>aij</strong> (*)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em> :: field in (theta,phi)-space</li>
-<li><strong>nthetastart</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: first theta to be treated</li>
+<li><strong>nthetastart</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: last theta</li>
 <li><strong>nthetablocksize</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 </ul>
 </td>
@@ -1198,7 +1205,7 @@ nThetaStart,..,nThetaStart+n_theta_block-1</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>nthetastart</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: First no of theta on block</li>
+<li><strong>nthetastart</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: NHS thetas covered before</li>
 <li><strong>f1lm</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lmp_max" title="f/truncation/lmp_max">lmp_max</a>)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></li>
 <li><strong>f1tm</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
 </ul>
@@ -1226,7 +1233,7 @@ nThetaStart,..,nThetaStart+n_theta_block-1</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>nthetastart</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: First no of theta on block</li>
+<li><strong>nthetastart</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: NHS thetas covered before</li>
 <li><strong>f1lm</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lmp_max" title="f/truncation/lmp_max">lmp_max</a>)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></li>
 <li><strong>f2lm</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lmp_max" title="f/truncation/lmp_max">lmp_max</a>)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></li>
 <li><strong>f1tm</strong> (<a class="reference internal" href="baseModules.html#f/truncation/nrp" title="f/truncation/nrp">nrp</a>,<a class="reference internal" href="blocking.html#f/blocking/nfs" title="f/blocking/nfs">nfs</a>)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
@@ -1256,7 +1263,7 @@ nThetaStart,..,nThetaStart+n_theta_block-1</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>nthetastart</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: First no of theta on block</li>
+<li><strong>nthetastart</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: NHS thetas covered before</li>
 <li><strong>f1lm</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lmp_max" title="f/truncation/lmp_max">lmp_max</a>)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></li>
 <li><strong>f2lm</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lmp_max" title="f/truncation/lmp_max">lmp_max</a>)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></li>
 <li><strong>f3lm</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lmp_max" title="f/truncation/lmp_max">lmp_max</a>)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></li>
@@ -1289,10 +1296,10 @@ n_theta_min,..,n_theta_min+n_theta_block-1</div></blockquote>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>flm1</strong> (*)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
-<li><strong>ft1</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>ft1</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: ASymm</li>
 <li><strong>lmmax</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Number of modes to be processed</li>
-<li><strong>nthetastart</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: First no of theta on block</li>
-<li><strong>sizethetab</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Size of theta block</li>
+<li><strong>nthetastart</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: 2 already done</li>
+<li><strong>sizethetab</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: thetas in NHS</li>
 </ul>
 </td>
 </tr>
@@ -1320,11 +1327,11 @@ n_theta_min,..,n_theta_min+n_theta_block-1</div></blockquote>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>flm1</strong> (*)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>flm2</strong> (*)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
-<li><strong>ft1</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>ft1</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: ASymm</li>
 <li><strong>ft2</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>lmmax</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Number of modes to be processed</li>
-<li><strong>nthetastart</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: First no of theta on block</li>
-<li><strong>sizethetab</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Size of theta block</li>
+<li><strong>nthetastart</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: 2 already done</li>
+<li><strong>sizethetab</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: thetas in NHS</li>
 </ul>
 </td>
 </tr>
@@ -1368,7 +1375,7 @@ fft99a, fft99b, wpass2, wpass3, wpass4 and wpass5</p>
 <ul>
 <li><dl class="variable">
 <dt id="f/fft/ni">
-<code class="descclassname">fft/</code><code class="descname">ni</code><em> [</em><em>integer</em><em>,</em><em>private/parameter=100</em><em>]</em><a class="headerlink" href="#f/fft/ni" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fft/</code><code class="descname">ni</code><em> [</em><em>integer</em><em>,</em><em>private/parameter/optional/default=100</em><em>]</em><a class="headerlink" href="#f/fft/ni" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
@@ -1380,13 +1387,13 @@ fft99a, fft99b, wpass2, wpass3, wpass4 and wpass5</p>
 </li>
 <li><dl class="variable">
 <dt id="f/fft/d_fft_init">
-<code class="descclassname">fft/</code><code class="descname">d_fft_init</code> (:)<em> [</em><em>real</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/fft/d_fft_init" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fft/</code><code class="descname">d_fft_init</code> (*)<em> [</em><em>real</em><em>,</em><em>private/allocatable</em><em>]</em><a class="headerlink" href="#f/fft/d_fft_init" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
 <li><dl class="variable">
 <dt id="f/fft/i_fft_init">
-<code class="descclassname">fft/</code><code class="descname">i_fft_init</code> (100)<em> [</em><em>integer</em><em>,</em><em>private</em><em>]</em><a class="headerlink" href="#f/fft/i_fft_init" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fft/</code><code class="descname">i_fft_init</code> ()<em> [</em><em>integer</em><em>,</em><em>private</em><em>]</em><a class="headerlink" href="#f/fft/i_fft_init" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
@@ -1403,7 +1410,8 @@ The actual transform is performed by the subroutine fftJW.</div></blockquote>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Dimension of problem, number of grid points</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: <p>&#8216;</p>
+</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><a class="reference internal" href="precalcModules.html#f/horizontal_data/horizontal" title="f/horizontal_data/horizontal"><code class="xref f f-func docutils literal"><span class="pre">horizontal()</span></code></a></td>
 </tr>
@@ -1433,17 +1441,19 @@ The actual transform is performed by the subroutine fftJW.</div></blockquote>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>f</strong> (ld_f,nrep)<em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em></li>
-<li><strong>ld_f</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></li>
-<li><strong>nrep</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>f</strong> (ld_f,nrep)<em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><ul class="first simple">
+<li><strong>ld_f</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,0)</em><em>]</em></li>
+<li><strong>nrep</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(f,1)</em><em>]</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="IOAdd.html#f/geos_mod/getdvptr" title="f/geos_mod/getdvptr"><code class="xref f f-func docutils literal"><span class="pre">getdvptr()</span></code></a></p>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="IOAdd.html#f/geos_mod/getdvptr" title="f/geos_mod/getdvptr"><code class="xref f f-func docutils literal"><span class="pre">getdvptr()</span></code></a></p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/fft/fftjw" title="f/fft/fftjw"><code class="xref f f-func docutils literal"><span class="pre">fftjw()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/fft/fftjw" title="f/fft/fftjw"><code class="xref f f-func docutils literal"><span class="pre">fftjw()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -1555,23 +1565,28 @@ unless there is no aliasing.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a</strong> (ld_a,*)<em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em> :: fields to be transformed</li>
-<li><strong>ld_a</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: leading dimension of a</li>
-<li><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: dimension of problem</li>
-<li><strong>isign</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: back/forth transtorm for isign=1/-1</li>
+<li><strong>a</strong> (ld_a,*)<em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em> :: <p>&#8216;</p>
+</li>
+<li><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: k</li>
+<li><strong>isign</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>nsize</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: number of fields for</li>
-<li><strong>wrk</strong> (wd1,wd2)<em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em> :: work array</li>
-<li><strong>wd1</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></li>
-<li><strong>wd2</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></li>
-<li><strong>i_fft_init</strong> (*)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: factorization information from init_fft</li>
-<li><strong>d_fft_init</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: trigonometric functions from init_fft</li>
+<li><strong>wrk</strong> (wd1,wd2)<em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em></li>
+<li><strong>i_fft_init</strong> (*)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>d_fft_init</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="#f/fft/fft_thetab" title="f/fft/fft_thetab"><code class="xref f f-func docutils literal"><span class="pre">fft_thetab()</span></code></a>, <a class="reference internal" href="#f/fft/fft_to_real" title="f/fft/fft_to_real"><code class="xref f f-func docutils literal"><span class="pre">fft_to_real()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><ul class="first simple">
+<li><strong>ld_a</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(a,0)</em><em>]</em></li>
+<li><strong>wd1</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(wrk,0)</em><em>]</em></li>
+<li><strong>wd2</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(wrk,1)</em><em>]</em> :: work array</li>
+</ul>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/fft/fft99ajw" title="f/fft/fft99ajw"><code class="xref f f-func docutils literal"><span class="pre">fft99ajw()</span></code></a>, <a class="reference internal" href="#f/fft/wpass2jw" title="f/fft/wpass2jw"><code class="xref f f-func docutils literal"><span class="pre">wpass2jw()</span></code></a>, <a class="reference internal" href="#f/fft/wpass3jw" title="f/fft/wpass3jw"><code class="xref f f-func docutils literal"><span class="pre">wpass3jw()</span></code></a>, <a class="reference internal" href="#f/fft/wpass4jw" title="f/fft/wpass4jw"><code class="xref f f-func docutils literal"><span class="pre">wpass4jw()</span></code></a>, <a class="reference internal" href="#f/fft/wpass5jw" title="f/fft/wpass5jw"><code class="xref f f-func docutils literal"><span class="pre">wpass5jw()</span></code></a>, <a class="reference internal" href="#f/fft/fft99bjw" title="f/fft/fft99bjw"><code class="xref f f-func docutils literal"><span class="pre">fft99bjw()</span></code></a></p>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first"><a class="reference internal" href="#f/fft/fft_thetab" title="f/fft/fft_thetab"><code class="xref f f-func docutils literal"><span class="pre">fft_thetab()</span></code></a>, <a class="reference internal" href="#f/fft/fft_to_real" title="f/fft/fft_to_real"><code class="xref f f-func docutils literal"><span class="pre">fft_to_real()</span></code></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Call to:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#f/fft/fft99ajw" title="f/fft/fft99ajw"><code class="xref f f-func docutils literal"><span class="pre">fft99ajw()</span></code></a>, <a class="reference internal" href="#f/fft/wpass2jw" title="f/fft/wpass2jw"><code class="xref f f-func docutils literal"><span class="pre">wpass2jw()</span></code></a>, <a class="reference internal" href="#f/fft/wpass3jw" title="f/fft/wpass3jw"><code class="xref f f-func docutils literal"><span class="pre">wpass3jw()</span></code></a>, <a class="reference internal" href="#f/fft/wpass4jw" title="f/fft/wpass4jw"><code class="xref f f-func docutils literal"><span class="pre">wpass4jw()</span></code></a>, <a class="reference internal" href="#f/fft/wpass5jw" title="f/fft/wpass5jw"><code class="xref f f-func docutils literal"><span class="pre">wpass5jw()</span></code></a>, <a class="reference internal" href="#f/fft/fft99bjw" title="f/fft/fft99bjw"><code class="xref f f-func docutils literal"><span class="pre">fft99bjw()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -1666,7 +1681,8 @@ unless there is no aliasing.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>a</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: <p>&#8216;</p>
+</li>
 <li><strong>b</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>c</strong> (*)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>d</strong> (*)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
@@ -1695,7 +1711,8 @@ reduction for factor 4</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>a</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: <p>&#8216;</p>
+</li>
 <li><strong>b</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>c</strong> (*)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>d</strong> (*)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
@@ -1724,7 +1741,8 @@ reduction for factor 5</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>a</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: <p>&#8216;</p>
+</li>
 <li><strong>b</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>c</strong> (*)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
 <li><strong>d</strong> (*)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></li>
@@ -1769,7 +1787,7 @@ reduction for factor 5</div></blockquote>
 <ul>
 <li><dl class="variable">
 <dt id="f/algebra/zero_tolerance">
-<code class="descclassname">algebra/</code><code class="descname">zero_tolerance</code><em> [</em><em>real</em><em>,</em><em>private/parameter=1.0e-15_cp</em><em>]</em><a class="headerlink" href="#f/algebra/zero_tolerance" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">algebra/</code><code class="descname">zero_tolerance</code><em> [</em><em>real</em><em>,</em><em>private/parameter/optional/default=1.0e-15_cp</em><em>]</em><a class="headerlink" href="#f/algebra/zero_tolerance" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
@@ -1788,14 +1806,16 @@ vector. On return x is stored in bc1.</div></blockquote>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>a</strong> (ia,*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: real n X n matrix</li>
-<li><strong>ia</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: first dim of a</li>
 <li><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: dimension of problem</li>
 <li><strong>ip</strong> (*)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: pivot pointer of legth n</li>
 <li><strong>bc1</strong> (*)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em> :: on input RHS of problem</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/updatez" title="f/updatez_mod/updatez"><code class="xref f f-func docutils literal"><span class="pre">updatez()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/j_cond" title="f/init_fields/j_cond"><code class="xref f f-func docutils literal"><span class="pre">j_cond()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><p class="first"><strong>ia</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(a,0)</em><em>]</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/updatez" title="f/updatez_mod/updatez"><code class="xref f f-func docutils literal"><span class="pre">updatez()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/j_cond" title="f/init_fields/j_cond"><code class="xref f f-func docutils literal"><span class="pre">j_cond()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -1814,16 +1834,20 @@ vectors bc. On return the results are stored in the bc.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a</strong> (ia,n)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: real n X n matrix</li>
-<li><strong>ia</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: leading dimension of a</li>
-<li><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: dimension of problem</li>
-<li><strong>ip</strong> (n)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: pivot pointer of length n</li>
-<li><strong>bc</strong> (,)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></li>
+<li><strong>a</strong> (ia,n)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: leading dimension of a</li>
+<li><strong>ip</strong> (n)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
+<li><strong>bc</strong> (,)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em> :: on input RHS of problem</li>
 <li><strong>nrhss</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: number of right-hand sides</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/updateb" title="f/updateb_mod/updateb"><code class="xref f f-func docutils literal"><span class="pre">updateb()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/updates" title="f/updates_mod/updates"><code class="xref f f-func docutils literal"><span class="pre">updates()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/updatexi" title="f/updatexi_mod/updatexi"><code class="xref f f-func docutils literal"><span class="pre">updatexi()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewpt_mod/updatewpt" title="f/updatewpt_mod/updatewpt"><code class="xref f f-func docutils literal"><span class="pre">updatewpt()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/updatewps" title="f/updatewps_mod/updatewps"><code class="xref f f-func docutils literal"><span class="pre">updatewps()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/updatez" title="f/updatez_mod/updatez"><code class="xref f f-func docutils literal"><span class="pre">updatez()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/updatewp" title="f/updatewp_mod/updatewp"><code class="xref f f-func docutils literal"><span class="pre">updatewp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/updates_ala" title="f/updates_mod/updates_ala"><code class="xref f f-func docutils literal"><span class="pre">updates_ala()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><ul class="first simple">
+<li><strong>ia</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(a,0)</em><em>]</em></li>
+<li><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(a,1)</em><em>]</em> :: real n X n matrix</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/updateb" title="f/updateb_mod/updateb"><code class="xref f f-func docutils literal"><span class="pre">updateb()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/updates" title="f/updates_mod/updates"><code class="xref f f-func docutils literal"><span class="pre">updates()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/updatexi" title="f/updatexi_mod/updatexi"><code class="xref f f-func docutils literal"><span class="pre">updatexi()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewpt_mod/updatewpt" title="f/updatewpt_mod/updatewpt"><code class="xref f f-func docutils literal"><span class="pre">updatewpt()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/updatewps" title="f/updatewps_mod/updatewps"><code class="xref f f-func docutils literal"><span class="pre">updatewps()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/updatez" title="f/updatez_mod/updatez"><code class="xref f f-func docutils literal"><span class="pre">updatez()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/updatewp" title="f/updatewp_mod/updatewp"><code class="xref f f-func docutils literal"><span class="pre">updatewp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/updates_ala" title="f/updates_mod/updates_ala"><code class="xref f f-func docutils literal"><span class="pre">updates_ala()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -1848,15 +1872,17 @@ b: (in/output) rhs-vector on input, solution on output</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a</strong> (ia,*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></li>
-<li><strong>ia</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: first dim of a</li>
+<li><strong>a</strong> (ia,*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: first dim of a</li>
 <li><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: dim of problem</li>
 <li><strong>ip</strong> (*)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: pivot information</li>
 <li><strong>b</strong> (*)<em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="timeAdvLinear.html#f/updates_mod/updates" title="f/updates_mod/updates"><code class="xref f f-func docutils literal"><span class="pre">updates()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/updatexi" title="f/updatexi_mod/updatexi"><code class="xref f f-func docutils literal"><span class="pre">updatexi()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewpt_mod/updatewpt" title="f/updatewpt_mod/updatewpt"><code class="xref f f-func docutils literal"><span class="pre">updatewpt()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/updatewps" title="f/updatewps_mod/updatewps"><code class="xref f f-func docutils literal"><span class="pre">updatewps()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/inits" title="f/init_fields/inits"><code class="xref f f-func docutils literal"><span class="pre">inits()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/updatewp" title="f/updatewp_mod/updatewp"><code class="xref f f-func docutils literal"><span class="pre">updatewp()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/initxi" title="f/init_fields/initxi"><code class="xref f f-func docutils literal"><span class="pre">initxi()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/updates_ala" title="f/updates_mod/updates_ala"><code class="xref f f-func docutils literal"><span class="pre">updates_ala()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/pt_cond" title="f/init_fields/pt_cond"><code class="xref f f-func docutils literal"><span class="pre">pt_cond()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/xi_cond" title="f/init_fields/xi_cond"><code class="xref f f-func docutils literal"><span class="pre">xi_cond()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/ps_cond" title="f/init_fields/ps_cond"><code class="xref f f-func docutils literal"><span class="pre">ps_cond()</span></code></a>, <a class="reference internal" href="precalcModules.html#f/radial_functions/getbackground" title="f/radial_functions/getbackground"><code class="xref f f-func docutils literal"><span class="pre">getbackground()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><p class="first"><strong>ia</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(a,0)</em><em>]</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="timeAdvLinear.html#f/updates_mod/updates" title="f/updates_mod/updates"><code class="xref f f-func docutils literal"><span class="pre">updates()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/updatexi" title="f/updatexi_mod/updatexi"><code class="xref f f-func docutils literal"><span class="pre">updatexi()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewpt_mod/updatewpt" title="f/updatewpt_mod/updatewpt"><code class="xref f f-func docutils literal"><span class="pre">updatewpt()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/updatewps" title="f/updatewps_mod/updatewps"><code class="xref f f-func docutils literal"><span class="pre">updatewps()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/inits" title="f/init_fields/inits"><code class="xref f f-func docutils literal"><span class="pre">inits()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/updatewp" title="f/updatewp_mod/updatewp"><code class="xref f f-func docutils literal"><span class="pre">updatewp()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/initxi" title="f/init_fields/initxi"><code class="xref f f-func docutils literal"><span class="pre">initxi()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/updates_ala" title="f/updates_mod/updates_ala"><code class="xref f f-func docutils literal"><span class="pre">updates_ala()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/pt_cond" title="f/init_fields/pt_cond"><code class="xref f f-func docutils literal"><span class="pre">pt_cond()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/xi_cond" title="f/init_fields/xi_cond"><code class="xref f f-func docutils literal"><span class="pre">xi_cond()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/ps_cond" title="f/init_fields/ps_cond"><code class="xref f f-func docutils literal"><span class="pre">ps_cond()</span></code></a>, <a class="reference internal" href="precalcModules.html#f/radial_functions/getbackground" title="f/radial_functions/getbackground"><code class="xref f f-func docutils literal"><span class="pre">getbackground()</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -1881,14 +1907,16 @@ info: (output) error message when  /=  0</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>a</strong> (ia,*)<em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em></li>
-<li><strong>ia</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></li>
 <li><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></li>
 <li><strong>ip</strong> (*)<em> [</em><em>integer</em><em>,</em><em>out</em><em>]</em> :: pivoting information</li>
 <li><strong>info</strong><em> [</em><em>integer</em><em>,</em><em>out</em><em>]</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_p0mat" title="f/updatewp_mod/get_p0mat"><code class="xref f f-func docutils literal"><span class="pre">get_p0mat()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/get_s0mat" title="f/updates_mod/get_s0mat"><code class="xref f f-func docutils literal"><span class="pre">get_s0mat()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/inits" title="f/init_fields/inits"><code class="xref f f-func docutils literal"><span class="pre">inits()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/initxi" title="f/init_fields/initxi"><code class="xref f f-func docutils literal"><span class="pre">initxi()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/get_wpsmat" title="f/updatewps_mod/get_wpsmat"><code class="xref f f-func docutils literal"><span class="pre">get_wpsmat()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/get_zmat" title="f/updatez_mod/get_zmat"><code class="xref f f-func docutils literal"><span class="pre">get_zmat()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/pt_cond" title="f/init_fields/pt_cond"><code class="xref f f-func docutils literal"><span class="pre">pt_cond()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewpt_mod/get_wptmat" title="f/updatewpt_mod/get_wptmat"><code class="xref f f-func docutils literal"><span class="pre">get_wptmat()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_wmat" title="f/updatewp_mod/get_wmat"><code class="xref f f-func docutils literal"><span class="pre">get_wmat()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/get_ps0mat" title="f/updatewps_mod/get_ps0mat"><code class="xref f f-func docutils literal"><span class="pre">get_ps0mat()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/xi_cond" title="f/init_fields/xi_cond"><code class="xref f f-func docutils literal"><span class="pre">xi_cond()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewpt_mod/get_pt0mat" title="f/updatewpt_mod/get_pt0mat"><code class="xref f f-func docutils literal"><span class="pre">get_pt0mat()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/ps_cond" title="f/init_fields/ps_cond"><code class="xref f f-func docutils literal"><span class="pre">ps_cond()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_wpmat" title="f/updatewp_mod/get_wpmat"><code class="xref f f-func docutils literal"><span class="pre">get_wpmat()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/j_cond" title="f/init_fields/j_cond"><code class="xref f f-func docutils literal"><span class="pre">j_cond()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_bmat" title="f/updateb_mod/get_bmat"><code class="xref f f-func docutils literal"><span class="pre">get_bmat()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/get_smat" title="f/updates_mod/get_smat"><code class="xref f f-func docutils literal"><span class="pre">get_smat()</span></code></a>, <a class="reference internal" href="precalcModules.html#f/radial_functions/getbackground" title="f/radial_functions/getbackground"><code class="xref f f-func docutils literal"><span class="pre">getbackground()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/get_ximat" title="f/updatexi_mod/get_ximat"><code class="xref f f-func docutils literal"><span class="pre">get_ximat()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/get_xi0mat" title="f/updatexi_mod/get_xi0mat"><code class="xref f f-func docutils literal"><span class="pre">get_xi0mat()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/get_z10mat" title="f/updatez_mod/get_z10mat"><code class="xref f f-func docutils literal"><span class="pre">get_z10mat()</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body"><p class="first"><strong>ia</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=shape(a,0)</em><em>]</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Called from:</th><td class="field-body"><p class="first last"><a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_p0mat" title="f/updatewp_mod/get_p0mat"><code class="xref f f-func docutils literal"><span class="pre">get_p0mat()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/get_s0mat" title="f/updates_mod/get_s0mat"><code class="xref f f-func docutils literal"><span class="pre">get_s0mat()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/inits" title="f/init_fields/inits"><code class="xref f f-func docutils literal"><span class="pre">inits()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/initxi" title="f/init_fields/initxi"><code class="xref f f-func docutils literal"><span class="pre">initxi()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/get_wpsmat" title="f/updatewps_mod/get_wpsmat"><code class="xref f f-func docutils literal"><span class="pre">get_wpsmat()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/get_zmat" title="f/updatez_mod/get_zmat"><code class="xref f f-func docutils literal"><span class="pre">get_zmat()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/pt_cond" title="f/init_fields/pt_cond"><code class="xref f f-func docutils literal"><span class="pre">pt_cond()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewpt_mod/get_wptmat" title="f/updatewpt_mod/get_wptmat"><code class="xref f f-func docutils literal"><span class="pre">get_wptmat()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_wmat" title="f/updatewp_mod/get_wmat"><code class="xref f f-func docutils literal"><span class="pre">get_wmat()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/get_ps0mat" title="f/updatewps_mod/get_ps0mat"><code class="xref f f-func docutils literal"><span class="pre">get_ps0mat()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/xi_cond" title="f/init_fields/xi_cond"><code class="xref f f-func docutils literal"><span class="pre">xi_cond()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewpt_mod/get_pt0mat" title="f/updatewpt_mod/get_pt0mat"><code class="xref f f-func docutils literal"><span class="pre">get_pt0mat()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/ps_cond" title="f/init_fields/ps_cond"><code class="xref f f-func docutils literal"><span class="pre">ps_cond()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_wpmat" title="f/updatewp_mod/get_wpmat"><code class="xref f f-func docutils literal"><span class="pre">get_wpmat()</span></code></a>, <a class="reference internal" href="initModules.html#f/init_fields/j_cond" title="f/init_fields/j_cond"><code class="xref f f-func docutils literal"><span class="pre">j_cond()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_bmat" title="f/updateb_mod/get_bmat"><code class="xref f f-func docutils literal"><span class="pre">get_bmat()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/get_smat" title="f/updates_mod/get_smat"><code class="xref f f-func docutils literal"><span class="pre">get_smat()</span></code></a>, <a class="reference internal" href="precalcModules.html#f/radial_functions/getbackground" title="f/radial_functions/getbackground"><code class="xref f f-func docutils literal"><span class="pre">getbackground()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/get_ximat" title="f/updatexi_mod/get_ximat"><code class="xref f f-func docutils literal"><span class="pre">get_ximat()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/get_xi0mat" title="f/updatexi_mod/get_xi0mat"><code class="xref f f-func docutils literal"><span class="pre">get_xi0mat()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/get_z10mat" title="f/updatez_mod/get_z10mat"><code class="xref f f-func docutils literal"><span class="pre">get_z10mat()</span></code></a></p>
 </td>
 </tr>
 </tbody>
