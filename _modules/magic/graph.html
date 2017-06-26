@@ -112,6 +112,7 @@
 <span class="kn">from</span> <span class="nn">.libmagic</span> <span class="kn">import</span> <span class="n">scanDir</span>
 <span class="kn">from</span> <span class="nn">magic.setup</span> <span class="kn">import</span> <span class="n">buildSo</span>
 <span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">from</span> <span class="nn">.npfile</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="k">if</span> <span class="n">buildSo</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
@@ -124,12 +125,29 @@
             <span class="kn">import</span> <span class="nn">magic.greader_double2</span> <span class="kn">as</span> <span class="nn">Gdble</span>
         <span class="n">readingMode</span> <span class="o">=</span> <span class="s1">&#39;f2py&#39;</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">.npfile</span> <span class="kn">import</span> <span class="o">*</span>
         <span class="n">readingMode</span> <span class="o">=</span> <span class="s1">&#39;python&#39;</span>
     <span class="c1">#print(&#39;read with %s&#39; % readingMode)</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">.npfile</span> <span class="kn">import</span> <span class="o">*</span>
     <span class="n">readingMode</span> <span class="o">=</span> <span class="s1">&#39;python&#39;</span>
+
+<span class="k">def</span> <span class="nf">getGraphEndianness</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function determines the endianness of the graphic files</span>
+
+<span class="sd">    :param filename: input of the filename</span>
+<span class="sd">    :type filename: str</span>
+<span class="sd">    :returns: the endianness of the file (&#39;B&#39;=&#39;big_endian&#39; or &#39;l&#39;=&#39;little_endian&#39;)</span>
+<span class="sd">    :rtype: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">npfile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="s1">&#39;S20&#39;</span><span class="p">)</span>
+        <span class="n">endian</span> <span class="o">=</span> <span class="s1">&#39;B&#39;</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="n">endian</span> <span class="o">=</span> <span class="s1">&#39;l&#39;</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">endian</span>
 
 <div class="viewcode-block" id="MagicGraph"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicGraph">[docs]</a><span class="k">class</span> <span class="nc">MagicGraph</span><span class="p">(</span><span class="n">MagicSetup</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -152,12 +170,9 @@
 <span class="sd">    &gt;&gt;&gt; gr = MagicGraph(ave=True, tag=&#39;N0m2&#39;, precision=&#39;Float64&#39;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MagicGraph.__init__"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicGraph.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ivar</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> 
+<div class="viewcode-block" id="MagicGraph.__init__"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicGraph.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ivar</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> 
                  <span class="n">ave</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="s1">&#39;Float32&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :param format: format of binary output: &#39;n&#39; (native), &#39;B&#39; (big endian)</span>
-<span class="sd">                       or &#39;l&#39; (little endian), (default &#39;B&#39;)</span>
-<span class="sd">        :type format: str</span>
 <span class="sd">        :param ave: when set to True, it tries to find an average G file (G_ave.TAG)</span>
 <span class="sd">        :type ave: bool</span>
 <span class="sd">        :param ivar: the number of the G file</span>
@@ -212,6 +227,9 @@
             <span class="k">print</span><span class="p">(</span><span class="s1">&#39;No such file&#39;</span><span class="p">)</span>
             <span class="k">return</span>
 
+        <span class="c1"># Get file endianness</span>
+        <span class="n">endian</span> <span class="o">=</span> <span class="n">getGraphEndianness</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">readingMode</span> <span class="o">!=</span> <span class="s1">&#39;python&#39;</span><span class="p">:</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">==</span> <span class="s1">&#39;Float32&#39;</span><span class="p">:</span>
@@ -219,7 +237,7 @@
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">==</span> <span class="s1">&#39;Float64&#39;</span><span class="p">:</span>
                 <span class="n">G</span> <span class="o">=</span> <span class="n">Gdble</span><span class="o">.</span><span class="n">greader_double</span>
 
-            <span class="n">G</span><span class="o">.</span><span class="n">readg</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="n">G</span><span class="o">.</span><span class="n">readg</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="n">endian</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">nr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nr</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ntheta</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nt</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">npI</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">np</span><span class="p">)</span>
@@ -248,7 +266,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">Bphi</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">bp</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1">#read data</span>
-            <span class="n">inline</span> <span class="o">=</span> <span class="n">npfile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="n">format</span><span class="p">)</span>
+            <span class="n">inline</span> <span class="o">=</span> <span class="n">npfile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="n">endian</span><span class="p">)</span>
 
             <span class="c1"># read the header</span>
             <span class="n">version</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="s1">&#39;|S20&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>

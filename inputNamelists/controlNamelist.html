@@ -224,12 +224,16 @@ no magnetic field, no Lorentz force and no advection</td>
 <h2>Time step control<a class="headerlink" href="#time-step-control" title="Permalink to this headline">¶</a></h2>
 <p>A modified courant criteria including a modified Alfven-velocity is used to
 account for the magnetic field. The relative and absolute importance of flow
-and Alfven-velocity can be controled by <strong>courfac</strong> and <strong>alffac</strong> respectively.</p>
+and Alfven-velocity can be controled by <strong>courfac</strong> and <strong>alffac</strong> respectively.
+The parameter <strong>l_cour_alf_damp</strong> allows to choose wheter the actual Alven speed
+is used to estimate the Courant condition or if damping (see Christensen et al.,
+GJI, 1999) is included.</p>
 <ul class="simple">
 <li><strong>dtstart</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/num_param/dtstart" title="f/num_param/dtstart"><code class="xref f f-var docutils literal"><span class="pre">dtstart=0.0</span></code></a>) is a real, which is used as the initial time step if the starting solution is initialized (see below) and <span class="math">\(\hbox{dtstart}&gt;0\)</span>.</li>
 <li><strong>dtMax</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/num_param/dtmax" title="f/num_param/dtmax"><code class="xref f f-var docutils literal"><span class="pre">dtMax=1e-4</span></code></a>) is a  real. This is the maximum allowed time step <span class="math">\(\delta t\)</span>. If <span class="math">\(\delta t &gt; \hbox{dtmax}\)</span>, the time step is decreased to at least dtmax (See routine <cite>dt_courant</cite>). Run is stopped if <span class="math">\(\delta t &lt; \hbox{dtmin}\)</span> and <span class="math">\(\hbox{dtmin}=10^{-6}\,\hbox{dtmax}\)</span>.</li>
 <li><strong>courfac</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/num_param/courfac" title="f/num_param/courfac"><code class="xref f f-var docutils literal"><span class="pre">courfac=2.5</span></code></a>) is a real used to scale velocity in courant criteria.</li>
 <li><strong>alffac</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/num_param/alffac" title="f/num_param/alffac"><code class="xref f f-var docutils literal"><span class="pre">alffac=1.0</span></code></a>) is a  real, used to scale Alfven-velocity in courant criteria.</li>
+<li><strong>l_cour_alf_damp</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/logic/l_cour_alf_damp" title="f/logic/l_cour_alf_damp"><code class="xref f f-var docutils literal"><span class="pre">l_cour_alf_damp=.true.</span></code></a>) is a logical. This is used to decide whether the damping of the Alven waves is taken into account when estimating the Courant condition (see Christensen et al., GJI, 1999). At low Ekman numbers, this criterion might actually lead to spurious oscillations/instabilities of the code.</li>
 <li><strong>n_cour_step</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/num_param/n_cour_step" title="f/num_param/n_cour_step"><code class="xref f f-var docutils literal"><span class="pre">n_cour_step=10</span></code></a>) is an integer. This is the number of time steps before consecutive checking of courant criteria. Note: the courant criteria is checked always after the time step has been changed if <code class="docutils literal"><span class="pre">n_cour_step&gt;0</span></code>.</li>
 </ul>
 </div>
@@ -292,22 +296,59 @@ input variables:</p>
 </table>
 </li>
 </ul>
-<p>When Chebyshev polynomials are used, it is also possible to use a non-linear mapping function to concentrate/diperse grid points around a point inside the domain. For a full description, see Bayliss and Turkel (1990). The function that re-distributes the collocation points is</p>
+<p>When Chebyshev polynomials are used, it is also possible to use a non-linear
+mapping function to concentrate/diperse grid points around a point inside the
+domain.</p>
+<ul>
+<li><p class="first"><strong>l_newmap</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/logic/l_newmap" title="f/logic/l_newmap"><code class="xref f f-var docutils literal"><span class="pre">l_newmap=.false.</span></code></a>) is a logical. A radial mapping can be applied to the Chebyshev grid when <code class="docutils literal"><span class="pre">l_newmap</span></code> is set to <code class="docutils literal"><span class="pre">.true.</span></code>. The radial profile of the mapping function is then stored during the initialisation of the code in the file <a class="reference internal" href="../outputFiles/outTransportProp.html#secmappingfile"><span>rNM.TAG</span></a>.</p>
+</li>
+<li><p class="first"><strong>map_function</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/num_param/map_function" title="f/num_param/map_function"><code class="xref f f-var docutils literal"><span class="pre">map_function='arcsin'</span></code></a>) is a character string. This allows to select which mapping function is used:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="82%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>map_function=&#8217;TAN&#8217;</td>
+<td>Use a tangent mapping  (see <a class="reference external" href="https://doi.org/10.1016/0021-9991(92)90012-N">Bayliss and Turkel 1992</a>)</td>
+</tr>
+<tr class="row-even"><td>map_function=&#8217;ARCSIN&#8217;</td>
+<td>Use finite differences (see <a class="reference external" href="https://doi.org/10.1006/jcph.1993.1044">Kosloff and Tal-Ezer 1993</a>)</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<p>If the tangent mapping is used, the function that re-distributes the collocation
+points is expressed by</p>
 <div class="math">
-\[r=\alpha_2+\left[ \frac{\textrm{tan}^{-1}\left(\lambda(r_{cheb}-x_0)\right)}{\alpha_1} \right] \textrm{ ,}\]</div>
+\[r=\frac{1}{2}\left(\alpha_2+\frac{\textrm{tan}\left[\lambda(r_{cheb}-x_0)\right]}{\alpha_1}\right) + \frac{r_i+r_o}{2} \textrm{ ,}\]</div>
 <p>where the Gauss-Lobatto collocation points are</p>
 <div class="math">
-\[\begin{split}r_{cheb}&amp;=\textrm{cos}\left( \frac{\pi(k-1)}{n_r} \right) \textrm{ , }\;\; k=1,2,...,n_r \textrm{ , }\; n_r=n\_r\_max\end{split}\]</div>
+\[\begin{split}r_{cheb}&amp;=\textrm{cos}\left( \frac{\pi(k-1)}{N_r} \right) \textrm{ , }\;\; k=1,2,...,n_r \textrm{ , }\; n_r=n\_r\_max\end{split}\]</div>
 <p>and <span class="math">\(r\!\in\![r_i,r_o]\)</span>, <span class="math">\(r_{cheb}\!\in\![-1.0,1.0]\)</span>. The parameters to calculate <span class="math">\(r\)</span> are</p>
 <div class="math">
 \[\begin{split}\lambda&amp;=\frac{\textrm{tan}^{-1}\left(\alpha_1(1-\alpha_2)\right)}{1-x_0} \\
 x_0&amp;=\frac{K-1}{K+1} \\
 K&amp;=\frac{\textrm{tan}^{-1}\left(\alpha_1(1+\alpha_2)\right)}{\textrm{tan}^{-1}\left(\alpha_1(1-\alpha_2)\right)} \textrm{ .}\end{split}\]</div>
 <p>The coefficient <span class="math">\(\alpha_1\)</span> determines the degree of concentration/dispersion of the grid points around <span class="math">\(r_{cheb}\!=\!\alpha_2\)</span>. If <span class="math">\(\alpha_1\)</span> is too high, the <span class="math">\(r\)</span> function becomes nearly discontinuous. To avoid numerical problems, <span class="math">\(\alpha_1\)</span> should remain close to unity.</p>
+<p>If the arcsin mapping is used, the function that re-distributes the collocation points
+is given by</p>
+<div class="math">
+\[r=\frac{1}{2}\left[ \frac{\textrm{arcin}\left(\alpha_1 r_{cheb}\right)}{\textrm{arcsin} \alpha_1} \right]+\frac{r_i+r_o}{2} \textrm{ ,}\]</div>
+<p>In the Kosloff and Tal-Ezer mapping, <span class="math">\(\alpha_1\)</span> transforms the Gauss-Lobatto
+grid into a more regularly-spaced grid. When <span class="math">\(\alpha_1 \rightarrow 0\)</span> one
+recovers the Gauss-Lobatto grid, while <span class="math">\(\alpha_1 \rightarrow 1\)</span> yields a
+regular grid.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The Kosloff-Tal-Ezer mapping becomes singular when <span class="math">\(\alpha_1=1\)</span>.
+Acceptable values are <span class="math">\(0&lt;\alpha_1&lt;1\)</span>. Note that the error increases
+as <span class="math">\(\epsilon=\left(\frac{1-\sqrt{1-\alpha_1^2}}{\alpha_1}\right)^{N_r}\)</span>.</p>
+</div>
 <ul class="simple">
-<li><strong>l_newmap</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/logic/l_newmap" title="f/logic/l_newmap"><code class="xref f f-var docutils literal"><span class="pre">l_newmap=.false.</span></code></a>) is a logical. A radial mapping can be applied to the Chebyshev grid when <code class="docutils literal"><span class="pre">l_newmap</span></code> is set to <code class="docutils literal"><span class="pre">.true.</span></code>. The radial profile of the mapping function is then stored during the initialisation of the code in the file <a class="reference internal" href="../outputFiles/outTransportProp.html#secmappingfile"><span>rNM.TAG</span></a>.</li>
-<li><strong>alph1</strong> (default <a class="reference internal" href="../apiFortran/precalcModules.html#f/radial_functions/alph1" title="f/radial_functions/alph1"><code class="xref f f-var docutils literal"><span class="pre">alph1=2.0</span></code></a>) is a real. This is a control parameter of the mapping function.</li>
-<li><strong>alph2</strong> (default <a class="reference internal" href="../apiFortran/precalcModules.html#f/radial_functions/alph2" title="f/radial_functions/alph2"><code class="xref f f-var docutils literal"><span class="pre">alph2=0.0</span></code></a>) is a real. This is a control parameter of the mapping function.</li>
+<li><strong>alph1</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/num_param/alph1" title="f/num_param/alph1"><code class="xref f f-var docutils literal"><span class="pre">alph1=0.8</span></code></a>) is a real. This is a control parameter of the mapping function.</li>
+<li><strong>alph2</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/num_param/alph2" title="f/num_param/alph2"><code class="xref f f-var docutils literal"><span class="pre">alph2=0.0</span></code></a>) is a real. This is a control parameter of the mapping function.</li>
 </ul>
 </div>
 <div class="section" id="miscellaneous">

@@ -106,11 +106,13 @@
             
   <h1>Source code for magic.coeff</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="kn">from</span> <span class="nn">magic</span> <span class="kn">import</span> <span class="n">npfile</span><span class="p">,</span> <span class="n">scanDir</span><span class="p">,</span> <span class="n">MagicSetup</span><span class="p">,</span> <span class="n">hammer2cart</span><span class="p">,</span> <span class="n">symmetrize</span>
+<span class="kn">from</span> <span class="nn">magic</span> <span class="kn">import</span> <span class="n">npfile</span><span class="p">,</span> <span class="n">scanDir</span><span class="p">,</span> <span class="n">MagicSetup</span><span class="p">,</span> <span class="n">hammer2cart</span><span class="p">,</span> <span class="n">symmetrize</span><span class="p">,</span> <span class="n">progressbar</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">.spectralTransforms</span> <span class="kn">import</span> <span class="n">SpectralTransforms</span>
 <span class="kn">from</span> <span class="nn">magic.setup</span> <span class="kn">import</span> <span class="n">labTex</span>
+<span class="kn">import</span> <span class="nn">copy</span>
 
 
 <div class="viewcode-block" id="deriv"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.coeff.deriv">[docs]</a><span class="k">def</span> <span class="nf">deriv</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
@@ -188,13 +190,13 @@
 <span class="sd">    &gt;&gt;&gt; print(cmb.ell, cmb.glm) # print \ell and g_{\ell m}</span>
 <span class="sd">    &gt;&gt;&gt; print(cmb.glm[:, cmb.idx[1, 0]]) # time-series of the axisymmetric dipole</span>
 <span class="sd">    &gt;&gt;&gt; plot(cmb.time, cmb.dglmdt[:, cmb.idx[2, 0]]) # Secular variation of the quadrupole</span>
-<span class="sd">    &gt;&gt;&gt; # Display the time-evolution of the CMB field (requires shtns)</span>
+<span class="sd">    &gt;&gt;&gt; # Display the time-evolution of the CMB field</span>
 <span class="sd">    &gt;&gt;&gt; cmb.movieCmb(levels=12, cm=&#39;seismic&#39;)</span>
-<span class="sd">    &gt;&gt;&gt; # Save the time-evolution of the CMB field (requires shtns)</span>
+<span class="sd">    &gt;&gt;&gt; # Save the time-evolution of the CMB field</span>
 <span class="sd">    &gt;&gt;&gt; cmb.movieCmb(levels=12, cm=&#39;seismic&#39;, png=True)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-<div class="viewcode-block" id="MagicCoeffCmb.__init__"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.coeff.MagicCoeffCmb.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">ratio_cmb_surface</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">scale_b</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+<div class="viewcode-block" id="MagicCoeffCmb.__init__"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.coeff.MagicCoeffCmb.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">ratio_cmb_surface</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">scale_b</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">lCut</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                  <span class="n">precision</span><span class="o">=</span><span class="s1">&#39;Float64&#39;</span><span class="p">,</span> <span class="n">ave</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">sv</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A class to read the B_coeff_cmb files</span>
@@ -215,6 +217,8 @@
 <span class="sd">        :type sv: bool</span>
 <span class="sd">        :param quiet: verbose when toggled to True (default is True)</span>
 <span class="sd">        :type quiet: bool</span>
+<span class="sd">        :param lCut: reduce the spherical harmonic truncation to l &lt;= lCut</span>
+<span class="sd">        :type lCut: int</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">logFiles</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="s1">&#39;log.*&#39;</span><span class="p">)</span>
@@ -273,6 +277,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">blm</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span><span class="o">+</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span>\
                                          <span class="mi">1j</span><span class="o">*</span><span class="n">data</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span><span class="o">+</span><span class="mi">2</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
 
+        <span class="c1"># Truncate!</span>
+        <span class="k">if</span> <span class="n">lCut</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">lCut</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">truncate</span><span class="p">(</span><span class="n">lCut</span><span class="p">)</span>
+
         <span class="c1"># Get time</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nstep</span><span class="p">,</span> <span class="n">precision</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
@@ -330,6 +339,64 @@
 
         <span class="k">if</span> <span class="n">iplot</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MagicCoeffCmb.__add__"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.coeff.MagicCoeffCmb.__add__">[docs]</a>    <span class="k">def</span> <span class="nf">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Built-in function to sum two cmb files</span>
+
+<span class="sd">        .. note:: So far this function only works for two cmb files with the same </span>
+<span class="sd">                  grid sizes. At some point, we might introduce grid extrapolation </span>
+<span class="sd">                  to allow any summation/</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">new</span><span class="p">)</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">nstep</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">nstep</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">nstep</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">new</span><span class="o">.</span><span class="n">time</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">blm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">blm</span><span class="p">,</span> <span class="n">new</span><span class="o">.</span><span class="n">blm</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">glm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">glm</span><span class="p">,</span> <span class="n">new</span><span class="o">.</span><span class="n">glm</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">hlm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">hlm</span><span class="p">,</span> <span class="n">new</span><span class="o">.</span><span class="n">hlm</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">El</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">El</span><span class="p">,</span> <span class="n">new</span><span class="o">.</span><span class="n">El</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">Em</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">Em</span><span class="p">,</span> <span class="n">new</span><span class="o">.</span><span class="n">Em</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">ESVl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">ESVl</span><span class="p">,</span> <span class="n">new</span><span class="o">.</span><span class="n">ESVl</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">out</span></div>
+
+<div class="viewcode-block" id="MagicCoeffCmb.truncate"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.coeff.MagicCoeffCmb.truncate">[docs]</a>    <span class="k">def</span> <span class="nf">truncate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lCut</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param lCut: truncate to spherical harmonic degree lCut</span>
+<span class="sd">        :type lCut: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span> <span class="o">=</span> <span class="n">lCut</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">m_max_cmb</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lm_max_cmb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">m_max_cmb</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span> <span class="o">-</span> \
+                        <span class="bp">self</span><span class="o">.</span><span class="n">m_max_cmb</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m_max_cmb</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span> <span class="o">+</span> \
+                        <span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">m_max_cmb</span><span class="o">+</span><span class="mi">1</span>
+
+        <span class="c1"># Get indices location</span>
+        <span class="n">idx_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">m_max_cmb</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;i&#39;</span><span class="p">)</span>
+        <span class="n">ell_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lm_max_cmb</span><span class="p">,</span> <span class="s1">&#39;i&#39;</span><span class="p">)</span>
+        <span class="n">ms_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lm_max_cmb</span><span class="p">,</span> <span class="s1">&#39;i&#39;</span><span class="p">)</span>
+        <span class="n">idx_new</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ell_new</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span><span class="o">+</span><span class="mi">1</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">idx_new</span><span class="p">[</span><span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
+                <span class="n">ell_new</span><span class="p">[</span><span class="n">idx_new</span><span class="p">[</span><span class="n">l</span><span class="p">,</span><span class="n">m</span><span class="p">]]</span> <span class="o">=</span> <span class="n">l</span>
+                <span class="n">ms_new</span><span class="p">[</span><span class="n">idx_new</span><span class="p">[</span><span class="n">l</span><span class="p">,</span><span class="n">m</span><span class="p">]]</span> <span class="o">=</span> <span class="n">m</span>
+                <span class="n">k</span> <span class="o">+=</span><span class="mi">1</span>
+
+        <span class="n">blm_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nstep</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lm_max_cmb</span><span class="p">),</span> <span class="s1">&#39;Complex64&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">):</span>
+                <span class="n">lm</span> <span class="o">=</span> <span class="n">idx_new</span><span class="p">[</span><span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">]</span>
+                <span class="n">blm_new</span><span class="p">[:,</span> <span class="n">lm</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">blm</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">idx</span><span class="p">[</span><span class="n">l</span><span class="p">,</span><span class="n">m</span><span class="p">]]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">idx</span> <span class="o">=</span> <span class="n">idx_new</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ell</span> <span class="o">=</span> <span class="n">ell_new</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ms</span> <span class="o">=</span> <span class="n">ms_new</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blm</span> <span class="o">=</span> <span class="n">blm_new</span></div>
+
 
 <div class="viewcode-block" id="MagicCoeffCmb.plot"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.coeff.MagicCoeffCmb.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -410,7 +477,7 @@
                        <span class="n">norm</span><span class="o">=</span><span class="n">shtns</span><span class="o">.</span><span class="n">sht_orthonormal</span> <span class="o">|</span> <span class="n">shtns</span><span class="o">.</span><span class="n">SHT_NO_CS_PHASE</span><span class="p">)</span>
 
         <span class="n">polar_opt_threshold</span> <span class="o">=</span> <span class="mf">1e-10</span>
-        <span class="n">nlat</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">),</span><span class="mi">192</span><span class="p">)</span>
+        <span class="n">nlat</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span><span class="o">*</span><span class="p">(</span><span class="mf">3.</span><span class="o">/</span><span class="mf">2.</span><span class="o">/</span><span class="mf">2.</span><span class="p">)</span><span class="o">*</span><span class="mf">2.</span><span class="p">),</span><span class="mi">192</span><span class="p">)</span>
         <span class="n">nphi</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">nlat</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span>
         <span class="n">nlat</span><span class="p">,</span> <span class="n">nphi</span> <span class="o">=</span> <span class="n">sh</span><span class="o">.</span><span class="n">set_grid</span><span class="p">(</span><span class="n">nlat</span><span class="p">,</span> <span class="n">nphi</span><span class="p">,</span> <span class="n">polar_opt</span><span class="o">=</span><span class="n">polar_opt_threshold</span><span class="p">)</span>
 
@@ -474,11 +541,9 @@
 
 <div class="viewcode-block" id="MagicCoeffCmb.movieCmb"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.coeff.MagicCoeffCmb.movieCmb">[docs]</a>    <span class="k">def</span> <span class="nf">movieCmb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cut</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">,</span> <span class="n">png</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                  <span class="n">normed</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">bgcolor</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">deminc</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">removeMean</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                 <span class="n">precision</span><span class="o">=</span><span class="s1">&#39;Float64&#39;</span><span class="p">,</span> <span class="n">shtns_lib</span><span class="o">=</span><span class="s1">&#39;shtns&#39;</span><span class="p">,</span> <span class="n">contour</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">mer</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+                 <span class="n">precision</span><span class="o">=</span><span class="s1">&#39;Float64&#39;</span><span class="p">,</span> <span class="n">contour</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">mer</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plotting function (it can also write the png files)</span>
-
-<span class="sd">        .. warning:: the python bindings of `SHTns &lt;https://bitbucket.org/bputigny/shtns-magic&gt;`_ are mandatory to use this plotting function!</span>
 
 <span class="sd">        :param levels: number of contour levels</span>
 <span class="sd">        :type levels: int</span>
@@ -503,9 +568,6 @@
 <span class="sd">        :type deminc: bool</span>
 <span class="sd">        :param precision: single or double precision</span>
 <span class="sd">        :type precision: char</span>
-<span class="sd">        :param shtns_lib: version of shtns library used: can be either &#39;shtns&#39;</span>
-<span class="sd">                          or &#39;shtns-magic&#39;</span>
-<span class="sd">        :type shtns_lib: char</span>
 <span class="sd">        :param contour: also display the solid contour levels when set to True</span>
 <span class="sd">        :type contour: bool</span>
 <span class="sd">        :param mer: display meridians and circles when set to True</span>
@@ -514,34 +576,25 @@
 <span class="sd">        :type removeMean: bool</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c1"># The python bindings of shtns are mandatory to use this function !!!</span>
-        <span class="kn">import</span> <span class="nn">shtns</span>
-
         <span class="k">if</span> <span class="n">removeMean</span><span class="p">:</span>
             <span class="n">blmCut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">blm</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">blm</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">blmCut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">blm</span>
 
-        <span class="c1"># Define shtns setup</span>
-        <span class="n">sh</span> <span class="o">=</span> <span class="n">shtns</span><span class="o">.</span><span class="n">sht</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m_max_cmb</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">),</span> 
-                       <span class="n">mres</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">),</span> 
-                       <span class="n">norm</span><span class="o">=</span><span class="n">shtns</span><span class="o">.</span><span class="n">sht_orthonormal</span> <span class="o">|</span> <span class="n">shtns</span><span class="o">.</span><span class="n">SHT_NO_CS_PHASE</span><span class="p">)</span>
-
-        <span class="n">polar_opt_threshold</span> <span class="o">=</span> <span class="mf">1e-10</span>
-        <span class="n">nlat</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">),</span><span class="mi">192</span><span class="p">)</span>
+        <span class="n">nlat</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span><span class="o">*</span><span class="p">(</span><span class="mf">3.</span><span class="o">/</span><span class="mf">2.</span><span class="o">/</span><span class="mf">2.</span><span class="p">)</span><span class="o">*</span><span class="mf">2.</span><span class="p">),</span><span class="mi">192</span><span class="p">)</span>
         <span class="n">nphi</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">nlat</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span>
-        <span class="n">nlat</span><span class="p">,</span> <span class="n">nphi</span> <span class="o">=</span> <span class="n">sh</span><span class="o">.</span><span class="n">set_grid</span><span class="p">(</span><span class="n">nlat</span><span class="p">,</span> <span class="n">nphi</span><span class="p">,</span> <span class="n">polar_opt</span><span class="o">=</span><span class="n">polar_opt_threshold</span><span class="p">)</span>
+
+        <span class="c1"># Define spectral transform setup</span>
+        <span class="n">sh</span> <span class="o">=</span> <span class="n">SpectralTransforms</span><span class="p">(</span><span class="n">l_max</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max_cmb</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">,</span>
+                                <span class="n">lm_max</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lm_max_cmb</span><span class="p">,</span> 
+                                <span class="n">n_theta_max</span><span class="o">=</span><span class="n">nlat</span><span class="p">)</span>
 
         <span class="c1"># Transform data on grid space</span>
         <span class="n">BrCMB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nstep</span><span class="p">,</span> <span class="n">nphi</span><span class="p">,</span> <span class="n">nlat</span><span class="p">),</span> <span class="n">precision</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nstep</span><span class="p">):</span>
-            <span class="n">tmp</span> <span class="o">=</span> <span class="n">sh</span><span class="o">.</span><span class="n">synth</span><span class="p">(</span><span class="n">blmCut</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:]</span><span class="o">*</span><span class="n">sh</span><span class="o">.</span><span class="n">l</span><span class="o">*</span><span class="p">(</span><span class="n">sh</span><span class="o">.</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">rcmb</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-            <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">.</span><span class="n">T</span> <span class="c1"># Longitude, Latitude</span>
-
-            <span class="k">if</span> <span class="n">shtns_lib</span> <span class="o">==</span> <span class="s1">&#39;shtns-magic&#39;</span><span class="p">:</span>
-                <span class="n">BrCMB</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">rearangeLat</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">BrCMB</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Spectral -&gt; Spatial transform&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">progressbar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nstep</span><span class="p">)):</span>
+            <span class="n">BrCMB</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">sh</span><span class="o">.</span><span class="n">spec_spat</span><span class="p">(</span><span class="n">blmCut</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:]</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">ell</span><span class="o">*</span><span class="p">(</span><span class="n">sh</span><span class="o">.</span><span class="n">ell</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">rcmb</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Done&#39;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">png</span><span class="p">:</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>
@@ -596,6 +649,9 @@
                                <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">],</span> <span class="n">linewidths</span><span class="o">=</span><span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">])</span>
                 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxout</span><span class="p">,</span> <span class="n">yyout</span><span class="p">,</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
                 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxin</span><span class="p">,</span> <span class="n">yyin</span><span class="p">,</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+                <span class="c1">#ax.text(0.12, 0.9, &#39;t=%.6f&#39; % self.time[0], fontsize=16,</span>
+                        <span class="c1">#horizontalalignment=&#39;right&#39;,</span>
+                        <span class="c1">#verticalalignment=&#39;center&#39;, transform = ax.transAxes)</span>
 
                 <span class="k">if</span> <span class="n">mer</span><span class="p">:</span>
                     <span class="k">for</span> <span class="n">lat0</span> <span class="ow">in</span> <span class="n">circles</span><span class="p">:</span>
@@ -627,6 +683,9 @@
                                <span class="n">linestyles</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">],</span> <span class="n">linewidths</span><span class="o">=</span><span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">])</span>
                 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxout</span><span class="p">,</span> <span class="n">yyout</span><span class="p">,</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
                 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxin</span><span class="p">,</span> <span class="n">yyin</span><span class="p">,</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+                <span class="c1">#ax.text(0.12, 0.9, &#39;t=%.6f&#39; % self.time[k], fontsize=16,</span>
+                        <span class="c1">#horizontalalignment=&#39;right&#39;,</span>
+                        <span class="c1">#verticalalignment=&#39;center&#39;, transform = ax.transAxes)</span>
 
                 <span class="k">if</span> <span class="n">mer</span><span class="p">:</span>
                     <span class="k">for</span> <span class="n">lat0</span> <span class="ow">in</span> <span class="n">circles</span><span class="p">:</span>
@@ -883,7 +942,7 @@
 
 <div class="viewcode-block" id="MagicCoeffR.movieRad"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.coeff.MagicCoeffR.movieRad">[docs]</a>    <span class="k">def</span> <span class="nf">movieRad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cut</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">,</span> <span class="n">png</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                  <span class="n">normed</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">bgcolor</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">deminc</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">removeMean</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                 <span class="n">precision</span><span class="o">=</span><span class="s1">&#39;Float64&#39;</span><span class="p">,</span> <span class="n">shtns_lib</span><span class="o">=</span><span class="s1">&#39;shtns&#39;</span><span class="p">,</span> <span class="n">contour</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">mer</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+                 <span class="n">precision</span><span class="o">=</span><span class="s1">&#39;Float64&#39;</span><span class="p">,</span> <span class="n">contour</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">mer</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plotting function (it can also write the png files)</span>
 
@@ -912,9 +971,6 @@
 <span class="sd">        :type deminc: bool</span>
 <span class="sd">        :param precision: single or double precision</span>
 <span class="sd">        :type precision: char</span>
-<span class="sd">        :param shtns_lib: version of shtns library used: can be either &#39;shtns&#39;</span>
-<span class="sd">                          or &#39;shtns-magic&#39;</span>
-<span class="sd">        :type shtns_lib: char</span>
 <span class="sd">        :param contour: also display the solid contour levels when set to True</span>
 <span class="sd">        :type contour: bool</span>
 <span class="sd">        :param mer: display meridians and circles when set to True</span>
@@ -923,34 +979,35 @@
 <span class="sd">        :type removeMean: bool</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c1"># The python bindings of shtns are mandatory to use this function !!!</span>
-        <span class="kn">import</span> <span class="nn">shtns</span>
-
         <span class="k">if</span> <span class="n">removeMean</span><span class="p">:</span>
             <span class="n">dataCut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wlm</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">wlm</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">dataCut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wlm</span>
 
-        <span class="c1"># Define shtns setup</span>
-        <span class="n">sh</span> <span class="o">=</span> <span class="n">shtns</span><span class="o">.</span><span class="n">sht</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max_r</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m_max_r</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">),</span> 
-                       <span class="n">mres</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">),</span> 
-                       <span class="n">norm</span><span class="o">=</span><span class="n">shtns</span><span class="o">.</span><span class="n">sht_orthonormal</span> <span class="o">|</span> <span class="n">shtns</span><span class="o">.</span><span class="n">SHT_NO_CS_PHASE</span><span class="p">)</span>
-
-        <span class="n">polar_opt_threshold</span> <span class="o">=</span> <span class="mf">1e-10</span>
-        <span class="n">nlat</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max_r</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">),</span><span class="mi">192</span><span class="p">)</span>
+        <span class="n">nlat</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max_r</span><span class="o">*</span><span class="p">(</span><span class="mf">3.</span><span class="o">/</span><span class="mf">2.</span><span class="o">/</span><span class="mf">2.</span><span class="p">)</span><span class="o">*</span><span class="mf">2.</span><span class="p">),</span><span class="mi">192</span><span class="p">)</span>
         <span class="n">nphi</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">nlat</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span>
-        <span class="n">nlat</span><span class="p">,</span> <span class="n">nphi</span> <span class="o">=</span> <span class="n">sh</span><span class="o">.</span><span class="n">set_grid</span><span class="p">(</span><span class="n">nlat</span><span class="p">,</span> <span class="n">nphi</span><span class="p">,</span> <span class="n">polar_opt</span><span class="o">=</span><span class="n">polar_opt_threshold</span><span class="p">)</span>
+
+        <span class="c1"># Define spectral transform setup</span>
+        <span class="n">sh</span> <span class="o">=</span> <span class="n">SpectralTransforms</span><span class="p">(</span><span class="n">l_max</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max_r</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">,</span>
+                                <span class="n">lm_max</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lm_max_r</span><span class="p">,</span> 
+                                <span class="n">n_theta_max</span><span class="o">=</span><span class="n">nlat</span><span class="p">)</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        # The python bindings of shtns are mandatory to use this function !!!</span>
+<span class="sd">        import shtns</span>
+
+<span class="sd">        # Define shtns setup</span>
+<span class="sd">        sh = shtns.sht(int(self.l_max_r), int(self.m_max_r/self.minc), </span>
+<span class="sd">                       mres=int(self.minc), </span>
+<span class="sd">                       norm=shtns.sht_orthonormal | shtns.SHT_NO_CS_PHASE)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Transform data on grid space</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nstep</span><span class="p">,</span> <span class="n">nphi</span><span class="p">,</span> <span class="n">nlat</span><span class="p">),</span> <span class="n">precision</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nstep</span><span class="p">):</span>
-            <span class="n">tmp</span> <span class="o">=</span> <span class="n">sh</span><span class="o">.</span><span class="n">synth</span><span class="p">(</span><span class="n">dataCut</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:]</span><span class="o">*</span><span class="n">sh</span><span class="o">.</span><span class="n">l</span><span class="o">*</span><span class="p">(</span><span class="n">sh</span><span class="o">.</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-            <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">.</span><span class="n">T</span> <span class="c1"># Longitude, Latitude</span>
-
-            <span class="k">if</span> <span class="n">shtns_lib</span> <span class="o">==</span> <span class="s1">&#39;shtns-magic&#39;</span><span class="p">:</span>
-                <span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">rearangeLat</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Spectral -&gt; Spatial transform&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">progressbar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nstep</span><span class="p">)):</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">sh</span><span class="o">.</span><span class="n">spec_spat</span><span class="p">(</span><span class="n">dataCut</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:]</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">ell</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ell</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Done&#39;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">png</span><span class="p">:</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>

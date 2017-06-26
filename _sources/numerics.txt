@@ -3,21 +3,22 @@
 Numerical technique
 ###################
 
-**MagIC** is a pseudo-spectral MHD code. This numerical technique was originally
-developed by P. Gilman and G. Glatzmaier for the spherical geometry. In this
-approach the unknowns are expanded into complete sets of functions in radial
-and angular directions: **Chebyshev polynomials in the radial direction** and
-**spherical harmonic functions in the azimuthal and latitudinal directions**.  This
-allows to express all partial derivatives analytically.  Employing
-orthogonality relations of spherical harmonic functions and using collocation
-in radius then lead to algebraic equations that are integrated in time with a
-**mixed implicit/explicit time stepping scheme**. The nonlinear terms and the
-Coriolis force are evaluated in the physical (or grid) space rather than in
-spectral space.  Although this approach requires costly numerical
-transformations between the two representations (from spatial to spectral using
-Legendre and Fourier transforms), the resulting decoupling of all spherical
-harmonic modes leads to a net gain in computational speed.  Before explaining
-these methods in more detail, we introduce the poloidal/toroidal decomposition.
+**MagIC** is a pseudo-spectral MHD code. This numerical technique was
+originally developed by P. Gilman and G. Glatzmaier for the spherical geometry.
+In this approach the unknowns are expanded into complete sets of functions in
+radial and angular directions: **Chebyshev polynomials or Finite differences in
+the radial direction** and **spherical harmonic functions in the azimuthal and
+latitudinal directions**. This allows to express all partial derivatives
+analytically.  Employing orthogonality relations of spherical harmonic
+functions and using collocation in radius then lead to algebraic equations that
+are integrated in time with a **mixed implicit/explicit time stepping scheme**.
+The nonlinear terms and the Coriolis force are evaluated in the physical (or
+grid) space rather than in spectral space. Although this approach requires
+costly numerical transformations between the two representations (from spatial
+to spectral using Legendre and Fourier transforms), the resulting decoupling of
+all spherical harmonic modes leads to a net gain in computational speed.
+Before explaining these methods in more detail, we introduce the
+poloidal/toroidal decomposition.
 
 
 Poloidal/toroidal decomposition
@@ -99,8 +100,8 @@ while the curl of :math:`\tilde{\rho}\vec{u}` is expressed by
 Using the horizontal part of the divergence operator
 
 .. math::
-   \vec{\nabla}_H = r\sin \dfrac{\partial (\sin\theta}{\partial \theta}\;\vec{e}_\theta 
-   + r\sin \dfrac{\partial}{\partial \phi}\;\vec{e}_\phi
+   \vec{\nabla}_H = \dfrac{1}{r\sin\theta} \dfrac{\partial}{\partial \theta}\sin\theta\;\vec{e}_\theta 
+   + \dfrac{1}{r\sin\theta} \dfrac{\partial}{\partial \phi}\;\vec{e}_\phi
 
 above expressions can be simplified to 
 
@@ -140,7 +141,7 @@ reads
 This means that
 
 .. math::
-  Y_{\ell}^{m}(\theta,\phi) = \sqrt{\dfrac{1}{2\pi}}\dfrac{(2\ell+1)(\ell-|m|)!}{2(\ell+|m|)!}
+  Y_{\ell}^{m}(\theta,\phi) = \left(\dfrac{(2\ell+1)}{4\pi}\dfrac{(\ell-|m|)!}{(\ell+|m|)!}\right)^{1/2}
   P_\ell^m(\cos{\theta})\,e^{i m \phi}\,(-1)^m,
 
 As an example, the spherical harmonic representation of the
