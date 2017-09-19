@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>magic.movie &mdash; Magic 5.6 documentation</title>
+    <title>magic.movie &#8212; Magic 5.6 documentation</title>
     
     <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -94,8 +94,8 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.6 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.6 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -110,11 +110,11 @@
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">.npfile</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">magic.libmagic</span> <span class="kn">import</span> <span class="n">symmetrize</span>
-<span class="kn">from</span> <span class="nn">magic.plotlib</span> <span class="kn">import</span> <span class="n">hammer2cart</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">.npfile</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">magic.libmagic</span> <span class="k">import</span> <span class="n">symmetrize</span><span class="p">,</span> <span class="n">chebgrid</span>
+<span class="kn">from</span> <span class="nn">magic.plotlib</span> <span class="k">import</span> <span class="n">hammer2cart</span>
 
 <span class="k">def</span> <span class="nf">getNlines</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="s1">&#39;Float32&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -171,11 +171,11 @@
 <span class="sd">    &gt;&gt;&gt; m = Movie(file=&#39;AB_mov.test&#39;, png=True, nvar=100, lastvar=380)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Movie.__init__"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.Movie.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">file</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">png</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                 <span class="n">lastvar</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">nvar</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">,</span> <span class="n">cut</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-                 <span class="n">bgcolor</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">fluct</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">avg</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> 
-                 <span class="n">std</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">normRad</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="s1">&#39;Float32&#39;</span><span class="p">,</span>
-                 <span class="n">deminc</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">ifield</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="Movie.__init__"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.Movie.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">png</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">lastvar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nvar</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">,</span> <span class="n">cut</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                 <span class="n">bgcolor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fluct</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">avg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+                 <span class="n">std</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">normRad</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="s1">&#39;Float32&#39;</span><span class="p">,</span>
+                 <span class="n">deminc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ifield</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param nvar: the number of timesteps of the movie file we want to plot</span>
 <span class="sd">                     starting from the last line</span>
@@ -221,8 +221,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">avg</span> <span class="ow">or</span> <span class="n">std</span><span class="p">:</span>
-            <span class="n">iplot</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="k">if</span> <span class="nb">file</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">iplot</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">file</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">dat</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*[Mm]ov.*&#39;</span><span class="p">)</span>
             <span class="n">str1</span> <span class="o">=</span> <span class="s1">&#39;Which movie do you want ?</span><span class="se">\n</span><span class="s1">&#39;</span>
             <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">movie</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dat</span><span class="p">):</span>
@@ -231,12 +231,12 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">filename</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="n">index</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
-                <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Non valid index: </span><span class="si">%s</span><span class="s1"> has been chosen instead&#39;</span> <span class="o">%</span> <span class="n">dat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Non valid index: </span><span class="si">%s</span><span class="s1"> has been chosen instead&#39;</span> <span class="o">%</span> <span class="n">dat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
                 <span class="n">filename</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">filename</span> <span class="o">=</span> <span class="nb">file</span>
-        <span class="n">mot</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;.*[Mm]ov\.(.*)&#39;</span><span class="p">)</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">file</span>
+        <span class="n">mot</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;.*[Mm]ov\.(.*)&#39;</span><span class="p">)</span>
         <span class="n">end</span> <span class="o">=</span> <span class="n">mot</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
         <span class="c1"># Read the movie file </span>
@@ -247,10 +247,10 @@
         <span class="n">movtype</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_fields</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_fields</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_fields</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;!!! Warning: several fields in the movie file !!!&#39;</span><span class="p">)</span>
-            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;!!! </span><span class="si">%i</span><span class="s1"> fields !!!&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_fields</span><span class="p">)</span>
-            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;!!! The one displayed is controlled by the    !!!&#39;</span><span class="p">)</span>
-            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;!!! input parameter ifield (=0 by default)    !!!&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;!!! Warning: several fields in the movie file !!!&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;!!! </span><span class="si">%i</span><span class="s1"> fields !!!&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_fields</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;!!! The one displayed is controlled by the    !!!&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;!!! input parameter ifield (=0 by default)    !!!&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">movtype</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">movtype</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">n_surface</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_surface</span><span class="p">)</span>
 
@@ -268,13 +268,18 @@
         <span class="c1"># Grid</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">]</span> <span class="c1"># remove inner core</span>
+        <span class="c1"># Overwrite radius to ensure double-precision of the grid (useful for Cheb der)</span>
+        <span class="n">rout</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">)</span>
+        <span class="n">rin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">*=</span> <span class="n">rout</span>
+        <span class="c1">#self.radius = chebgrid(self.n_r_max-1, rout, rin)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">phi</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
 
         <span class="c1"># Determine the number of lines by reading the log.TAG file</span>
         <span class="n">logfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;log.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">end</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
-        <span class="n">mot</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;  ! WRITING MOVIE FRAME NO\s*(\d*).*&#39;</span><span class="p">)</span>
-        <span class="n">mot2</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39; ! WRITING TO MOVIE FRAME NO\s*(\d*).*&#39;</span><span class="p">)</span>
+        <span class="n">mot</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;  ! WRITING MOVIE FRAME NO\s*(\d*).*&#39;</span><span class="p">)</span>
+        <span class="n">mot2</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39; ! WRITING TO MOVIE FRAME NO\s*(\d*).*&#39;</span><span class="p">)</span>
         <span class="n">nlines</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">logfile</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">mot</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
@@ -289,7 +294,7 @@
             <span class="n">nlines</span> <span class="o">-=</span> <span class="mi">8</span> <span class="c1"># Remove 8 lines of header</span>
             <span class="n">nlines</span>  <span class="o">/=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_fields</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> 
         
-        <span class="k">if</span> <span class="n">lastvar</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">lastvar</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">var2</span> <span class="o">=</span> <span class="n">nlines</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">var2</span> <span class="o">=</span> <span class="n">lastvar</span>
@@ -398,13 +403,19 @@
 <span class="sd">                  to allow any summation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">new</span><span class="p">)</span>
-        <span class="n">out</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">new</span><span class="o">.</span><span class="n">time</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-        <span class="n">out</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">new</span><span class="o">.</span><span class="n">data</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">out</span><span class="o">.</span><span class="n">nvar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nvar</span><span class="o">+</span><span class="n">new</span><span class="o">.</span><span class="n">nvar</span>
-        <span class="n">out</span><span class="o">.</span><span class="n">var2</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">nvar</span>
+        <span class="k">if</span> <span class="n">new</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">new</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="mi">1</span><span class="p">:]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">new</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:,</span> <span class="o">...</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">nvar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nvar</span><span class="o">+</span><span class="n">new</span><span class="o">.</span><span class="n">nvar</span><span class="o">-</span><span class="mi">1</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">var2</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">nvar</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">new</span><span class="o">.</span><span class="n">time</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">new</span><span class="o">.</span><span class="n">data</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">nvar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nvar</span><span class="o">+</span><span class="n">new</span><span class="o">.</span><span class="n">nvar</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">var2</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">nvar</span>
         <span class="k">return</span> <span class="n">out</span></div>
 
-<div class="viewcode-block" id="Movie.avgStd"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.Movie.avgStd">[docs]</a>    <span class="k">def</span> <span class="nf">avgStd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ifield</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">cut</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="Movie.avgStd"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.Movie.avgStd">[docs]</a>    <span class="k">def</span> <span class="nf">avgStd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ifield</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">cut</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot time-average or standard deviation</span>
 
@@ -469,14 +480,14 @@
             <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 
         <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">top</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
-        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">avg</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxout</span><span class="p">,</span> <span class="n">yyout</span><span class="p">,</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxin</span><span class="p">,</span> <span class="n">yyin</span><span class="p">,</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Movie.plot"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.Movie.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ifield</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cut</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">,</span> <span class="n">png</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
-             <span class="n">normed</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">bgcolor</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">deminc</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Movie.plot"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.Movie.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ifield</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cut</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">,</span> <span class="n">png</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+             <span class="n">normed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">bgcolor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">deminc</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plotting function (it can also write the png files)</span>
 
@@ -571,7 +582,7 @@
             <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 
         <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">top</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
-        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nvar</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -597,7 +608,7 @@
                 <span class="n">man</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">k</span> <span class="o">%</span> <span class="n">step</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">png</span><span class="p">:</span>
-                    <span class="k">print</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">var2</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">nvar</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">var2</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">nvar</span><span class="p">)</span>
                 <span class="n">plt</span><span class="o">.</span><span class="n">cla</span><span class="p">()</span>
                 <span class="k">if</span> <span class="n">normed</span><span class="p">:</span>
                     <span class="n">vmin</span> <span class="o">=</span> <span class="o">-</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">ifield</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span>
@@ -620,15 +631,15 @@
                 <span class="n">man</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">png</span><span class="p">:</span>
                 <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;movie/img</span><span class="si">%05d</span><span class="s1">.png&#39;</span> <span class="o">%</span> <span class="n">k</span>
-                <span class="k">print</span><span class="p">(</span><span class="s1">&#39;write </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;write </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
                 <span class="c1">#st = &#39;echo %i&#39; % ivar + &#39; &gt; movie/imgmax&#39;</span>
-                <span class="k">if</span> <span class="n">bgcolor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">bgcolor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="n">bgcolor</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Movie.timeLongitude"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.Movie.timeLongitude">[docs]</a>    <span class="k">def</span> <span class="nf">timeLongitude</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ifield</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">removeMean</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">lat0</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> 
-                      <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">,</span> <span class="n">deminc</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Movie.timeLongitude"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.Movie.timeLongitude">[docs]</a>    <span class="k">def</span> <span class="nf">timeLongitude</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ifield</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">removeMean</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lat0</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> 
+                      <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">,</span> <span class="n">deminc</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot the time-longitude diagram (input latitude can be chosen)</span>
 
@@ -701,13 +712,13 @@
         <span class="n">ax1</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">ms</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">w2</span><span class="p">),</span> <span class="mi">65</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;jet&#39;</span><span class="p">))</span>
         <span class="n">ax1</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
         <span class="c1">#ax1.set_xlim(0,13)</span>
-        <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">r&#39;Azimuthal wavenumber&#39;</span><span class="p">)</span>
-        <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">r&#39;Frequency&#39;</span><span class="p">)</span></div></div>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Azimuthal wavenumber&#39;</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span></div></div>
 
 
 
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">Movie</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -720,14 +731,11 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -746,13 +754,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.6 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.6 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+        &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
   </body>
 </html>
