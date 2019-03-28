@@ -1,36 +1,35 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>Support for the log.TAG files &#8212; Magic 5.6 documentation</title>
-    
     <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '5.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="Magic 5.6 documentation" href="../contents.html" />
-    <link rel="up" title="Data visualisation and post-processing" href="../postProc.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Support for time-averaged radial profiles" href="radial.html" />
     <link rel="prev" title="Data visualisation and post-processing" href="../postProc.html" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
           rel='stylesheet' type='text/css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
     <script src="galleria/galleria-1.4.2.min.js"></script>
  
     <style type="text/css">
@@ -68,7 +67,7 @@
     </script>
 
   </head>
-  <body role="document">
+  <body>
 <div class="pageheader">
   <ul>
     <li><a href="../index.html">Home</a></li>
@@ -133,9 +132,9 @@ namelist/log file.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>datadir</strong> (<em>str</em>) &#8211; the working directory</li>
-<li><strong>nml</strong> (<em>str</em>) &#8211; name of the input namelist/ log file</li>
-<li><strong>quiet</strong> (<em>bool</em>) &#8211; when set to True, makes the output silent (default False)</li>
+<li><strong>datadir</strong> (<em>str</em>) – the working directory</li>
+<li><strong>nml</strong> (<em>str</em>) – name of the input namelist/ log file</li>
+<li><strong>quiet</strong> (<em>bool</em>) – when set to True, makes the output silent (default False)</li>
 </ul>
 </td>
 </tr>
@@ -151,7 +150,7 @@ namelist/log file.</p>
 <dl class="class">
 <dt id="magic.MagicTs">
 <em class="property">class </em><code class="descclassname">magic.</code><code class="descname">MagicTs</code><span class="sig-paren">(</span><em>datadir='.'</em>, <em>field='e_kin'</em>, <em>iplot=True</em>, <em>all=False</em>, <em>tag=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/series.html#MagicTs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicTs" title="Permalink to this definition">¶</a></dt>
-<dd><p>This python class is used to read and plot the different time series 
+<dd><p>This python class is used to read and plot the different time series
 written by the code:</p>
 <blockquote>
 <div><ul class="simple">
@@ -180,7 +179,7 @@ written by the code:</p>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># stack **all** the power.TAG file found in the directory</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ts</span> <span class="o">=</span> <span class="n">MagicTs</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;power&#39;</span><span class="p">,</span> <span class="nb">all</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">ts</span><span class="o">.</span><span class="n">buoPower</span><span class="p">)</span> <span class="c1"># print time and buoyancy power </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">ts</span><span class="o">.</span><span class="n">buoPower</span><span class="p">)</span> <span class="c1"># print time and buoyancy power</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># If you only want to read the file ``heat.N0m2z``</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ts</span> <span class="o">=</span> <span class="n">MagicTs</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;heat&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;N0m2z&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -194,13 +193,13 @@ written by the code:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>datadir</strong> (<em>str</em>) &#8211; working directory</li>
-<li><strong>field</strong> (<em>str</em>) &#8211; the file you want to plot</li>
-<li><strong>iplot</strong> (<em>bool</em>) &#8211; when set to True, display the plots (default True)</li>
-<li><strong>all</strong> (<em>bool</em>) &#8211; when set to True, the complete time series is reconstructed by
+<li><strong>datadir</strong> (<em>str</em>) – working directory</li>
+<li><strong>field</strong> (<em>str</em>) – the file you want to plot</li>
+<li><strong>iplot</strong> (<em>bool</em>) – when set to True, display the plots (default True)</li>
+<li><strong>all</strong> (<em>bool</em>) – when set to True, the complete time series is reconstructed by
 stacking all the corresponding files from the working directory
 (default False)</li>
-<li><strong>tag</strong> (<em>str</em>) &#8211; read the time series that exactly corresponds to the specified tag</li>
+<li><strong>tag</strong> (<em>str</em>) – read the time series that exactly corresponds to the specified tag</li>
 </ul>
 </td>
 </tr>
@@ -211,7 +210,7 @@ stacking all the corresponding files from the working directory
 <dl class="method">
 <dt id="magic.MagicTs.plot">
 <code class="descname">plot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/series.html#MagicTs.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicTs.plot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plotting subroutines. Only called if &#8216;iplot=True&#8217;</p>
+<dd><p>Plotting subroutines. Only called if ‘iplot=True’</p>
 </dd></dl>
 
 </dd></dl>
@@ -224,7 +223,7 @@ stacking all the corresponding files from the working directory
 <em class="property">class </em><code class="descclassname">magic.</code><code class="descname">AvgField</code><span class="sig-paren">(</span><em>tstart=None</em>, <em>tag=None</em>, <em>dipExtra=False</em>, <em>perpPar=False</em>, <em>std=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/series.html#AvgField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.AvgField" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class calculates the time-average properties from time series. It will
 store the input starting time in a small file named <code class="docutils literal"><span class="pre">tInitAvg</span></code>, such that
-the next time you use it you don&#8217;t need to give <code class="docutils literal"><span class="pre">tstart</span></code> again.</p>
+the next time you use it you don’t need to give <code class="docutils literal"><span class="pre">tstart</span></code> again.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Average from t=2.11 and also store the additional dipole.TAG informations</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">AvgField</span><span class="p">(</span><span class="n">tstart</span><span class="o">=</span><span class="mf">2.11</span><span class="p">,</span> <span class="n">dipExtra</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Average only the files that match the pattern N0m2[a-c]</span>
@@ -242,14 +241,14 @@ the next time you use it you don&#8217;t need to give <code class="docutils lite
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>tstart</strong> (<em>float</em>) &#8211; the starting time for averaging</li>
-<li><strong>tag</strong> (<em>str</em>) &#8211; if you specify an input tag (generic regExp pattern), 
-the averaging process will only happen on the time series 
+<li><strong>tstart</strong> (<em>float</em>) – the starting time for averaging</li>
+<li><strong>tag</strong> (<em>str</em>) – if you specify an input tag (generic regExp pattern),
+the averaging process will only happen on the time series
 that match this input pattern</li>
-<li><strong>dipExtra</strong> (<em>bool</em>) &#8211; if this parameter is set to <code class="docutils literal"><span class="pre">True</span></code>, then additional 
-values extracted from <a class="reference internal" href="../outputFiles/outTimeSeriesStd.html#secdipolefile"><span class="std std-ref">dipole.TAG</span></a> 
+<li><strong>dipExtra</strong> (<em>bool</em>) – if this parameter is set to <code class="docutils literal"><span class="pre">True</span></code>, then additional
+values extracted from <a class="reference internal" href="../outputFiles/outTimeSeriesStd.html#secdipolefile"><span class="std std-ref">dipole.TAG</span></a>
 are also computed</li>
-<li><strong>perpPar</strong> (<em>bool</em>) &#8211; additional values extracted from <a class="reference internal" href="../outputFiles/outTimeSeriesSupp.html#secperpparfile"><span class="std std-ref">perpPar.TAG</span></a>
+<li><strong>perpPar</strong> (<em>bool</em>) – additional values extracted from <a class="reference internal" href="../outputFiles/outTimeSeriesSupp.html#secperpparfile"><span class="std std-ref">perpPar.TAG</span></a>
 are also computed</li>
 </ul>
 </td>
@@ -290,7 +289,7 @@ are also computed</li>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/apiPython/timeSeries.txt"
+      <li><a href="../_sources/apiPython/timeSeries.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -332,7 +331,7 @@ are also computed</li>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
     </div>
   </body>
 </html>

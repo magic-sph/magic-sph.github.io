@@ -1,34 +1,33 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>magic.radial &#8212; Magic 5.6 documentation</title>
-    
     <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '5.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="Magic 5.6 documentation" href="../../contents.html" />
-    <link rel="up" title="Module code" href="../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
           rel='stylesheet' type='text/css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
     <script src="galleria/galleria-1.4.2.min.js"></script>
  
     <style type="text/css">
@@ -66,7 +65,7 @@
     </script>
 
   </head>
-  <body role="document">
+  <body>
 <div class="pageheader">
   <ul>
     <li><a href="../../index.html">Home</a></li>
@@ -115,10 +114,10 @@
 
 <div class="viewcode-block" id="MagicRadial"><a class="viewcode-back" href="../../apiPython/radial.html#magic.MagicRadial">[docs]</a><span class="k">class</span> <span class="nc">MagicRadial</span><span class="p">(</span><span class="n">MagicSetup</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This class can be used to read and display the time and </span>
+<span class="sd">    This class can be used to read and display the time and</span>
 <span class="sd">    horizontally averaged files:</span>
 
-<span class="sd">        * Kinetic energy: :ref:`eKinR.TAG &lt;secEkinRFile&gt;` </span>
+<span class="sd">        * Kinetic energy: :ref:`eKinR.TAG &lt;secEkinRFile&gt;`</span>
 <span class="sd">        * Magnetic energy: :ref:`eMagR.TAG &lt;secEmagRfile&gt;`</span>
 <span class="sd">        * Anelastic reference state: :ref:`anel.TAG &lt;secAnelFile&gt;`</span>
 <span class="sd">        * Variable electrical conductivity: :ref:`varCond.TAG &lt;secVarCondFile&gt;`</span>
@@ -135,7 +134,7 @@
 <span class="sd">    &gt;&gt;&gt; print(rad.radius, rad.ekin_pol_axi) # print radius and poloidal energy</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MagicRadial.__init__"><a class="viewcode-back" href="../../apiPython/radial.html#magic.MagicRadial.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;eKin&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="MagicRadial.__init__"><a class="viewcode-back" href="../../apiPython/radial.html#magic.MagicRadial.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;eKin&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">normalize_radius</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param datadir: working directory</span>
 <span class="sd">        :type datadir: str</span>
@@ -179,12 +178,14 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No corresponding radial profiles... Try again&#39;</span><span class="p">)</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalize_radius</span> <span class="o">=</span> <span class="n">normalize_radius</span>
+
         <span class="k">if</span> <span class="n">tags</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">file</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
                 <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;log.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">tag</span><span class="p">):</span>
-                    <span class="n">MagicSetup</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="n">datadir</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+                    <span class="n">MagicSetup</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="n">datadir</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                         <span class="n">nml</span><span class="o">=</span><span class="s1">&#39;log.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">tag</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">pattern</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.*&#39;</span><span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
@@ -195,7 +196,7 @@
                 <span class="n">ending</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">groups</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;log.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">ending</span><span class="p">):</span>
                     <span class="k">try</span><span class="p">:</span>
-                        <span class="n">MagicSetup</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="n">datadir</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+                        <span class="n">MagicSetup</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="n">datadir</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                         <span class="n">nml</span><span class="o">=</span><span class="s1">&#39;log.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">ending</span><span class="p">)</span>
                     <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                         <span class="k">pass</span>
@@ -227,6 +228,13 @@
                             <span class="bp">self</span><span class="o">.</span><span class="n">gradT2</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">nml</span><span class="o">.</span><span class="n">stop_time</span><span class="o">-</span><span class="n">nml</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span>
                             <span class="n">gradT2init</span> <span class="o">=</span> <span class="n">nml</span><span class="o">.</span><span class="n">start_time</span>
                             <span class="n">gradT2finish</span> <span class="o">=</span> <span class="n">nml</span><span class="o">.</span><span class="n">stop_time</span>
+
+                    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;powerR&#39;</span><span class="p">:</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">fast_read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">skiplines</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">nml</span><span class="o">.</span><span class="n">stop_time</span><span class="o">-</span><span class="n">nml</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">8</span> <span class="ow">or</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span> <span class="c1"># in that case insert an extra column</span>
+                            <span class="n">zero</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Float64&#39;</span><span class="p">)</span>
+                            <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">zero</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">data</span> <span class="o">=</span> <span class="n">fast_read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">skiplines</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">nml</span><span class="o">.</span><span class="n">stop_time</span><span class="o">-</span><span class="n">nml</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -244,6 +252,13 @@
                                     <span class="bp">self</span><span class="o">.</span><span class="n">gradT2</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">nml</span><span class="o">.</span><span class="n">stop_time</span><span class="o">-</span><span class="n">nml</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span>
                                     <span class="n">gradT2init</span> <span class="o">=</span> <span class="n">nml</span><span class="o">.</span><span class="n">start_time</span>
                                     <span class="n">gradT2finish</span> <span class="o">=</span> <span class="n">nml</span><span class="o">.</span><span class="n">stop_time</span>
+                    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;powerR&#39;</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+                            <span class="n">dat</span> <span class="o">=</span> <span class="n">fast_read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">skiplines</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">dat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">8</span> <span class="ow">or</span> <span class="n">da</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span> <span class="c1"># in that case insert an extra column</span>
+                                <span class="n">zero</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Float64&#39;</span><span class="p">)</span>
+                                <span class="n">dat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">zero</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                            <span class="n">data</span> <span class="o">+=</span> <span class="n">dat</span><span class="o">*</span><span class="p">(</span><span class="n">nml</span><span class="o">.</span><span class="n">stop_time</span><span class="o">-</span><span class="n">nml</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span>
                     <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;eKinR&#39;</span><span class="p">:</span>
                         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
                             <span class="n">dat</span> <span class="o">=</span> <span class="n">fast_read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">skiplines</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -302,6 +317,23 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">dsdr</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">]</span>
             <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">dsdr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">divkgradT</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">7</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">divkgradT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">alpha0</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">8</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">alpha0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ogrun</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">9</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ogrun</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dLtemp0</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">10</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dLtemp0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
+
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;varDiff&#39;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">conduc</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
@@ -323,11 +355,11 @@
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;powerR&#39;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">buoPower</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">9</span> <span class="ow">or</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">buoPower_chem</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">viscDiss</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ohmDiss</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span>
-            <span class="k">elif</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">8</span> <span class="ow">or</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">viscDiss</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ohmDiss</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;parrad&#39;</span><span class="p">:</span>
@@ -391,6 +423,11 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Display the result when ``iplot=True``</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize_radius</span><span class="p">:</span>
+            <span class="n">x_axis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x_axis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;eKinR&#39;</span><span class="p">:</span>
             <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
             <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
@@ -440,28 +477,28 @@
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;anel&#39;</span><span class="p">:</span>
             <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
             <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">temp0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Temperature&#39;</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">temp0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Temperature&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Density&#39;</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reference state&#39;</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Radius&#39;</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x_axis</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x_axis</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
             <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
             <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;beta&#39;</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dbeta</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;dbeta/dr&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;beta&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dbeta</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;dbeta/dr&#39;</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Radius&#39;</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Derivatives of rho&#39;</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x_axis</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x_axis</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
             <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
             <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grav</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grav</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Radius&#39;</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Gravity&#39;</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Gravity&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x_axis</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x_axis</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;varDiff&#39;</span><span class="p">:</span>
             <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
             <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
@@ -472,7 +509,7 @@
             <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Radius&#39;</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-            
+
             <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
             <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dLkappa</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;dLkappa&#39;</span><span class="p">)</span>
@@ -491,10 +528,10 @@
             <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Radius&#39;</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-            
+
             <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
             <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
-            <span class="n">axplot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dLvisc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;dLvisc&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dLvisc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;dLvisc&#39;</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Radius&#39;</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$d\ln\nu / dr$&#39;</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
@@ -522,7 +559,7 @@
             <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">entropy</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;entropy&#39;</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">varS</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">varS</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> 
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">varS</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">varS</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
                     <span class="n">label</span><span class="o">=</span><span class="s1">&#39;entropy variance&#39;</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Radius&#39;</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
@@ -538,18 +575,18 @@
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;parR&#39;</span><span class="p">:</span>
             <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
             <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rm</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rm</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x_axis</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x_axis</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Radius&#39;</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Rm&#39;</span><span class="p">)</span>
 
             <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
             <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rol</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Rol&#39;</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">urol</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;u Rol&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rol</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Rol&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">urol</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;u Rol&#39;</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Radius&#39;</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Rol&#39;</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x_axis</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x_axis</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;fluxesR&#39;</span><span class="p">:</span>
             <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
@@ -639,7 +676,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
     </div>
   </body>
 </html>

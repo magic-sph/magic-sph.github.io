@@ -1,34 +1,33 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>magic.butterfly &#8212; Magic 5.6 documentation</title>
-    
     <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '5.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="Magic 5.6 documentation" href="../../contents.html" />
-    <link rel="up" title="Module code" href="../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
           rel='stylesheet' type='text/css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
     <script src="galleria/galleria-1.4.2.min.js"></script>
  
     <style type="text/css">
@@ -66,7 +65,7 @@
     </script>
 
   </head>
-  <body role="document">
+  <body>
 <div class="pageheader">
   <ul>
     <li><a href="../../index.html">Home</a></li>
@@ -127,7 +126,7 @@
 <span class="sd">    radial cuts (like Br_CMB_mov.TAG) or azimuthal-average (like AB_mov.TAG).</span>
 
 <span class="sd">    &gt;&gt;&gt; # Read Br_CMB_mov.ccondAnelN3MagRa2e7Pm2ggg</span>
-<span class="sd">    &gt;&gt;&gt; t1 = Butterfly(file=&#39;Br_CMB_mov.ccondAnelN3MagRa2e7Pm2ggg&#39;, step=1, </span>
+<span class="sd">    &gt;&gt;&gt; t1 = Butterfly(file=&#39;Br_CMB_mov.ccondAnelN3MagRa2e7Pm2ggg&#39;, step=1,</span>
 <span class="sd">                       iplot=False)</span>
 <span class="sd">    &gt;&gt;&gt; # Plot it</span>
 <span class="sd">    &gt;&gt;&gt; t1.plot(levels=33, cm=&#39;seismic&#39;, cut=0.6)</span>
@@ -149,7 +148,7 @@
 <span class="sd">        :type nvar: int</span>
 <span class="sd">        :param lastvar: the number of the last time step to be read</span>
 <span class="sd">        :type lastvar: int</span>
-<span class="sd">        :param step: the stepping between two lines             </span>
+<span class="sd">        :param step: the stepping between two lines</span>
 <span class="sd">        :type step: int</span>
 <span class="sd">        :param levels: the number of contour levels</span>
 <span class="sd">        :type levels: int</span>
@@ -198,7 +197,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">nvar</span> <span class="o">=</span> <span class="n">nvar</span>
 
-        <span class="c1"># READ the movie file </span>
+        <span class="c1"># READ the movie file</span>
         <span class="n">infile</span> <span class="o">=</span> <span class="n">npfile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
         <span class="c1"># HEADER</span>
         <span class="n">version</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="s1">&#39;|S64&#39;</span><span class="p">)</span>
@@ -305,7 +304,7 @@
 <span class="sd">        :param contour: when set to True, display contour levels (pylab.contourf),</span>
 <span class="sd">                        when set to False, display an image (pylab.imshow)</span>
 <span class="sd">        :type contour: bool</span>
-<span class="sd">        :param renorm: when set to True, it re-bins the time series in case of </span>
+<span class="sd">        :param renorm: when set to True, it re-bins the time series in case of</span>
 <span class="sd">                       irregularly time-spaced data</span>
 <span class="sd">        :type renorm: bool</span>
 <span class="sd">        :param mesh: when renorm=True, factor of regriding: NewTime = mesh*OldTime</span>
@@ -317,7 +316,7 @@
         <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
         <span class="n">vmax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">min</span><span class="p">()))</span>
         <span class="k">if</span> <span class="n">contour</span><span class="p">:</span>
-            <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="o">*</span><span class="mi">180</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">,:],</span> 
+            <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="o">*</span><span class="mi">180</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">,:],</span>
                             <span class="n">levels</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cm</span><span class="p">,</span> <span class="n">aa</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">extent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">90</span>
@@ -328,12 +327,12 @@
                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
                     <span class="n">tckp</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
                     <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">tckp</span><span class="p">)</span>
-                <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;upper&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> 
+                <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;upper&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span>
                            <span class="n">cmap</span><span class="o">=</span><span class="n">cm</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="n">extent</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;bicubic&#39;</span><span class="p">)</span>
                 <span class="c1">#im = ax.contourf(zi[:-1, :],  cmap=cm)</span>
                 <span class="c1">#vmax = max(abs(zi.max()), abs(zi.min()))</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;upper&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> 
+                <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;upper&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span>
                            <span class="n">cmap</span><span class="o">=</span><span class="n">cm</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="n">extent</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;bicubic&#39;</span><span class="p">)</span>
         <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="o">-</span><span class="n">cut</span><span class="o">*</span><span class="n">vmax</span><span class="p">,</span> <span class="n">cut</span><span class="o">*</span><span class="n">vmax</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
@@ -347,7 +346,7 @@
             <span class="c1">#ax.text(0.05, 0.9, &#39;a)&#39;, transform =ax.transAxes)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span><span class="o">-</span><span class="mi">45</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">90</span><span class="p">])</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="s1">&#39;$-90^\circ$&#39;</span><span class="p">,</span> <span class="s1">&#39;$-45^\circ$&#39;</span><span class="p">,</span> <span class="s1">&#39;$0^\circ$&#39;</span><span class="p">,</span> 
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="s1">&#39;$-90^\circ$&#39;</span><span class="p">,</span> <span class="s1">&#39;$-45^\circ$&#39;</span><span class="p">,</span> <span class="s1">&#39;$0^\circ$&#39;</span><span class="p">,</span>
                                 <span class="s1">&#39;$45^\circ$&#39;</span><span class="p">,</span> <span class="s1">&#39;$90^\circ$&#39;</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="s1">&#39;-90&#39;</span><span class="p">,</span> <span class="s1">&#39;-45&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;45&#39;</span><span class="p">,</span> <span class="s1">&#39;90&#39;</span><span class="p">])</span></div>
@@ -364,7 +363,7 @@
 <span class="sd">        &gt;&gt;&gt; # Fourier analysis</span>
 <span class="sd">        &gt;&gt;&gt; b1.fourier2D()</span>
 
-<span class="sd">        :param renorm: when set to True, it rebins the time series in case of </span>
+<span class="sd">        :param renorm: when set to True, it rebins the time series in case of</span>
 <span class="sd">                       irregularly spaced data</span>
 <span class="sd">        :type renorm: bool</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -406,11 +405,10 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">t1</span> <span class="o">=</span> <span class="n">Butterfly</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s1">&#39;Br_CMB_mov.ccondAnelN3MagRa2e7Pm2ggg&#39;</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">Butterfly</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s1">&#39;Br_CMB_mov.ccondAnelN3MagRa2e7Pm2ggg&#39;</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                    <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">t1</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
 </pre></div>
 
           </div>
@@ -450,7 +448,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
     </div>
   </body>
 </html>

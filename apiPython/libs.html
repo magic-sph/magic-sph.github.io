@@ -1,36 +1,35 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>Spectral tansforms &#8212; Magic 5.6 documentation</title>
-    
     <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '5.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="Magic 5.6 documentation" href="../contents.html" />
-    <link rel="up" title="Data visualisation and post-processing" href="../postProc.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Description of the Fortran modules" href="../api.html" />
     <link rel="prev" title="Additional possible analyses" href="misc.html" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
           rel='stylesheet' type='text/css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
     <script src="galleria/galleria-1.4.2.min.js"></script>
  
     <style type="text/css">
@@ -68,7 +67,7 @@
     </script>
 
   </head>
-  <body role="document">
+  <body>
 <div class="pageheader">
   <ul>
     <li><a href="../index.html">Home</a></li>
@@ -127,9 +126,9 @@ to initialize the transform</p>
 </div>
 <dl class="method">
 <dt id="magic.spectralTransforms.SpectralTransforms.spat_spec">
-<code class="descname">spat_spec</code><span class="sig-paren">(</span><em>input</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/spectralTransforms.html#SpectralTransforms.spat_spec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.spectralTransforms.SpectralTransforms.spat_spec" title="Permalink to this definition">¶</a></dt>
+<code class="descname">spat_spec</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/spectralTransforms.html#SpectralTransforms.spat_spec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.spectralTransforms.SpectralTransforms.spat_spec" title="Permalink to this definition">¶</a></dt>
 <dd><p>This subroutine computes a transfrom from spatial representation
-(n_phi,n_theta) to spectral representation (lm_max). It returns 
+(n_phi,n_theta) to spectral representation (lm_max). It returns
 one complex 1-D array (dimension(n_phi_max))</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gr</span> <span class="o">=</span> <span class="n">MagicGraph</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sh</span> <span class="o">=</span> <span class="n">SpectralTransforms</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">l_max</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">)</span>
@@ -138,13 +137,15 @@ one complex 1-D array (dimension(n_phi_max))</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Caculation of the poloidal potential from vr:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">wlm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">vrlm</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">wlm</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">vrlm</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">/</span><span class="p">(</span><span class="n">sh</span><span class="o">.</span><span class="n">ell</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">*</span><span class="p">(</span><span class="n">sh</span><span class="o">.</span><span class="n">ell</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="mi">30</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Spheroidal/Toroidal transform</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vtlm</span><span class="p">,</span> <span class="n">vplm</span> <span class="o">=</span> <span class="n">spec_spat</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vtheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="p">)</span>
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>input</strong> (<em>numpy.ndarray</em>) &#8211; input array in the physical space (n_phi,n_theta)</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>input</strong> (<em>numpy.ndarray</em>) – input array in the physical space (n_phi,n_theta)</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">output array in the spectral space (lm_max)</td>
 </tr>
@@ -158,8 +159,8 @@ one complex 1-D array (dimension(n_phi_max))</p>
 <dt id="magic.spectralTransforms.SpectralTransforms.spec_spat">
 <code class="descname">spec_spat</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/spectralTransforms.html#SpectralTransforms.spec_spat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.spectralTransforms.SpectralTransforms.spec_spat" title="Permalink to this definition">¶</a></dt>
 <dd><p>This subroutine computes a transfrom from spectral to spatial
-for all latitudes. It returns either  one or two 2-D arrays 
-(dimension(n_phi_max,n_theta_max)) depending if only the poloidal 
+for all latitudes. It returns either  one or two 2-D arrays
+(dimension(n_phi_max,n_theta_max)) depending if only the poloidal
 or both the poloidal and the toroidal potentials are given as
 input quantities.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">wlmr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1"># lm_max</span>
@@ -184,7 +185,7 @@ to spatrial spaces. It returns a 2-D array of dimension (n_phi,n_theta)</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>polo</strong> (<em>numpy.ndarray</em>) &#8211; the input array(lm_max) in spectral space</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>polo</strong> (<em>numpy.ndarray</em>) – the input array(lm_max) in spectral space</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the phi derivative in the physical space (n_phi, n_theta)</td>
 </tr>
@@ -209,8 +210,8 @@ to spatrial spaces. It returns a 2-D array of dimension (n_phi,n_theta)</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>polo</strong> (<em>numpy.ndarray</em>) &#8211; the input array(lm_max) in spectral space</li>
-<li><strong>l_axi</strong> (<em>bool</em>) &#8211; switch to True, if only the axisymmetric field is needed</li>
+<li><strong>polo</strong> (<em>numpy.ndarray</em>) – the input array(lm_max) in spectral space</li>
+<li><strong>l_axi</strong> (<em>bool</em>) – switch to True, if only the axisymmetric field is needed</li>
 </ul>
 </td>
 </tr>
@@ -228,7 +229,7 @@ to spatrial spaces. It returns a 2-D array of dimension (n_phi,n_theta)</p>
 <dt id="magic.spectralTransforms.SpectralTransforms.spec_spat_equat">
 <code class="descname">spec_spat_equat</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/spectralTransforms.html#SpectralTransforms.spec_spat_equat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.spectralTransforms.SpectralTransforms.spec_spat_equat" title="Permalink to this definition">¶</a></dt>
 <dd><p>This subroutine computes a transfrom from spectral to spatial
-at the equator. It returns either one or two 1-D arrays 
+at the equator. It returns either one or two 1-D arrays
 (dimension(n_phi_max)) depending if only the poloidal or both the
 poloidal and the toroidal potentials are given as input quantities.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">wlmr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1"># lm_max</span>
@@ -247,7 +248,7 @@ poloidal and the toroidal potentials are given as input quantities.</p>
 <dl class="function">
 <dt id="magic.plotlib.cut">
 <code class="descclassname">magic.plotlib.</code><code class="descname">cut</code><span class="sig-paren">(</span><em>dat</em>, <em>vmax=None</em>, <em>vmin=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/plotlib.html#cut"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.plotlib.cut" title="Permalink to this definition">¶</a></dt>
-<dd><p>This functions truncates the values of an input array that are beyond 
+<dd><p>This functions truncates the values of an input array that are beyond
 vmax or below vmin and replace them by vmax and vmin, respectively.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Keep only values between -1e3 and 1e3</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">datNew</span> <span class="o">=</span> <span class="n">cut</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">1e3</span><span class="p">)</span>
@@ -258,9 +259,9 @@ vmax or below vmin and replace them by vmax and vmin, respectively.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>dat</strong> (<em>numpy.ndarray</em>) &#8211; an input array</li>
-<li><strong>vmax</strong> (<em>float</em>) &#8211; maximum upper bound</li>
-<li><strong>vmin</strong> (<em>float</em>) &#8211; minimum lower bound</li>
+<li><strong>dat</strong> (<em>numpy.ndarray</em>) – an input array</li>
+<li><strong>vmax</strong> (<em>float</em>) – maximum upper bound</li>
+<li><strong>vmin</strong> (<em>float</em>) – minimum lower bound</li>
 </ul>
 </td>
 </tr>
@@ -284,22 +285,22 @@ and the values &lt;=vmin have been replaced by vmin</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; the input data (an array of size (nphi,nr))</li>
-<li><strong>radius</strong> (<em>numpy.ndarray</em>) &#8211; the input radius</li>
-<li><strong>minc</strong> (<em>int</em>) &#8211; azimuthal symmetry</li>
-<li><strong>label</strong> (<em>str</em>) &#8211; the name of the input physical quantity you want to
+<li><strong>data</strong> (<em>numpy.ndarray</em>) – the input data (an array of size (nphi,nr))</li>
+<li><strong>radius</strong> (<em>numpy.ndarray</em>) – the input radius</li>
+<li><strong>minc</strong> (<em>int</em>) – azimuthal symmetry</li>
+<li><strong>label</strong> (<em>str</em>) – the name of the input physical quantity you want to
 display</li>
-<li><strong>normRad</strong> (<em>bool</em>) &#8211; when set to True, the contour levels are normalised
+<li><strong>normRad</strong> (<em>bool</em>) – when set to True, the contour levels are normalised
 radius by radius (default is False)</li>
-<li><strong>levels</strong> (<em>int</em>) &#8211; the number of levels in the contour</li>
-<li><strong>cm</strong> (<em>str</em>) &#8211; name of the colormap (&#8216;jet&#8217;, &#8216;seismic&#8217;, &#8216;RdYlBu_r&#8217;, etc.)</li>
-<li><strong>tit</strong> (<em>bool</em>) &#8211; display the title of the figure when set to True</li>
-<li><strong>cbar</strong> (<em>bool</em>) &#8211; display the colorbar when set to True</li>
-<li><strong>vmax</strong> (<em>float</em>) &#8211; maximum value of the contour levels</li>
-<li><strong>vmin</strong> (<em>float</em>) &#8211; minimum value of the contour levels</li>
-<li><strong>normed</strong> (<em>bool</em>) &#8211; when set to True, the colormap is centered around zero.
+<li><strong>levels</strong> (<em>int</em>) – the number of levels in the contour</li>
+<li><strong>cm</strong> (<em>str</em>) – name of the colormap (‘jet’, ‘seismic’, ‘RdYlBu_r’, etc.)</li>
+<li><strong>tit</strong> (<em>bool</em>) – display the title of the figure when set to True</li>
+<li><strong>cbar</strong> (<em>bool</em>) – display the colorbar when set to True</li>
+<li><strong>vmax</strong> (<em>float</em>) – maximum value of the contour levels</li>
+<li><strong>vmin</strong> (<em>float</em>) – minimum value of the contour levels</li>
+<li><strong>normed</strong> (<em>bool</em>) – when set to True, the colormap is centered around zero.
 Default is True, except for entropy/temperature plots.</li>
-<li><strong>deminc</strong> (<em>bool</em>) &#8211; a logical to indicate if one wants do get rid of the
+<li><strong>deminc</strong> (<em>bool</em>) – a logical to indicate if one wants do get rid of the
 possible azimuthal symmetry</li>
 </ul>
 </td>
@@ -327,9 +328,9 @@ plotting surface contours in <a class="reference internal" href="graphMovCoeff.h
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>ttheta</strong> (<em>numpy.ndarray</em>) &#8211; meshgrid [nphi, ntheta] for the latitudinal direction</li>
-<li><strong>pphi</strong> &#8211; meshgrid [nphi, ntheta] for the azimuthal direction</li>
-<li><strong>colat</strong> (<em>numpy.ndarray</em>) &#8211; colatitudes (when not specified a regular grid is assumed)</li>
+<li><strong>ttheta</strong> (<em>numpy.ndarray</em>) – meshgrid [nphi, ntheta] for the latitudinal direction</li>
+<li><strong>pphi</strong> – meshgrid [nphi, ntheta] for the azimuthal direction</li>
+<li><strong>colat</strong> (<em>numpy.ndarray</em>) – colatitudes (when not specified a regular grid is assumed)</li>
 </ul>
 </td>
 </tr>
@@ -353,17 +354,17 @@ used in contour plots</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; the input data (an array of size (ntheta,nr))</li>
-<li><strong>radius</strong> (<em>numpy.ndarray</em>) &#8211; the input radius</li>
-<li><strong>label</strong> (<em>str</em>) &#8211; the name of the input physical quantity you want to
+<li><strong>data</strong> (<em>numpy.ndarray</em>) – the input data (an array of size (ntheta,nr))</li>
+<li><strong>radius</strong> (<em>numpy.ndarray</em>) – the input radius</li>
+<li><strong>label</strong> (<em>str</em>) – the name of the input physical quantity you want to
 display</li>
-<li><strong>levels</strong> (<em>int</em>) &#8211; the number of levels in the contour</li>
-<li><strong>cm</strong> (<em>str</em>) &#8211; name of the colormap (&#8216;jet&#8217;, &#8216;seismic&#8217;, &#8216;RdYlBu_r&#8217;, etc.)</li>
-<li><strong>tit</strong> (<em>bool</em>) &#8211; display the title of the figure when set to True</li>
-<li><strong>cbar</strong> (<em>bool</em>) &#8211; display the colorbar when set to True</li>
-<li><strong>vmax</strong> (<em>float</em>) &#8211; maximum value of the contour levels</li>
-<li><strong>vmin</strong> (<em>float</em>) &#8211; minimum value of the contour levels</li>
-<li><strong>normed</strong> (<em>bool</em>) &#8211; when set to True, the colormap is centered around zero.
+<li><strong>levels</strong> (<em>int</em>) – the number of levels in the contour</li>
+<li><strong>cm</strong> (<em>str</em>) – name of the colormap (‘jet’, ‘seismic’, ‘RdYlBu_r’, etc.)</li>
+<li><strong>tit</strong> (<em>bool</em>) – display the title of the figure when set to True</li>
+<li><strong>cbar</strong> (<em>bool</em>) – display the colorbar when set to True</li>
+<li><strong>vmax</strong> (<em>float</em>) – maximum value of the contour levels</li>
+<li><strong>vmin</strong> (<em>float</em>) – minimum value of the contour levels</li>
+<li><strong>normed</strong> (<em>bool</em>) – when set to True, the colormap is centered around zero.
 Default is True, except for entropy/temperature plots.</li>
 </ul>
 </td>
@@ -381,22 +382,22 @@ Default is True, except for entropy/temperature plots.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; the input data (an array of size (nphi,ntheta))</li>
-<li><strong>rad</strong> (<em>float</em>) &#8211; the value of the selected radius</li>
-<li><strong>label</strong> (<em>str</em>) &#8211; the name of the input physical quantity you want to
+<li><strong>data</strong> (<em>numpy.ndarray</em>) – the input data (an array of size (nphi,ntheta))</li>
+<li><strong>rad</strong> (<em>float</em>) – the value of the selected radius</li>
+<li><strong>label</strong> (<em>str</em>) – the name of the input physical quantity you want to
 display</li>
-<li><strong>proj</strong> (<em>str</em>) &#8211; the type of projection. Default is Hammer, in case
-you want to use &#8216;ortho&#8217; or &#8216;moll&#8217;, then Basemap is
+<li><strong>proj</strong> (<em>str</em>) – the type of projection. Default is Hammer, in case
+you want to use ‘ortho’ or ‘moll’, then Basemap is
 required.</li>
-<li><strong>levels</strong> (<em>int</em>) &#8211; the number of levels in the contour</li>
-<li><strong>cm</strong> (<em>str</em>) &#8211; name of the colormap (&#8216;jet&#8217;, &#8216;seismic&#8217;, &#8216;RdYlBu_r&#8217;, etc.)</li>
-<li><strong>tit</strong> (<em>bool</em>) &#8211; display the title of the figure when set to True</li>
-<li><strong>cbar</strong> (<em>bool</em>) &#8211; display the colorbar when set to True</li>
-<li><strong>lines</strong> (<em>bool</em>) &#8211; when set to True, over-plot solid lines to highlight
+<li><strong>levels</strong> (<em>int</em>) – the number of levels in the contour</li>
+<li><strong>cm</strong> (<em>str</em>) – name of the colormap (‘jet’, ‘seismic’, ‘RdYlBu_r’, etc.)</li>
+<li><strong>tit</strong> (<em>bool</em>) – display the title of the figure when set to True</li>
+<li><strong>cbar</strong> (<em>bool</em>) – display the colorbar when set to True</li>
+<li><strong>lines</strong> (<em>bool</em>) – when set to True, over-plot solid lines to highlight
 the limits between two adjacent contour levels</li>
-<li><strong>vmax</strong> (<em>float</em>) &#8211; maximum value of the contour levels</li>
-<li><strong>vmin</strong> (<em>float</em>) &#8211; minimum value of the contour levels</li>
-<li><strong>normed</strong> (<em>bool</em>) &#8211; when set to True, the colormap is centered around zero.
+<li><strong>vmax</strong> (<em>float</em>) – maximum value of the contour levels</li>
+<li><strong>vmin</strong> (<em>float</em>) – minimum value of the contour levels</li>
+<li><strong>normed</strong> (<em>bool</em>) – when set to True, the colormap is centered around zero.
 Default is True, except for entropy/temperature plots.</li>
 </ul>
 </td>
@@ -422,13 +423,13 @@ of an anelastic model.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>radius</strong> (<em>numpy.ndarray</em>) &#8211; the radial gridpoints</li>
-<li><strong>polind</strong> (<em>float</em>) &#8211; the polytropic index</li>
-<li><strong>strat</strong> (<em>float</em>) &#8211; the number of the density scale heights between the inner
+<li><strong>radius</strong> (<em>numpy.ndarray</em>) – the radial gridpoints</li>
+<li><strong>polind</strong> (<em>float</em>) – the polytropic index</li>
+<li><strong>strat</strong> (<em>float</em>) – the number of the density scale heights between the inner
 and the outer boundary</li>
-<li><strong>g0</strong> (<em>float</em>) &#8211; gravity profile: g=g0</li>
-<li><strong>g1</strong> (<em>float</em>) &#8211; gravity profile: g=g1*r/r_o</li>
-<li><strong>g2</strong> (<em>float</em>) &#8211; gravity profile: g=g2*(r_o/r)**2</li>
+<li><strong>g0</strong> (<em>float</em>) – gravity profile: g=g0</li>
+<li><strong>g1</strong> (<em>float</em>) – gravity profile: g=g1*r/r_o</li>
+<li><strong>g2</strong> (<em>float</em>) – gravity profile: g=g2*(r_o/r)**2</li>
 </ul>
 </td>
 </tr>
@@ -457,10 +458,10 @@ and the log-derivative of the density profile versus radius</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>time</strong> (<em>numpy.ndarray</em>) &#8211; time</li>
-<li><strong>field</strong> (<em>numpy.ndarray</em>) &#8211; the time series of a given field</li>
-<li><strong>tstart</strong> (<em>float</em>) &#8211; the starting time of the averaging</li>
-<li><strong>std</strong> (<em>bool</em>) &#8211; when set to True, the standard deviation is also calculated</li>
+<li><strong>time</strong> (<em>numpy.ndarray</em>) – time</li>
+<li><strong>field</strong> (<em>numpy.ndarray</em>) – the time series of a given field</li>
+<li><strong>tstart</strong> (<em>float</em>) – the starting time of the averaging</li>
+<li><strong>std</strong> (<em>bool</em>) – when set to True, the standard deviation is also calculated</li>
 </ul>
 </td>
 </tr>
@@ -487,9 +488,9 @@ and the log-derivative of the density profile versus radius</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>nr</strong> (<em>int</em>) &#8211; number of radial grid points</li>
-<li><strong>a</strong> (<em>float</em>) &#8211; lower limit of the Gauss-Lobatto grid</li>
-<li><strong>b</strong> (<em>float</em>) &#8211; upper limit of the Gauss-Lobatto grid</li>
+<li><strong>nr</strong> (<em>int</em>) – number of radial grid points</li>
+<li><strong>a</strong> (<em>float</em>) – lower limit of the Gauss-Lobatto grid</li>
+<li><strong>b</strong> (<em>float</em>) – upper limit of the Gauss-Lobatto grid</li>
 </ul>
 </td>
 </tr>
@@ -517,9 +518,9 @@ a regularly-spaced cylindrical grid.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>radius</strong> (<em>numpy.ndarray</em>) &#8211; cylindrical radius</li>
-<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; input data</li>
-<li><strong>order</strong> (<em>int</em>) &#8211; order of the finite-difference scheme (possible values are 2 or 4)</li>
+<li><strong>radius</strong> (<em>numpy.ndarray</em>) – cylindrical radius</li>
+<li><strong>data</strong> (<em>numpy.ndarray</em>) – input data</li>
+<li><strong>order</strong> (<em>int</em>) – order of the finite-difference scheme (possible values are 2 or 4)</li>
 </ul>
 </td>
 </tr>
@@ -547,8 +548,8 @@ a regularly-spaced cylindrical grid.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>z</strong> (<em>numpy.ndarray</em>) &#8211; height of the cylinder</li>
-<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; input data</li>
+<li><strong>z</strong> (<em>numpy.ndarray</em>) – height of the cylinder</li>
+<li><strong>data</strong> (<em>numpy.ndarray</em>) – input data</li>
 </ul>
 </td>
 </tr>
@@ -565,7 +566,7 @@ a regularly-spaced cylindrical grid.</p>
 <dl class="function">
 <dt id="magic.libmagic.fast_read">
 <code class="descclassname">magic.libmagic.</code><code class="descname">fast_read</code><span class="sig-paren">(</span><em>file</em>, <em>skiplines=0</em>, <em>binary=False</em>, <em>precision='Float64'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#fast_read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.fast_read" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function reads an input ascii table 
+<dd><p>This function reads an input ascii table
 (can read both formatted or unformatted fortran)</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Read &#39;e_kin.test&#39;, skip the first 10 lines</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">fast_read</span><span class="p">(</span><span class="s1">&#39;e_kin.test&#39;</span><span class="p">,</span> <span class="n">skiplines</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -576,11 +577,11 @@ a regularly-spaced cylindrical grid.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>file</strong> (<em>str</em>) &#8211; name of the input file</li>
-<li><strong>skiplines</strong> (<em>int</em>) &#8211; number of header lines to be skept during reading</li>
-<li><strong>binary</strong> (<em>bool</em>) &#8211; when set to True, try to read an unformatted binray Fortran file
+<li><strong>file</strong> (<em>str</em>) – name of the input file</li>
+<li><strong>skiplines</strong> (<em>int</em>) – number of header lines to be skept during reading</li>
+<li><strong>binary</strong> (<em>bool</em>) – when set to True, try to read an unformatted binray Fortran file
 (default is False)</li>
-<li><strong>precision</strong> (<em>str</em>) &#8211; single (&#8216;Float32&#8217;) or double precision (&#8216;Float64&#8217;)</li>
+<li><strong>precision</strong> (<em>str</em>) – single (‘Float32’) or double precision (‘Float64’)</li>
 </ul>
 </td>
 </tr>
@@ -602,7 +603,7 @@ a regularly-spaced cylindrical grid.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<em>file</em>) &#8211; the log file you want to analyze</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<em>file</em>) – the log file you want to analyze</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the total CPU time</td>
 </tr>
@@ -640,10 +641,10 @@ a regularly-spaced cylindrical grid.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>f</strong> &#8211; an input array</li>
-<li><strong>nr</strong> (<em>int</em>) &#8211; number of radial grid points</li>
-<li><strong>z1</strong> (<em>float</em>) &#8211; lower limit of the Gauss-Lobatto grid</li>
-<li><strong>z2</strong> (<em>float</em>) &#8211; upper limit of the Gauss-Lobatto grid</li>
+<li><strong>f</strong> – an input array</li>
+<li><strong>nr</strong> (<em>int</em>) – number of radial grid points</li>
+<li><strong>z1</strong> (<em>float</em>) – lower limit of the Gauss-Lobatto grid</li>
+<li><strong>z2</strong> (<em>float</em>) – upper limit of the Gauss-Lobatto grid</li>
 </ul>
 </td>
 </tr>
@@ -678,9 +679,9 @@ a regularly-spaced cylindrical grid.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>nr</strong> (<em>int</em>) &#8211; number of radial grid points</li>
-<li><strong>z1</strong> (<em>float</em>) &#8211; lower limit of the Gauss-Lobatto grid</li>
-<li><strong>z2</strong> (<em>float</em>) &#8211; upper limit of the Gauss-Lobatto grid</li>
+<li><strong>nr</strong> (<em>int</em>) – number of radial grid points</li>
+<li><strong>z1</strong> (<em>float</em>) – lower limit of the Gauss-Lobatto grid</li>
+<li><strong>z2</strong> (<em>float</em>) – upper limit of the Gauss-Lobatto grid</li>
 </ul>
 </td>
 </tr>
@@ -707,9 +708,9 @@ a regularly-spaced cylindrical grid.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; input array</li>
-<li><strong>minc</strong> (<em>int</em>) &#8211; azimuthal symmetry</li>
-<li><strong>order</strong> (<em>int</em>) &#8211; order of the finite-difference scheme (possible values are 2 or 4)</li>
+<li><strong>data</strong> (<em>numpy.ndarray</em>) – input array</li>
+<li><strong>minc</strong> (<em>int</em>) – azimuthal symmetry</li>
+<li><strong>order</strong> (<em>int</em>) – order of the finite-difference scheme (possible values are 2 or 4)</li>
 </ul>
 </td>
 </tr>
@@ -736,8 +737,8 @@ a regularly-spaced cylindrical grid.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>prefix</strong> (<em>str</em>) &#8211; prefix string before progress bar</li>
-<li><strong>size</strong> (<em>int</em>) &#8211; width of the progress bar (in points of xterm width)</li>
+<li><strong>prefix</strong> (<em>str</em>) – prefix string before progress bar</li>
+<li><strong>size</strong> (<em>int</em>) – width of the progress bar (in points of xterm width)</li>
 </ul>
 </td>
 </tr>
@@ -758,11 +759,11 @@ a regularly-spaced cylindrical grid.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; input array</li>
-<li><strong>eta</strong> (<em>float</em>) &#8211; aspect ratio of the spherical shell</li>
-<li><strong>spectral</strong> (<em>bool</em>) &#8211; when set to True use Chebyshev derivatives, otherwise use
+<li><strong>data</strong> (<em>numpy.ndarray</em>) – input array</li>
+<li><strong>eta</strong> (<em>float</em>) – aspect ratio of the spherical shell</li>
+<li><strong>spectral</strong> (<em>bool</em>) – when set to True use Chebyshev derivatives, otherwise use
 finite differences (default is True)</li>
-<li><strong>exclude</strong> (<em>bool</em>) &#8211; when set to True, exclude the first and last radial grid points
+<li><strong>exclude</strong> (<em>bool</em>) – when set to True, exclude the first and last radial grid points
 and replace them by a spline extrapolation (default is False)</li>
 </ul>
 </td>
@@ -791,8 +792,8 @@ to the most recent one (in the current working directory)</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>pattern</strong> (<em>str</em>) &#8211; a classical regexp pattern</li>
-<li><strong>tfix</strong> (<em>float</em>) &#8211; in case you want to add only the files that are more recent than
+<li><strong>pattern</strong> (<em>str</em>) – a classical regexp pattern</li>
+<li><strong>tfix</strong> (<em>float</em>) – in case you want to add only the files that are more recent than
 a certain date, use tfix (computer 1970 format!!)</li>
 </ul>
 </td>
@@ -820,13 +821,13 @@ a certain date, use tfix (computer 1970 format!!)</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; input array</li>
-<li><strong>eta</strong> (<em>float</em>) &#8211; aspect ratio of the spherical shell</li>
-<li><strong>spectral</strong> (<em>bool</em>) &#8211; when set to True use Chebyshev derivatives, otherwise use
+<li><strong>data</strong> (<em>numpy.ndarray</em>) – input array</li>
+<li><strong>eta</strong> (<em>float</em>) – aspect ratio of the spherical shell</li>
+<li><strong>spectral</strong> (<em>bool</em>) – when set to True use Chebyshev derivatives, otherwise use
 finite differences (default is True)</li>
-<li><strong>exclude</strong> (<em>bool</em>) &#8211; when set to True, exclude the first and last radial grid points
+<li><strong>exclude</strong> (<em>bool</em>) – when set to True, exclude the first and last radial grid points
 and replace them by a spline extrapolation (default is False)</li>
-<li><strong>colat</strong> (<em>numpy.ndarray</em>) &#8211; colatitudes (when not specified a regular grid is assumed)</li>
+<li><strong>colat</strong> (<em>numpy.ndarray</em>) – colatitudes (when not specified a regular grid is assumed)</li>
 </ul>
 </td>
 </tr>
@@ -842,17 +843,17 @@ and replace them by a spline extrapolation (default is False)</li>
 
 <dl class="function">
 <dt id="magic.libmagic.selectField">
-<code class="descclassname">magic.libmagic.</code><code class="descname">selectField</code><span class="sig-paren">(</span><em>obj</em>, <em>field</em>, <em>labTex=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#selectField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.selectField" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">magic.libmagic.</code><code class="descname">selectField</code><span class="sig-paren">(</span><em>obj</em>, <em>field</em>, <em>labTex=True</em>, <em>ic=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/libmagic.html#selectField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.libmagic.selectField" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function selects for you which field you want to display. It actually
-allows to avoid possible variables miss-spelling: i.e. &#8216;Bphi&#8217;=&#8217;bp&#8217;=&#8217;Bp&#8217;=&#8217;bphi&#8217;</p>
+allows to avoid possible variables miss-spelling: i.e. ‘Bphi’=’bp’=’Bp’=’bphi’</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>obj</strong> (<a class="reference internal" href="graphMovCoeff.html#magic.MagicGraph" title="magic.MagicGraph"><code class="xref py py-class docutils literal"><span class="pre">magic.MagicGraph</span></code></a>) &#8211; a graphic output file</li>
-<li><strong>field</strong> (<em>str</em>) &#8211; the name of the field one wants to select</li>
-<li><strong>labTex</strong> (<em>bool</em>) &#8211; when set to True, format the labels using LaTeX fonts</li>
+<li><strong>obj</strong> (<a class="reference internal" href="graphMovCoeff.html#magic.MagicGraph" title="magic.MagicGraph"><code class="xref py py-class docutils literal"><span class="pre">magic.MagicGraph</span></code></a>) – a graphic output file</li>
+<li><strong>field</strong> (<em>str</em>) – the name of the field one wants to select</li>
+<li><strong>labTex</strong> (<em>bool</em>) – when set to True, format the labels using LaTeX fonts</li>
 </ul>
 </td>
 </tr>
@@ -875,9 +876,9 @@ allows to avoid possible variables miss-spelling: i.e. &#8216;Bphi&#8217;=&#8217
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; the input array</li>
-<li><strong>ms</strong> (<em>int</em>) &#8211; the azimuthal symmetry</li>
-<li><strong>reversed</strong> (<em>bool</em>) &#8211; set to True, in case the array is reversed (i.e. n_phi is the last column)</li>
+<li><strong>data</strong> (<em>numpy.ndarray</em>) – the input array</li>
+<li><strong>ms</strong> (<em>int</em>) – the azimuthal symmetry</li>
+<li><strong>reversed</strong> (<em>bool</em>) – set to True, in case the array is reversed (i.e. n_phi is the last column)</li>
 </ul>
 </td>
 </tr>
@@ -904,8 +905,8 @@ allows to avoid possible variables miss-spelling: i.e. &#8216;Bphi&#8217;=&#8217
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; input array</li>
-<li><strong>order</strong> (<em>int</em>) &#8211; order of the finite-difference scheme (possible values are 2 or 4)</li>
+<li><strong>data</strong> (<em>numpy.ndarray</em>) – input array</li>
+<li><strong>order</strong> (<em>int</em>) – order of the finite-difference scheme (possible values are 2 or 4)</li>
 </ul>
 </td>
 </tr>
@@ -936,8 +937,8 @@ format the output</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>par</strong> (<a class="reference internal" href="timeSeries.html#magic.MagicTs" title="magic.MagicTs"><code class="xref py py-class docutils literal"><span class="pre">magic.MagicTs</span></code></a>) &#8211; a <a class="reference internal" href="timeSeries.html#magic.MagicTs" title="magic.MagicTs"><code class="xref py py-class docutils literal"><span class="pre">MagicTs</span></code></a> object containing the par file</li>
-<li><strong>tstart</strong> (<em>float</em>) &#8211; the starting time of the averaging</li>
+<li><strong>par</strong> (<a class="reference internal" href="timeSeries.html#magic.MagicTs" title="magic.MagicTs"><code class="xref py py-class docutils literal"><span class="pre">magic.MagicTs</span></code></a>) – a <a class="reference internal" href="timeSeries.html#magic.MagicTs" title="magic.MagicTs"><code class="xref py py-class docutils literal"><span class="pre">MagicTs</span></code></a> object containing the par file</li>
+<li><strong>tstart</strong> (<em>float</em>) – the starting time of the averaging</li>
 </ul>
 </td>
 </tr>
@@ -964,13 +965,13 @@ format the output</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; input array</li>
-<li><strong>eta</strong> (<em>float</em>) &#8211; aspect ratio of the spherical shell</li>
-<li><strong>spectral</strong> (<em>bool</em>) &#8211; when set to True use Chebyshev derivatives, otherwise use
+<li><strong>data</strong> (<em>numpy.ndarray</em>) – input array</li>
+<li><strong>eta</strong> (<em>float</em>) – aspect ratio of the spherical shell</li>
+<li><strong>spectral</strong> (<em>bool</em>) – when set to True use Chebyshev derivatives, otherwise use
 finite differences (default is True)</li>
-<li><strong>exclude</strong> (<em>bool</em>) &#8211; when set to True, exclude the first and last radial grid points
+<li><strong>exclude</strong> (<em>bool</em>) – when set to True, exclude the first and last radial grid points
 and replace them by a spline extrapolation (default is False)</li>
-<li><strong>colat</strong> (<em>numpy.ndarray</em>) &#8211; colatitudes (when not specified a regular grid is assumed)</li>
+<li><strong>colat</strong> (<em>numpy.ndarray</em>) – colatitudes (when not specified a regular grid is assumed)</li>
 </ul>
 </td>
 </tr>
@@ -1008,7 +1009,7 @@ and replace them by a spline extrapolation (default is False)</li>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/apiPython/libs.txt"
+      <li><a href="../_sources/apiPython/libs.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -1050,7 +1051,7 @@ and replace them by a spline extrapolation (default is False)</li>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
     </div>
   </body>
 </html>

@@ -1,34 +1,33 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>magic.log &#8212; Magic 5.6 documentation</title>
-    
     <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '5.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="Magic 5.6 documentation" href="../../contents.html" />
-    <link rel="up" title="Module code" href="../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
           rel='stylesheet' type='text/css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
     <script src="galleria/galleria-1.4.2.min.js"></script>
  
     <style type="text/css">
@@ -66,7 +65,7 @@
     </script>
 
   </head>
-  <body role="document">
+  <body>
 <div class="pageheader">
   <ul>
     <li><a href="../../index.html">Home</a></li>
@@ -108,7 +107,7 @@
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">os</span>
-
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <div class="viewcode-block" id="MagicSetup"><a class="viewcode-back" href="../../apiPython/timeSeries.html#magic.MagicSetup">[docs]</a><span class="k">class</span> <span class="nc">MagicSetup</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -170,15 +169,37 @@
             <span class="k">elif</span> <span class="n">valueInt</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">rhs</span><span class="p">):</span>
                 <span class="n">rhs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span>
-            
+
         <span class="bp">self</span><span class="o">.</span><span class="n">ra</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ra</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">quiet</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
         <span class="c1"># Overwrite self.tag to be sure that nothing is messed up</span>
         <span class="k">if</span> <span class="n">logFile</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">nml</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">logFile</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">nml</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">logFile</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">nml</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># ##############################################</span>
+            <span class="c1"># Anelastic Benchmark, Jones et al, 2011, Icarus</span>
+            <span class="c1"># ##############################################</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cylinder</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">WO</span> <span class="o">=</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">radratio</span> <span class="o">+</span> <span class="mf">1.</span><span class="p">)</span>
+                       <span class="o">/</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">radratio</span>
+                          <span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strat</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">polind</span><span class="p">)</span> <span class="o">+</span><span class="mf">1.</span><span class="p">)))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">WI</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radratio</span> <span class="o">+</span> <span class="mf">1.</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">WO</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radratio</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">c0</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">WO</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span> <span class="o">-</span><span class="mf">1.</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">c1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">WO</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_lScale</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">R_out</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">R_inn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">R_out</span> <span class="o">-</span> <span class="mf">1.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vol</span> <span class="o">=</span> <span class="mf">4.</span><span class="o">/</span><span class="mf">3.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">R_out</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">R_inn</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="c1">## may be not a &quot;standard&quot; anelastic run</span>
+            <span class="c1">## check default values or look at the log.TAG file</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">quiet</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div></div>
 
     <span class="c1">#def __repr__(self):</span>
         <span class="c1">#st = &#39;Welcome in the run %s\n&#39; % self.tag</span>
@@ -227,7 +248,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
     </div>
   </body>
 </html>

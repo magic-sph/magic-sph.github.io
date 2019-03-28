@@ -1,36 +1,35 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>Spectra &#8212; Magic 5.6 documentation</title>
-    
     <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '5.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="Magic 5.6 documentation" href="../contents.html" />
-    <link rel="up" title="Output files" href="outFiles.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Graphic files G_#.TAG and G_ave.TAG" href="outGraph.html" />
     <link rel="prev" title="Transport properties of the reference state" href="outTransportProp.html" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
           rel='stylesheet' type='text/css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
     <script src="galleria/galleria-1.4.2.min.js"></script>
  
     <style type="text/css">
@@ -68,7 +67,7 @@
     </script>
 
   </head>
-  <body role="document">
+  <body>
 <div class="pageheader">
   <ul>
     <li><a href="../index.html">Home</a></li>
@@ -218,7 +217,7 @@ subroutine <a class="reference internal" href="../apiFortran/IOGeneral.html#f/sp
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">This file is <strong>only</strong> written in anelastic models, i.e. either when
-<a class="reference internal" href="../inputNamelists/physNamelist.html#varstrat"><span class="std std-ref">strat/=0</span></a> or when <a class="reference internal" href="../inputNamelists/physNamelist.html#varinterior-model"><span class="std std-ref">interior_model/=&#8221;None&#8221;</span></a></p>
+<a class="reference internal" href="../inputNamelists/physNamelist.html#varstrat"><span class="std std-ref">strat/=0</span></a> or when <a class="reference internal" href="../inputNamelists/physNamelist.html#varinterior-model"><span class="std std-ref">interior_model/=”None”</span></a></p>
 </div>
 <p>This file contains the spectra of the square velocity. This file is written by the
 subroutine <a class="reference internal" href="../apiFortran/IOGeneral.html#f/spectra/spectrum" title="f/spectra/spectrum"><code class="xref f f-subr docutils literal"><span class="pre">spectrum</span></code></a>.</p>
@@ -301,14 +300,20 @@ versus order</td>
 </table>
 </div></blockquote>
 </div>
-<div class="section" id="d-spectra-2d-kin-mag-u2-spec-tag">
-<span id="sec2dspectra"></span><h2>2D spectra <cite>[2D_kin|mag|u2_spec]_#.TAG</cite><a class="headerlink" href="#d-spectra-2d-kin-mag-u2-spec-tag" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="d-spectra-2d-kin-mag-spec-tag-and-2d-kin-mag-spec-ave-tag">
+<span id="sec2dspectra"></span><h2>2D spectra <code class="docutils literal"><span class="pre">2D_[kin|mag]_spec_#.TAG</span></code> and <code class="docutils literal"><span class="pre">2D_[kin|mag]_spec_ave.TAG</span></code><a class="headerlink" href="#d-spectra-2d-kin-mag-spec-tag-and-2d-kin-mag-spec-ave-tag" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Those files are <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlStd.html#varl-2d-spectra"><span class="std std-ref">l_2D_spectra=.true.</span></a>. The time-averaged files also require that <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlStd.html#varl-average"><span class="std std-ref">l_average=.true.</span></a>.</p>
+</div>
 <p>Those files contain 2-D spectra in the <span class="math">\((r,\ell)\)</span> and in the
 <span class="math">\((r,m)\)</span> planes.  In other words, the poloidal and toroidal energies
 versus degree <span class="math">\(\ell\)</span> or versus order <span class="math">\(m\)</span> are computed for all
-radii. There are three kinds of those files that correspond to the
-aforementioned spectra, namely <strong>2D_kin_spec_#.TAG</strong>, <strong>2D_mag_spec_#.TAG</strong>
-and <strong>2D_u2_spec_#.TAG</strong>. The calculations are done in the subroutine
+radii. There are two kinds of those files that correspond to the
+aforementioned spectra, namely <strong>2D_kin_spec_#.TAG</strong>, <strong>2D_mag_spec_#.TAG</strong>.
+In case time-averages are requested, <strong>2D_kin_spec_ave.TAG</strong> and
+<strong>2D_mag_spec_ave.TAG</strong> will also be stored. The calculations are done
+in the subroutine
 <a class="reference internal" href="../apiFortran/IOGeneral.html#f/spectra/spectrum" title="f/spectra/spectrum"><code class="xref f f-subr docutils literal"><span class="pre">spectrum</span></code></a>. The structure of the output files
 are same for these three outputs. They are stored as fortran unformatted files.</p>
 <p>Unformatted files are not directly human readable, and are used to store binary
@@ -370,7 +375,7 @@ fortran, the open, read and write operations for these files are performed as fo
 <p>Those files can be read using the python class <a class="reference internal" href="../apiPython/spectra.html#magic.MagicSpectrum2D" title="magic.MagicSpectrum2D"><code class="xref py py-class docutils literal"><span class="pre">MagicSpectrum2D</span></code></a> with
 the following options:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Read the file 2D_mag_spec_3.ext</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">sp</span> <span class="o">=</span> <span class="n">MagicRSpec</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;ext&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="n">e_mag</span><span class="s1">&#39;, ispec=3)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sp</span> <span class="o">=</span> <span class="n">MagicSpectrum2D</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;ext&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;e_mag&#39;</span><span class="p">,</span> <span class="n">ispec</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Print e_pol_l and e_tor_m</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">e_pol_l</span><span class="p">,</span> <span class="n">sp</span><span class="o">.</span><span class="n">e_tor_m</span><span class="p">)</span>
 </pre></div>
@@ -384,7 +389,7 @@ the following options:</p>
 </div>
 <p>This file contains the time-average kinetic energy spectra as well as squared quantities
 to allow a possible further reconstruction of the standard deviation.
-This file is written by the subroutine <a class="reference internal" href="../apiFortran/IOGeneral.html#f/spectra/spectrum_average" title="f/spectra/spectrum_average"><code class="xref f f-subr docutils literal"><span class="pre">spectrum_average</span></code></a>.</p>
+This file is written by the subroutine <a class="reference internal" href="../apiFortran/IOGeneral.html#f/spectra/spectrum" title="f/spectra/spectrum"><code class="xref f f-subr docutils literal"><span class="pre">spectrum</span></code></a>.</p>
 <blockquote>
 <div><table border="1" class="docutils">
 <colgroup>
@@ -413,16 +418,16 @@ This file is written by the subroutine <a class="reference internal" href="../ap
 <td>Time-averaged toroidal kinetic energy versus order</td>
 </tr>
 <tr class="row-odd"><td>6</td>
-<td>Time-averaged poloidal kinetic energy square versus degree</td>
+<td>Standard deviation of poloidal kinetic energy versus degree</td>
 </tr>
 <tr class="row-even"><td>7</td>
-<td>Time-averaged poloidal kinetic energy square versus order</td>
+<td>Standard deviation of poloidal kinetic energy versus order</td>
 </tr>
 <tr class="row-odd"><td>8</td>
-<td>Time-averaged toroidal kinetic energy square versus degree</td>
+<td>Standard deviation of toroidal kinetic energy versus degree</td>
 </tr>
 <tr class="row-even"><td>9</td>
-<td>Time-averaged toroidal kinetic energy square versus order</td>
+<td>Standard deviation of toroidal kinetic energy versus order</td>
 </tr>
 </tbody>
 </table>
@@ -441,7 +446,7 @@ This file is written by the subroutine <a class="reference internal" href="../ap
 the run is magnetic</p>
 </div>
 <p>This file contains the time-average magnetic energy spectra. This file is written by the
-subroutine <a class="reference internal" href="../apiFortran/IOGeneral.html#f/spectra/spectrum_average" title="f/spectra/spectrum_average"><code class="xref f f-subr docutils literal"><span class="pre">spectrum_average</span></code></a>.</p>
+subroutine <a class="reference internal" href="../apiFortran/IOGeneral.html#f/spectra/spectrum" title="f/spectra/spectrum"><code class="xref f f-subr docutils literal"><span class="pre">spectrum</span></code></a>.</p>
 <blockquote>
 <div><table border="1" class="docutils">
 <colgroup>
@@ -476,44 +481,28 @@ subroutine <a class="reference internal" href="../apiFortran/IOGeneral.html#f/sp
 <td>Time-averaged poloidal magnetic energy at the CMB versus order</td>
 </tr>
 <tr class="row-odd"><td>8</td>
-<td>Time-averaged poloidal magnetic energy in the outer core + its standard
-deviation versus degree</td>
+<td>Standard deviation of the poloidal magnetic energy in the outer
+core versus degree</td>
 </tr>
 <tr class="row-even"><td>9</td>
-<td>Time-averaged poloidal magnetic energy in the outer core - its standard
-deviation versus degree</td>
+<td>Standard deviation of the poloidal magnetic energy in the outer core
+versus order</td>
 </tr>
 <tr class="row-odd"><td>10</td>
-<td>Time-averaged poloidal magnetic energy in the outer core + its standard
-deviation versus order</td>
+<td>Standard deviation of the toroidal magnetic energy in the outer core
+versus degree</td>
 </tr>
 <tr class="row-even"><td>11</td>
-<td>Time-averaged poloidal magnetic energy in the outer core - its standard
-deviation versus order</td>
+<td>Standard deviation of the toroidal magnetic energy in the outer core
+versus order</td>
 </tr>
 <tr class="row-odd"><td>12</td>
-<td>Time-averaged toroidal magnetic energy in the outer core + its standard
-deviation versus degree</td>
+<td>Standard deviation of the magnetic energy at the CMB
+versus degree</td>
 </tr>
 <tr class="row-even"><td>13</td>
-<td>Time-averaged toroidal magnetic energy in the outer core - its standard
-deviation versus degree</td>
-</tr>
-<tr class="row-odd"><td>14</td>
-<td>Time-averaged toroidal magnetic energy in the outer core + its standard
-deviation versus order</td>
-</tr>
-<tr class="row-even"><td>15</td>
-<td>Time-averaged toroidal magnetic energy in the outer core - its standard
-deviation versus order</td>
-</tr>
-<tr class="row-odd"><td>16</td>
-<td>Time-averaged poloidal magnetic energy at the CMB + its standard
-deviation versus order</td>
-</tr>
-<tr class="row-even"><td>17</td>
-<td>Time-averaged poloidal magnetic energy at the CMB - its standard
-deviation versus order</td>
+<td>Standard deviation of the magnetic energy at the CMB
+versus order</td>
 </tr>
 </tbody>
 </table>
@@ -531,7 +520,7 @@ deviation versus order</td>
 <p class="last">This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlStd.html#varl-average"><span class="std std-ref">l_average=.true.</span></a></p>
 </div>
 <p>This file contains the time-averaged temperature/entropy spectra and their standard
-deviation. It is written by the subroutine <a class="reference internal" href="../apiFortran/IOGeneral.html#f/spectra/spectrum_temp_average" title="f/spectra/spectrum_temp_average"><code class="xref f f-subr docutils literal"><span class="pre">spectrum_temp_average</span></code></a>.</p>
+deviation. It is written by the subroutine <code class="xref f f-subr docutils literal"><span class="pre">spectrum_temp_average</span></code>.</p>
 <blockquote>
 <div><table border="1" class="docutils">
 <colgroup>
@@ -545,30 +534,53 @@ deviation. It is written by the subroutine <a class="reference internal" href=".
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>1</td>
-<td>Spherical harmonic degree</td>
+<td>Spherical harmonic degree/order</td>
 </tr>
 <tr class="row-odd"><td>2</td>
 <td>Time-averaged RMS temperature/entropy versus degree</td>
 </tr>
 <tr class="row-even"><td>3</td>
-<td>Standard deviation of the temperature/entropy versus
-degree</td>
+<td>Time-averaged RMS temperature/entropy versus order</td>
 </tr>
 <tr class="row-odd"><td>4</td>
 <td>Time-averaged RMS temperature/entropy at the ICB versus
 degree</td>
 </tr>
 <tr class="row-even"><td>5</td>
-<td>Standard deviation of the temperature/entropy at the ICB
-versus degree</td>
+<td>Time-averaged RMS temperature/entropy at the ICB versus
+order</td>
 </tr>
 <tr class="row-odd"><td>6</td>
 <td>Time-averaged temperature/entropy gradient at the ICB
 versus degree</td>
 </tr>
 <tr class="row-even"><td>7</td>
+<td>Time-averaged temperature/entropy gradient at the ICB
+versus order</td>
+</tr>
+<tr class="row-odd"><td>8</td>
+<td>Standard deviation of the temperature/entropy versus
+degree</td>
+</tr>
+<tr class="row-even"><td>9</td>
+<td>Standard deviation of the temperature/entropy versus
+order</td>
+</tr>
+<tr class="row-odd"><td>10</td>
+<td>Standard deviation of the temperature/entropy at the ICB
+versus degree</td>
+</tr>
+<tr class="row-even"><td>11</td>
+<td>Standard deviation of the temperature/entropy at the ICB
+versus order</td>
+</tr>
+<tr class="row-odd"><td>12</td>
 <td>Standard deviation of the temperature/entropy gradient
 at the ICB  versus degree</td>
+</tr>
+<tr class="row-even"><td>13</td>
+<td>Standard deviation of the temperature/entropy gradient
+at the ICB  versus order</td>
 </tr>
 </tbody>
 </table>
@@ -628,7 +640,7 @@ files):</p>
 <li><a class="reference internal" href="#mag-spec-tag"><code class="docutils literal"><span class="pre">mag_spec_#.TAG</span></code></a></li>
 <li><a class="reference internal" href="#u2-spec-tag"><code class="docutils literal"><span class="pre">u2_spec_#.TAG</span></code></a></li>
 <li><a class="reference internal" href="#t-spec-tag"><code class="docutils literal"><span class="pre">T_spec_#.TAG</span></code></a></li>
-<li><a class="reference internal" href="#d-spectra-2d-kin-mag-u2-spec-tag">2D spectra <cite>[2D_kin|mag|u2_spec]_#.TAG</cite></a></li>
+<li><a class="reference internal" href="#d-spectra-2d-kin-mag-spec-tag-and-2d-kin-mag-spec-ave-tag">2D spectra <code class="docutils literal"><span class="pre">2D_[kin|mag]_spec_#.TAG</span></code> and <code class="docutils literal"><span class="pre">2D_[kin|mag]_spec_ave.TAG</span></code></a></li>
 <li><a class="reference internal" href="#kin-spec-ave-tag"><code class="docutils literal"><span class="pre">kin_spec_ave.TAG</span></code></a></li>
 <li><a class="reference internal" href="#mag-spec-ave-tag"><code class="docutils literal"><span class="pre">mag_spec_ave.TAG</span></code></a></li>
 <li><a class="reference internal" href="#t-spec-ave-tag"><code class="docutils literal"><span class="pre">T_spec_ave.TAG</span></code></a></li>
@@ -646,7 +658,7 @@ files):</p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/outputFiles/outSpecFiles.txt"
+      <li><a href="../_sources/outputFiles/outSpecFiles.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -688,7 +700,7 @@ files):</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
     </div>
   </body>
 </html>

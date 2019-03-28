@@ -1,36 +1,35 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>Support for time-averaged radial profiles &#8212; Magic 5.6 documentation</title>
-    
     <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '5.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="Magic 5.6 documentation" href="../contents.html" />
-    <link rel="up" title="Data visualisation and post-processing" href="../postProc.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Support for the spectra files (kin|mag|u2)_spec_#.TAG" href="spectra.html" />
     <link rel="prev" title="Support for the log.TAG files" href="timeSeries.html" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
           rel='stylesheet' type='text/css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
     <script src="galleria/galleria-1.4.2.min.js"></script>
  
     <style type="text/css">
@@ -68,7 +67,7 @@
     </script>
 
   </head>
-  <body role="document">
+  <body>
 <div class="pageheader">
   <ul>
     <li><a href="../index.html">Home</a></li>
@@ -116,8 +115,8 @@
 <span id="secpythonradial"></span><h1>Support for time-averaged radial profiles<a class="headerlink" href="#support-for-time-averaged-radial-profiles" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="magic.MagicRadial">
-<em class="property">class </em><code class="descclassname">magic.</code><code class="descname">MagicRadial</code><span class="sig-paren">(</span><em>datadir='.'</em>, <em>field='eKin'</em>, <em>iplot=True</em>, <em>tag=None</em>, <em>tags=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/radial.html#MagicRadial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicRadial" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class can be used to read and display the time and 
+<em class="property">class </em><code class="descclassname">magic.</code><code class="descname">MagicRadial</code><span class="sig-paren">(</span><em>datadir='.'</em>, <em>field='eKin'</em>, <em>iplot=True</em>, <em>tag=None</em>, <em>tags=None</em>, <em>normalize_radius=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/radial.html#MagicRadial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicRadial" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class can be used to read and display the time and
 horizontally averaged files:</p>
 <blockquote>
 <div><ul class="simple">
@@ -141,17 +140,17 @@ horizontally averaged files:</p>
 </div>
 <dl class="method">
 <dt id="magic.MagicRadial.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>datadir='.'</em>, <em>field='eKin'</em>, <em>iplot=True</em>, <em>tag=None</em>, <em>tags=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/radial.html#MagicRadial.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicRadial.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>datadir='.'</em>, <em>field='eKin'</em>, <em>iplot=True</em>, <em>tag=None</em>, <em>tags=None</em>, <em>normalize_radius=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/radial.html#MagicRadial.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicRadial.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>datadir</strong> (<em>str</em>) &#8211; working directory</li>
-<li><strong>field</strong> (<em>str</em>) &#8211; the field you want to plot</li>
-<li><strong>iplot</strong> (<em>bool</em>) &#8211; to plot the output, default is True</li>
-<li><strong>tag</strong> (<em>str</em>) &#8211; a specific tag, default is None</li>
-<li><strong>tags</strong> (<em>list</em>) &#8211; a list that contains multiple tags: useful to sum
+<li><strong>datadir</strong> (<em>str</em>) – working directory</li>
+<li><strong>field</strong> (<em>str</em>) – the field you want to plot</li>
+<li><strong>iplot</strong> (<em>bool</em>) – to plot the output, default is True</li>
+<li><strong>tag</strong> (<em>str</em>) – a specific tag, default is None</li>
+<li><strong>tags</strong> (<em>list</em>) – a list that contains multiple tags: useful to sum
 several radial files</li>
 </ul>
 </td>
@@ -185,7 +184,7 @@ several radial files</li>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/apiPython/radial.txt"
+      <li><a href="../_sources/apiPython/radial.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -227,7 +226,7 @@ several radial files</li>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
     </div>
   </body>
 </html>

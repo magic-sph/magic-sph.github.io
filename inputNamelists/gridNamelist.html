@@ -1,36 +1,35 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>Grid namelist &#8212; Magic 5.6 documentation</title>
-    
     <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '5.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="Magic 5.6 documentation" href="../contents.html" />
-    <link rel="up" title="Input parameters" href="namelists.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Control namelist" href="controlNamelist.html" />
     <link rel="prev" title="Input parameters" href="namelists.html" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
           rel='stylesheet' type='text/css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
     <script src="galleria/galleria-1.4.2.min.js"></script>
  
     <style type="text/css">
@@ -68,7 +67,7 @@
     </script>
 
   </head>
-  <body role="document">
+  <body>
 <div class="pageheader">
   <ul>
     <li><a href="../index.html">Home</a></li>
@@ -118,17 +117,13 @@
 <div class="section" id="outer-core">
 <h2>Outer Core<a class="headerlink" href="#outer-core" title="Permalink to this headline">¶</a></h2>
 <ul id="varn-r-max">
-<li><p class="first"><strong>n_r_max</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max"><code class="xref f f-var docutils literal"><span class="pre">n_r_max=33</span></code></a>) is an integer which gives the number of grid points in the radial direction in the outer core (<span class="math">\([r_i,r_o]\)</span>). If Chebyshev polynomials are used for the radial integration scheme, there are some constraints on the value of <cite>n_r_max</cite>: first of all it must be of the form <code class="docutils literal"><span class="pre">4*n+1</span></code>, where <code class="docutils literal"><span class="pre">n</span></code> is an integer; and second the prime decomposition of <cite>n_r_max</cite> should only contain multiple of 3, 4 and 5 (this second condition comes from the Chebyshev transforms). This constraint does not exist when finite differences are used.</p>
+<li><p class="first"><strong>n_r_max</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max"><code class="xref f f-var docutils literal"><span class="pre">n_r_max=33</span></code></a>) is an integer which gives the number of grid points in the radial direction in the outer core (<span class="math">\([r_i,r_o]\)</span>). If Chebyshev polynomials are used for the radial integration scheme, there are some constraints on the value of <cite>n_r_max</cite>: first of all it must be of the form <code class="docutils literal"><span class="pre">4*n+1</span></code>, where <code class="docutils literal"><span class="pre">n</span></code> is an integer; and second the prime decomposition of <cite>n_r_max-1</cite> should only contain multiple of 3, 4 and 5 (this second condition comes from the limitations of the built-in discrete cosine transforms). This constraint is released when finite differences are used.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If Chebyshev polynomials are used, the possible values for <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max"><code class="xref f f-var docutils literal"><span class="pre">n_r_max</span></code></a> below 220 are hence: 17, 21, 25, 33, 37, 41, 49, 61, 65, 73, 81, 97, 101, 109, 121, 129, 145, 161, 181, 193, 201, 217,...</p>
+<p class="last">If Chebyshev polynomials are used, the possible values for <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max"><code class="xref f f-var docutils literal"><span class="pre">n_r_max</span></code></a> below 220 are hence: 17, 21, 25, 33, 37, 41, 49, 61, 65, 73, 81, 97, 101, 109, 121, 129, 145, 161, 181, 193, 201, 217,…</p>
 </div>
 </li>
 <li><p class="first"><strong>n_cheb_max</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_cheb_max" title="f/truncation/n_cheb_max"><code class="xref f f-var docutils literal"><span class="pre">n_cheb_max=31</span></code></a>) is an integer which is the number of terms in the Chebyshev polynomial expansion to be used in the radial direction - the highest degree of Chebyshev polynomial used being <code class="docutils literal"><span class="pre">n_cheb_max-1</span></code>. Note that <code class="docutils literal"><span class="pre">n_cheb_max</span> <span class="pre">&lt;=</span> <span class="pre">n_r_max</span></code>. This quantity will not be used if finite differences are used.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Adopting <code class="docutils literal"><span class="pre">n_cheb_max=n_r_max-2</span></code> is usually a good choice</p>
-</div>
 </li>
 <li><p class="first"><strong>n_phi_tot</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_phi_tot" title="f/truncation/n_phi_tot"><code class="xref f f-var docutils literal"><span class="pre">n_phi_tot=192</span></code></a>) is an integer which gives the number of longitudinal/azimuthal grid points. It has the following constraints:</p>
 <ul class="simple">
@@ -138,7 +133,7 @@
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The possible values for <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_phi_max" title="f/truncation/n_phi_max"><code class="xref f f-var docutils literal"><span class="pre">n_phi_max</span></code></a> are thus: 16, 32, 48, 64, 96, 128, 192, 256, 288? 320, 384, 400, 512, 576, 640, 768, 864, 1024, 1280, 1536, 1792, 2048, ...</p>
+<p class="last">The possible values for <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_phi_max" title="f/truncation/n_phi_max"><code class="xref f f-var docutils literal"><span class="pre">n_phi_max</span></code></a> are thus: 16, 32, 48, 64, 96, 128, 192, 256, 288? 320, 384, 400, 512, 576, 640, 768, 864, 1024, 1280, 1536, 1792, 2048, …</p>
 </div>
 </li>
 <li><p class="first"><strong>l_axi</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/l_axi" title="f/truncation/l_axi"><code class="xref f f-var docutils literal"><span class="pre">l_axi=.false.</span></code></a>) is a logical. When set to true, one considers only the axisymmetric mode (i.e. MagIC becomes a 2-D axisymmetric code).</p>
@@ -147,7 +142,7 @@
 </li>
 <li><p class="first"><strong>fd_order</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/fd_order" title="f/truncation/fd_order"><code class="xref f f-var docutils literal"><span class="pre">fd_order=2</span></code></a>) is an integer. This is the order of the finite difference scheme for the bulk points (possible values are 2, 4, 6).</p>
 </li>
-<li><p class="first"><strong>fd_order_bound</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/fd_order_bound" title="f/truncation/fd_order_bound"><code class="xref f f-var docutils literal"><span class="pre">fd_order_bound=2</span></code></a>) is an integer. This is the order of the finite difference scheme for the boundary points (possible values are 1,2,3,4,5,6, ...).</p>
+<li><p class="first"><strong>fd_order_bound</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/fd_order_bound" title="f/truncation/fd_order_bound"><code class="xref f f-var docutils literal"><span class="pre">fd_order_bound=2</span></code></a>) is an integer. This is the order of the finite difference scheme for the boundary points (possible values are 1,2,3,4,5,6, …).</p>
 </li>
 <li><p class="first"><strong>fd_stretch</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/fd_stretch" title="f/truncation/fd_stretch"><code class="xref f f-var docutils literal"><span class="pre">fd_stretch=0.3</span></code></a>) is a real. It controls the ratio between the number of points in the boundary layers and in the bulk.</p>
 </li>
@@ -208,7 +203,7 @@ harmonic expansion are determined by <a class="reference internal" href="../apiF
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/inputNamelists/gridNamelist.txt"
+      <li><a href="../_sources/inputNamelists/gridNamelist.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -250,7 +245,7 @@ harmonic expansion are determined by <a class="reference internal" href="../apiF
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
     </div>
   </body>
 </html>

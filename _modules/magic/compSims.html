@@ -1,34 +1,33 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>magic.compSims &#8212; Magic 5.6 documentation</title>
-    
     <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '5.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="Magic 5.6 documentation" href="../../contents.html" />
-    <link rel="up" title="Module code" href="../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
           rel='stylesheet' type='text/css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
     <script src="galleria/galleria-1.4.2.min.js"></script>
  
     <style type="text/css">
@@ -66,7 +65,7 @@
     </script>
 
   </head>
-  <body role="document">
+  <body>
 <div class="pageheader">
   <ul>
     <li><a href="../../index.html">Home</a></li>
@@ -119,7 +118,7 @@
 <span class="sd">    This class allows to compare an analyse several DNS simultaneously. It is possible</span>
 <span class="sd">    to compare time-series or :ref:`graphic files &lt;secGraphFile&gt;`. To set it up, you</span>
 <span class="sd">    first need to create a file that contains the list of directories you want to analyse:</span>
-<span class="sd"> </span>
+
 <span class="sd">    .. code-block:: bash</span>
 
 <span class="sd">       $ cat inputList</span>
@@ -396,7 +395,7 @@
                     <span class="n">data</span> <span class="o">=</span> <span class="n">vr</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span> <span class="o">-</span> <span class="n">vt</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span>
                     <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Vz&#39;</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">data</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">selectField</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+                    <span class="n">data</span><span class="p">,</span> <span class="n">data_ic</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">selectField</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                 <span class="k">continue</span>
 
@@ -418,17 +417,17 @@
                                   <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">aa</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">cs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">levels</span>
-                <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">indPlot</span><span class="p">],</span> <span class="n">cs</span><span class="p">,</span> 
+                <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">indPlot</span><span class="p">],</span> <span class="n">cs</span><span class="p">,</span>
                                   <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">aa</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">rad</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">indPlot</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">gr</span><span class="o">.</span><span class="n">radratio</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">, r/ro=</span><span class="si">%.3f</span><span class="s1">, Ra=</span><span class="si">%.1e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">rad</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ra</span><span class="p">),</span> 
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">, r/ro=</span><span class="si">%.3f</span><span class="s1">, Ra=</span><span class="si">%.1e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">rad</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ra</span><span class="p">),</span>
                     <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
 
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;entropy&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">normed</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-                <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="o">-</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">indPlot</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> 
-                                 <span class="nb">abs</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">indPlot</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())),</span> 
+                <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="o">-</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">indPlot</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span>
+                                 <span class="nb">abs</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">indPlot</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())),</span>
                              <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">indPlot</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span>
                                  <span class="nb">abs</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">indPlot</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())))</span>
             <span class="n">iplot</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -477,7 +476,7 @@
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;omega&#39;</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">data</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">selectField</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+                    <span class="n">data</span><span class="p">,</span> <span class="n">data_ic</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">selectField</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                 <span class="k">continue</span>
 
@@ -499,7 +498,7 @@
                 <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">equator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">levels</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
                                 <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cut</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>    
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cut</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">normed</span> <span class="o">=</span> <span class="kc">False</span>
                     <span class="n">vmin</span> <span class="o">=</span> <span class="o">-</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">equator</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">equator</span><span class="o">.</span><span class="n">min</span><span class="p">()))</span>
                     <span class="n">vmin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cut</span><span class="o">*</span><span class="n">vmin</span>
@@ -537,7 +536,7 @@
             <span class="c1">#fig.colorbar(im)</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;entropy&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">normed</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-                <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="o">-</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">equator</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">equator</span><span class="o">.</span><span class="n">min</span><span class="p">())),</span> 
+                <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="o">-</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">equator</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">equator</span><span class="o">.</span><span class="n">min</span><span class="p">())),</span>
                              <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">equator</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">equator</span><span class="o">.</span><span class="n">min</span><span class="p">())))</span>
             <span class="n">iplot</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">workdir</span><span class="p">)</span></div>
@@ -589,13 +588,13 @@
                     <span class="n">denom</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">vs</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">vp</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
                     <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$\langle v_s v_\phi\rangle$&#39;</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">data</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">selectField</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+                    <span class="n">data</span><span class="p">,</span> <span class="n">data_ic</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">selectField</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                 <span class="k">continue</span>
 
             <span class="c1">#label += &#39; Ra = %.1e&#39; % gr.ra</span>
             <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Ra = </span><span class="si">%.1e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">gr</span><span class="o">.</span><span class="n">ra</span>
-            
+
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;Cr&#39;</span><span class="p">,</span> <span class="s1">&#39;cr&#39;</span><span class="p">,</span> <span class="s1">&#39;ra&#39;</span><span class="p">,</span> <span class="s1">&#39;ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;Cz&#39;</span><span class="p">,</span> <span class="s1">&#39;cz&#39;</span><span class="p">):</span>
                 <span class="n">phiavg</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
@@ -623,12 +622,12 @@
                     <span class="k">if</span> <span class="n">th</span> <span class="o">&gt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">radratio</span><span class="p">)</span>  <span class="ow">and</span> \
                        <span class="n">th</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">radratio</span><span class="p">):</span>
                         <span class="c1"># Outside tangent cylinder</span>
-                        <span class="n">val</span> <span class="o">=</span> <span class="n">trapz</span><span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="n">rr</span> <span class="o">&gt;=</span> <span class="n">ri</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">)],</span> 
+                        <span class="n">val</span> <span class="o">=</span> <span class="n">trapz</span><span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="n">rr</span> <span class="o">&gt;=</span> <span class="n">ri</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">)],</span>
                                     <span class="n">rr</span><span class="p">[</span><span class="n">rr</span> <span class="o">&gt;=</span> <span class="n">ri</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">)])</span>
                         <span class="n">outTC</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">outTC</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
                         <span class="n">integ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">integ</span><span class="p">,</span> <span class="n">th</span><span class="p">)</span>
                         <span class="c1"># Inside tangent cylinder</span>
-                        <span class="n">val</span> <span class="o">=</span> <span class="n">trapz</span><span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="n">rr</span> <span class="o">&lt;</span> <span class="n">ri</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">)],</span> 
+                        <span class="n">val</span> <span class="o">=</span> <span class="n">trapz</span><span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="n">rr</span> <span class="o">&lt;</span> <span class="n">ri</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">)],</span>
                                     <span class="n">rr</span><span class="p">[</span><span class="n">rr</span> <span class="o">&lt;</span> <span class="n">ri</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">)])</span>
                         <span class="n">inTC</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inTC</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
@@ -649,10 +648,10 @@
 
             <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nrow</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ncol</span><span class="p">,</span> <span class="n">iplot</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="p">:</span>
-                <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">phiavg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">levels</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> 
+                <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">phiavg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">levels</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
                                 <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cut</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>    
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cut</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">normed</span> <span class="o">=</span> <span class="kc">False</span>
                     <span class="n">vmin</span> <span class="o">=</span> <span class="o">-</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">min</span><span class="p">()))</span>
                     <span class="n">vmin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cut</span><span class="o">*</span><span class="n">vmin</span>
@@ -670,7 +669,7 @@
 
             <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="s1">&#39;k-&#39;</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="s1">&#39;k-&#39;</span><span class="p">)</span>
-            
+
             <span class="c1"># Variable conductivity</span>
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="s1">&#39;nVarCond&#39;</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">gr</span><span class="o">.</span><span class="n">nVarCond</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
@@ -705,7 +704,7 @@
                               <span class="c1">#verticalalignment=&#39;center&#39;,</span>
                               <span class="c1">#transform = ax.transAxes)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;entropy&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">normed</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-                <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="o">-</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">min</span><span class="p">())),</span> 
+                <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="o">-</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">min</span><span class="p">())),</span>
                              <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">min</span><span class="p">())))</span>
 
             <span class="n">iplot</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -742,13 +741,13 @@
                     <span class="n">data</span> <span class="o">=</span> <span class="n">vr</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span> <span class="o">-</span> <span class="n">vt</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span>
                     <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Vz&#39;</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">data</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">selectField</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+                    <span class="n">data</span><span class="p">,</span> <span class="n">data_ic</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">selectField</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                 <span class="k">continue</span>
 
             <span class="c1">#label += &#39; Ra = %.1e&#39; % gr.ra</span>
             <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Ra = </span><span class="si">%.1e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">gr</span><span class="o">.</span><span class="n">ra</span>
-            
+
             <span class="n">phiavg</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
 
             <span class="n">th</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">)</span>
@@ -773,7 +772,7 @@
 <span class="sd">            &quot;&quot;&quot;</span>
 
             <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nrow</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ncol</span><span class="p">,</span> <span class="n">iplot</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cut</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>    
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cut</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">normed</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="n">vmin</span> <span class="o">=</span> <span class="o">-</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">min</span><span class="p">()))</span>
                 <span class="n">vmin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cut</span><span class="o">*</span><span class="n">vmin</span>
@@ -790,7 +789,7 @@
 
             <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="s1">&#39;k-&#39;</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="s1">&#39;k-&#39;</span><span class="p">)</span>
-            
+
             <span class="c1"># Variable conductivity</span>
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="s1">&#39;nVarCond&#39;</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">gr</span><span class="o">.</span><span class="n">nVarCond</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
@@ -820,7 +819,7 @@
                               <span class="c1">#verticalalignment=&#39;center&#39;,</span>
                               <span class="c1">#transform = ax.transAxes)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;entropy&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">normed</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-                <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="o">-</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">min</span><span class="p">())),</span> 
+                <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="o">-</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">min</span><span class="p">())),</span>
                              <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">min</span><span class="p">())))</span>
 
             <span class="n">iplot</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -867,7 +866,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
     </div>
   </body>
 </html>

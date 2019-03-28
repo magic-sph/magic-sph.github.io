@@ -1,34 +1,33 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>magic.cyl &#8212; Magic 5.6 documentation</title>
-    
     <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '5.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="Magic 5.6 documentation" href="../../contents.html" />
-    <link rel="up" title="Module code" href="../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
           rel='stylesheet' type='text/css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
     <script src="galleria/galleria-1.4.2.min.js"></script>
  
     <style type="text/css">
@@ -66,7 +65,7 @@
     </script>
 
   </head>
-  <body role="document">
+  <body>
 <div class="pageheader">
   <ul>
     <li><a href="../../index.html">Home</a></li>
@@ -119,7 +118,7 @@
 
 <div class="viewcode-block" id="sph2cyl_plane"><a class="viewcode-back" href="../../apiPython/misc.html#magic.cyl.sph2cyl_plane">[docs]</a><span class="k">def</span> <span class="nf">sph2cyl_plane</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">rad</span><span class="p">,</span> <span class="n">ns</span><span class="p">,</span> <span class="n">nz</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This function extrapolates a phi-slice of a spherical shell on </span>
+<span class="sd">    This function extrapolates a phi-slice of a spherical shell on</span>
 <span class="sd">    a cylindrical grid</span>
 
 <span class="sd">    &gt;&gt;&gt; # Read G_1.test</span>
@@ -183,7 +182,7 @@
 <span class="sd">    grid). This works well for 2-D (phi-slice) arrays. In case of 3-D arrays, only</span>
 <span class="sd">    one element is allowed (too demanding otherwise).</span>
 
-<span class="sd">    :param input: a list of 2-D or 3-D arrays </span>
+<span class="sd">    :param input: a list of 2-D or 3-D arrays</span>
 <span class="sd">    :type input: list(numpy.ndarray)</span>
 <span class="sd">    :param radius: spherical radius</span>
 <span class="sd">    :type radius: numpy.ndarray</span>
@@ -191,7 +190,7 @@
 <span class="sd">    :type ns: int</span>
 <span class="sd">    :param minc: azimuthal symmetry</span>
 <span class="sd">    :type minc: int</span>
-<span class="sd">    :param save: a boolean to specify if one wants to save the outputs into </span>
+<span class="sd">    :param save: a boolean to specify if one wants to save the outputs into</span>
 <span class="sd">                 a pickle (default is True)</span>
 <span class="sd">    :type save: bool</span>
 <span class="sd">    :param filename: name of the output pickle when save=True</span>
@@ -211,7 +210,7 @@
     <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">ro</span><span class="p">,</span> <span class="n">ro</span><span class="p">,</span> <span class="n">nz</span><span class="p">)</span>
     <span class="n">cylRad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">ro</span><span class="p">,</span> <span class="n">ns</span><span class="p">)</span>
     <span class="n">cylRad</span> <span class="o">=</span> <span class="n">cylRad</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    
+
     <span class="n">height</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">cylRad</span><span class="p">)</span>
     <span class="n">height</span><span class="p">[</span><span class="n">cylRad</span><span class="o">&gt;=</span><span class="n">ri</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ro</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">cylRad</span><span class="p">[</span><span class="n">cylRad</span><span class="o">&gt;=</span><span class="n">ri</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">height</span><span class="p">[</span><span class="n">cylRad</span><span class="o">&lt;</span><span class="n">ri</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ro</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">cylRad</span><span class="p">[</span><span class="n">cylRad</span><span class="o">&lt;</span><span class="n">ri</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>\
@@ -331,7 +330,7 @@
 <div class="viewcode-block" id="Cyl"><a class="viewcode-back" href="../../apiPython/misc.html#magic.cyl.Cyl">[docs]</a><span class="k">class</span> <span class="nc">Cyl</span><span class="p">(</span><span class="n">MagicSetup</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class allows to extrapolate a given :ref:`graphic file &lt;secGraphFile&gt;`</span>
-<span class="sd">    on a cylindrical grid. Once done, the extrapolated file is stored in </span>
+<span class="sd">    on a cylindrical grid. Once done, the extrapolated file is stored in</span>
 <span class="sd">    a python.pickle file. It is then possible to display 2-D cuts of the extrapolated</span>
 <span class="sd">    arrays (radial cuts, phi-averages, equatorial cuts, z-averages and phi-slices)</span>
 
@@ -361,7 +360,7 @@
 <span class="sd">        :type ns: int</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">MagicSetup</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="p">)</span>
-         
+
         <span class="bp">self</span><span class="o">.</span><span class="n">datadir</span> <span class="o">=</span> <span class="n">datadir</span>
 
         <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">G_</span><span class="si">%i</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;cyl&#39;</span><span class="p">,</span> <span class="n">ivar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
@@ -379,12 +378,12 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">minc</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">minc</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ro</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ri</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Z</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vphi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vz</span> <span class="o">=</span> <span class="n">sph2cyl</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Z</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vphi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vz</span> <span class="o">=</span> <span class="n">sph2cyl</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span>
                                     <span class="bp">self</span><span class="o">.</span><span class="n">ns</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nz</span><span class="p">)</span>
             <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span>
             <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">ns</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nz</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nphi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">],</span> <span class="n">file</span><span class="p">)</span>
             <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">ro</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ri</span><span class="p">],</span> <span class="n">file</span><span class="p">)</span>
-            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Z</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vphi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vz</span><span class="p">],</span> 
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Z</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vphi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vz</span><span class="p">],</span>
                         <span class="n">file</span><span class="p">)</span>
             <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
@@ -396,15 +395,15 @@
                          <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
             <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ro</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ns</span><span class="p">)</span>
-        <span class="n">temp0</span><span class="p">,</span> <span class="n">rho0</span><span class="p">,</span> <span class="n">beta0</span> <span class="o">=</span> <span class="n">anelprof</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ro</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ri</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ns</span><span class="p">),</span> 
+        <span class="n">temp0</span><span class="p">,</span> <span class="n">rho0</span><span class="p">,</span> <span class="n">beta0</span> <span class="o">=</span> <span class="n">anelprof</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ro</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ri</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ns</span><span class="p">),</span>
                                      <span class="bp">self</span><span class="o">.</span><span class="n">strat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">polind</span><span class="p">)</span>
         <span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nphi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ns</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vr</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
         <span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nphi</span><span class="o">/</span><span class="mi">2</span><span class="p">):</span>
             <span class="n">rho</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">rho0</span>
             <span class="n">beta</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">beta0</span>
-        <span class="n">Z</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="p">[</span><span class="n">rho</span><span class="p">,</span> <span class="n">beta</span><span class="p">]</span> <span class="o">=</span> <span class="n">sph2cyl_plane</span><span class="p">([</span><span class="n">rho</span><span class="p">,</span><span class="n">beta</span><span class="p">],</span> 
-                                 <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ro</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ri</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ns</span><span class="p">),</span> 
+        <span class="n">Z</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="p">[</span><span class="n">rho</span><span class="p">,</span> <span class="n">beta</span><span class="p">]</span> <span class="o">=</span> <span class="n">sph2cyl_plane</span><span class="p">([</span><span class="n">rho</span><span class="p">,</span><span class="n">beta</span><span class="p">],</span>
+                                 <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ro</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ri</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ns</span><span class="p">),</span>
                                  <span class="bp">self</span><span class="o">.</span><span class="n">ns</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nz</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vs</span><span class="p">)</span>
@@ -413,7 +412,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">beta</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">ro</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ro</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nz</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Cyl.surf"><a class="viewcode-back" href="../../apiPython/misc.html#magic.cyl.Cyl.surf">[docs]</a>    <span class="k">def</span> <span class="nf">surf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;Bphi&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+<div class="viewcode-block" id="Cyl.surf"><a class="viewcode-back" href="../../apiPython/misc.html#magic.cyl.Cyl.surf">[docs]</a>    <span class="k">def</span> <span class="nf">surf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;Bphi&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
              <span class="n">levels</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot the surface distribution of an input field at a given</span>
@@ -469,7 +468,7 @@
 
         <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
         <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
-        <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">indPlot</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">levels</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> 
+        <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">indPlot</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">levels</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span>
                         <span class="n">aa</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">rad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">indPlot</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">ri</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">ro</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
@@ -483,8 +482,8 @@
         <span class="n">cbar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;entropy&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">normed</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="o">-</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">indPlot</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> 
-                             <span class="nb">abs</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">indPlot</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())),</span> 
+            <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="o">-</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">indPlot</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span>
+                             <span class="nb">abs</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">indPlot</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())),</span>
                          <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">indPlot</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span>
                              <span class="nb">abs</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">indPlot</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())))</span></div>
 
@@ -551,7 +550,7 @@
                 <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;beta vr&#39;</span>
         <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;Cr&#39;</span><span class="p">,</span> <span class="s1">&#39;cr&#39;</span><span class="p">):</span>
             <span class="n">vp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vphi</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">vphi</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># convective vp</span>
-            <span class="n">data</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">vs</span> <span class="o">*</span> <span class="n">vp</span> 
+            <span class="n">data</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">vs</span> <span class="o">*</span> <span class="n">vp</span>
             <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
                 <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$\langle \rho v_s v_\phi\rangle$&#39;</span>
             <span class="k">else</span><span class="p">:</span>
@@ -577,7 +576,7 @@
         <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;entropy&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">normed</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="o">-</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">equator</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">equator</span><span class="o">.</span><span class="n">min</span><span class="p">())),</span> 
+            <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="o">-</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">equator</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">equator</span><span class="o">.</span><span class="n">min</span><span class="p">())),</span>
                          <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">equator</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">equator</span><span class="o">.</span><span class="n">min</span><span class="p">())))</span></div>
 
 <div class="viewcode-block" id="Cyl.avg"><a class="viewcode-back" href="../../apiPython/misc.html#magic.cyl.Cyl.avg">[docs]</a>    <span class="k">def</span> <span class="nf">avg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;Bphi&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -663,7 +662,7 @@
         <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;entropy&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">normed</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="o">-</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">min</span><span class="p">())),</span> 
+            <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="o">-</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">min</span><span class="p">())),</span>
                          <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">phiavg</span><span class="o">.</span><span class="n">min</span><span class="p">())))</span></div>
 
 <div class="viewcode-block" id="Cyl.avgz"><a class="viewcode-back" href="../../apiPython/misc.html#magic.cyl.Cyl.avgz">[docs]</a>    <span class="k">def</span> <span class="nf">avgz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;vs&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -834,8 +833,8 @@
         <span class="n">equator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ns</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vs</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">rad</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">rad</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ri</span><span class="p">:</span>
-                <span class="n">zo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ro</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">rad</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> 
-                <span class="n">zi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ri</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">rad</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> 
+                <span class="n">zo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ro</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">rad</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+                <span class="n">zi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ri</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">rad</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
                 <span class="n">m1</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">zo</span>
                 <span class="n">m2</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">zi</span>
                 <span class="n">equator</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="n">m1</span><span class="o">*</span><span class="n">m2</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -848,7 +847,7 @@
                    <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">vr</span><span class="p">[:,</span> <span class="n">m1</span><span class="o">*</span><span class="n">m2</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>\
                  <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vs</span><span class="p">[:,</span> <span class="n">m1</span><span class="o">*</span><span class="n">m2</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
             <span class="k">elif</span> <span class="n">rad</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ri</span> <span class="ow">and</span> <span class="n">rad</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ro</span><span class="p">:</span>
-                <span class="n">zo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ro</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">rad</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> 
+                <span class="n">zo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ro</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">rad</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
                 <span class="n">m1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="n">zo</span>
                 <span class="n">m2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">&lt;=</span> <span class="n">zo</span>
                 <span class="n">equator</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="n">m1</span><span class="o">*</span><span class="n">m2</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -890,10 +889,10 @@
             <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
 
         <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;entropy&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">normed</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="o">-</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">equator</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">equator</span><span class="o">.</span><span class="n">min</span><span class="p">())),</span> 
+            <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="o">-</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">equator</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">equator</span><span class="o">.</span><span class="n">min</span><span class="p">())),</span>
                          <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">equator</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">equator</span><span class="o">.</span><span class="n">min</span><span class="p">())))</span></div>
 
-<div class="viewcode-block" id="Cyl.slice"><a class="viewcode-back" href="../../apiPython/misc.html#magic.cyl.Cyl.slice">[docs]</a>    <span class="k">def</span> <span class="nf">slice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;Bphi&#39;</span><span class="p">,</span> <span class="n">lon_0</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">,</span> 
+<div class="viewcode-block" id="Cyl.slice"><a class="viewcode-back" href="../../apiPython/misc.html#magic.cyl.Cyl.slice">[docs]</a>    <span class="k">def</span> <span class="nf">slice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;Bphi&#39;</span><span class="p">,</span> <span class="n">lon_0</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">,</span>
               <span class="n">normed</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot an azimuthal slice of a given field.</span>
@@ -942,7 +941,7 @@
         <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nphi</span><span class="p">)</span>
 
         <span class="n">lon_0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">lon_0</span><span class="p">)</span>
-        
+
         <span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">cm</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lon_0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -981,7 +980,7 @@
             <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;entropy&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">normed</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="o">-</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">phislice</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">phislice</span><span class="o">.</span><span class="n">min</span><span class="p">())),</span> 
+            <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="o">-</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">phislice</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">phislice</span><span class="o">.</span><span class="n">min</span><span class="p">())),</span>
                          <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">phislice</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">phislice</span><span class="o">.</span><span class="n">min</span><span class="p">())))</span></div></div>
 
 
@@ -1030,7 +1029,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
     </div>
   </body>
 </html>
