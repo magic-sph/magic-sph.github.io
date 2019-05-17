@@ -1,0 +1,376 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>magic.spectralTransforms &#8212; Magic 5.7 documentation</title>
+    <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '5.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script src="galleria/galleria-1.4.2.min.js"></script>
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body>
+<div class="pageheader">
+  <ul>
+    <li><a href="../../index.html">Home</a></li>
+    <li><a href="../../install.html">Get it/Run it</a></li>
+    <li><a href="../../contribute.html">Contribute!</a></li>
+    <li><a href="../../numerics.html">Numerical methods</a></li>
+    <li><a href="../../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../../index.html">
+      <img src="../../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.7 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for magic.spectralTransforms</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">.setup</span> <span class="k">import</span> <span class="n">buildSo</span>
+
+<span class="k">if</span> <span class="n">buildSo</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">magic.legendre3</span> <span class="k">as</span> <span class="nn">leg</span>
+    <span class="k">elif</span>  <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">magic.legendre2</span> <span class="k">as</span> <span class="nn">leg</span>
+
+
+
+<div class="viewcode-block" id="SpectralTransforms"><a class="viewcode-back" href="../../apiPython/libs.html#magic.spectralTransforms.SpectralTransforms">[docs]</a><span class="k">class</span> <span class="nc">SpectralTransforms</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This python class is used to compute Legendre and Fourier transforms</span>
+<span class="sd">    from spectral to physical space. It works in two steps: one first needs</span>
+<span class="sd">    to initialize the transform</span>
+
+<span class="sd">    &gt;&gt;&gt; sh = SpectralTransforms( l_max=256, lm_max=33153, n_theta_max=384)</span>
+<span class="sd">    &gt;&gt;&gt; print(Tlm[:, 10].shape) # lm_max (Temperature at ir=10)</span>
+<span class="sd">    &gt;&gt;&gt; T = sh.spec_spat(Tlm) # T[n_phi_max, n_theta_max]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l_max</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">lm_max</span><span class="o">=</span><span class="mi">561</span><span class="p">,</span> <span class="n">n_theta_max</span><span class="o">=</span><span class="mi">64</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param l_max: maximum spherical harmonic degree</span>
+<span class="sd">        :type l_max: int</span>
+<span class="sd">        :param minc: azimuthal symmetry</span>
+<span class="sd">        :type minc: int</span>
+<span class="sd">        :param lm_max: maximum l,m combination</span>
+<span class="sd">        :type lm_max: int</span>
+<span class="sd">        :param n_theta_max: number of grid points in the latitudinal direction</span>
+<span class="sd">        :type n_theta_max: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_legF90</span> <span class="o">=</span> <span class="n">leg</span><span class="o">.</span><span class="n">legendre</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_legF90</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">l_max</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> <span class="n">lm_max</span><span class="p">,</span> <span class="n">n_theta_max</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_legF90</span><span class="o">.</span><span class="n">l_max</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_legF90</span><span class="o">.</span><span class="n">minc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lm_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_legF90</span><span class="o">.</span><span class="n">lm_max</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_legF90</span><span class="o">.</span><span class="n">n_theta_max</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_legF90</span><span class="o">.</span><span class="n">n_phi_max</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">m_max</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Spectral transform setup:&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;l_max, m_max, minc, lm_max: </span><span class="si">%i</span><span class="s1">, </span><span class="si">%i</span><span class="s1">, </span><span class="si">%i</span><span class="s1">, </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">m_max</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lm_max</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;n_phi_max, n_theta_max: </span><span class="si">%i</span><span class="s1">, </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">colat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_legF90</span><span class="o">.</span><span class="n">sinth</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">m_max</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;i&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ell</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">lm_max</span><span class="p">),</span> <span class="s1">&#39;i&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">idx</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ell</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_max</span><span class="o">+</span><span class="mi">1</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_max</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_max</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">idx</span><span class="p">[</span><span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ell</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">idx</span><span class="p">[</span><span class="n">l</span><span class="p">,</span><span class="n">m</span><span class="p">]]</span> <span class="o">=</span> <span class="n">l</span>
+                <span class="n">k</span> <span class="o">+=</span><span class="mi">1</span>
+
+<div class="viewcode-block" id="SpectralTransforms.spec_spat"><a class="viewcode-back" href="../../apiPython/libs.html#magic.spectralTransforms.SpectralTransforms.spec_spat">[docs]</a>    <span class="k">def</span> <span class="nf">spec_spat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This subroutine computes a transfrom from spectral to spatial</span>
+<span class="sd">        for all latitudes. It returns either  one or two 2-D arrays</span>
+<span class="sd">        (dimension(n_phi_max,n_theta_max)) depending if only the poloidal</span>
+<span class="sd">        or both the poloidal and the toroidal potentials are given as</span>
+<span class="sd">        input quantities.</span>
+
+<span class="sd">        &gt;&gt;&gt; print(wlmr.shape) # lm_max</span>
+<span class="sd">        &gt;&gt;&gt; vr = spec_spat_equat(wlmr)</span>
+<span class="sd">        &gt;&gt;&gt; print(vr.shape) # n_phi, n_theta</span>
+<span class="sd">        &gt;&gt;&gt; vt, vp = spec_spat_equat(dwdrlmr, zlmr)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s1">&#39;l_axi&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">l_axi</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;l_axi&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">l_axi</span><span class="p">:</span>
+                <span class="n">n_phi</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">n_phi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">n_phi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">polo</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_legF90</span><span class="o">.</span><span class="n">specspat_scal</span><span class="p">(</span><span class="n">polo</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">,</span> <span class="n">n_phi</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">n_phi</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">real</span>
+            <span class="k">return</span> <span class="n">out</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">polo</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">toro</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">vt</span><span class="p">,</span> <span class="n">vp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_legF90</span><span class="o">.</span><span class="n">specspat_vec</span><span class="p">(</span><span class="n">polo</span><span class="p">,</span> <span class="n">toro</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">,</span> <span class="n">n_phi</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">n_phi</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">vt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">vt</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span>
+                <span class="n">vp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span>
+            <span class="n">vt</span> <span class="o">=</span> <span class="n">vt</span><span class="o">.</span><span class="n">real</span>
+            <span class="n">vp</span> <span class="o">=</span> <span class="n">vp</span><span class="o">.</span><span class="n">real</span>
+
+            <span class="k">return</span> <span class="n">vt</span><span class="p">,</span> <span class="n">vp</span></div>
+
+<div class="viewcode-block" id="SpectralTransforms.spec_spat_dtheta"><a class="viewcode-back" href="../../apiPython/libs.html#magic.spectralTransforms.SpectralTransforms.spec_spat_dtheta">[docs]</a>    <span class="k">def</span> <span class="nf">spec_spat_dtheta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">polo</span><span class="p">,</span> <span class="n">l_axi</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This routine computes the theta-derivative and the transform from spectral</span>
+<span class="sd">        to spatrial spaces. It returns a 2-D array of dimension (n_phi,n_theta)</span>
+
+<span class="sd">        &gt;&gt;&gt; p = MagicPotential(&#39;V&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; vrlm = p.pol*p.ell*(p.ell+1)/p.radius[ir]**2/p.rho0[ir] # vr at r=ir</span>
+<span class="sd">        &gt;&gt;&gt; dvrdt = p.sh.spec_spat_dtheta(vrlm) # theta-derivative of vr</span>
+
+<span class="sd">        :param polo: the input array(lm_max) in spectral space</span>
+<span class="sd">        :type polo: numpy.ndarray</span>
+<span class="sd">        :param l_axi: switch to True, if only the axisymmetric field is needed</span>
+<span class="sd">        :type l_axi: bool</span>
+<span class="sd">        :returns: the theta derivative in the physical space (n_phi, n_theta)</span>
+<span class="sd">        :rtype: numpy.ndarray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">l_axi</span><span class="p">:</span>
+            <span class="n">n_phi</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">n_phi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_legF90</span><span class="o">.</span><span class="n">specspat_dtheta</span><span class="p">(</span><span class="n">polo</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">,</span> <span class="n">n_phi</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">n_phi</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">real</span>
+
+        <span class="k">return</span> <span class="n">out</span></div>
+
+<div class="viewcode-block" id="SpectralTransforms.spec_spat_dphi"><a class="viewcode-back" href="../../apiPython/libs.html#magic.spectralTransforms.SpectralTransforms.spec_spat_dphi">[docs]</a>    <span class="k">def</span> <span class="nf">spec_spat_dphi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">polo</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This routine computes the phi-derivative and the transform from spectral</span>
+<span class="sd">        to spatrial spaces. It returns a 2-D array of dimension (n_phi,n_theta)</span>
+
+<span class="sd">        &gt;&gt;&gt; p = MagicPotential(&#39;V&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; vrlm = p.pol*p.ell*(p.ell+1)/p.radius[ir]**2/p.rho0[ir] # vr at r=ir</span>
+<span class="sd">        &gt;&gt;&gt; dvrdp = p.sh.spec_spat_dphi(vrlm) # phi-derivative of vr</span>
+
+<span class="sd">        :param polo: the input array(lm_max) in spectral space</span>
+<span class="sd">        :type polo: numpy.ndarray</span>
+<span class="sd">        :returns: the phi derivative in the physical space (n_phi, n_theta)</span>
+<span class="sd">        :rtype: numpy.ndarray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_legF90</span><span class="o">.</span><span class="n">specspat_dphi</span><span class="p">(</span><span class="n">polo</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span>
+        <span class="c1"># since dPhilm contains a 1/sin(theta) one has to multiply by sin(theta)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">real</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colat</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">out</span></div>
+
+<div class="viewcode-block" id="SpectralTransforms.spec_spat_equat"><a class="viewcode-back" href="../../apiPython/libs.html#magic.spectralTransforms.SpectralTransforms.spec_spat_equat">[docs]</a>    <span class="k">def</span> <span class="nf">spec_spat_equat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This subroutine computes a transfrom from spectral to spatial</span>
+<span class="sd">        at the equator. It returns either one or two 1-D arrays</span>
+<span class="sd">        (dimension(n_phi_max)) depending if only the poloidal or both the</span>
+<span class="sd">        poloidal and the toroidal potentials are given as input quantities.</span>
+
+<span class="sd">        &gt;&gt;&gt; print(wlmr.shape) # lm_max</span>
+<span class="sd">        &gt;&gt;&gt; vr = spec_spat_equat(wlmr)</span>
+<span class="sd">        &gt;&gt;&gt; print(vr.shape) # n_phi</span>
+<span class="sd">        &gt;&gt;&gt; vt, vp = spec_spat_equat(dwdrlmr, zlmr)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">polo</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_legF90</span><span class="o">.</span><span class="n">specspat_equat_scal</span><span class="p">(</span><span class="n">polo</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">real</span>
+
+            <span class="k">return</span> <span class="n">out</span>
+
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">polo</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">toro</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">vt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">)</span>
+            <span class="n">vp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_legF90</span><span class="o">.</span><span class="n">specspat_equat_vec</span><span class="p">(</span><span class="n">polo</span><span class="p">,</span> <span class="n">toro</span><span class="p">,</span> <span class="n">vt</span><span class="p">,</span> <span class="n">vp</span><span class="p">)</span>
+            <span class="n">vt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">vt</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span>
+            <span class="n">vp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">vp</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span>
+            <span class="n">vt</span> <span class="o">=</span> <span class="n">vt</span><span class="o">.</span><span class="n">real</span>
+            <span class="n">vp</span> <span class="o">=</span> <span class="n">vp</span><span class="o">.</span><span class="n">real</span>
+
+            <span class="k">return</span> <span class="n">vt</span><span class="p">,</span> <span class="n">vp</span></div>
+
+<div class="viewcode-block" id="SpectralTransforms.spat_spec"><a class="viewcode-back" href="../../apiPython/libs.html#magic.spectralTransforms.SpectralTransforms.spat_spec">[docs]</a>    <span class="k">def</span> <span class="nf">spat_spec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This subroutine computes a transfrom from spatial representation</span>
+<span class="sd">        (n_phi,n_theta) to spectral representation (lm_max). It returns</span>
+<span class="sd">        one complex 1-D array (dimension(n_phi_max))</span>
+
+<span class="sd">        &gt;&gt;&gt; gr = MagicGraph()</span>
+<span class="sd">        &gt;&gt;&gt; sh = SpectralTransforms(gr.l_max, gr.minc, gr.lm_max, gr.n_theta_max)</span>
+<span class="sd">        &gt;&gt;&gt; vr = gr.vr[:,:,30] # Radius ir=30</span>
+<span class="sd">        &gt;&gt;&gt; vrlm = sh.spat_spec(vr) # vrlm is a complex array (lm_max)</span>
+<span class="sd">        &gt;&gt;&gt; # Caculation of the poloidal potential from vr:</span>
+<span class="sd">        &gt;&gt;&gt; wlm = np.zeros_like(vrlm)</span>
+<span class="sd">        &gt;&gt;&gt; wlm[1:] = vrlm[1:]/(sh.ell[1:]*(sh.ell[1:]+1))*gr.radius[30]**2</span>
+<span class="sd">        &gt;&gt;&gt; # Spheroidal/Toroidal transform</span>
+<span class="sd">        &gt;&gt;&gt; vtlm, vplm = spec_spat(gr.vtheta, gr.vphi)</span>
+
+<span class="sd">        :param input: input array in the physical space (n_phi,n_theta)</span>
+<span class="sd">        :type input: numpy.ndarray</span>
+<span class="sd">        :returns: output array in the spectral space (lm_max)</span>
+<span class="sd">        :rtype: numpy.ndarray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">input</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span>
+            <span class="n">outLM</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_legF90</span><span class="o">.</span><span class="n">spatspec</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lm_max</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">outLM</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">in1</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">in2</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">out1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">in1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span>
+            <span class="n">out2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">in2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span>
+
+            <span class="n">utLM</span><span class="p">,</span> <span class="n">upLM</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_legF90</span><span class="o">.</span><span class="n">spatspec_sphertor</span><span class="p">(</span><span class="n">out1</span><span class="p">,</span> <span class="n">out2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lm_max</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">utLM</span><span class="p">,</span> <span class="n">upLM</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">sh</span> <span class="o">=</span> <span class="n">SpectralTransforms</span><span class="p">(</span> <span class="n">l_max</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">lm_max</span><span class="o">=</span><span class="mi">33153</span><span class="p">,</span> <span class="n">n_theta_max</span><span class="o">=</span><span class="mi">384</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span> <span class="n">a</span><span class="o">.</span><span class="n">lm_max</span> <span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.7 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+    </div>
+  </body>
+</html>

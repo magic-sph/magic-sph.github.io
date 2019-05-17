@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>magic.graph &#8212; Magic 5.6 documentation</title>
+    <title>magic.graph &#8212; Magic 5.7 documentation</title>
     <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '5.6',
+        VERSION:     '5.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -93,7 +93,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.6 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.7 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -169,11 +169,11 @@
 <span class="sd">    &gt;&gt;&gt; print(gr.ek) # print ekman number</span>
 <span class="sd">    &gt;&gt;&gt; print(gr.minc) # azimuthal symmetry</span>
 <span class="sd">    &gt;&gt;&gt; # Averaged G file with double precision</span>
-<span class="sd">    &gt;&gt;&gt; gr = MagicGraph(ave=True, tag=&#39;N0m2&#39;, precision=&#39;Float64&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; gr = MagicGraph(ave=True, tag=&#39;N0m2&#39;, precision=np.float64)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="MagicGraph.__init__"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicGraph.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ivar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                 <span class="n">ave</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="s1">&#39;Float32&#39;</span><span class="p">):</span>
+                 <span class="n">ave</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param ave: when set to True, it tries to find an average</span>
 <span class="sd">                    G file (G_ave.TAG)</span>
@@ -188,7 +188,7 @@
 <span class="sd">        :type quiet: bool</span>
 <span class="sd">        :param datadir: directory of the G file (default is . )</span>
 <span class="sd">        :type datadir: str</span>
-<span class="sd">        :param precision: single or double precision (default &#39;Float32&#39;)</span>
+<span class="sd">        :param precision: single or double precision (default np.float32)</span>
 <span class="sd">        :type precision: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">=</span> <span class="n">precision</span>
@@ -236,9 +236,9 @@
 
         <span class="k">if</span> <span class="n">readingMode</span> <span class="o">!=</span> <span class="s1">&#39;python&#39;</span><span class="p">:</span>
 
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">==</span> <span class="s1">&#39;Float32&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">:</span>
                 <span class="n">G</span> <span class="o">=</span> <span class="n">Gsngl</span><span class="o">.</span><span class="n">greader_single</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">==</span> <span class="s1">&#39;Float64&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">:</span>
                 <span class="n">G</span> <span class="o">=</span> <span class="n">Gdble</span><span class="o">.</span><span class="n">greader_double</span>
 
             <span class="n">G</span><span class="o">.</span><span class="n">readg</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="n">endian</span><span class="p">)</span>
@@ -599,13 +599,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.6 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.7 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
   </body>
 </html>

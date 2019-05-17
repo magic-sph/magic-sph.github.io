@@ -1,0 +1,703 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>magic.potential &#8212; Magic 5.7 documentation</title>
+    <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '5.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script src="galleria/galleria-1.4.2.min.js"></script>
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head>
+  <body>
+<div class="pageheader">
+  <ul>
+    <li><a href="../../index.html">Home</a></li>
+    <li><a href="../../install.html">Get it/Run it</a></li>
+    <li><a href="../../contribute.html">Contribute!</a></li>
+    <li><a href="../../numerics.html">Numerical methods</a></li>
+    <li><a href="../../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../../index.html">
+      <img src="../../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.7 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for magic.potential</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">magic</span> <span class="k">import</span> <span class="n">MagicSetup</span><span class="p">,</span> <span class="n">scanDir</span>
+<span class="kn">from</span> <span class="nn">.setup</span> <span class="k">import</span> <span class="n">labTex</span><span class="p">,</span> <span class="n">defaultCm</span><span class="p">,</span> <span class="n">defaultLevels</span><span class="p">,</span> <span class="n">labTex</span><span class="p">,</span> <span class="n">buildSo</span>
+<span class="kn">from</span> <span class="nn">.libmagic</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.spectralTransforms</span> <span class="k">import</span> <span class="n">SpectralTransforms</span>
+<span class="kn">from</span> <span class="nn">.plotlib</span> <span class="k">import</span> <span class="n">radialContour</span><span class="p">,</span> <span class="n">merContour</span><span class="p">,</span> <span class="n">equatContour</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">.npfile</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="k">if</span> <span class="n">buildSo</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">magic.lmrreader_single3</span> <span class="k">as</span> <span class="nn">Psngl</span>
+    <span class="k">elif</span>  <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">magic.lmrreader_single2</span> <span class="k">as</span> <span class="nn">Psngl</span>
+
+    <span class="n">readingMode</span> <span class="o">=</span> <span class="s1">&#39;f2py&#39;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">readingMode</span> <span class="o">=</span> <span class="s1">&#39;python&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">getPotEndianness</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function determines the endianness of the potential files</span>
+
+<span class="sd">    :param filename: input of the filename</span>
+<span class="sd">    :type filename: str</span>
+<span class="sd">    :returns: the endianness of the file (&#39;B&#39;=&#39;big_endian&#39; or</span>
+<span class="sd">              &#39;l&#39;=&#39;little_endian&#39;)</span>
+<span class="sd">    :rtype: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">npfile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="s1">&#39;i4&#39;</span><span class="p">)</span>
+        <span class="n">endian</span> <span class="o">=</span> <span class="s1">&#39;B&#39;</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="n">endian</span> <span class="o">=</span> <span class="s1">&#39;l&#39;</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">endian</span>
+
+
+<div class="viewcode-block" id="MagicPotential"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicPotential">[docs]</a><span class="k">class</span> <span class="nc">MagicPotential</span><span class="p">(</span><span class="n">MagicSetup</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class allows to load and display the content of the potential</span>
+<span class="sd">    files: :ref:`V_lmr.TAG &lt;secVpotFile&gt;`, :ref:`B_lmr.TAG &lt;secBpotFile&gt;`</span>
+<span class="sd">    and :ref:`T_lmr.TAG &lt;secTpotFile&gt;`. This class allows to transform</span>
+<span class="sd">    the poloidal/toroidal potential in spectral space to the physical</span>
+<span class="sd">    quantities in the physical space. It allows to plot radial and</span>
+<span class="sd">    equatorial cuts as well as phi-averages.</span>
+
+<span class="sd">    &gt;&gt;&gt; # To read T_lmr.test</span>
+<span class="sd">    &gt;&gt;&gt; p = MagicPotential(field=&#39;T&#39;, ipot=1, tag=&#39;test&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; # To read the latest V_lmr file in the working directory</span>
+<span class="sd">    &gt;&gt;&gt; p = MagicPotential(field=&#39;V&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; # Get the poloidal potential (lm, nR)</span>
+<span class="sd">    &gt;&gt;&gt; wlm = p.pol</span>
+<span class="sd">    &gt;&gt;&gt; # Obtain the value of w(l=12, m=12, nR=33)</span>
+<span class="sd">    &gt;&gt;&gt; print( p.pol[p.idx[12,12], 32] )</span>
+
+<span class="sd">    &gt;&gt;&gt; # Possible plots</span>
+<span class="sd">    &gt;&gt;&gt; p.equat(field=&#39;vr&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; p.avg(field=&#39;vp&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; p.surf(field=&#39;vt&#39;, r=0.8)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MagicPotential.__init__"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicPotential.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;V&#39;</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ave</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ipot</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">precision</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param field: &#39;B&#39;, &#39;V&#39; or &#39;T&#39; (magnetic field, velocity field or</span>
+<span class="sd">                      temperature)</span>
+<span class="sd">        :type field: str</span>
+<span class="sd">        :param datadir: the working directory</span>
+<span class="sd">        :type datadir: str</span>
+<span class="sd">        :param tag: if you specify a pattern, it tries to read the</span>
+<span class="sd">                    corresponding files</span>
+<span class="sd">        :type tag: str</span>
+<span class="sd">        :param ave: plot a time-averaged spectrum when set to True</span>
+<span class="sd">        :type ave: bool</span>
+<span class="sd">        :param ipot: the number of the lmr file you want to plot</span>
+<span class="sd">        :type ipot: int</span>
+<span class="sd">        :param precision: single or double precision</span>
+<span class="sd">        :type precision: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;radial_scheme&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">radial_scheme</span> <span class="o">==</span> <span class="s1">&#39;FD&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">rcheb</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">rcheb</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rcheb</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="n">ave</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_lmr_ave&#39;</span> <span class="o">%</span> <span class="n">field</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_lmr_&#39;</span> <span class="o">%</span> <span class="n">field</span>
+
+        <span class="k">if</span> <span class="n">tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ipot</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">file</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s%i</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">ipot</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">pattern</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">*</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">tag</span><span class="p">))</span>
+                <span class="n">files</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">filename</span> <span class="o">=</span> <span class="n">files</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No such tag... try again&#39;</span><span class="p">)</span>
+                    <span class="k">return</span>
+
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="s1">&#39;log.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">tag</span><span class="p">)):</span>
+                <span class="n">MagicSetup</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="n">datadir</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                    <span class="n">nml</span><span class="o">=</span><span class="s1">&#39;log.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">tag</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ipot</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">pattern</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s%i</span><span class="s1">*&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">ipot</span><span class="p">))</span>
+                <span class="n">files</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">files</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">pattern</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">*&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="n">files</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">files</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="c1"># Determine the setup</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;.*\.(.*)&#39;</span><span class="p">)</span>
+            <span class="n">ending</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">groups</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="s1">&#39;log.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">ending</span><span class="p">)):</span>
+                <span class="n">MagicSetup</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="n">datadir</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                    <span class="n">nml</span><span class="o">=</span><span class="s1">&#39;log.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">ending</span><span class="p">)</span>
+
+
+        <span class="c1"># Determine file endianness</span>
+        <span class="n">endian</span> <span class="o">=</span> <span class="n">getPotEndianness</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+        <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">readingMode</span>  <span class="o">==</span> <span class="s1">&#39;python&#39;</span><span class="p">:</span>
+
+            <span class="n">infile</span> <span class="o">=</span> <span class="n">npfile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="n">endian</span><span class="p">)</span>
+
+            <span class="c1"># Read header</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">l_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">,</span> \
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">lm_max</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="s1">&#39;i4&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">m_max</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n_m_max</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m_max</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ek</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prmag</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma_ratio</span><span class="p">,</span> \
+                         <span class="bp">self</span><span class="o">.</span><span class="n">omega_ma</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega_ic</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
+            <span class="n">dat</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span>
+
+            <span class="c1"># Read radius and density</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rho0</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">:]</span>
+
+            <span class="c1"># Read field in the outer core</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pol</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lm_max</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="o">.</span><span class="n">T</span>
+            <span class="k">if</span> <span class="p">(</span> <span class="n">field</span> <span class="o">!=</span> <span class="s1">&#39;T&#39;</span> <span class="ow">and</span> <span class="n">field</span> <span class="o">!=</span> <span class="s1">&#39;Xi&#39;</span> <span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tor</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tor</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lm_max</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tor</span><span class="o">.</span><span class="n">T</span>
+
+            <span class="n">infile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># F2py reader</span>
+
+            <span class="k">if</span> <span class="p">(</span> <span class="n">field</span> <span class="o">!=</span> <span class="s1">&#39;T&#39;</span> <span class="ow">and</span> <span class="n">field</span> <span class="o">!=</span> <span class="s1">&#39;Xi&#39;</span> <span class="p">):</span>
+                <span class="n">l_read_tor</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">l_read_tor</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="n">Prd</span> <span class="o">=</span> <span class="n">Psngl</span><span class="o">.</span><span class="n">potreader_single</span>
+            <span class="n">Prd</span><span class="o">.</span><span class="n">readpot</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="p">,</span> <span class="n">l_read_tor</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">n_r_max</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">l_max</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">l_max</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n_r_ic_max</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">n_r_ic_max</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">minc</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">minc</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lm_max</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">lm_max</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">m_max</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n_m_max</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m_max</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ra</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">ra</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ek</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">ek</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">radratio</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sigma_ratio</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">sigma_ratio</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prmag</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">prmag</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pr</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">pr</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">omega_ic</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">omega_ic</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">omega_ma</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">omega_ma</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">radius</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rho0</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">rho0</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">pol</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">pol</span>
+            <span class="k">if</span> <span class="p">(</span> <span class="n">field</span> <span class="o">!=</span> <span class="s1">&#39;T&#39;</span> <span class="ow">and</span> <span class="n">field</span> <span class="o">!=</span> <span class="s1">&#39;Xi&#39;</span> <span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tor</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">tor</span>
+        <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Time to read </span><span class="si">%s</span><span class="s1">: </span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">t2</span><span class="o">-</span><span class="n">t1</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span> <span class="o">%</span> <span class="mi">2</span><span class="p">:</span> <span class="c1"># odd number</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+        <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sh</span> <span class="o">=</span> <span class="n">SpectralTransforms</span><span class="p">(</span><span class="n">l_max</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">,</span>
+                                     <span class="n">lm_max</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">n_theta_max</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">)</span>
+        <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Time to set up the spectral transforms: </span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t2</span><span class="o">-</span><span class="n">t1</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">colat</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">idx</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">ell</span></div>
+
+<div class="viewcode-block" id="MagicPotential.avg"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicPotential.avg">[docs]</a>    <span class="k">def</span> <span class="nf">avg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;vphi&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">defaultLevels</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="n">defaultCm</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">vmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tit</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plot the azimutal average of a given field.</span>
+
+<span class="sd">           &gt;&gt;&gt; p = MagicPotential(field=&#39;V&#39;)</span>
+<span class="sd">           &gt;&gt;&gt; # Axisymmetric zonal flows, 65 contour levels</span>
+<span class="sd">           &gt;&gt;&gt; p.avg(field=&#39;vp&#39;, levels=65, cm=&#39;seismic&#39;)</span>
+
+<span class="sd">           &gt;&gt;&gt; # Minimal plot (no cbar, not title)</span>
+<span class="sd">           &gt;&gt;&gt; p.avg(field=&#39;vr&#39;, tit=False, cbar=False)</span>
+
+<span class="sd">        :param field: the field you want to display</span>
+<span class="sd">        :type field: str</span>
+<span class="sd">        :param levels: the number of levels in the contourf plot</span>
+<span class="sd">        :type levels: int</span>
+<span class="sd">        :param cm: name of the colormap (&#39;jet&#39;, &#39;seismic&#39;, &#39;RdYlBu_r&#39;, etc.)</span>
+<span class="sd">        :type cm: str</span>
+<span class="sd">        :param tit: display the title of the figure when set to True</span>
+<span class="sd">        :type tit: bool</span>
+<span class="sd">        :param cbar: display the colorbar when set to True</span>
+<span class="sd">        :type cbar: bool</span>
+<span class="sd">        :param vmax: maximum value of the contour levels</span>
+<span class="sd">        :type vmax: float</span>
+<span class="sd">        :param vmin: minimum value of the contour levels</span>
+<span class="sd">        :type vmin: float</span>
+<span class="sd">        :param normed: when set to True, the colormap is centered around zero.</span>
+<span class="sd">                       Default is True, except for entropy/temperature plots.</span>
+<span class="sd">        :type normed: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">phiavg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="s1">&#39;temp&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;entropy&#39;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">):</span>
+                <span class="n">phiavg</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">spec_spat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">l_axi</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;T&#39;</span>
+        <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;vr&#39;</span><span class="p">,</span> <span class="s1">&#39;Vr&#39;</span><span class="p">,</span> <span class="s1">&#39;ur&#39;</span><span class="p">,</span> <span class="s1">&#39;Ur&#39;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">):</span>
+                <span class="n">field</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">ell</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ell</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>\
+                        <span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">rho0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">phiavg</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">spec_spat</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">l_axi</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$v_r$&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;vr&#39;</span>
+        <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;vt&#39;</span><span class="p">,</span> <span class="s1">&#39;Vt&#39;</span><span class="p">,</span> <span class="s1">&#39;ut&#39;</span><span class="p">,</span> <span class="s1">&#39;Ut&#39;</span><span class="p">,</span> <span class="s1">&#39;utheta&#39;</span><span class="p">,</span> <span class="s1">&#39;vtheta&#39;</span><span class="p">):</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="n">rderavg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="n">spectral</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rcheb</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">):</span>
+                <span class="n">vt</span><span class="p">,</span> <span class="n">vp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">spec_spat</span><span class="p">(</span> <span class="n">field</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">tor</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">l_axi</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">phiavg</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">vt</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">rho0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$v_\theta$&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;vtheta&#39;</span>
+        <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;vp&#39;</span><span class="p">,</span> <span class="s1">&#39;Vp&#39;</span><span class="p">,</span> <span class="s1">&#39;up&#39;</span><span class="p">,</span> <span class="s1">&#39;Up&#39;</span><span class="p">,</span> <span class="s1">&#39;uphi&#39;</span><span class="p">,</span> <span class="s1">&#39;vphi&#39;</span><span class="p">):</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="n">rderavg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="n">spectral</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rcheb</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">):</span>
+                <span class="n">vt</span><span class="p">,</span> <span class="n">vp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">spec_spat</span><span class="p">(</span> <span class="n">field</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">tor</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">l_axi</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">phiavg</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">vp</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">rho0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$v_\phi$&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;vphi&#39;</span>
+        <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;br&#39;</span><span class="p">,</span> <span class="s1">&#39;Br&#39;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">):</span>
+                <span class="n">field</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">ell</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ell</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+
+                <span class="n">phiavg</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">spec_spat</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">l_axi</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$B_r$&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;br&#39;</span>
+        <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;bt&#39;</span><span class="p">,</span> <span class="s1">&#39;Bt&#39;</span><span class="p">,</span> <span class="s1">&#39;Btheta&#39;</span><span class="p">,</span> <span class="s1">&#39;btheta&#39;</span><span class="p">):</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="n">rderavg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="n">spectral</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rcheb</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">):</span>
+                <span class="n">bt</span><span class="p">,</span> <span class="n">bp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">spec_spat</span><span class="p">(</span> <span class="n">field</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">tor</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">l_axi</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">phiavg</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">bt</span><span class="o">.</span><span class="n">real</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$B_\theta$&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Btheta&#39;</span>
+        <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;bp&#39;</span><span class="p">,</span> <span class="s1">&#39;Bp&#39;</span><span class="p">,</span> <span class="s1">&#39;bphi&#39;</span><span class="p">,</span> <span class="s1">&#39;Bphi&#39;</span><span class="p">):</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="n">rderavg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="n">spectral</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rcheb</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">):</span>
+                <span class="n">bt</span><span class="p">,</span> <span class="n">bp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">spec_spat</span><span class="p">(</span> <span class="n">field</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">tor</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">l_axi</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">phiavg</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">bp</span><span class="o">.</span><span class="n">real</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$B_\phi$&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Bphi&#39;</span>
+        <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Transform time (avg): </span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t2</span><span class="o">-</span><span class="n">t1</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;entropy&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;u2&#39;</span><span class="p">,</span> <span class="s1">&#39;b2&#39;</span><span class="p">,</span> <span class="s1">&#39;nrj&#39;</span><span class="p">):</span>
+            <span class="n">normed</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="n">fig</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">merContour</span><span class="p">(</span><span class="n">phiavg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">levels</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">normed</span><span class="p">,</span>
+                                 <span class="n">vmax</span><span class="p">,</span> <span class="n">vmin</span><span class="p">,</span> <span class="n">cbar</span><span class="p">,</span> <span class="n">tit</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MagicPotential.equat"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicPotential.equat">[docs]</a>    <span class="k">def</span> <span class="nf">equat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;vr&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">defaultLevels</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="n">defaultCm</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+              <span class="n">vmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">normRad</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plot the equatorial cut of a given field</span>
+
+<span class="sd">           &gt;&gt;&gt; p = MagicPotential(field=&#39;B&#39;)</span>
+<span class="sd">           &gt;&gt;&gt; # Equatorial cut of the Br</span>
+<span class="sd">           &gt;&gt;&gt; p.equat(field=&#39;Br&#39;)</span>
+
+<span class="sd">           &gt;&gt;&gt; # Normalise the contour levels radius by radius</span>
+<span class="sd">           &gt;&gt;&gt; p.equat(field=&#39;Bphi&#39;, normRad=True)</span>
+
+<span class="sd">        :param field: the name of the input physical quantity you want to</span>
+<span class="sd">                      display</span>
+<span class="sd">        :type field: str</span>
+<span class="sd">        :param normRad: when set to True, the contour levels are normalised</span>
+<span class="sd">                        radius by radius (default is False)</span>
+<span class="sd">        :type normRad: bool</span>
+<span class="sd">        :param levels: the number of levels in the contour</span>
+<span class="sd">        :type levels: int</span>
+<span class="sd">        :param cm: name of the colormap (&#39;jet&#39;, &#39;seismic&#39;, &#39;RdYlBu_r&#39;, etc.)</span>
+<span class="sd">        :type cm: str</span>
+<span class="sd">        :param tit: display the title of the figure when set to True</span>
+<span class="sd">        :type tit: bool</span>
+<span class="sd">        :param cbar: display the colorbar when set to True</span>
+<span class="sd">        :type cbar: bool</span>
+<span class="sd">        :param vmax: maximum value of the contour levels</span>
+<span class="sd">        :type vmax: float</span>
+<span class="sd">        :param vmin: minimum value of the contour levels</span>
+<span class="sd">        :type vmin: float</span>
+<span class="sd">        :param normed: when set to True, the colormap is centered around zero.</span>
+<span class="sd">                       Default is True, except for entropy/temperature plots.</span>
+<span class="sd">        :type normed: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">equator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="s1">&#39;entropy&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">):</span>
+                <span class="n">equator</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">spec_spat_equat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="p">[:,</span> <span class="n">i</span><span class="p">])</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;T&#39;</span>
+        <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;vr&#39;</span><span class="p">,</span> <span class="s1">&#39;Vr&#39;</span><span class="p">,</span> <span class="s1">&#39;ur&#39;</span><span class="p">,</span> <span class="s1">&#39;Ur&#39;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">):</span>
+                <span class="n">field</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ell</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ell</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">rho0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span>\
+                        <span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
+                <span class="n">equator</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">spec_spat_equat</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$v_r$&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;vr&#39;</span>
+        <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;vt&#39;</span><span class="p">,</span> <span class="s1">&#39;Vt&#39;</span><span class="p">,</span> <span class="s1">&#39;ut&#39;</span><span class="p">,</span> <span class="s1">&#39;Ut&#39;</span><span class="p">,</span> <span class="s1">&#39;vtheta&#39;</span><span class="p">,</span> <span class="s1">&#39;utheta&#39;</span><span class="p">):</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="n">rderavg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="n">spectral</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rcheb</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">):</span>
+                <span class="n">vt</span><span class="p">,</span> <span class="n">vp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">spec_spat_equat</span><span class="p">(</span><span class="n">field</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">tor</span><span class="p">[:,</span> <span class="n">i</span><span class="p">])</span>
+                <span class="n">equator</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">vt</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">rho0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$v_\theta$&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;vtheta&#39;</span>
+        <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;vp&#39;</span><span class="p">,</span> <span class="s1">&#39;Vp&#39;</span><span class="p">,</span> <span class="s1">&#39;up&#39;</span><span class="p">,</span> <span class="s1">&#39;Up&#39;</span><span class="p">,</span> <span class="s1">&#39;vphi&#39;</span><span class="p">,</span> <span class="s1">&#39;uphi&#39;</span><span class="p">):</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="n">rderavg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="n">spectral</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rcheb</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">):</span>
+                <span class="n">vt</span><span class="p">,</span> <span class="n">vp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">spec_spat_equat</span><span class="p">(</span><span class="n">field</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">tor</span><span class="p">[:,</span> <span class="n">i</span><span class="p">])</span>
+                <span class="n">equator</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">vp</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">rho0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$v_\phi$&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;vphi&#39;</span>
+        <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;Br&#39;</span><span class="p">,</span> <span class="s1">&#39;br&#39;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">):</span>
+                <span class="n">field</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ell</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ell</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
+                <span class="n">equator</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">spec_spat_equat</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$B_r$&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Br&#39;</span>
+        <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;bt&#39;</span><span class="p">,</span> <span class="s1">&#39;Bt&#39;</span><span class="p">,</span> <span class="s1">&#39;Btheta&#39;</span><span class="p">,</span> <span class="s1">&#39;btheta&#39;</span><span class="p">):</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="n">rderavg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="n">spectral</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rcheb</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">):</span>
+                <span class="n">bt</span><span class="p">,</span> <span class="n">bp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">spec_spat_equat</span><span class="p">(</span><span class="n">field</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">tor</span><span class="p">[:,</span> <span class="n">i</span><span class="p">])</span>
+                <span class="n">equator</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">bt</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$B_\theta$&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Btheta&#39;</span>
+        <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;bp&#39;</span><span class="p">,</span> <span class="s1">&#39;Bp&#39;</span><span class="p">,</span> <span class="s1">&#39;Bphi&#39;</span><span class="p">,</span> <span class="s1">&#39;bphi&#39;</span><span class="p">):</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="n">rderavg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="n">spectral</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rcheb</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">):</span>
+                <span class="n">bt</span><span class="p">,</span> <span class="n">bp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">spec_spat_equat</span><span class="p">(</span><span class="n">field</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">tor</span><span class="p">[:,</span> <span class="n">i</span><span class="p">])</span>
+                <span class="n">equator</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">bp</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$B_\phi$&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Bphi&#39;</span>
+        <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Transform time (equat): </span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t2</span><span class="o">-</span><span class="n">t1</span><span class="p">))</span>
+
+        <span class="n">equator</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">equator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="s1">&#39;entropy&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;u2&#39;</span><span class="p">,</span> <span class="s1">&#39;b2&#39;</span><span class="p">,</span> <span class="s1">&#39;nrj&#39;</span><span class="p">):</span>
+            <span class="n">normed</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="n">fig</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">equatContour</span><span class="p">(</span> <span class="n">equator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span>
+                                    <span class="n">levels</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">normed</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">vmin</span><span class="p">,</span> <span class="n">cbar</span><span class="p">,</span> <span class="n">tit</span><span class="p">,</span>
+                                    <span class="n">normRad</span> <span class="p">)</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">get_axes</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># Variable conductivity: add a dashed line</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;nVarCond&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nVarCond</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">radi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">con_RadRatio</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="n">radi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MagicPotential.surf"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicPotential.surf">[docs]</a>    <span class="k">def</span> <span class="nf">surf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;vr&#39;</span><span class="p">,</span> <span class="n">proj</span><span class="o">=</span><span class="s1">&#39;hammer&#39;</span><span class="p">,</span> <span class="n">lon_0</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="n">vmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lat_0</span><span class="o">=</span><span class="mf">30.</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">defaultLevels</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="n">defaultCm</span><span class="p">,</span> <span class="n">lon_shift</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+             <span class="n">normed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plot the surface distribution of an input field at a given</span>
+<span class="sd">        input radius (normalised by the outer boundary radius).</span>
+
+<span class="sd">           &gt;&gt;&gt; p = MagicPotential(field=&#39;V&#39;)</span>
+<span class="sd">           &gt;&gt;&gt; # Radial flow component at ``r=0.95 r_o``, 65 contour levels</span>
+<span class="sd">           &gt;&gt;&gt; p.surf(field=&#39;vr&#39;, r=0.95, levels=65, cm=&#39;seismic&#39;)</span>
+
+<span class="sd">           &gt;&gt;&gt; # Control the limit of the colormap from -1e3 to 1e3</span>
+<span class="sd">           &gt;&gt;&gt; p.surf(field=&#39;vp&#39;, r=1., vmin=-1e3, vmax=1e3, levels=33)</span>
+
+<span class="sd">        :param field: the name of the field you want to display</span>
+<span class="sd">        :type field: str</span>
+<span class="sd">        :param proj: the type of projection. Default is Hammer, in case</span>
+<span class="sd">                     you want to use &#39;ortho&#39; or &#39;moll&#39;, then Basemap is</span>
+<span class="sd">                     required.</span>
+<span class="sd">        :type proj: str</span>
+<span class="sd">        :param lon_0: central azimuth (only used with Basemap)</span>
+<span class="sd">        :type lon_0: float</span>
+<span class="sd">        :param lat_0: central latitude (only used with Basemap)</span>
+<span class="sd">        :type lat_0: float</span>
+<span class="sd">        :param r: the radius at which you want to display the input</span>
+<span class="sd">                  data (in normalised units with the radius of the outer boundary)</span>
+<span class="sd">        :type r: float</span>
+<span class="sd">        :param levels: the number of levels in the contour</span>
+<span class="sd">        :type levels: int</span>
+<span class="sd">        :param cm: name of the colormap (&#39;jet&#39;, &#39;seismic&#39;, &#39;RdYlBu_r&#39;, etc.)</span>
+<span class="sd">        :type cm: str</span>
+<span class="sd">        :param tit: display the title of the figure when set to True</span>
+<span class="sd">        :type tit: bool</span>
+<span class="sd">        :param cbar: display the colorbar when set to True</span>
+<span class="sd">        :type cbar: bool</span>
+<span class="sd">        :param lines: when set to True, over-plot solid lines to highlight</span>
+<span class="sd">                      the limits between two adjacent contour levels</span>
+<span class="sd">        :type lines: bool</span>
+<span class="sd">        :param vmax: maximum value of the contour levels</span>
+<span class="sd">        :type vmax: float</span>
+<span class="sd">        :param vmin: minimum value of the contour levels</span>
+<span class="sd">        :type vmin: float</span>
+<span class="sd">        :param normed: when set to True, the colormap is centered around zero.</span>
+<span class="sd">        :type normed: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">r</span> <span class="o">/=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">)</span> <span class="c1"># as we give a normalised radius</span>
+        <span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">-</span><span class="n">r</span><span class="p">)</span> \
+                        <span class="o">==</span> <span class="nb">min</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">-</span><span class="n">r</span><span class="p">)),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">indPlot</span> <span class="o">=</span> <span class="n">ind</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">rad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">indPlot</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">)</span>
+
+        <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">rprof</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">n_phi_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="s1">&#39;temp&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;entropy&#39;</span><span class="p">):</span>
+            <span class="n">rprof</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">spec_spat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="p">[:,</span> <span class="n">indPlot</span><span class="p">])</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;T&#39;</span>
+        <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;vr&#39;</span><span class="p">,</span> <span class="s1">&#39;Vr&#39;</span><span class="p">,</span> <span class="s1">&#39;ur&#39;</span><span class="p">,</span> <span class="s1">&#39;Ur&#39;</span><span class="p">):</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ell</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ell</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">indPlot</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">rho0</span><span class="p">[</span><span class="n">indPlot</span><span class="p">]</span><span class="o">*</span>\
+                    <span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="p">[:,</span> <span class="n">indPlot</span><span class="p">]</span>
+            <span class="n">rprof</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">spec_spat</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$v_r$&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;vr&#39;</span>
+        <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;vt&#39;</span><span class="p">,</span> <span class="s1">&#39;Vt&#39;</span><span class="p">,</span> <span class="s1">&#39;ut&#39;</span><span class="p">,</span> <span class="s1">&#39;Ut&#39;</span><span class="p">,</span> <span class="s1">&#39;vtheta&#39;</span><span class="p">,</span> <span class="s1">&#39;utheta&#39;</span><span class="p">):</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="n">rderavg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="n">spectral</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rcheb</span><span class="p">)</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="n">field</span><span class="p">[:,</span> <span class="n">indPlot</span><span class="p">]</span>
+            <span class="n">vt</span><span class="p">,</span> <span class="n">vp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">spec_spat</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tor</span><span class="p">[:,</span> <span class="n">indPlot</span><span class="p">])</span>
+            <span class="n">rprof</span> <span class="o">=</span> <span class="n">vt</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">indPlot</span><span class="p">]</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">rho0</span><span class="p">[</span><span class="n">indPlot</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$v_\theta$&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;vtheta&#39;</span>
+        <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;vp&#39;</span><span class="p">,</span> <span class="s1">&#39;Vp&#39;</span><span class="p">,</span> <span class="s1">&#39;up&#39;</span><span class="p">,</span> <span class="s1">&#39;Up&#39;</span><span class="p">,</span> <span class="s1">&#39;uphi&#39;</span><span class="p">,</span> <span class="s1">&#39;vphi&#39;</span><span class="p">):</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="n">rderavg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="n">spectral</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rcheb</span><span class="p">)</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="n">field</span><span class="p">[:,</span> <span class="n">indPlot</span><span class="p">]</span>
+            <span class="n">vt</span><span class="p">,</span> <span class="n">vp</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">spec_spat</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tor</span><span class="p">[:,</span> <span class="n">indPlot</span><span class="p">])</span>
+            <span class="n">rprof</span> <span class="o">=</span> <span class="n">vp</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">indPlot</span><span class="p">]</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">rho0</span><span class="p">[</span><span class="n">indPlot</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$v_\phi$&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;vphi&#39;</span>
+        <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;br&#39;</span><span class="p">,</span> <span class="s1">&#39;Br&#39;</span><span class="p">):</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ell</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ell</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">indPlot</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span>\
+                    <span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="p">[:,</span> <span class="n">indPlot</span><span class="p">]</span>
+            <span class="n">rprof</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">spec_spat</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$B_r$&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Br&#39;</span>
+        <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;bt&#39;</span><span class="p">,</span> <span class="s1">&#39;Bt&#39;</span><span class="p">,</span> <span class="s1">&#39;Btheta&#39;</span><span class="p">,</span> <span class="s1">&#39;btheta&#39;</span><span class="p">):</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="n">rderavg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="n">spectral</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rcheb</span><span class="p">)</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="n">field</span><span class="p">[:,</span> <span class="n">indPlot</span><span class="p">]</span>
+            <span class="n">bt</span><span class="p">,</span> <span class="n">bp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">spec_spat</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tor</span><span class="p">[:,</span> <span class="n">indPlot</span><span class="p">])</span>
+            <span class="n">rprof</span> <span class="o">=</span> <span class="n">bt</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">indPlot</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$B_\theta$&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Btheta&#39;</span>
+        <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;bp&#39;</span><span class="p">,</span> <span class="s1">&#39;Bp&#39;</span><span class="p">,</span> <span class="s1">&#39;bphi&#39;</span><span class="p">,</span> <span class="s1">&#39;Bphi&#39;</span><span class="p">):</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="n">rderavg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="n">spectral</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rcheb</span><span class="p">)</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="n">field</span><span class="p">[:,</span> <span class="n">indPlot</span><span class="p">]</span>
+            <span class="n">bt</span><span class="p">,</span> <span class="n">bp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">spec_spat</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tor</span><span class="p">[:,</span> <span class="n">indPlot</span><span class="p">])</span>
+            <span class="n">rprof</span> <span class="o">=</span> <span class="n">bp</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">indPlot</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$B_\phi$&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Bphi&#39;</span>
+        <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Transform time (surf): </span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t2</span><span class="o">-</span><span class="n">t1</span><span class="p">))</span>
+
+        <span class="n">rprof</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">rprof</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="s1">&#39;entropy&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;u2&#39;</span><span class="p">,</span> <span class="s1">&#39;b2&#39;</span><span class="p">,</span> <span class="s1">&#39;nrj&#39;</span><span class="p">):</span>
+            <span class="n">normed</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">radialContour</span><span class="p">(</span><span class="n">rprof</span><span class="p">,</span> <span class="n">rad</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">proj</span><span class="p">,</span> <span class="n">lon_0</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">vmin</span><span class="p">,</span> <span class="n">lat_0</span><span class="p">,</span> <span class="n">levels</span><span class="p">,</span>
+                            <span class="n">cm</span><span class="p">,</span> <span class="n">normed</span><span class="p">,</span> <span class="n">cbar</span><span class="p">,</span> <span class="n">tit</span><span class="p">,</span> <span class="n">lines</span><span class="p">)</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MagicPotential</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="n">ave</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">surf</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;br&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;br&#39;</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">equat</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;br&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.7 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+    </div>
+  </body>
+</html>
