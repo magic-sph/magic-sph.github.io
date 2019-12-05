@@ -1,28 +1,20 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>magic.libmagic &#8212; Magic 5.7 documentation</title>
+    <meta charset="utf-8" />
+    <title>magic.libmagic &#8212; Magic 5.9 documentation</title>
     <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
-        VERSION:     '5.7',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
@@ -64,8 +56,7 @@
       });
     </script>
 
-  </head>
-  <body>
+  </head><body>
 <div class="pageheader">
   <ul>
     <li><a href="../../index.html">Home</a></li>
@@ -93,7 +84,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.7 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.9 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -108,7 +99,7 @@
 <span class="kn">import</span> <span class="nn">scipy.interpolate</span> <span class="k">as</span> <span class="nn">S</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">glob</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">.npfile</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.npfile</span> <span class="kn">import</span> <span class="o">*</span>
 
 
 <div class="viewcode-block" id="selectField"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.selectField">[docs]</a><span class="k">def</span> <span class="nf">selectField</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">labTex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ic</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -161,6 +152,7 @@
             <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$p$&#39;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;p&#39;</span>
+        <span class="n">data_ic</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;composition&#39;</span><span class="p">,</span> <span class="s1">&#39;xi&#39;</span><span class="p">,</span> <span class="s1">&#39;Xi&#39;</span><span class="p">,</span> <span class="s1">&#39;Comp&#39;</span><span class="p">,</span> <span class="s1">&#39;comp&#39;</span><span class="p">,</span> <span class="s1">&#39;chem&#39;</span><span class="p">,</span> <span class="s1">&#39;Chem&#39;</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">xi</span>
         <span class="k">if</span> <span class="n">labTex</span><span class="p">:</span>
@@ -706,6 +698,39 @@
         <span class="n">den</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">den</span>
     <span class="k">return</span> <span class="n">den</span>
 
+<div class="viewcode-block" id="timeder"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.timeder">[docs]</a><span class="k">def</span> <span class="nf">timeder</span><span class="p">(</span><span class="n">time</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    time derivative of an input array</span>
+
+<span class="sd">    computed with central differences (numpy.gradient)</span>
+
+<span class="sd">    &gt;&gt;&gt; ts = MagicTs(field=&#39;e_kin&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; dt_ekinpol = timeder(ts,field=&#39;ekin_pol&#39;)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span>
+                      <span class="n">time</span><span class="p">,</span>
+                      <span class="n">edge_order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">out</span></div>
+
+<div class="viewcode-block" id="secondtimeder"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.secondtimeder">[docs]</a><span class="k">def</span> <span class="nf">secondtimeder</span><span class="p">(</span><span class="n">time</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    second time derivative of an input array</span>
+
+<span class="sd">    computed with central differences (numpy.gradient)</span>
+
+<span class="sd">    &gt;&gt;&gt; ts = MagicTs(field=&#39;e_kin&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; dt_ekinpol = secondtimeder(ts,field=&#39;ekin_pol&#39;)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span>
+                      <span class="n">time</span><span class="p">,</span>
+                      <span class="n">edge_order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span>
+                      <span class="n">time</span><span class="p">,</span>
+                      <span class="n">edge_order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span></div>
 
 <div class="viewcode-block" id="phideravg"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.phideravg">[docs]</a><span class="k">def</span> <span class="nf">phideravg</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1005,6 +1030,8 @@
     <span class="n">threads</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[\s]*\![\s]*nThreads\:[\s]*(.*)&#39;</span><span class="p">)</span>
     <span class="n">ranks</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[\s]*\![\s\w]*ranks[\s\w]*\:[\s]*(.*)&#39;</span><span class="p">)</span>
     <span class="n">runTime</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[\s\!\w]*time:[\s]*([0-9]*)d[\s\:]*([0-9]*)h[\s\:]*([0-9]*)m[\s\:]*([0-9]*)s[\s\:]*([0-9]*)ms.*&#39;</span><span class="p">)</span>
+    <span class="n">runTime_new</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39; \! Total run time:[\s]*([0-9]*)[\s]*h[\s]*([0-9]*)[\s]*m[\s]*([0-9]*)[\s]*s[\s]*([0-9]*)[\s]*ms[\s]*&#39;</span><span class="p">)</span>
+
     <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
     <span class="n">tab</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
     <span class="n">nThreads</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># In case a pure MPI version is used</span>
@@ -1022,9 +1049,50 @@
             <span class="n">sec</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">runTime</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">3</span><span class="p">])</span>
             <span class="n">ms</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">runTime</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">4</span><span class="p">])</span>
             <span class="n">realTime</span> <span class="o">=</span> <span class="mi">24</span><span class="o">*</span><span class="n">days</span><span class="o">+</span><span class="n">hours</span><span class="o">+</span><span class="mf">1.</span><span class="o">/</span><span class="mi">60</span><span class="o">*</span><span class="nb">min</span><span class="o">+</span><span class="mf">1.</span><span class="o">/</span><span class="mi">3600</span><span class="o">*</span><span class="n">sec</span><span class="o">+</span><span class="mf">1.</span><span class="o">/</span><span class="mf">3.6e6</span><span class="o">*</span><span class="n">ms</span>
+        <span class="k">elif</span> <span class="n">runTime_new</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+            <span class="n">hours</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">runTime_new</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="nb">min</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">runTime_new</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">sec</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">runTime_new</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">ms</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">runTime_new</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">3</span><span class="p">])</span>
+            <span class="n">realTime</span> <span class="o">=</span> <span class="n">hours</span><span class="o">+</span><span class="mf">1.</span><span class="o">/</span><span class="mi">60</span><span class="o">*</span><span class="nb">min</span><span class="o">+</span><span class="mf">1.</span><span class="o">/</span><span class="mi">3600</span><span class="o">*</span><span class="n">sec</span><span class="o">+</span><span class="mf">1.</span><span class="o">/</span><span class="mf">3.6e6</span><span class="o">*</span><span class="n">ms</span>
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="n">cpuTime</span> <span class="o">=</span> <span class="n">nThreads</span><span class="o">*</span><span class="n">nRanks</span><span class="o">*</span><span class="n">realTime</span>
     <span class="k">return</span> <span class="n">cpuTime</span></div>
+
+<div class="viewcode-block" id="ReadBinaryTimeseries"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.ReadBinaryTimeseries">[docs]</a><span class="k">def</span> <span class="nf">ReadBinaryTimeseries</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span>
+                         <span class="n">ncols</span><span class="p">,</span>
+                         <span class="n">datatype</span><span class="o">=</span><span class="s1">&#39;f8&#39;</span><span class="p">,</span>
+                         <span class="n">endianness</span><span class="o">=</span><span class="s1">&#39;&gt;&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function reads binary timeseries. It is then faster than</span>
+<span class="sd">    the fast_read function.</span>
+
+<span class="sd">    :param infile: the file to read</span>
+<span class="sd">    :type infile: string</span>
+<span class="sd">    :param ncols: number of columns of the file</span>
+<span class="sd">    :type ncols: int</span>
+<span class="sd">    :param datatype: &#39;f8&#39; = 64-bit floating-point number</span>
+<span class="sd">                     &#39;f4&#39; = 32-bit floating-point number</span>
+<span class="sd">    :type datatype: string</span>
+<span class="sd">    :param endianness: &#39;&gt;&#39; = big-endian ; &#39;&lt;&#39; = small-endian</span>
+<span class="sd">    :type endianness: string</span>
+<span class="sd">    :returns: an array[nlines, ncols] that contains</span>
+<span class="sd">              the data of the binary file</span>
+<span class="sd">    :rtype: numpy.ndarray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">DUMM</span> <span class="o">=</span> <span class="n">endianness</span><span class="o">+</span><span class="s1">&#39;i4&#39;</span>
+    <span class="n">FTYP</span> <span class="o">=</span> <span class="n">endianness</span><span class="o">+</span><span class="n">datatype</span>
+
+    <span class="n">size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">infile</span><span class="p">)</span>
+    <span class="c1">#nline = size/(2*4 + ncols*4) # line = 2*i4 + ncols*f4</span>
+    <span class="n">typeG</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">([(</span><span class="s1">&#39;dum1&#39;</span><span class="p">,</span><span class="n">DUMM</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                      <span class="p">(</span><span class="s1">&#39;line&#39;</span><span class="p">,</span><span class="n">FTYP</span><span class="p">,</span><span class="n">ncols</span><span class="p">),</span>
+                      <span class="p">(</span><span class="s1">&#39;dum2&#39;</span><span class="p">,</span><span class="n">DUMM</span><span class="p">,</span><span class="mi">1</span><span class="p">)])</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span><span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">typeG</span><span class="p">,</span><span class="n">count</span><span class="o">=</span><span class="n">size</span><span class="p">)[</span><span class="s1">&#39;line&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">data</span></div>
 
 <div class="viewcode-block" id="getTotalRunTime"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.getTotalRunTime">[docs]</a><span class="k">def</span> <span class="nf">getTotalRunTime</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1038,6 +1106,26 @@
     <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">logFiles</span><span class="p">:</span>
         <span class="n">totCpuTime</span> <span class="o">+=</span> <span class="n">getCpuTime</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">totCpuTime</span></div>
+
+<div class="viewcode-block" id="prime_factors"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.prime_factors">[docs]</a><span class="k">def</span> <span class="nf">prime_factors</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function returns all prime factors of a number</span>
+
+<span class="sd">    :type n: int</span>
+<span class="sd">    :returns: all prime factors</span>
+<span class="sd">    :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">factors</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">*</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="n">i</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">//=</span> <span class="n">i</span>
+            <span class="n">factors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">factors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">factors</span></div>
 </pre></div>
 
           </div>
@@ -1046,13 +1134,13 @@
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -1071,13 +1159,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.7 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.9 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
     </div>
   </body>
 </html>

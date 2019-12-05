@@ -1,28 +1,20 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Support for time-averaged radial profiles &#8212; Magic 5.7 documentation</title>
+    <meta charset="utf-8" />
+    <title>Support for time-averaged radial profiles &#8212; Magic 5.9 documentation</title>
     <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '5.7',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Support for the spectra files (kin|mag|u2)_spec_#.TAG" href="spectra.html" />
@@ -66,8 +58,7 @@
       });
     </script>
 
-  </head>
-  <body>
+  </head><body>
 <div class="pageheader">
   <ul>
     <li><a href="../index.html">Home</a></li>
@@ -101,7 +92,7 @@
         <li class="right" >
           <a href="timeSeries.html" title="Support for the log.TAG files"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.7 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.9 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../postProc.html" accesskey="U">Data visualisation and post-processing</a> &#187;</li> 
       </ul>
     </div>  
@@ -115,54 +106,50 @@
 <span id="secpythonradial"></span><h1>Support for time-averaged radial profiles<a class="headerlink" href="#support-for-time-averaged-radial-profiles" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="magic.MagicRadial">
-<em class="property">class </em><code class="descclassname">magic.</code><code class="descname">MagicRadial</code><span class="sig-paren">(</span><em>datadir='.'</em>, <em>field='eKin'</em>, <em>iplot=True</em>, <em>tag=None</em>, <em>tags=None</em>, <em>normalize_radius=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/radial.html#MagicRadial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicRadial" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">magic.</code><code class="sig-name descname">MagicRadial</code><span class="sig-paren">(</span><em class="sig-param">datadir='.'</em>, <em class="sig-param">field='eKin'</em>, <em class="sig-param">iplot=True</em>, <em class="sig-param">tag=None</em>, <em class="sig-param">tags=None</em>, <em class="sig-param">normalize_radius=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/radial.html#MagicRadial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicRadial" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class can be used to read and display the time and
 horizontally averaged files:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Kinetic energy: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secekinrfile"><span class="std std-ref">eKinR.TAG</span></a></li>
-<li>Magnetic energy: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secemagrfile"><span class="std std-ref">eMagR.TAG</span></a></li>
-<li>Anelastic reference state: <a class="reference internal" href="../outputFiles/outTransportProp.html#secanelfile"><span class="std std-ref">anel.TAG</span></a></li>
-<li>Variable electrical conductivity: <a class="reference internal" href="../outputFiles/outTransportProp.html#secvarcondfile"><span class="std std-ref">varCond.TAG</span></a></li>
-<li>Variable thermal diffusivity: <a class="reference internal" href="../outputFiles/outTransportProp.html#secvardifffile"><span class="std std-ref">varDiff.TAG</span></a></li>
-<li>Variable kinematic viscosity: <a class="reference internal" href="../outputFiles/outTransportProp.html#secvarviscfile"><span class="std std-ref">varVisc.TAG</span></a></li>
-<li>Diagnostic parameters: <a class="reference internal" href="../outputFiles/outTimeSeriesStd.html#secparfile"><span class="std std-ref">parR.TAG</span></a></li>
-<li>Power budget: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secpowerrfile"><span class="std std-ref">powerR.TAG</span></a></li>
-<li>Heat fluxes: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secfluxesrfile"><span class="std std-ref">fluxesR.TAG</span></a></li>
-<li>Mean entropy, temperature and pressure: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secheatrfile"><span class="std std-ref">heatR.TAG</span></a></li>
-<li>Radial profiles used for boundary layers: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secblayersrfile"><span class="std std-ref">bLayersR.TAG</span></a></li>
-<li>Parallel/perpendicular decomposition: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secperpparrfile"><span class="std std-ref">perpParR.TAG</span></a></li>
+<li><p>Kinetic energy: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secekinrfile"><span class="std std-ref">eKinR.TAG</span></a></p></li>
+<li><p>Magnetic energy: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secemagrfile"><span class="std std-ref">eMagR.TAG</span></a></p></li>
+<li><p>Anelastic reference state: <a class="reference internal" href="../outputFiles/outTransportProp.html#secanelfile"><span class="std std-ref">anel.TAG</span></a></p></li>
+<li><p>Variable electrical conductivity: <a class="reference internal" href="../outputFiles/outTransportProp.html#secvarcondfile"><span class="std std-ref">varCond.TAG</span></a></p></li>
+<li><p>Variable thermal diffusivity: <a class="reference internal" href="../outputFiles/outTransportProp.html#secvardifffile"><span class="std std-ref">varDiff.TAG</span></a></p></li>
+<li><p>Variable kinematic viscosity: <a class="reference internal" href="../outputFiles/outTransportProp.html#secvarviscfile"><span class="std std-ref">varVisc.TAG</span></a></p></li>
+<li><p>Diagnostic parameters: <a class="reference internal" href="../outputFiles/outTimeSeriesStd.html#secparfile"><span class="std std-ref">parR.TAG</span></a></p></li>
+<li><p>Power budget: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secpowerrfile"><span class="std std-ref">powerR.TAG</span></a></p></li>
+<li><p>Heat fluxes: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secfluxesrfile"><span class="std std-ref">fluxesR.TAG</span></a></p></li>
+<li><p>Mean entropy, temperature and pressure: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secheatrfile"><span class="std std-ref">heatR.TAG</span></a></p></li>
+<li><p>Radial profiles used for boundary layers: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secblayersrfile"><span class="std std-ref">bLayersR.TAG</span></a></p></li>
+<li><p>Parallel/perpendicular decomposition: <a class="reference internal" href="../outputFiles/outRadialFiles.html#secperpparrfile"><span class="std std-ref">perpParR.TAG</span></a></p></li>
 </ul>
 </div></blockquote>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rad</span> <span class="o">=</span> <span class="n">MagicRadial</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;eKinR&#39;</span><span class="p">)</span> <span class="c1"># display the content of eKinR.tag</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rad</span> <span class="o">=</span> <span class="n">MagicRadial</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;eKinR&#39;</span><span class="p">)</span> <span class="c1"># display the content of eKinR.tag</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">rad</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">rad</span><span class="o">.</span><span class="n">ekin_pol_axi</span><span class="p">)</span> <span class="c1"># print radius and poloidal energy</span>
 </pre></div>
 </div>
 <dl class="method">
 <dt id="magic.MagicRadial.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>datadir='.'</em>, <em>field='eKin'</em>, <em>iplot=True</em>, <em>tag=None</em>, <em>tags=None</em>, <em>normalize_radius=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/radial.html#MagicRadial.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicRadial.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>datadir</strong> (<em>str</em>) – working directory</li>
-<li><strong>field</strong> (<em>str</em>) – the field you want to plot</li>
-<li><strong>iplot</strong> (<em>bool</em>) – to plot the output, default is True</li>
-<li><strong>tag</strong> (<em>str</em>) – a specific tag, default is None</li>
-<li><strong>tags</strong> (<em>list</em>) – a list that contains multiple tags: useful to sum
-several radial files</li>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">datadir='.'</em>, <em class="sig-param">field='eKin'</em>, <em class="sig-param">iplot=True</em>, <em class="sig-param">tag=None</em>, <em class="sig-param">tags=None</em>, <em class="sig-param">normalize_radius=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/radial.html#MagicRadial.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicRadial.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>datadir</strong> (<em>str</em>) – working directory</p></li>
+<li><p><strong>field</strong> (<em>str</em>) – the field you want to plot</p></li>
+<li><p><strong>iplot</strong> (<em>bool</em>) – to plot the output, default is True</p></li>
+<li><p><strong>tag</strong> (<em>str</em>) – a specific tag, default is None</p></li>
+<li><p><strong>tags</strong> (<em>list</em>) – a list that contains multiple tags: useful to sum
+several radial files</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="magic.MagicRadial.plot">
-<code class="descname">plot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/radial.html#MagicRadial.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicRadial.plot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Display the result when <code class="docutils literal"><span class="pre">iplot=True</span></code></p>
+<code class="sig-name descname">plot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/radial.html#MagicRadial.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicRadial.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display the result when <code class="docutils literal notranslate"><span class="pre">iplot=True</span></code></p>
 </dd></dl>
 
 </dd></dl>
@@ -177,10 +164,10 @@ several radial files</li>
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="timeSeries.html"
-                        title="previous chapter">Support for the <code class="docutils literal"><span class="pre">log.TAG</span></code> files</a></p>
+                        title="previous chapter">Support for the <code class="docutils literal notranslate"><span class="pre">log.TAG</span></code> files</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="spectra.html"
-                        title="next chapter">Support for the spectra files <code class="docutils literal"><span class="pre">(kin|mag|u2)_spec_#.TAG</span></code></a></p>
+                        title="next chapter">Support for the spectra files <code class="docutils literal notranslate"><span class="pre">(kin|mag|u2)_spec_#.TAG</span></code></a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -189,13 +176,13 @@ several radial files</li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -220,13 +207,13 @@ several radial files</li>
         <li class="right" >
           <a href="timeSeries.html" title="Support for the log.TAG files"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.7 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.9 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../postProc.html" >Data visualisation and post-processing</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
     </div>
   </body>
 </html>

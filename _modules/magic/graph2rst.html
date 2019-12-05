@@ -1,0 +1,558 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>magic.graph2rst &#8212; Magic 5.9 documentation</title>
+    <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script src="galleria/galleria-1.4.2.min.js"></script>
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head><body>
+<div class="pageheader">
+  <ul>
+    <li><a href="../../index.html">Home</a></li>
+    <li><a href="../../install.html">Get it/Run it</a></li>
+    <li><a href="../../contribute.html">Contribute!</a></li>
+    <li><a href="../../numerics.html">Numerical methods</a></li>
+    <li><a href="../../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../../index.html">
+      <img src="../../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for magic.graph2rst</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">MagicGraph</span><span class="p">,</span> <span class="n">SpectralTransforms</span><span class="p">,</span> <span class="n">thetaderavg</span><span class="p">,</span> <span class="n">phideravg</span><span class="p">,</span> \
+              <span class="n">MagicRadial</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<div class="viewcode-block" id="bytes_per_record"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.graph2rst.bytes_per_record">[docs]</a><span class="k">def</span> <span class="nf">bytes_per_record</span><span class="p">(</span><span class="n">record_type</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This routine determines the number of bytes that corresponds</span>
+<span class="sd">    to an input record</span>
+
+<span class="sd">    :param record_type: the type of record</span>
+<span class="sd">    :type record_type: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">record_type</span> <span class="o">==</span> <span class="s1">&#39;&gt;f&#39;</span> <span class="ow">or</span> <span class="n">record_type</span> <span class="o">==</span> <span class="s1">&#39;f&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">4</span>
+    <span class="k">if</span> <span class="n">record_type</span> <span class="o">==</span> <span class="s1">&#39;&gt;d&#39;</span> <span class="ow">or</span> <span class="n">record_type</span> <span class="o">==</span> <span class="s1">&#39;d&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">8</span>
+    <span class="k">if</span> <span class="n">record_type</span> <span class="o">==</span> <span class="s1">&#39;&gt;i&#39;</span> <span class="ow">or</span> <span class="n">record_type</span> <span class="o">==</span> <span class="s1">&#39;i&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">4</span>
+
+    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;unknown record_type</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="write_record"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.graph2rst.write_record">[docs]</a><span class="k">def</span> <span class="nf">write_record</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">record_type</span><span class="p">,</span> <span class="n">array</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This subroutine writes an array into a binary file including</span>
+<span class="sd">    the corresponding record markers to make it readable by Fortran</span>
+
+<span class="sd">    :param f: the binary file</span>
+<span class="sd">    :type f: file</span>
+<span class="sd">    :param record_type: the array type (can be &#39;f&#39;, &#39;d&#39;, &#39;i&#39;)</span>
+<span class="sd">    :type record_type: str</span>
+<span class="sd">    :param array: the array to be written</span>
+<span class="sd">    :type array: np.ndarray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># starting marker</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="n">bytes_per_record</span><span class="p">(</span><span class="n">record_type</span><span class="p">)</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)))</span>
+
+    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">array</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">record_type</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+
+    <span class="c1"># read end marker</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="n">bytes_per_record</span><span class="p">(</span><span class="n">record_type</span><span class="p">)</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="write_single_record"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.graph2rst.write_single_record">[docs]</a><span class="k">def</span> <span class="nf">write_single_record</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">record_type</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This subroutine writes one variable into a binary file including</span>
+<span class="sd">    the corresponding record markers to make it readable by Fortran</span>
+
+<span class="sd">    :param f: the binary file</span>
+<span class="sd">    :type f: file</span>
+<span class="sd">    :param record_type: the type of the variable (can be &#39;f&#39;, &#39;d&#39;, &#39;i&#39;)</span>
+<span class="sd">    :type record_type: str</span>
+<span class="sd">    :param val: the scalar</span>
+<span class="sd">    :type array: float or int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="n">bytes_per_record</span><span class="p">(</span><span class="n">record_type</span><span class="p">)))</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">record_type</span><span class="p">,</span> <span class="n">val</span><span class="p">))</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="n">bytes_per_record</span><span class="p">(</span><span class="n">record_type</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="Graph2Rst"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.graph2rst.Graph2Rst">[docs]</a><span class="k">class</span> <span class="nc">Graph2Rst</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class allows to transform an input graphic file into a checkpoint</span>
+<span class="sd">    file format that can be read by MagIC to restart a simulation.</span>
+
+<span class="sd">    &gt;&gt;&gt; # Load a Graphic File</span>
+<span class="sd">    &gt;&gt;&gt; gr = MagicGraph()</span>
+<span class="sd">    &gt;&gt;&gt; # Produce the file checkpoint_ave.from_G with dt=1e-4</span>
+<span class="sd">    &gt;&gt;&gt; Graph2Rst(gr, filename=&#39;checkpoint_ave.from_G&#39;, dt=1e-4):q</span>
+
+<span class="sd">    .. note:: So far the endianness is hard-coded an set to &quot;big_endian&quot;.</span>
+<span class="sd">              This might become useful to have an extra option to control</span>
+<span class="sd">              it as well.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gr</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;checkpoint_ave&#39;</span><span class="p">,</span> <span class="n">dt</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param gr: the input graphic file one wants to convert into a restart</span>
+<span class="sd">                   file</span>
+<span class="sd">        :type gr: magic.MagicGraph</span>
+<span class="sd">        :param filename: name of the checkpoint file</span>
+<span class="sd">        :type filename: str</span>
+<span class="sd">        :param dt: time step size</span>
+<span class="sd">        :type dt: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="s1">&#39;tag&#39;</span><span class="p">):</span>
+            <span class="n">tag</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">tag</span>
+
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;anel.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">tag</span><span class="p">):</span>
+                <span class="n">r</span> <span class="o">=</span> <span class="n">MagicRadial</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;anel&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="n">rho0</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">rho0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">rho0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rho0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
+
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span>
+
+        <span class="n">version</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="n">write_single_record</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+
+        <span class="n">time</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dt</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">dt</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">dtMax</span>
+
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="o">+</span><span class="mi">8</span><span class="o">+</span><span class="mi">4</span><span class="p">))</span>  <span class="c1"># 2 doubles + 1 int</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;d&#39;</span><span class="p">,</span> <span class="n">time</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;d&#39;</span><span class="p">,</span> <span class="n">dt</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">n_time_steps</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="o">+</span><span class="mi">8</span><span class="o">+</span><span class="mi">4</span><span class="p">))</span>  <span class="c1"># 2 doubles + 1 int</span>
+
+        <span class="n">ra</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">ra</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">pr</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">pr</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">raxi</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+            <span class="n">raxi</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">raxi</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">sc</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">sc</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">raxi</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">raxi</span>
+            <span class="n">sc</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">sc</span>
+        <span class="n">prmag</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">prmag</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">ek</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">ek</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">radratio</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">radratio</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">par</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="n">ra</span><span class="p">,</span> <span class="n">pr</span><span class="p">,</span> <span class="n">raxi</span><span class="p">,</span> <span class="n">sc</span><span class="p">,</span> <span class="n">prmag</span><span class="p">,</span> <span class="n">ek</span><span class="p">,</span> <span class="n">radratio</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">sigma_ratio</span><span class="p">]</span>
+        <span class="n">par</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span>
+        <span class="n">write_record</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;&gt;d&#39;</span><span class="p">,</span> <span class="n">par</span><span class="p">)</span>
+
+        <span class="c1"># Grid resolution</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">n_phi_tot</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">,</span>
+                    <span class="n">gr</span><span class="o">.</span><span class="n">nalias</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="p">]</span>
+        <span class="n">write_record</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span>
+
+        <span class="c1"># Radial scheme</span>
+        <span class="k">if</span> <span class="n">gr</span><span class="o">.</span><span class="n">radial_scheme</span> <span class="o">==</span> <span class="s1">&#39;CHEB&#39;</span><span class="p">:</span>
+            <span class="n">version</span> <span class="o">=</span> <span class="s1">&#39;cheb&#39;</span><span class="o">+</span><span class="s1">&#39;</span><span class="si">%68s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="s1">&#39;&#39;</span>
+            <span class="n">n_max</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">n_cheb_max</span>
+            <span class="k">if</span> <span class="n">gr</span><span class="o">.</span><span class="n">l_newmap</span> <span class="o">==</span> <span class="s1">&#39;F&#39;</span><span class="p">:</span>
+                <span class="n">o_bound</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">o_bound</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">alph1</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">alph1</span>
+            <span class="n">alph2</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">alph2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">version</span> <span class="o">=</span> <span class="s1">&#39;fd&#39;</span><span class="o">+</span><span class="s1">&#39;</span><span class="si">%70s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="s1">&#39;&#39;</span>
+            <span class="n">n_max</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">fd_order</span>
+            <span class="n">o_bound</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">fd_order_bound</span>
+            <span class="n">alph1</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">fd_stretch</span>
+            <span class="n">alph2</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">fd_ratio</span>
+
+        <span class="n">s</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="o">+</span><span class="mi">8</span><span class="o">+</span><span class="mi">4</span><span class="o">+</span><span class="mi">4</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)))</span>  <span class="c1"># 2 doubles + 2 int + 1 str</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&gt;</span><span class="si">%d</span><span class="s2">s&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">),),</span> <span class="n">s</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="n">n_max</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="n">o_bound</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;d&#39;</span><span class="p">,</span> <span class="n">alph1</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;d&#39;</span><span class="p">,</span> <span class="n">alph2</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="o">+</span><span class="mi">8</span><span class="o">+</span><span class="mi">4</span><span class="o">+</span><span class="mi">4</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)))</span>  <span class="c1"># 2 doubles + 2 int + 1str</span>
+
+        <span class="c1"># Torques: dummy</span>
+        <span class="n">dumm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span>
+        <span class="n">dumm</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">dt</span>
+        <span class="n">write_record</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;&gt;d&#39;</span><span class="p">,</span> <span class="n">dumm</span><span class="p">)</span>
+
+        <span class="c1"># Flags</span>
+        <span class="k">if</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span> <span class="ow">or</span> <span class="n">ra</span> <span class="o">==</span> <span class="mf">0.</span><span class="p">:</span>
+            <span class="n">l_heat</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">l_heat</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">raxi</span> <span class="o">&gt;</span> <span class="mf">0.</span> <span class="ow">or</span> <span class="n">raxi</span> <span class="o">&lt;</span> <span class="mf">0.</span><span class="p">:</span>
+            <span class="n">l_chem</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">l_chem</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">if</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]:</span>
+            <span class="n">l_mag</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">l_mag</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">if</span> <span class="n">gr</span><span class="o">.</span><span class="n">sigma_ratio</span> <span class="o">==</span> <span class="mf">0.</span><span class="p">:</span>
+            <span class="n">l_cond_ic</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">l_cond_ic</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="n">flags</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="n">l_heat</span><span class="p">,</span> <span class="n">l_chem</span><span class="p">,</span> <span class="n">l_mag</span><span class="p">,</span> <span class="n">l_cond_ic</span><span class="p">]</span>
+        <span class="n">write_record</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="p">)</span>
+
+        <span class="c1"># At this stage we need to initiate the transforms</span>
+
+        <span class="n">sh</span> <span class="o">=</span> <span class="n">SpectralTransforms</span><span class="p">(</span><span class="n">l_max</span><span class="o">=</span><span class="n">gr</span><span class="o">.</span><span class="n">l_max</span><span class="p">,</span> <span class="n">lm_max</span><span class="o">=</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">,</span>
+                                <span class="n">n_theta_max</span><span class="o">=</span><span class="n">gr</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">)</span>
+
+        <span class="c1"># Calculate and store the poloidal potential using vr</span>
+        <span class="n">pol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="p">),</span> <span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">):</span>
+            <span class="n">vr</span> <span class="o">=</span> <span class="n">sh</span><span class="o">.</span><span class="n">spat_spec</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vr</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">])</span>
+            <span class="n">pol</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">vr</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">/</span><span class="p">(</span><span class="n">sh</span><span class="o">.</span><span class="n">ell</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">*</span><span class="p">(</span><span class="n">sh</span><span class="o">.</span><span class="n">ell</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> \
+                         <span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">rho0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+        <span class="n">pol</span><span class="o">.</span><span class="n">byteswap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">pol</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+
+        <span class="n">pol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="p">),</span> <span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+        <span class="n">pol</span><span class="o">.</span><span class="n">byteswap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">pol</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+
+        <span class="c1"># Calculate the toroidal potential using wr</span>
+        <span class="n">tor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="p">),</span> <span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+
+        <span class="n">th3D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vr</span><span class="p">)</span>
+        <span class="n">rr3D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">):</span>
+            <span class="n">th3D</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">colatitude</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">):</span>
+            <span class="n">rr3D</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">s3D</span> <span class="o">=</span> <span class="n">rr3D</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span>
+        <span class="n">omr</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">s3D</span><span class="o">*</span><span class="p">(</span><span class="n">thetaderavg</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span> <span class="o">-</span>
+                      <span class="n">phideravg</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vtheta</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">):</span>
+            <span class="n">om</span> <span class="o">=</span> <span class="n">sh</span><span class="o">.</span><span class="n">spat_spec</span><span class="p">(</span><span class="n">omr</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">])</span>
+            <span class="n">tor</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">om</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">/</span><span class="p">(</span><span class="n">sh</span><span class="o">.</span><span class="n">ell</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">*</span><span class="p">(</span><span class="n">sh</span><span class="o">.</span><span class="n">ell</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> \
+                         <span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">rho0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+        <span class="n">tor</span><span class="o">.</span><span class="n">byteswap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">tor</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+
+        <span class="n">tor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="p">),</span> <span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+        <span class="n">tor</span><span class="o">.</span><span class="n">byteswap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">tor</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+
+        <span class="c1"># Calculate the pressure</span>
+        <span class="n">pre</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="p">),</span> <span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">):</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">sh</span><span class="o">.</span><span class="n">spat_spec</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">pre</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">])</span>
+            <span class="n">pre</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[:]</span>
+
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+        <span class="n">pre</span><span class="o">.</span><span class="n">byteswap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">pre</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+
+        <span class="n">pre</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="p">),</span> <span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+        <span class="n">pre</span><span class="o">.</span><span class="n">byteswap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">pre</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+
+        <span class="c1"># Calculate entropy/temperature</span>
+        <span class="k">if</span> <span class="n">l_heat</span><span class="p">:</span>
+            <span class="n">entropy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="p">),</span> <span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">):</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">sh</span><span class="o">.</span><span class="n">spat_spec</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">entropy</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">])</span>
+                <span class="n">entropy</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[:]</span>
+
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+            <span class="n">entropy</span><span class="o">.</span><span class="n">byteswap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">entropy</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+
+            <span class="n">entropy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="p">),</span> <span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+            <span class="n">entropy</span><span class="o">.</span><span class="n">byteswap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">entropy</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+
+        <span class="c1"># Calculate chemical composition</span>
+        <span class="k">if</span> <span class="n">l_chem</span><span class="p">:</span>
+            <span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="p">),</span> <span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">):</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">sh</span><span class="o">.</span><span class="n">spat_spec</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">xi</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">])</span>
+                <span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[:]</span>
+
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+            <span class="n">xi</span><span class="o">.</span><span class="n">byteswap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">xi</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+
+            <span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="p">),</span> <span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+            <span class="n">xi</span><span class="o">.</span><span class="n">byteswap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">xi</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">l_mag</span><span class="p">:</span>
+            <span class="c1"># Calculate and store the poloidal potential using Br</span>
+            <span class="n">pol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="p">),</span> <span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">):</span>
+                <span class="n">vr</span> <span class="o">=</span> <span class="n">sh</span><span class="o">.</span><span class="n">spat_spec</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">Br</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">])</span>
+                <span class="n">pol</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">vr</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">/</span><span class="p">(</span><span class="n">sh</span><span class="o">.</span><span class="n">ell</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">*</span><span class="p">(</span><span class="n">sh</span><span class="o">.</span><span class="n">ell</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+            <span class="n">pol</span><span class="o">.</span><span class="n">byteswap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">pol</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+
+            <span class="n">pol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="p">),</span> <span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+            <span class="n">pol</span><span class="o">.</span><span class="n">byteswap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">pol</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+
+            <span class="c1"># Calculate the toroidal potential using jr</span>
+            <span class="n">tor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="p">),</span> <span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+
+            <span class="n">jr</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">s3D</span><span class="o">*</span><span class="p">(</span><span class="n">thetaderavg</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">Bphi</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span> <span class="o">-</span>
+                         <span class="n">phideravg</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">Btheta</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">))</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">):</span>
+                <span class="n">om</span> <span class="o">=</span> <span class="n">sh</span><span class="o">.</span><span class="n">spat_spec</span><span class="p">(</span><span class="n">jr</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">])</span>
+                <span class="n">tor</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">om</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">/</span><span class="p">(</span><span class="n">sh</span><span class="o">.</span><span class="n">ell</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">*</span><span class="p">(</span><span class="n">sh</span><span class="o">.</span><span class="n">ell</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+            <span class="n">tor</span><span class="o">.</span><span class="n">byteswap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">tor</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+
+            <span class="n">tor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="p">),</span> <span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+            <span class="n">tor</span><span class="o">.</span><span class="n">byteswap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">tor</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">l_mag</span> <span class="ow">and</span> <span class="n">l_cond_ic</span><span class="p">:</span>
+            <span class="n">ri</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">radratio</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="n">gr</span><span class="o">.</span><span class="n">radratio</span><span class="p">)</span>
+
+
+            <span class="c1"># Calculate and store the poloidal potential using Br</span>
+            <span class="n">pol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="p">),</span> <span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="p">):</span>
+                <span class="n">rdep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">sh</span><span class="o">.</span><span class="n">ell</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># ICB radius</span>
+                    <span class="n">vr</span> <span class="o">=</span> <span class="n">sh</span><span class="o">.</span><span class="n">spat_spec</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">Br</span><span class="p">[:,</span> <span class="p">:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="n">rr</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">rdep</span> <span class="o">=</span> <span class="mf">1.</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">vr</span> <span class="o">=</span> <span class="n">sh</span><span class="o">.</span><span class="n">spat_spec</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">Br_ic</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="n">rr</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">radius_ic</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">rdep</span> <span class="o">=</span> <span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">radius_ic</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">ri</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">sh</span><span class="o">.</span><span class="n">ell</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+                <span class="n">pol</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">vr</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">/</span><span class="p">(</span><span class="n">sh</span><span class="o">.</span><span class="n">ell</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">*</span><span class="p">(</span><span class="n">sh</span><span class="o">.</span><span class="n">ell</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">*</span><span class="n">rr</span><span class="o">**</span><span class="mi">2</span>
+                <span class="c1"># Technically we should define by rdep but this yields</span>
+                <span class="c1"># numerical difficulties</span>
+                <span class="c1">#pol[i, 1:] /= rdep</span>
+
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="p">))</span>
+            <span class="n">pol</span><span class="o">.</span><span class="n">byteswap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">pol</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="p">))</span>
+
+            <span class="n">pol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="p">),</span> <span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="p">))</span>
+            <span class="n">pol</span><span class="o">.</span><span class="n">byteswap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">pol</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="p">))</span>
+
+            <span class="c1"># Calculate the toroidal potential using jr</span>
+            <span class="n">tor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="p">),</span> <span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+
+            <span class="n">th3D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">Br_ic</span><span class="p">)</span>
+            <span class="n">rr3D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">):</span>
+                <span class="n">th3D</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">colatitude</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">rr3D</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">radius_ic</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">rr3D</span><span class="p">[:,</span> <span class="p">:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e-4</span>
+            <span class="n">s3D</span> <span class="o">=</span> <span class="n">rr3D</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span>
+            <span class="n">jr_ic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span>
+            <span class="n">jr_ic</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">s3D</span><span class="o">*</span><span class="p">(</span><span class="n">thetaderavg</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">Bphi_ic</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span> <span class="o">-</span>
+                            <span class="n">phideravg</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">Btheta_ic</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">))</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># ICB radius</span>
+                    <span class="n">om</span> <span class="o">=</span> <span class="n">sh</span><span class="o">.</span><span class="n">spat_spec</span><span class="p">(</span><span class="n">jr</span><span class="p">[:,</span> <span class="p">:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="n">rr</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">om</span> <span class="o">=</span> <span class="n">sh</span><span class="o">.</span><span class="n">spat_spec</span><span class="p">(</span><span class="n">jr_ic</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="n">rr</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">radius_ic</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">tor</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">om</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">/</span><span class="p">(</span><span class="n">sh</span><span class="o">.</span><span class="n">ell</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">*</span><span class="p">(</span><span class="n">sh</span><span class="o">.</span><span class="n">ell</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">*</span><span class="n">rr</span><span class="o">**</span><span class="mi">2</span>
+
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="p">))</span>
+            <span class="n">tor</span><span class="o">.</span><span class="n">byteswap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">tor</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="p">))</span>
+
+            <span class="n">tor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="p">),</span> <span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="p">))</span>
+            <span class="n">tor</span><span class="o">.</span><span class="n">byteswap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">tor</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="p">))</span>
+
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="n">gr</span> <span class="o">=</span> <span class="n">MagicGraph</span><span class="p">()</span>
+    <span class="n">Graph2Rst</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>

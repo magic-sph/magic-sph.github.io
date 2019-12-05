@@ -1,28 +1,20 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Formulation of the (magneto)-hydrodynamics problem &#8212; Magic 5.7 documentation</title>
+    <meta charset="utf-8" />
+    <title>Formulation of the (magneto)-hydrodynamics problem &#8212; Magic 5.9 documentation</title>
     <link rel="stylesheet" href="_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '5.7',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Numerical technique" href="numerics.html" />
@@ -66,8 +58,7 @@
       });
     </script>
 
-  </head>
-  <body>
+  </head><body>
 <div class="pageheader">
   <ul>
     <li><a href="index.html">Home</a></li>
@@ -101,7 +92,7 @@
         <li class="right" >
           <a href="install.html" title="Get MagIC and run it"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="contents.html">Magic 5.7 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="contents.html">Magic 5.9 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -115,144 +106,144 @@
 <p>The general equations describing thermal convection and dynamo action of a
 rotating compressible fluid are the starting point from which the Boussinesq or
 the anelastic approximations are developed.  In MagIC, we consider a spherical
-shell rotating about the vertical <span class="math">\(z\)</span> axis with a constant angular
-velocity <span class="math">\(\Omega\)</span>. Equations are solve in the corotating system.</p>
+shell rotating about the vertical <span class="math notranslate nohighlight">\(z\)</span> axis with a constant angular
+velocity <span class="math notranslate nohighlight">\(\Omega\)</span>. Equations are solve in the corotating system.</p>
 <p>The conservation of momentum is formulated by the Navier-Stokes equation</p>
-<div class="math" id="equation-eqNS">
-<span class="eqno">(1)<a class="headerlink" href="#equation-eqNS" title="Permalink to this equation">¶</a></span>\[\rho\left(\dfrac{\partial \vec{u}}{\partial t}+ \vec{u}\cdot\vec{\nabla}\
+<div class="math notranslate nohighlight" id="equation-eqns">
+<span class="eqno">(1)<a class="headerlink" href="#equation-eqns" title="Permalink to this equation">¶</a></span>\[\rho\left(\dfrac{\partial \vec{u}}{\partial t}+ \vec{u}\cdot\vec{\nabla}\
 \vec{u} \right) =-\vec{\nabla} p +
 \dfrac{1}{\mu_0}(\vec{\nabla}\times\vec{B})\times\vec{B} +\rho
 \vec{g}-2\rho\vec{\Omega}\times\vec{u}+ \vec{\nabla}\cdot\mathsf{S},\]</div>
-<p>where <span class="math">\(\vec{u}\)</span> is the velocity field, <span class="math">\(\vec{B}\)</span> the magnetic field,
-and <span class="math">\(p\)</span> a modified pressure that includes centrifugal forces.
-<span class="math">\(\mathsf{S}\)</span> corresponds to the rate-of-strain tensor given by:</p>
-<div class="math">
+<p>where <span class="math notranslate nohighlight">\(\vec{u}\)</span> is the velocity field, <span class="math notranslate nohighlight">\(\vec{B}\)</span> the magnetic field,
+and <span class="math notranslate nohighlight">\(p\)</span> a modified pressure that includes centrifugal forces.
+<span class="math notranslate nohighlight">\(\mathsf{S}\)</span> corresponds to the rate-of-strain tensor given by:</p>
+<div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
 S_{ij} &amp; = 2\nu\rho\left[e_{ij}-\dfrac{1}{3}\delta_{ij}\,\vec{\nabla}\cdot\vec{u} \right], \\
 e_{ij} &amp; =\dfrac{1}{2}\left(\dfrac{\partial u_i}{\partial x_j}+\dfrac{\partial
 u_j}{\partial x_i}\right).
 \end{aligned}\end{split}\]</div>
-<p>Convection is driven by buoyancy forces acting on variations in density <span class="math">\(\rho\)</span>.
+<p>Convection is driven by buoyancy forces acting on variations in density <span class="math notranslate nohighlight">\(\rho\)</span>.
 These variations have a dynamical part formulated by the continuity equation
 describing the conservation of mass:</p>
-<div class="math" id="equation-eqContinuity">
-<span class="eqno">(2)<a class="headerlink" href="#equation-eqContinuity" title="Permalink to this equation">¶</a></span>\[\dfrac{\partial \rho}{\partial t} = - \vec{\nabla} \cdot \rho \vec{u}.\]</div>
+<div class="math notranslate nohighlight" id="equation-eqcontinuity">
+<span class="eqno">(2)<a class="headerlink" href="#equation-eqcontinuity" title="Permalink to this equation">¶</a></span>\[\dfrac{\partial \rho}{\partial t} = - \vec{\nabla} \cdot \rho \vec{u}.\]</div>
 <p>In addition an equation of state is required to formulate the thermodynamic
 density changes. For example the relation</p>
-<div class="math" id="equation-EOS1">
-<span class="eqno">(3)<a class="headerlink" href="#equation-EOS1" title="Permalink to this equation">¶</a></span>\[\dfrac{1}{\rho} \partial \rho = -\alpha \partial T + \beta \partial p - \delta \partial \xi\]</div>
-<p>describes density variations caused by variations in temperature <span class="math">\(T\)</span>,
-pressure <span class="math">\(p\)</span>, and composition <span class="math">\(\xi\)</span>. The latter contribution needs
+<div class="math notranslate nohighlight" id="equation-eos1">
+<span class="eqno">(3)<a class="headerlink" href="#equation-eos1" title="Permalink to this equation">¶</a></span>\[\dfrac{1}{\rho} \partial \rho = -\alpha \partial T + \beta \partial p - \delta \partial \xi\]</div>
+<p>describes density variations caused by variations in temperature <span class="math notranslate nohighlight">\(T\)</span>,
+pressure <span class="math notranslate nohighlight">\(p\)</span>, and composition <span class="math notranslate nohighlight">\(\xi\)</span>. The latter contribution needs
 to be considered for describing the effects of light elements released from a
 growing solid iron core in a so-called double diffusive approach.</p>
 <p>To close the system we also have to formulate the dynamic changes of entropy,
 pressure, and composition.  The evolution equation for pressure can be derived
 from the Navier-Stokes equation, as will be further discussed below. For
 entropy variations we use the so-called energy or heat equation</p>
-<div class="math" id="equation-eqEntropy">
-<span class="eqno">(4)<a class="headerlink" href="#equation-eqEntropy" title="Permalink to this equation">¶</a></span>\[\rho T\left(\dfrac{\partial s}{\partial t}+\vec{u}\cdot \vec{\nabla} s \right) =
+<div class="math notranslate nohighlight" id="equation-eqentropy">
+<span class="eqno">(4)<a class="headerlink" href="#equation-eqentropy" title="Permalink to this equation">¶</a></span>\[\rho T\left(\dfrac{\partial s}{\partial t}+\vec{u}\cdot \vec{\nabla} s \right) =
 \vec{\nabla}\cdot (k\vec{\nabla} T) + \Phi_\nu +\dfrac{\lambda}{\mu_0}\left(\vec{\nabla}\times\vec{B}\right)^2
 + \epsilon,\]</div>
-<p>where <span class="math">\(\Phi_\nu\)</span> corresponds to the viscous heating expressed by</p>
-<div class="math">
+<p>where <span class="math notranslate nohighlight">\(\Phi_\nu\)</span> corresponds to the viscous heating expressed by</p>
+<div class="math notranslate nohighlight">
 \[\Phi_\nu = 2\rho\left[e_{ij}e_{ji}-\dfrac{1}{3}\left(\vec{\nabla}\cdot\vec{u}\right)^2\right]\]</div>
-<p>Note that we use here the summation convention over the indices <span class="math">\(i\)</span> and
-<span class="math">\(j\)</span>. The second last term on the right hand side is the Ohmic heating due
+<p>Note that we use here the summation convention over the indices <span class="math notranslate nohighlight">\(i\)</span> and
+<span class="math notranslate nohighlight">\(j\)</span>. The second last term on the right hand side is the Ohmic heating due
 to electric currents. The last term is a volumetric sink or source term that
 can describe various effects, for example radiogenic heating, the mixing-in  of
 the light elements or, when radially dependent, potential variations in the
 adiabatic gradient (see below).
 For chemical composition, we finally use</p>
-<div class="math" id="equation-eqXi">
-<span class="eqno">(5)<a class="headerlink" href="#equation-eqXi" title="Permalink to this equation">¶</a></span>\[\rho \left(\dfrac{\partial \xi}{\partial t}+\vec{u}\cdot \vec{\nabla} \xi \right) =
+<div class="math notranslate nohighlight" id="equation-eqxi">
+<span class="eqno">(5)<a class="headerlink" href="#equation-eqxi" title="Permalink to this equation">¶</a></span>\[\rho \left(\dfrac{\partial \xi}{\partial t}+\vec{u}\cdot \vec{\nabla} \xi \right) =
 \vec{\nabla}\cdot(k_\xi \vec{\nabla} \xi) + \epsilon_\xi,\]</div>
 <p>The induction equation is obtained from the Maxwell equations (ignoring
 displacement current) and Ohm’s law (neglecting Hall effect):</p>
-<div class="math" id="equation-eqInduction">
-<span class="eqno">(6)<a class="headerlink" href="#equation-eqInduction" title="Permalink to this equation">¶</a></span>\[\dfrac{\partial \vec{B}}{\partial t} = \vec{\nabla} \times \left( \vec{u}\times\vec{B}-\lambda\,\vec{\nabla}\times\vec{B}\right).\]</div>
-<p>When the magnetic diffusivity <span class="math">\(\lambda\)</span> is homogeneous this simplifies to
+<div class="math notranslate nohighlight" id="equation-eqinduction">
+<span class="eqno">(6)<a class="headerlink" href="#equation-eqinduction" title="Permalink to this equation">¶</a></span>\[\dfrac{\partial \vec{B}}{\partial t} = \vec{\nabla} \times \left( \vec{u}\times\vec{B}-\lambda\,\vec{\nabla}\times\vec{B}\right).\]</div>
+<p>When the magnetic diffusivity <span class="math notranslate nohighlight">\(\lambda\)</span> is homogeneous this simplifies to
 the commonly used form</p>
-<div class="math" id="equation-eqInduction2">
-<span class="eqno">(7)<a class="headerlink" href="#equation-eqInduction2" title="Permalink to this equation">¶</a></span>\[\dfrac{\partial \vec{B}}{\partial t} = \vec{\nabla} \times \left( \vec{u}\times\vec{B} \right)
+<div class="math notranslate nohighlight" id="equation-eqinduction2">
+<span class="eqno">(7)<a class="headerlink" href="#equation-eqinduction2" title="Permalink to this equation">¶</a></span>\[\dfrac{\partial \vec{B}}{\partial t} = \vec{\nabla} \times \left( \vec{u}\times\vec{B} \right)
 + \lambda\,\vec{\Delta}\vec{B}.\]</div>
 <p>The physical properties determining above equations are rotation rate
-<span class="math">\(\Omega\)</span>, the kinematic viscosity <span class="math">\(\nu\)</span>, the magnetic permeability
-<span class="math">\(\mu_0\)</span>, gravity <span class="math">\(\vec{g}\)</span>, thermal conductivity <span class="math">\(k\)</span>, Fick’s
-conductiviy <span class="math">\(k_\xi\)</span>, magnetic diffusivity <span class="math">\(\lambda\)</span>. The latter
-connects to the electrical conductivity <span class="math">\(\sigma\)</span> via <span class="math">\(\lambda =
-1/(\mu_0\sigma)\)</span>.  The thermodynamics properties appearing in <a class="reference internal" href="#equation-EOS1">(3)</a> are
+<span class="math notranslate nohighlight">\(\Omega\)</span>, the kinematic viscosity <span class="math notranslate nohighlight">\(\nu\)</span>, the magnetic permeability
+<span class="math notranslate nohighlight">\(\mu_0\)</span>, gravity <span class="math notranslate nohighlight">\(\vec{g}\)</span>, thermal conductivity <span class="math notranslate nohighlight">\(k\)</span>, Fick’s
+conductiviy <span class="math notranslate nohighlight">\(k_\xi\)</span>, magnetic diffusivity <span class="math notranslate nohighlight">\(\lambda\)</span>. The latter
+connects to the electrical conductivity <span class="math notranslate nohighlight">\(\sigma\)</span> via <span class="math notranslate nohighlight">\(\lambda =
+1/(\mu_0\sigma)\)</span>.  The thermodynamics properties appearing in <a class="reference internal" href="#equation-eos1">(3)</a> are
 the thermal expansivity at constant pressure (and composition)</p>
-<div class="math" id="equation-alpha">
+<div class="math notranslate nohighlight" id="equation-alpha">
 <span class="eqno">(8)<a class="headerlink" href="#equation-alpha" title="Permalink to this equation">¶</a></span>\[\alpha = -\dfrac{1}{\rho}\left(\dfrac{\partial\rho}{\partial T}\right)_{p,\xi},\]</div>
 <p>the compressibility at constant temperature</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\beta = \dfrac{1}{\rho}\left(\dfrac{\partial\rho}{\partial p}\right)_{T,\xi}\]</div>
-<p>and an equivalent parameter <span class="math">\(\delta\)</span> for the dependence of
+<p>and an equivalent parameter <span class="math notranslate nohighlight">\(\delta\)</span> for the dependence of
 density on composition:</p>
-<div class="math" id="equation-delta">
+<div class="math notranslate nohighlight" id="equation-delta">
 <span class="eqno">(9)<a class="headerlink" href="#equation-delta" title="Permalink to this equation">¶</a></span>\[\delta = -\dfrac{1}{\rho}\left(\dfrac{\partial\rho}{\partial \xi}\right)_{p,T},\]</div>
 <div class="figure align-center" id="id1">
 <a class="reference internal image-reference" href="_images/shell.png"><img alt="caption" src="_images/shell.png" style="width: 312.5px; height: 322.0px;" /></a>
-<p class="caption"><span class="caption-text">Sketch of the spherical shell model and its system of coordinate.</span></p>
+<p class="caption"><span class="caption-text">Sketch of the spherical shell model and its system of coordinate.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </div>
 <div class="section" id="the-reference-state">
 <h2>The reference state<a class="headerlink" href="#the-reference-state" title="Permalink to this headline">¶</a></h2>
 <p>The convective flow and the related processes including magnetic field generation constitute
 only small disturbances around a background or reference state. In the following we denote the background
 state with a tilde and the disturbance we are interested in with a prime.
-Formally we will solve equations in first order of a smallness parameters <span class="math">\(\epsilon\)</span> which
+Formally we will solve equations in first order of a smallness parameters <span class="math notranslate nohighlight">\(\epsilon\)</span> which
 quantified the ratio of convective disturbances to background state:</p>
-<div class="math" id="equation-epsilon">
+<div class="math notranslate nohighlight" id="equation-epsilon">
 <span class="eqno">(10)<a class="headerlink" href="#equation-epsilon" title="Permalink to this equation">¶</a></span>\[\epsilon \sim \dfrac{T'}{\tilde{T}} \sim \dfrac{p'}{\tilde{p}} \sim \dfrac{\rho'}{\tilde{\rho}} \sim  ... \ll 1 .\]</div>
 <p>The background state is hydrostatic, i.e. obeys the simple force balance</p>
-<div class="math" id="equation-hydrostatic">
+<div class="math notranslate nohighlight" id="equation-hydrostatic">
 <span class="eqno">(11)<a class="headerlink" href="#equation-hydrostatic" title="Permalink to this equation">¶</a></span>\[\nabla \tilde{p} = \tilde{\rho} \tilde{\vec{g}}.\]</div>
 <p>Convective motions are supposed to be strong enough to provide homogeneous entropy
 (and composition). The reference state is thus adiabatic and its gradients can be
 expressed in terms of the pressure gradient <a class="reference internal" href="#equation-hydrostatic">(11)</a>:</p>
-<div class="math" id="equation-nablaT">
-<span class="eqno">(12)<a class="headerlink" href="#equation-nablaT" title="Permalink to this equation">¶</a></span>\[\dfrac{\nabla\tilde{T}}{\tilde{T}} = \dfrac{1}{\tilde{T}} \left(\dfrac{\partial T}{\partial p}\right)_s
+<div class="math notranslate nohighlight" id="equation-nablat">
+<span class="eqno">(12)<a class="headerlink" href="#equation-nablat" title="Permalink to this equation">¶</a></span>\[\dfrac{\nabla\tilde{T}}{\tilde{T}} = \dfrac{1}{\tilde{T}} \left(\dfrac{\partial T}{\partial p}\right)_s
 \nabla p = \dfrac{\alpha}{c_p} \tilde{\vec{g}} ,\]</div>
-<div class="math" id="equation-nablarho">
+<div class="math notranslate nohighlight" id="equation-nablarho">
 <span class="eqno">(13)<a class="headerlink" href="#equation-nablarho" title="Permalink to this equation">¶</a></span>\[\dfrac{\nabla\tilde{\rho}}{\tilde{\rho}} = \dfrac{1}{\tilde{\rho}} \left(\dfrac{\partial \rho}{\partial p}\right)_s
 \nabla p = \beta \tilde{\rho} \tilde{\vec{g}} .\]</div>
 <p>The reference state obviously dependence only on radius.
-Dimensionless numbers quantifying the temperature and density gradients are called dissipation number <span class="math">\(Di\)</span> and
-compressibility parameter <span class="math">\(Co\)</span> respectively:</p>
-<div class="math">
+Dimensionless numbers quantifying the temperature and density gradients are called dissipation number <span class="math notranslate nohighlight">\(Di\)</span> and
+compressibility parameter <span class="math notranslate nohighlight">\(Co\)</span> respectively:</p>
+<div class="math notranslate nohighlight">
 \[Di = \dfrac{\alpha d}{c_p} \tilde{g},\]</div>
 <p>and</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[Co = d \beta \tilde{\rho} \tilde{g}.\]</div>
-<p>Here <span class="math">\(d\)</span> is a typical length scale, for example the shell thickness of the problem.
+<p>Here <span class="math notranslate nohighlight">\(d\)</span> is a typical length scale, for example the shell thickness of the problem.
 The dissipation number is something like an inverse temperature scale hight while the
 compressibility parameters is an inverse density scale hight.
 The ratio of both numbers also helps to quantify the relative impact of temperature and
 pressure on density variations:</p>
-<div class="math" id="equation-deltarho">
+<div class="math notranslate nohighlight" id="equation-deltarho">
 <span class="eqno">(14)<a class="headerlink" href="#equation-deltarho" title="Permalink to this equation">¶</a></span>\[\dfrac{\alpha \nabla T}{\beta \nabla \rho} \approx \alpha \tilde{T} \dfrac{Di}{Co}.\]</div>
 <p>As an example we demonstrate how to derive the first order continuity equation here.
-Using <span class="math">\(\rho=\tilde{\rho}+\rho'\)</span> in <a class="reference internal" href="#equation-eqContinuity">(2)</a> leads to</p>
-<div class="math">
+Using <span class="math notranslate nohighlight">\(\rho=\tilde{\rho}+\rho'\)</span> in <a class="reference internal" href="#equation-eqcontinuity">(2)</a> leads to</p>
+<div class="math notranslate nohighlight">
 \[\dfrac{\partial \tilde{\rho}}{\partial t} + \dfrac{\partial \rho'}{\partial t}
 = - \vec{\nabla} \cdot \left( \tilde{\rho} \vec{u} \right)
   - \vec{\nabla} \cdot \left( \rho' \vec{u} \right).\]</div>
 <p>The zero order term vanishes since the background density is considered static (or actually changing very slowly
 on very long time scales). The second term in the right hand side is obviously of second order.
-The ratio of the remaining two terms can be estimated to also be of first order in <span class="math">\(\epsilon\)</span>, meaning
-that the time derivative of <span class="math">\(\rho\)</span> is actually also of second order:</p>
-<div class="math">
+The ratio of the remaining two terms can be estimated to also be of first order in <span class="math notranslate nohighlight">\(\epsilon\)</span>, meaning
+that the time derivative of <span class="math notranslate nohighlight">\(\rho\)</span> is actually also of second order:</p>
+<div class="math notranslate nohighlight">
 \[\dfrac{\left[\partial \rho /\partial t\right]}{\left[\vec{\nabla} \cdot \rho \vec{u}\right]} \approx
 \dfrac{\rho'}{\tilde{\rho}}\approx\epsilon\;\;.\]</div>
 <p>Square brackets denote order of magnitude estimates here.
 We have used the fact that the reference state is
-static and assume time scale of changes are comparable (or slower) <span class="math">\(\rho'\)</span> than the time
-scales represented by <span class="math">\(u\)</span> and that length scales
+static and assume time scale of changes are comparable (or slower) <span class="math notranslate nohighlight">\(\rho'\)</span> than the time
+scales represented by <span class="math notranslate nohighlight">\(u\)</span> and that length scales
 associated to the gradient operator are not too small.
-We can then neglect local variations in <span class="math">\(\rho'\)</span> which means that sound waves are filtered out.
+We can then neglect local variations in <span class="math notranslate nohighlight">\(\rho'\)</span> which means that sound waves are filtered out.
 This first order continuity equation thus simply reads:</p>
-<div class="math" id="equation-eqContiuity1">
-<span class="eqno">(15)<a class="headerlink" href="#equation-eqContiuity1" title="Permalink to this equation">¶</a></span>\[\vec{\nabla} \cdot \left( \tilde{\rho} \vec{u} \right) =  0.\]</div>
+<div class="math notranslate nohighlight" id="equation-eqcontiuity1">
+<span class="eqno">(15)<a class="headerlink" href="#equation-eqcontiuity1" title="Permalink to this equation">¶</a></span>\[\vec{\nabla} \cdot \left( \tilde{\rho} \vec{u} \right) =  0.\]</div>
 <p>This defines the so-called anelastic approximation where sound waves are filtered out by
 neglecting the local time derivative of density. This approximation is justified when
 typical velocities are sufficiently smaller than the speed of sound.</p>
@@ -260,116 +251,116 @@ typical velocities are sufficiently smaller than the speed of sound.</p>
 <div class="section" id="boussinesq-approximation">
 <h2>Boussinesq approximation<a class="headerlink" href="#boussinesq-approximation" title="Permalink to this headline">¶</a></h2>
 <p>For Earth the dissipation number and the compressibility parameter
-are around <span class="math">\(0.2\)</span> when temperature and density jump over the whole liquid core
-are considered. This motivates the so called Boussinesq approximation where <span class="math">\(Di\)</span> and
-<span class="math">\(Co\)</span> are assumed to vanish. The continuity equation <a class="reference internal" href="#equation-eqContinuity">(2)</a> then simplifies further:</p>
-<div class="math">
+are around <span class="math notranslate nohighlight">\(0.2\)</span> when temperature and density jump over the whole liquid core
+are considered. This motivates the so called Boussinesq approximation where <span class="math notranslate nohighlight">\(Di\)</span> and
+<span class="math notranslate nohighlight">\(Co\)</span> are assumed to vanish. The continuity equation <a class="reference internal" href="#equation-eqcontinuity">(2)</a> then simplifies further:</p>
+<div class="math notranslate nohighlight">
 \[\dfrac{1}{\tilde{\rho}} \vec{\nabla} \cdot \tilde{\rho} \vec{u} = \dfrac{\vec{u}}{\tilde{\rho}} \cdot \nabla \tilde{\rho}
 + \nabla\cdot\vec{u} \approx \nabla\cdot\vec{u} = 0.\]</div>
-<p>When using typical number for Earth, <a class="reference internal" href="#equation-deltarho">(14)</a> becomes <span class="math">\(0.05\)</span> so that pressure effects on density may be neglected.
+<p>When using typical number for Earth, <a class="reference internal" href="#equation-deltarho">(14)</a> becomes <span class="math notranslate nohighlight">\(0.05\)</span> so that pressure effects on density may be neglected.
 The first order Navier-Stokes equation (after to zero order hydrostatic reference solution has been subtracted) then reads:</p>
-<div class="math" id="equation-eqNSB">
-<span class="eqno">(16)<a class="headerlink" href="#equation-eqNSB" title="Permalink to this equation">¶</a></span>\[\tilde{\rho}\left(\dfrac{\partial \vec{u}}{\partial t}+ \vec{u}\cdot\vec{\nabla}\
+<div class="math notranslate nohighlight" id="equation-eqnsb">
+<span class="eqno">(16)<a class="headerlink" href="#equation-eqnsb" title="Permalink to this equation">¶</a></span>\[\tilde{\rho}\left(\dfrac{\partial \vec{u}}{\partial t}+ \vec{u}\cdot\vec{\nabla}\
 \vec{u} \right) =-\vec{\nabla} p' -2\rho\vec{\Omega}\times\vec{u}
 + \alpha \tilde{g}_o T' \dfrac{\vec{r}}{r_o}
 + \delta \tilde{g}_o \xi' \dfrac{\vec{r}}{r_o}
 + \dfrac{1}{\mu_0}(\vec{\nabla}\times\vec{B})\times\vec{B}
 + \tilde{\rho} \nu \Delta \vec{u}.\]</div>
-<p>Here <span class="math">\(u\)</span> and <span class="math">\(B\)</span> are understood as first order disturbances and
-<span class="math">\(p'\)</span> is the first order non-hydrostatic pressure and <span class="math">\(T'\)</span> the
-super-adiabatic temperature and <span class="math">\(\xi\)</span> the super-adiabatic chemical
+<p>Here <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are understood as first order disturbances and
+<span class="math notranslate nohighlight">\(p'\)</span> is the first order non-hydrostatic pressure and <span class="math notranslate nohighlight">\(T'\)</span> the
+super-adiabatic temperature and <span class="math notranslate nohighlight">\(\xi\)</span> the super-adiabatic chemical
 composition.  Above we have adopted a simplification of the buoyancy term.  In
-the Boussinesq limit with vanishing <span class="math">\(Co\)</span> and a small density difference
+the Boussinesq limit with vanishing <span class="math notranslate nohighlight">\(Co\)</span> and a small density difference
 between a solid inner and a liquid outer core a linear gravity dependence
 provides a reasonable approximation:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\tilde{\vec{g}} = \tilde{g}_o \dfrac{\vec{r}}{r_o},\]</div>
-<p>where we have chosen the gravity <span class="math">\(\tilde{g}_o\)</span> at the outer boundary
-radius <span class="math">\(r_o\)</span> as reference.</p>
+<p>where we have chosen the gravity <span class="math notranslate nohighlight">\(\tilde{g}_o\)</span> at the outer boundary
+radius <span class="math notranslate nohighlight">\(r_o\)</span> as reference.</p>
 <p>The first order energy equation becomes</p>
-<div class="math" id="equation-eqEntropyB">
-<span class="eqno">(17)<a class="headerlink" href="#equation-eqEntropyB" title="Permalink to this equation">¶</a></span>\[\tilde{\rho}\left(\dfrac{\partial T'}{\partial t}+\vec{u}\cdot \vec{\nabla} T' \right) =
+<div class="math notranslate nohighlight" id="equation-eqentropyb">
+<span class="eqno">(17)<a class="headerlink" href="#equation-eqentropyb" title="Permalink to this equation">¶</a></span>\[\tilde{\rho}\left(\dfrac{\partial T'}{\partial t}+\vec{u}\cdot \vec{\nabla} T' \right) =
 \kappa \Delta T'  + \epsilon,\]</div>
-<p>where we have assumed a homogeneous <span class="math">\(k\)</span> and neglected viscous and Ohmic
-heating which can be shown to scale with <span class="math">\(Di\)</span> as we discuss below.
+<p>where we have assumed a homogeneous <span class="math notranslate nohighlight">\(k\)</span> and neglected viscous and Ohmic
+heating which can be shown to scale with <span class="math notranslate nohighlight">\(Di\)</span> as we discuss below.
 Furthermore, we have used the simple relation</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\partial s \approx \dfrac{\tilde{\rho} c_p}{\tilde{T}} \partial T,\]</div>
 <p>defined the thermal diffusivity</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\kappa = \dfrac{k}{\tilde{\rho} c_p},\]</div>
-<p>and adjusted the definition of <span class="math">\(\epsilon\)</span>. Finally the first order equation
+<p>and adjusted the definition of <span class="math notranslate nohighlight">\(\epsilon\)</span>. Finally the first order equation
 for chemical composition becomes</p>
-<div class="math" id="equation-eqCompB">
-<span class="eqno">(18)<a class="headerlink" href="#equation-eqCompB" title="Permalink to this equation">¶</a></span>\[\tilde{\rho}\left(\dfrac{\partial \xi'}{\partial t}+\vec{u}\cdot \vec{\nabla} \xi' \right) =
+<div class="math notranslate nohighlight" id="equation-eqcompb">
+<span class="eqno">(18)<a class="headerlink" href="#equation-eqcompb" title="Permalink to this equation">¶</a></span>\[\tilde{\rho}\left(\dfrac{\partial \xi'}{\partial t}+\vec{u}\cdot \vec{\nabla} \xi' \right) =
 \kappa_\xi \Delta \xi'  + \epsilon_\xi,\]</div>
-<p>where we have assumed a homogeneous <span class="math">\(k_\xi\)</span> and adjusted the definition of <span class="math">\(\epsilon_\xi\)</span>.</p>
+<p>where we have assumed a homogeneous <span class="math notranslate nohighlight">\(k_\xi\)</span> and adjusted the definition of <span class="math notranslate nohighlight">\(\epsilon_\xi\)</span>.</p>
 <p>MagIC solves a dimensionless form of the differential equations. Time is scaled
-in units of the viscous diffusion time <span class="math">\(d^2/\nu\)</span>, length in units of the
-shell thickness <span class="math">\(d\)</span>, temperature in units of the temperature drop
-<span class="math">\(\Delta T=T_o-T_i\)</span> over the shell, composition in units of the composition
-drop <span class="math">\(\Delta \xi = \xi_o-\xi_i\)</span> over the shell  and magnetic field in units
-<span class="math">\((\mu\lambda\tilde{\rho}\Omega)^{1/2}\)</span>.  Technically the transition to
+in units of the viscous diffusion time <span class="math notranslate nohighlight">\(d^2/\nu\)</span>, length in units of the
+shell thickness <span class="math notranslate nohighlight">\(d\)</span>, temperature in units of the temperature drop
+<span class="math notranslate nohighlight">\(\Delta T=T_o-T_i\)</span> over the shell, composition in units of the composition
+drop <span class="math notranslate nohighlight">\(\Delta \xi = \xi_o-\xi_i\)</span> over the shell  and magnetic field in units
+<span class="math notranslate nohighlight">\((\mu\lambda\tilde{\rho}\Omega)^{1/2}\)</span>.  Technically the transition to
 the dimensionless form is achieved by the substitution</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[r\rightarrow r\;d ,\quad t\rightarrow (d^2/\nu)\;t ,\quad
 T\rightarrow \Delta T\;T ,\quad \xi\rightarrow \Delta\xi\;\xi ,\quad
 B\rightarrow \left(\mu\lambda\tilde{\rho}\Omega\right)^{1/2}B\]</div>
-<p>where <span class="math">\(r\)</span> stands for any length. The next step then is to collect the
+<p>where <span class="math notranslate nohighlight">\(r\)</span> stands for any length. The next step then is to collect the
 physical properties as a few possible characteristic dimensionless numbers.
 Note that many different scalings and combinations of dimensionless numbers are
 possible. For the Navier-Stokes equation in the Boussinesq limit MagIC uses the
 form:</p>
-<div class="math" id="equation-eqNSBoussinesq">
-<span class="eqno">(19)<a class="headerlink" href="#equation-eqNSBoussinesq" title="Permalink to this equation">¶</a></span>\[\left(\dfrac{\partial \vec{u}}{\partial t}+ \vec{u}\cdot\vec{\nabla}\
+<div class="math notranslate nohighlight" id="equation-eqnsboussinesq">
+<span class="eqno">(19)<a class="headerlink" href="#equation-eqnsboussinesq" title="Permalink to this equation">¶</a></span>\[\left(\dfrac{\partial \vec{u}}{\partial t}+ \vec{u}\cdot\vec{\nabla}\
 \vec{u} \right) =-\vec{\nabla} p' -\dfrac{2}{E}\vec{e_z}\times\vec{u}
 + \dfrac{Ra}{Pr} T' \dfrac{\vec{r}}{r_o}
 + \dfrac{Ra_\xi}{Sc} \xi' \dfrac{\vec{r}}{r_o}
 + \dfrac{1}{E Pm}(\vec{\nabla}\times\vec{B})\times\vec{B}
 + \Delta \vec{u},\]</div>
-<p>where <span class="math">\(\vec{e}_z\)</span> is the unit vector in the direction of the rotation
-axis and the meaning of the pressure disturbance <span class="math">\(p'\)</span> has been adjusted
+<p>where <span class="math notranslate nohighlight">\(\vec{e}_z\)</span> is the unit vector in the direction of the rotation
+axis and the meaning of the pressure disturbance <span class="math notranslate nohighlight">\(p'\)</span> has been adjusted
 to the new dimensionless equation form.</p>
 </div>
 <div class="section" id="anelastic-approximation">
 <h2>Anelastic approximation<a class="headerlink" href="#anelastic-approximation" title="Permalink to this headline">¶</a></h2>
-<p>The anelastic approximation adopts the simplified continuity <a class="reference internal" href="#equation-eqContiuity1">(15)</a>.
+<p>The anelastic approximation adopts the simplified continuity <a class="reference internal" href="#equation-eqcontiuity1">(15)</a>.
 The background state can be specified in different ways, for example by
 providing profiles based on internal models and/or ab initio simulations.
 We will assume a polytropic ideal gas in the following.</p>
 <div class="section" id="analytical-solution-in-the-limit-of-an-ideal-gas">
 <h3>Analytical solution in the limit of an ideal gas<a class="headerlink" href="#analytical-solution-in-the-limit-of-an-ideal-gas" title="Permalink to this headline">¶</a></h3>
 <p>In the limit of an ideal gas which follows
-<span class="math">\(\tilde{p}=\tilde{\rho}\tilde{T}\)</span> and has <span class="math">\(\alpha=1/\tilde{T}\)</span>, one
+<span class="math notranslate nohighlight">\(\tilde{p}=\tilde{\rho}\tilde{T}\)</span> and has <span class="math notranslate nohighlight">\(\alpha=1/\tilde{T}\)</span>, one
 directly gets:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
 \dfrac{d \tilde{T}}{dr}  &amp; = -Di\,\tilde{g}(r), \\
 \tilde{\rho} &amp; = \tilde{T}^{1/(\gamma-1)},
 \end{aligned}\end{split}\]</div>
-<p>where <span class="math">\(\gamma=c_p/c_v\)</span>. Note that we have moved to a dimensionless
+<p>where <span class="math notranslate nohighlight">\(\gamma=c_p/c_v\)</span>. Note that we have moved to a dimensionless
 formulations here, where all quantities have been normalized with their outer boundary values
-and <span class="math">\(Di\)</span> refers to the respective outer boundary value.
+and <span class="math notranslate nohighlight">\(Di\)</span> refers to the respective outer boundary value.
 If we in addition make the assumption of a
 centrally-condensed mass in the center of the spherical shell of radius
-<span class="math">\(r\in[r_i,r_o]\)</span>, i.e. <span class="math">\(g\propto, 1/r^2\)</span>, this leads to</p>
-<div class="math">
+<span class="math notranslate nohighlight">\(r\in[r_i,r_o]\)</span>, i.e. <span class="math notranslate nohighlight">\(g\propto, 1/r^2\)</span>, this leads to</p>
+<div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
  \tilde{T}(r) &amp; =Di\frac{r_o^2}{r}+(1-Di\,r_o), \\
  \tilde{\rho}(r) &amp; = \tilde{T}^m, \\
  Di &amp; = \dfrac{r_i}{r_o}\left(\exp\dfrac{N_\rho}{m}-1\right),
 \end{aligned}\end{split}\]</div>
-<p>where <span class="math">\(N_\rho=\ln(\tilde{\rho}_i/\tilde{\rho}_o)\)</span> is the number of density scale heights of the reference
-state and <span class="math">\(m=1/(\gamma-1)\)</span> is the polytropic index.</p>
+<p>where <span class="math notranslate nohighlight">\(N_\rho=\ln(\tilde{\rho}_i/\tilde{\rho}_o)\)</span> is the number of density scale heights of the reference
+state and <span class="math notranslate nohighlight">\(m=1/(\gamma-1)\)</span> is the polytropic index.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<ul class="last simple">
-<li>The relationship between <span class="math">\(N_\rho\)</span> and the dissipation number
-<span class="math">\(Di\)</span> directly depends on the gravity profile. The formula above
-is only valid when <span class="math">\(g\propto 1/r^2\)</span>.</li>
-<li>In this formulation, when you change the polytropic index <span class="math">\(m\)</span>, you
+<p class="admonition-title">Warning</p>
+<ul class="simple">
+<li><p>The relationship between <span class="math notranslate nohighlight">\(N_\rho\)</span> and the dissipation number
+<span class="math notranslate nohighlight">\(Di\)</span> directly depends on the gravity profile. The formula above
+is only valid when <span class="math notranslate nohighlight">\(g\propto 1/r^2\)</span>.</p></li>
+<li><p>In this formulation, when you change the polytropic index <span class="math notranslate nohighlight">\(m\)</span>, you
 also change the nature of the fluid you’re modelling since you accordingly
-modify <span class="math">\(\gamma=c_p/c_v\)</span>.</li>
+modify <span class="math notranslate nohighlight">\(\gamma=c_p/c_v\)</span>.</p></li>
 </ul>
 </div>
 </div>
@@ -383,141 +374,141 @@ adopt the inner boundary value instead.  The motivation is twofold: (i) it
 allows an easier control of the possible continuous conductivity value in the
 inner core; (ii) it is a more natural choice when modelling gas giants planets
 which exhibit a strong electrical conductivity decay in the outer layer.</p>
-<p>The time scale is then the viscous diffusion time <span class="math">\(d^2/\nu_o\)</span> where
-<span class="math">\(\nu_o\)</span> is the kinematic viscosity at the outer boundary.  Magnetic field
-is expressed in units of <span class="math">\((\rho_o\mu_0\lambda_i\Omega)^{1/2}\)</span>, where
-<span class="math">\(\rho_o\)</span> is the density at the outer boundary and <span class="math">\(\lambda_i\)</span> is
+<p>The time scale is then the viscous diffusion time <span class="math notranslate nohighlight">\(d^2/\nu_o\)</span> where
+<span class="math notranslate nohighlight">\(\nu_o\)</span> is the kinematic viscosity at the outer boundary.  Magnetic field
+is expressed in units of <span class="math notranslate nohighlight">\((\rho_o\mu_0\lambda_i\Omega)^{1/2}\)</span>, where
+<span class="math notranslate nohighlight">\(\rho_o\)</span> is the density at the outer boundary and <span class="math notranslate nohighlight">\(\lambda_i\)</span> is
 the magnetic diffusivity at the <strong>inner</strong> boundary.</p>
 <p>This leads to the following sets of dimensionless equations:</p>
-<div class="math" id="equation-eqNSNd">
-<span class="eqno">(20)<a class="headerlink" href="#equation-eqNSNd" title="Permalink to this equation">¶</a></span>\[\left(\dfrac{\partial \vec{u}}{\partial t}+\vec{u}\cdot\vec{\nabla}\vec{u}\right)
+<div class="math notranslate nohighlight" id="equation-eqnsnd">
+<span class="eqno">(20)<a class="headerlink" href="#equation-eqnsnd" title="Permalink to this equation">¶</a></span>\[\left(\dfrac{\partial \vec{u}}{\partial t}+\vec{u}\cdot\vec{\nabla}\vec{u}\right)
 = -\vec{\nabla}\left({\dfrac{p'}{\tilde{\rho}}}\right) - \dfrac{2}{E}\vec{e_z}\times\vec{u}
 + \dfrac{Ra}{Pr}\tilde{g} \,s'\,\vec{e_r}
 + \dfrac{Ra_\xi}{Sc}\tilde{g} \,\xi'\,\vec{e_r}
 +\dfrac{1}{Pm\,E \,\tilde{\rho}}\left(\vec{\nabla}\times \vec{B}
 \right)\times \vec{B}+ \dfrac{1}{\tilde{\rho}} \vec{\nabla}\cdot \mathsf{S},\]</div>
-<div class="math" id="equation-eqContNd">
-<span class="eqno">(21)<a class="headerlink" href="#equation-eqContNd" title="Permalink to this equation">¶</a></span>\[\vec{\nabla}\cdot\tilde{\rho}\vec{u}=0,\]</div>
-<div class="math" id="equation-eqMagNd">
-<span class="eqno">(22)<a class="headerlink" href="#equation-eqMagNd" title="Permalink to this equation">¶</a></span>\[\vec{\nabla}\cdot\vec{B}=0,\]</div>
-<div class="math" id="equation-eqCompNd">
-<span class="eqno">(23)<a class="headerlink" href="#equation-eqCompNd" title="Permalink to this equation">¶</a></span>\[\tilde{\rho}\left(\dfrac{\partial \xi'}{\partial t} +
+<div class="math notranslate nohighlight" id="equation-eqcontnd">
+<span class="eqno">(21)<a class="headerlink" href="#equation-eqcontnd" title="Permalink to this equation">¶</a></span>\[\vec{\nabla}\cdot\tilde{\rho}\vec{u}=0,\]</div>
+<div class="math notranslate nohighlight" id="equation-eqmagnd">
+<span class="eqno">(22)<a class="headerlink" href="#equation-eqmagnd" title="Permalink to this equation">¶</a></span>\[\vec{\nabla}\cdot\vec{B}=0,\]</div>
+<div class="math notranslate nohighlight" id="equation-eqcompnd">
+<span class="eqno">(23)<a class="headerlink" href="#equation-eqcompnd" title="Permalink to this equation">¶</a></span>\[\tilde{\rho}\left(\dfrac{\partial \xi'}{\partial t} +
 \vec{u}\cdot\vec{\nabla} \xi'\right) =
 \dfrac{1}{Sc}\vec{\nabla}\cdot\left(\kappa_\xi(r)\tilde{\rho}\vec{\nabla} \xi'\right)\]</div>
-<div class="math" id="equation-eqIndNd">
-<span class="eqno">(24)<a class="headerlink" href="#equation-eqIndNd" title="Permalink to this equation">¶</a></span>\[\dfrac{\partial \vec{B}}{\partial t} = \vec{\nabla} \times \left( \vec{u}\times\vec{B}\right)-\dfrac{1}{Pm}\vec{\nabla}\times\left(\lambda(r)\,\vec{\nabla}\times\vec{B}\right).\]</div>
-<p>Here <span class="math">\(\tilde{g}\)</span> and <span class="math">\(\tilde{\rho}\)</span> are
+<div class="math notranslate nohighlight" id="equation-eqindnd">
+<span class="eqno">(24)<a class="headerlink" href="#equation-eqindnd" title="Permalink to this equation">¶</a></span>\[\dfrac{\partial \vec{B}}{\partial t} = \vec{\nabla} \times \left( \vec{u}\times\vec{B}\right)-\dfrac{1}{Pm}\vec{\nabla}\times\left(\lambda(r)\,\vec{\nabla}\times\vec{B}\right).\]</div>
+<p>Here <span class="math notranslate nohighlight">\(\tilde{g}\)</span> and <span class="math notranslate nohighlight">\(\tilde{\rho}\)</span> are
 the normalized radial gravity and density profiles that reach one at the outer boundary.</p>
 </div>
 <div class="section" id="entropy-equation-and-turbulent-diffusion">
 <h3>Entropy equation and turbulent diffusion<a class="headerlink" href="#entropy-equation-and-turbulent-diffusion" title="Permalink to this headline">¶</a></h3>
 <p>The entropy equation usually requires an additional assumption in most of the
 existing anelastic approximations. Indeed, if one simply expands Eq.
-<a class="reference internal" href="#equation-eqEntropy">(4)</a> with the classical temperature diffusion an operator of the
+<a class="reference internal" href="#equation-eqentropy">(4)</a> with the classical temperature diffusion an operator of the
 form:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\epsilon\,\vec{\nabla}\cdot \left( K \vec{\nabla} T'\right)+\vec{\nabla}\cdot \left( K \vec{\nabla} \tilde{T}\right),\]</div>
 <p>will remain the right-hand side of the equation. At first glance, there seems
-to be a <span class="math">\(1/\epsilon\)</span> factor between the first term and the second one,
+to be a <span class="math notranslate nohighlight">\(1/\epsilon\)</span> factor between the first term and the second one,
 which would suggest to keep only the second term in this expansion. However,
 for astrophysical objects which exhibit strong convective driving (and hence
 large Rayleigh numbers), the diffusion of the adiabatic background is actually
-very small and may be comparable or even smaller in magnitude than the <span class="math">\(\epsilon\)</span>
+very small and may be comparable or even smaller in magnitude than the <span class="math notranslate nohighlight">\(\epsilon\)</span>
 terms representing the usual convective perturbations. For the Earth core for instance,
 if one assumes that the typical temperature fluctuations are of the order of 1 mK and
 the temperature contrast between the inner and outer core is of the order of 1000 K, then
-<span class="math">\(\epsilon \sim 10^{-6}\)</span>. The ratio of the two terms can thus be estimated as</p>
-<div class="math" id="equation-eqEpsRatio">
-<span class="eqno">(25)<a class="headerlink" href="#equation-eqEpsRatio" title="Permalink to this equation">¶</a></span>\[\epsilon \dfrac{T'/\delta^2}{T/d^2},\]</div>
-<p>where <span class="math">\(d\)</span> is the thickness of the inner core and <span class="math">\(\delta\)</span> is the typical thermal
-boundary layer thickness. This ratio is exactly one when <span class="math">\(\delta =1\text{ m}\)</span>, a
+<span class="math notranslate nohighlight">\(\epsilon \sim 10^{-6}\)</span>. The ratio of the two terms can thus be estimated as</p>
+<div class="math notranslate nohighlight" id="equation-eqepsratio">
+<span class="eqno">(25)<a class="headerlink" href="#equation-eqepsratio" title="Permalink to this equation">¶</a></span>\[\epsilon \dfrac{T'/\delta^2}{T/d^2},\]</div>
+<p>where <span class="math notranslate nohighlight">\(d\)</span> is the thickness of the inner core and <span class="math notranslate nohighlight">\(\delta\)</span> is the typical thermal
+boundary layer thickness. This ratio is exactly one when <span class="math notranslate nohighlight">\(\delta =1\text{ m}\)</span>, a
 plausible value for the Earth inner core.</p>
 <p>In numerical simulations however, the over-estimated diffusivities restrict the
 computational capabilities to much lower Rayleigh numbers. As a consequence,
 the actual boundary layers in a global DNS will be much thicker and the ratio
-<a class="reference internal" href="#equation-eqEpsRatio">(25)</a> will be much smaller than unity. The second terms will thus
+<a class="reference internal" href="#equation-eqepsratio">(25)</a> will be much smaller than unity. The second terms will thus
 effectively acts  as a radial-dependent heat source or sink that will drive or
 hinder convection. This is one of the physical motivation to rather introduce a
 <strong>turbulent diffusivity</strong> that will be approximated by</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\kappa \tilde{\rho}\tilde{T} \vec{\nabla} s,\]</div>
-<p>where <span class="math">\(\kappa\)</span> is the turbulent diffusivity. <strong>Entropy diffusion is assumed to dominate
+<p>where <span class="math notranslate nohighlight">\(\kappa\)</span> is the turbulent diffusivity. <strong>Entropy diffusion is assumed to dominate
 over temperature diffusion in turbulent flows</strong>.</p>
-<p>The choice of the entropy scale to non-dimensionalize Eq. <a class="reference internal" href="#equation-eqEntropy">(4)</a> also
+<p>The choice of the entropy scale to non-dimensionalize Eq. <a class="reference internal" href="#equation-eqentropy">(4)</a> also
 depends on the nature of the boundary conditions: it can be simply the entropy
-contrast over the layer <span class="math">\(\Delta s\)</span> when the entropy is held constant at
-both boundaries, or <span class="math">\(d\,(ds /dr)\)</span> when flux-based boundary conditions are
+contrast over the layer <span class="math notranslate nohighlight">\(\Delta s\)</span> when the entropy is held constant at
+both boundaries, or <span class="math notranslate nohighlight">\(d\,(ds /dr)\)</span> when flux-based boundary conditions are
 employed. We will restrict to the first option in the following, but keep in
 mind that depending on your setup, the entropy reference scale (and thus the
 Rayleigh number definition) might change.</p>
-<div class="math" id="equation-eqEntropyNd">
-<span class="eqno">(26)<a class="headerlink" href="#equation-eqEntropyNd" title="Permalink to this equation">¶</a></span>\[\tilde{\rho}\tilde{T}\left(\dfrac{\partial s'}{\partial t} +
+<div class="math notranslate nohighlight" id="equation-eqentropynd">
+<span class="eqno">(26)<a class="headerlink" href="#equation-eqentropynd" title="Permalink to this equation">¶</a></span>\[\tilde{\rho}\tilde{T}\left(\dfrac{\partial s'}{\partial t} +
 \vec{u}\cdot\vec{\nabla} s'\right) =
 \dfrac{1}{Pr}\vec{\nabla}\cdot\left(\kappa(r)\tilde{\rho}\tilde{T}\vec{\nabla} s'\right) +
 \dfrac{Pr\,Di}{Ra}\Phi_\nu +
 \dfrac{Pr\,Di}{Pm^2\,E\,Ra}\lambda(r)\left(\vec{\nabla}
 \times\vec{B}\right)^2,\]</div>
-<p>A comparison with <a class="reference internal" href="#equation-eqNSNd">(20)</a> reveals meaning of the different non-dimensional
-numbers that scale viscous and Ohmic heating. The fraction <span class="math">\(Pr/Ra\)</span> simply
+<p>A comparison with <a class="reference internal" href="#equation-eqnsnd">(20)</a> reveals meaning of the different non-dimensional
+numbers that scale viscous and Ohmic heating. The fraction <span class="math notranslate nohighlight">\(Pr/Ra\)</span> simply
 expresses the ratio of entropy and flow in the Navier-Stokes equation, while
-the additional factor <span class="math">\(1/E Pm\)</span> reflects the scale difference of magnetic
-field and flow.  Then remaining dissipation number <span class="math">\(Di\)</span> then expresses
+the additional factor <span class="math notranslate nohighlight">\(1/E Pm\)</span> reflects the scale difference of magnetic
+field and flow.  Then remaining dissipation number <span class="math notranslate nohighlight">\(Di\)</span> then expresses
 the relative importance of viscous and Ohmic heating compared to buoyancy and
-Lorentz force in the Navier-Stokes equation. For small <span class="math">\(Di\)</span>  both heating
+Lorentz force in the Navier-Stokes equation. For small <span class="math notranslate nohighlight">\(Di\)</span>  both heating
 terms can be neglected compared to entropy changes due to advection, an limit
 that is used in the Boussinesq approximation.</p>
 </div>
 </div>
 <div class="section" id="dimensionless-control-parameters">
 <h2>Dimensionless control parameters<a class="headerlink" href="#dimensionless-control-parameters" title="Permalink to this headline">¶</a></h2>
-<p>The equations <a class="reference internal" href="#equation-eqNSNd">(20)</a>-<a class="reference internal" href="#equation-eqEntropyNd">(26)</a> are governed by four dimensionless numbers: the
+<p>The equations <a class="reference internal" href="#equation-eqnsnd">(20)</a>-<a class="reference internal" href="#equation-eqentropynd">(26)</a> are governed by four dimensionless numbers: the
 Ekman number</p>
-<div class="math" id="equation-eqEkman">
-<span class="eqno">(27)<a class="headerlink" href="#equation-eqEkman" title="Permalink to this equation">¶</a></span>\[E = \frac{\nu}{\Omega d^2},\]</div>
+<div class="math notranslate nohighlight" id="equation-eqekman">
+<span class="eqno">(27)<a class="headerlink" href="#equation-eqekman" title="Permalink to this equation">¶</a></span>\[E = \frac{\nu}{\Omega d^2},\]</div>
 <p>the thermal Rayleigh number</p>
-<div class="math" id="equation-eqRayleigh">
-<span class="eqno">(28)<a class="headerlink" href="#equation-eqRayleigh" title="Permalink to this equation">¶</a></span>\[Ra = \frac{\alpha_o g_o T_o d^3 \Delta s}{c_p \kappa_o \nu_o},\]</div>
+<div class="math notranslate nohighlight" id="equation-eqrayleigh">
+<span class="eqno">(28)<a class="headerlink" href="#equation-eqrayleigh" title="Permalink to this equation">¶</a></span>\[Ra = \frac{\alpha_o g_o T_o d^3 \Delta s}{c_p \kappa_o \nu_o},\]</div>
 <p>the compositional Rayleigh number</p>
-<div class="math" id="equation-eqRayleighxi">
-<span class="eqno">(29)<a class="headerlink" href="#equation-eqRayleighxi" title="Permalink to this equation">¶</a></span>\[Ra_\xi = \frac{\delta_o g_o d^3 \Delta \xi}{\kappa_\xi \nu_o},\]</div>
+<div class="math notranslate nohighlight" id="equation-eqrayleighxi">
+<span class="eqno">(29)<a class="headerlink" href="#equation-eqrayleighxi" title="Permalink to this equation">¶</a></span>\[Ra_\xi = \frac{\delta_o g_o d^3 \Delta \xi}{\kappa_\xi \nu_o},\]</div>
 <p>the Prandtl number</p>
-<div class="math" id="equation-eqPrandtl">
-<span class="eqno">(30)<a class="headerlink" href="#equation-eqPrandtl" title="Permalink to this equation">¶</a></span>\[Pr = \frac{\nu_o}{\kappa_o},\]</div>
+<div class="math notranslate nohighlight" id="equation-eqprandtl">
+<span class="eqno">(30)<a class="headerlink" href="#equation-eqprandtl" title="Permalink to this equation">¶</a></span>\[Pr = \frac{\nu_o}{\kappa_o},\]</div>
 <p>the Schmidt number</p>
-<div class="math" id="equation-eqSchmidt">
-<span class="eqno">(31)<a class="headerlink" href="#equation-eqSchmidt" title="Permalink to this equation">¶</a></span>\[Sc = \frac{\nu_o}{\kappa_\xi},\]</div>
+<div class="math notranslate nohighlight" id="equation-eqschmidt">
+<span class="eqno">(31)<a class="headerlink" href="#equation-eqschmidt" title="Permalink to this equation">¶</a></span>\[Sc = \frac{\nu_o}{\kappa_\xi},\]</div>
 <p>and the magnetic Prandtl number</p>
-<div class="math" id="equation-eqmaPrandtl">
-<span class="eqno">(32)<a class="headerlink" href="#equation-eqmaPrandtl" title="Permalink to this equation">¶</a></span>\[Pm = \frac{\nu_o}{\lambda_i}.\]</div>
+<div class="math notranslate nohighlight" id="equation-eqmaprandtl">
+<span class="eqno">(32)<a class="headerlink" href="#equation-eqmaprandtl" title="Permalink to this equation">¶</a></span>\[Pm = \frac{\nu_o}{\lambda_i}.\]</div>
 <p>In addition to these four numbers, the reference state is controlled by the geometry of
 the spherical shell given by its radius ratio</p>
-<div class="math" id="equation-eqRadratio">
-<span class="eqno">(33)<a class="headerlink" href="#equation-eqRadratio" title="Permalink to this equation">¶</a></span>\[\eta = \frac{r_i}{r_o},\]</div>
-<p>and the background density and temperature profiles, either controlled by <span class="math">\(Di\)</span> or
-by <span class="math">\(N_\rho\)</span> and <span class="math">\(m\)</span>.</p>
+<div class="math notranslate nohighlight" id="equation-eqradratio">
+<span class="eqno">(33)<a class="headerlink" href="#equation-eqradratio" title="Permalink to this equation">¶</a></span>\[\eta = \frac{r_i}{r_o},\]</div>
+<p>and the background density and temperature profiles, either controlled by <span class="math notranslate nohighlight">\(Di\)</span> or
+by <span class="math notranslate nohighlight">\(N_\rho\)</span> and <span class="math notranslate nohighlight">\(m\)</span>.</p>
 <p>In the Boussinesq approximation all physical properties are assumed to
-be homogeneous and we can drop the sub-indices <span class="math">\(o\)</span>  and <span class="math">\(i\)</span>
+be homogeneous and we can drop the sub-indices <span class="math notranslate nohighlight">\(o\)</span>  and <span class="math notranslate nohighlight">\(i\)</span>
 except for gravity.
 Moreover, the Rayleigh number can be expressed in terms of the temperature
 jump across the shell:</p>
-<div class="math" id="equation-eqRayleighBoussinesq">
-<span class="eqno">(34)<a class="headerlink" href="#equation-eqRayleighBoussinesq" title="Permalink to this equation">¶</a></span>\[Ra = \frac{\alpha g_o d^3 \Delta T}{\kappa \nu}.\]</div>
+<div class="math notranslate nohighlight" id="equation-eqrayleighboussinesq">
+<span class="eqno">(34)<a class="headerlink" href="#equation-eqrayleighboussinesq" title="Permalink to this equation">¶</a></span>\[Ra = \frac{\alpha g_o d^3 \Delta T}{\kappa \nu}.\]</div>
 <div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last">In MagIC, those control parameters can be adjusted in the
+<p class="admonition-title">See also</p>
+<p>In MagIC, those control parameters can be adjusted in the
 <a class="reference internal" href="inputNamelists/physNamelist.html#secphysnml"><span class="std std-ref">&amp;phys_param</span></a> section of the input namelist.</p>
 </div>
 <p>Variants of the non-dimensional equations and control parameters result from
 different choices for the fundamental scales. For the length scale often
-<span class="math">\(r_o\)</span> is chosen instead of <span class="math">\(d\)</span>. Other natural scales for time are the
+<span class="math notranslate nohighlight">\(r_o\)</span> is chosen instead of <span class="math notranslate nohighlight">\(d\)</span>. Other natural scales for time are the
 magnetic or the thermal diffusion time, or the rotation period.
 There are also different options for scaling the magnetic field strength.
 The prefactor of two, which is retained in the
-Coriolis term in <a class="reference internal" href="#equation-eqNSNd">(20)</a>, is often incorporated into the definition of the
+Coriolis term in <a class="reference internal" href="#equation-eqnsnd">(20)</a>, is often incorporated into the definition of the
 Ekman number.</p>
 <div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last">Those references timescales and length scales can be adjusted by
+<p class="admonition-title">See also</p>
+<p>Those references timescales and length scales can be adjusted by
 several input parameters in the <a class="reference internal" href="inputNamelists/controlNamelist.html#seccontrolnml"><span class="std std-ref">&amp;control</span></a> section
 of the input namelist.</p>
 </div>
@@ -526,31 +517,31 @@ of the input namelist.</p>
 <p>Characteristic properties of the solution are usually expressed in terms
 of non-dimensional diagnostic parameters.
 In the context of the geodynamo for instance, the two
-most important ones are the magnetic Reynolds number <span class="math">\(Rm\)</span> and
-the Elsasser number <span class="math">\(\Lambda\)</span>. Usually the rms-values of the velocity
-<span class="math">\(u_{rms}\)</span> and of the magnetic field <span class="math">\(B_{rms}\)</span> inside the spherical shell
+most important ones are the magnetic Reynolds number <span class="math notranslate nohighlight">\(Rm\)</span> and
+the Elsasser number <span class="math notranslate nohighlight">\(\Lambda\)</span>. Usually the rms-values of the velocity
+<span class="math notranslate nohighlight">\(u_{rms}\)</span> and of the magnetic field <span class="math notranslate nohighlight">\(B_{rms}\)</span> inside the spherical shell
 are taken as characteristic values. The magnetic Reynolds number</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[Rm =  \frac{u_{rms}d}{\lambda_i}\]</div>
 <p>can be considered as a measure for the flow velocity and describes
 the ratio of advection of the magnetic field to magnetic diffusion.
 Other characteristic non-dimensional numbers related to the flow velocity are
 the (hydrodynamic) Reynolds number</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[Re = \frac{u_{rms} d}{\nu_o},\]</div>
 <p>which measures the ratio of inertial forces to viscous forces,
 and the Rossby number</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[Ro = \frac{u_{rms}}{\Omega d} ,\]</div>
 <p>a measure for the ratio of inertial to Coriolis forces.</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\Lambda = \frac{B_{rms}^2}{\mu_0\lambda_i\rho_o\Omega}\]</div>
 <p>measures the ratio of Lorentz to Coriolis forces and is
 equivalent to the square of the non-dimensional magnetic field strength
 in the scaling chosen here.</p>
 <div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last">The time-evolution of these diagnostic quantities are stored in
+<p class="admonition-title">See also</p>
+<p>The time-evolution of these diagnostic quantities are stored in
 the <a class="reference internal" href="outputFiles/outTimeSeriesStd.html#secparfile"><span class="std std-ref">par.TAG</span></a> file produced during the run of MagIC.</p>
 </div>
 </div>
@@ -562,7 +553,7 @@ the <a class="reference internal" href="outputFiles/outTimeSeriesStd.html#secpar
 <p>In its simplest form, when modelling the geodynamo, the fluid shell is treated
 as a container with rigid, impenetrable, and co-rotating walls. This implies
 that within the rotating frame of reference all velocity components vanish at
-<span class="math">\(r_o\)</span> and <span class="math">\(r_i\)</span>.  In case of modelling the free surface of a gas
+<span class="math notranslate nohighlight">\(r_o\)</span> and <span class="math notranslate nohighlight">\(r_i\)</span>.  In case of modelling the free surface of a gas
 giant planets or a star, it is preferable to rather replace the condition of
 zero horizontal velocity by one of vanishing viscous shear stresses (the
 so-called free-slip condition).</p>
@@ -574,8 +565,8 @@ change of rotation rate is determined from the net torque. Viscous,
 electromagnetic, and torques due to gravitational coupling between density
 heterogeneities in the mantle and in the inner core contribute.</p>
 <div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last">The mechanical boundary conditions can be adjusted with the
+<p class="admonition-title">See also</p>
+<p>The mechanical boundary conditions can be adjusted with the
 parameters <a class="reference internal" href="inputNamelists/physNamelist.html#secmechanicalbcs"><span class="std std-ref">ktopv</span></a> and
 <a class="reference internal" href="inputNamelists/physNamelist.html#secmechanicalbcs"><span class="std std-ref">kbotv</span></a> in the <a class="reference internal" href="inputNamelists/physNamelist.html#secphysnml"><span class="std std-ref">&amp;phys_param</span></a>
 section of the input namelist.</p>
@@ -592,14 +583,14 @@ magnetic boundary conditions (like cancellation of the horizontal component of t
 <p>Depending on the physical problem you want to model, treating the inner core as an
 insulator is not realistic either, and it might instead be more appropriate to
 assume that it has the same electrical conductivity as
-the fluid shell. In this case, an equation equivalent to <a class="reference internal" href="#equation-eqIndNd">(24)</a> must
+the fluid shell. In this case, an equation equivalent to <a class="reference internal" href="#equation-eqindnd">(24)</a> must
 be solved for the inner core, where the velocity field simply
 describes the solid body rotation of the inner core with respect to the reference frame.
 At the inner core boundary a continuity condition for the magnetic field and the
 horizontal component of the electrical field apply.</p>
 <div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last">The magnetic boundary conditions can be adjusted with the parameters
+<p class="admonition-title">See also</p>
+<p>The magnetic boundary conditions can be adjusted with the parameters
 <a class="reference internal" href="inputNamelists/physNamelist.html#secmagneticbcs"><span class="std std-ref">ktopb</span></a> and <a class="reference internal" href="inputNamelists/physNamelist.html#secmagneticbcs"><span class="std std-ref">kbotb</span></a>
 in the <a class="reference internal" href="inputNamelists/physNamelist.html#secphysnml"><span class="std std-ref">&amp;phys_param</span></a> section of the input namelist.</p>
 </div>
@@ -617,8 +608,8 @@ from the core is controlled by the convecting mantle, which effectively imposes
 a condition of fixed heat flux at the core-mantle boundary on the dynamo. The
 heat flux is in that case spatially and temporally variable.</p>
 <div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last">The thermal boundary conditions can be adjusted with the parameters
+<p class="admonition-title">See also</p>
+<p>The thermal boundary conditions can be adjusted with the parameters
 <a class="reference internal" href="inputNamelists/physNamelist.html#secthermalbcs"><span class="std std-ref">ktops</span></a> and <a class="reference internal" href="inputNamelists/physNamelist.html#secthermalbcs"><span class="std std-ref">kbots</span></a>
 in the <a class="reference internal" href="inputNamelists/physNamelist.html#secphysnml"><span class="std std-ref">&amp;phys_param</span></a> section of the input namelist.</p>
 </div>
@@ -627,8 +618,8 @@ in the <a class="reference internal" href="inputNamelists/physNamelist.html#secp
 <h3>Chemical composition boundary conditions<a class="headerlink" href="#chemical-composition-boundary-conditions" title="Permalink to this headline">¶</a></h3>
 <p>They are treated in a very similar manner as the thermal boundary conditions</p>
 <div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last">The boundary conditions for composition can be adjusted with the parameters
+<p class="admonition-title">See also</p>
+<p>The boundary conditions for composition can be adjusted with the parameters
 <a class="reference internal" href="inputNamelists/physNamelist.html#seccompbcs"><span class="std std-ref">ktopxi</span></a> and <a class="reference internal" href="inputNamelists/physNamelist.html#seccompbcs"><span class="std std-ref">kbotxi</span></a>
 in the <a class="reference internal" href="inputNamelists/physNamelist.html#secphysnml"><span class="std std-ref">&amp;phys_param</span></a> section of the input namelist.</p>
 </div>
@@ -642,7 +633,7 @@ in the <a class="reference internal" href="inputNamelists/physNamelist.html#secp
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="contents.html">Table Of Contents</a></h3>
+  <h3><a href="contents.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Formulation of the (magneto)-hydrodynamics problem</a><ul>
 <li><a class="reference internal" href="#the-reference-state">The reference state</a></li>
@@ -682,13 +673,13 @@ in the <a class="reference internal" href="inputNamelists/physNamelist.html#secp
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -713,12 +704,12 @@ in the <a class="reference internal" href="inputNamelists/physNamelist.html#secp
         <li class="right" >
           <a href="install.html" title="Get MagIC and run it"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="contents.html">Magic 5.7 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="contents.html">Magic 5.9 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
     </div>
   </body>
 </html>
