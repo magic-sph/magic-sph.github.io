@@ -1,0 +1,398 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>magic.checker &#8212; Magic 5.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Magic 5.10 documentation"
+          href="../../_static/opensearch.xml"/>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
+          rel='stylesheet' type='text/css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script src="galleria/galleria-1.4.2.min.js"></script>
+ 
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      
+  </style>
+  <script type="text/javascript">
+      // intelligent scrolling of the sidebar content
+      $(window).scroll(function() {
+        var sb = $('.sphinxsidebarwrapper');
+        var win = $(window);
+        var sbh = sb.height();
+        var offset = $('.sphinxsidebar').position()['top'];
+        var wintop = win.scrollTop();
+        var winbot = wintop + win.innerHeight();
+        var curtop = sb.position()['top'];
+        var curbot = curtop + sbh;
+        // does sidebar fit in window?
+        if (sbh < win.innerHeight()) {
+          // yes: easy case -- always keep at the top
+          sb.css('top', $u.min([$u.max([0, wintop - offset - 10]),
+                                $(document).height() - sbh - 200]));
+        } else {
+          // no: only scroll if top/bottom edge of sidebar is at
+          // top/bottom edge of window
+          if (curtop > wintop && curbot > winbot) {
+            sb.css('top', $u.max([wintop - offset - 10, 0]));
+          } else if (curtop < wintop && curbot < winbot) {
+            sb.css('top', $u.min([winbot - sbh - offset - 20,
+                                  $(document).height() - sbh - 200]));
+          }
+        }
+      });
+    </script>
+
+  </head><body>
+<div class="pageheader">
+  <ul>
+    <li><a href="../../index.html">Home</a></li>
+    <li><a href="../../install.html">Get it/Run it</a></li>
+    <li><a href="../../contribute.html">Contribute!</a></li>
+    <li><a href="../../numerics.html">Numerical methods</a></li>
+    <li><a href="../../contents.html">Contents</a></li>
+  </ul>
+  <div>
+    <a href="../../index.html">
+      <img src="../../_static/logo.png" alt="magic" height="120px" width="192px"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">magic.checker</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for magic.checker</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">magic</span> <span class="kn">import</span> <span class="n">MagicTs</span><span class="p">,</span> <span class="n">avgField</span><span class="p">,</span> <span class="n">MagicSpectrum</span><span class="p">,</span> <span class="n">MagicRadial</span><span class="p">,</span> <span class="n">scanDir</span><span class="p">,</span> <span class="n">MagicSetup</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <span class="n">argrelextrema</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">class</span> <span class="nc">bcolors</span><span class="p">:</span>
+    <span class="n">HEADER</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[95m&#39;</span>
+    <span class="n">OKBLUE</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[34m&#39;</span>
+    <span class="n">OKGREEN</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[32m&#39;</span>
+    <span class="n">MODERATE</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[33m&#39;</span>
+    <span class="n">WARNING</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[91m&#39;</span>
+    <span class="n">FAIL</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[91m&#39;</span>
+    <span class="n">ENDC</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[0m&#39;</span>
+    <span class="n">BOLD</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[1m&#39;</span>
+    <span class="n">UNDERLINE</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[4m&#39;</span>
+
+<div class="viewcode-block" id="MagicCheck"><a class="viewcode-back" href="../../apiPython/timeSeries.html#magic.checker.MagicCheck">[docs]</a><span class="k">def</span> <span class="nf">MagicCheck</span><span class="p">(</span><span class="n">tstart</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function is used to compute several sanity checks that can be evaluated</span>
+<span class="sd">    if the power.TAG and some spectra have been produced in the current directory.</span>
+<span class="sd">    If in addition the tInitAvg file is also there in the directory it averages</span>
+<span class="sd">    only from this starting time.</span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; MagicCheck(tstart=10.)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;tInitAvg&#39;</span><span class="p">):</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;tInitAvg&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">tstart</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">tstart</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">tstart</span> <span class="o">=</span> <span class="mf">0.</span>
+
+    <span class="n">ts</span> <span class="o">=</span> <span class="n">MagicTs</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;power&#39;</span><span class="p">,</span> <span class="nb">all</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">ts1</span> <span class="o">=</span> <span class="n">MagicTs</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;dtE&#39;</span><span class="p">,</span> <span class="nb">all</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span> <span class="n">ts</span><span class="o">.</span><span class="n">time</span> <span class="o">&gt;=</span> <span class="n">tstart</span> <span class="p">)</span>
+    <span class="c1"># Not super accurate if n_log_step changed but better that nothing</span>
+    <span class="n">n_steps</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span> <span class="o">*</span> <span class="n">ts</span><span class="o">.</span><span class="n">n_log_step</span>
+
+    <span class="n">dEdt</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">buoPower</span><span class="o">+</span><span class="n">ts</span><span class="o">.</span><span class="n">buoPower_chem</span><span class="o">+</span><span class="n">ts</span><span class="o">.</span><span class="n">ohmDiss</span><span class="o">+</span><span class="n">ts</span><span class="o">.</span><span class="n">viscDiss</span>
+
+    <span class="c1"># Power balance:</span>
+    <span class="n">buoPower_avg</span> <span class="o">=</span> <span class="n">avgField</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">ts</span><span class="o">.</span><span class="n">buoPower</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+    <span class="n">buoPower_chem_avg</span> <span class="o">=</span> <span class="n">avgField</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">ts</span><span class="o">.</span><span class="n">buoPower_chem</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+    <span class="n">ohmDiss_avg</span> <span class="o">=</span> <span class="n">avgField</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">ts</span><span class="o">.</span><span class="n">ohmDiss</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+    <span class="n">viscDiss_avg</span> <span class="o">=</span> <span class="n">avgField</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">ts</span><span class="o">.</span><span class="n">viscDiss</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+    <span class="n">ratio</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">buoPower_avg</span><span class="o">+</span><span class="n">buoPower_chem_avg</span><span class="o">+</span><span class="n">ohmDiss_avg</span><span class="o">+</span><span class="n">viscDiss_avg</span><span class="p">)</span> <span class="o">/</span> \
+            <span class="p">(</span><span class="n">buoPower_avg</span><span class="o">+</span><span class="n">buoPower_chem_avg</span><span class="p">)</span> 
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">BOLD</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">UNDERLINE</span> <span class="o">+</span> <span class="s1">&#39;Power balance:&#39;</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Power injected   : </span><span class="si">%.5e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">buoPower_avg</span><span class="o">+</span><span class="n">buoPower_chem_avg</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Power dissipated : </span><span class="si">%.5e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="o">-</span><span class="n">ohmDiss_avg</span><span class="o">-</span><span class="n">viscDiss_avg</span><span class="p">))</span>
+    <span class="n">st</span> <span class="o">=</span> <span class="s1">&#39;Power mis-balance: </span><span class="si">%.3f</span><span class="s1"> </span><span class="si">%%</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">ratio</span>
+    <span class="k">if</span> <span class="n">ratio</span> <span class="o">&lt;=</span> <span class="mf">0.5</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">OKGREEN</span> <span class="o">+</span> <span class="n">st</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">ratio</span> <span class="o">&gt;</span> <span class="mf">0.5</span> <span class="ow">and</span> <span class="n">ratio</span> <span class="o">&lt;=</span> <span class="mf">1.</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">MODERATE</span> <span class="o">+</span> <span class="n">st</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">ratio</span> <span class="o">&gt;</span> <span class="mf">1.</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">WARNING</span> <span class="o">+</span> <span class="n">st</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+
+    <span class="c1"># Spikes catcher in the time series of power/dEdt</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">BOLD</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">UNDERLINE</span> <span class="o">+</span> <span class="s1">&#39;Time resolution:&#39;</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+    <span class="n">absdEdt_avg</span> <span class="o">=</span> <span class="n">avgField</span><span class="p">(</span><span class="n">ts1</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ts1</span><span class="o">.</span><span class="n">dEdt</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span>
+    <span class="n">field</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">dEdt</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span><span class="o">-</span><span class="n">ts1</span><span class="o">.</span><span class="n">dEdt</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+    <span class="n">mask_spike</span> <span class="o">=</span> <span class="p">(</span><span class="n">field</span> <span class="o">&gt;=</span> <span class="n">absdEdt_avg</span><span class="p">)</span>
+    <span class="n">l_spikes</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">mask_spike</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+        <span class="n">l_spikes</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">l_spikes</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">MODERATE</span> <span class="o">+</span> <span class="s1">&#39;Sudden variations detected in power balance!&#39;</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+        <span class="n">ones</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+        <span class="n">ones</span><span class="p">[</span><span class="o">~</span><span class="n">mask_spike</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="n">ttot_spikes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">ones</span><span class="p">,</span> <span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+        <span class="n">ttot</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="n">ttot_spikes</span><span class="o">/</span><span class="n">ttot</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;    -Time fraction with spikes: </span><span class="si">%.3f</span><span class="s1"> </span><span class="si">%%</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="mf">100.</span><span class="o">*</span><span class="n">ratio</span><span class="p">))</span>
+        <span class="n">largest</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">field</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">/</span><span class="n">absdEdt_avg</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="s1">&#39;    -Largest event            : </span><span class="si">%.2f</span><span class="s1"> &lt;|dE/dt|&gt;&#39;</span> <span class="o">%</span> <span class="n">largest</span>
+        <span class="k">if</span> <span class="n">largest</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">WARNING</span> <span class="o">+</span> <span class="n">st</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">MODERATE</span> <span class="o">+</span> <span class="n">st</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">OKGREEN</span> <span class="o">+</span> <span class="s1">&#39;Power balance clean!&#39;</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+
+    <span class="c1"># Timestep change occurence</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="s1">&#39;timestep.*&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">MagicTs</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;timestep&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">all</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span> <span class="o">&gt;=</span> <span class="n">tstart</span><span class="p">)</span>
+        <span class="n">ddt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+        <span class="n">ddt_neq_zero</span> <span class="o">=</span> <span class="p">(</span><span class="n">ddt</span> <span class="o">!=</span> <span class="mf">0.</span><span class="p">)</span>
+        <span class="n">ddt</span> <span class="o">=</span> <span class="n">ddt</span><span class="p">[</span><span class="n">ddt_neq_zero</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Number of time step changes   : </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">ddt</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of iterations          : </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">n_steps</span><span class="p">)</span>
+        <span class="n">freq</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span> <span class="nb">float</span><span class="p">(</span><span class="n">n_steps</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ddt</span><span class="p">))</span> <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Average number of iterations with fixed time step size: </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">freq</span><span class="p">)</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">mask</span><span class="p">][</span><span class="mi">1</span><span class="p">:][</span><span class="n">ddt_neq_zero</span><span class="p">]</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">dt</span><span class="p">[</span><span class="n">mask</span><span class="p">][</span><span class="mi">1</span><span class="p">:][</span><span class="n">ddt_neq_zero</span><span class="p">]</span>
+        <span class="n">dtMean</span> <span class="o">=</span> <span class="n">avgField</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+        <span class="n">mask_changes</span> <span class="o">=</span> <span class="p">(</span> <span class="n">ddt</span> <span class="o">&lt;=</span> <span class="mi">50</span><span class="o">*</span><span class="n">dtMean</span> <span class="p">)</span>
+        <span class="n">ones</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+        <span class="n">ones</span><span class="p">[</span><span class="o">~</span><span class="n">mask_changes</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="n">ttot_changes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ones</span><span class="o">*</span><span class="n">ddt</span><span class="p">)</span>
+        <span class="n">fast_change_ratio</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="n">ttot_changes</span><span class="o">/</span><span class="p">(</span><span class="n">time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">time</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="s1">&#39;Fraction of time with frequent timestep changes (&lt; 50 steps): </span><span class="si">%.2f</span><span class="s1"> </span><span class="si">%%</span><span class="s1">&#39;</span> <span class="o">%</span> \
+             <span class="n">fast_change_ratio</span>
+        <span class="k">if</span> <span class="n">fast_change_ratio</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">OKGREEN</span> <span class="o">+</span> <span class="n">st</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">fast_change_ratio</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">fast_change_ratio</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">MODERATE</span> <span class="o">+</span> <span class="n">st</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">MODERATE</span> <span class="o">+</span> <span class="s1">&#39;Maybe increase Courant factors!&#39;</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">WARNING</span> <span class="o">+</span> <span class="n">st</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">WARNING</span> <span class="o">+</span> <span class="s1">&#39;Probably increase Courant factors!&#39;</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+
+    <span class="c1"># Dissipation lengthscales</span>
+    <span class="n">ts</span> <span class="o">=</span> <span class="n">MagicTs</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;par&#39;</span><span class="p">,</span> <span class="nb">all</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span> <span class="o">&gt;=</span> <span class="n">tstart</span><span class="p">)</span>
+    <span class="n">lbDiss_avg</span> <span class="o">=</span> <span class="n">avgField</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">ts</span><span class="o">.</span><span class="n">lbDiss</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+    <span class="n">lvDiss_avg</span> <span class="o">=</span> <span class="n">avgField</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">ts</span><span class="o">.</span><span class="n">lvDiss</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+
+    <span class="n">ri</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">radratio</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="n">ts</span><span class="o">.</span><span class="n">radratio</span><span class="p">)</span>
+    <span class="n">ro</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="n">ts</span><span class="o">.</span><span class="n">radratio</span><span class="p">)</span>
+    <span class="n">dmean</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">ri</span><span class="o">+</span><span class="n">ro</span><span class="p">)</span>
+    <span class="n">lTrunc</span> <span class="o">=</span> <span class="n">dmean</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">ts</span><span class="o">.</span><span class="n">l_max</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">BOLD</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">UNDERLINE</span> <span class="o">+</span> <span class="s1">&#39;Angular resolution:&#39;</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Viscous dissipation scale: </span><span class="si">%.3e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">lvDiss_avg</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ohmic dissipation scale  : </span><span class="si">%.3e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">lbDiss_avg</span><span class="p">)</span>
+    <span class="n">st</span> <span class="o">=</span> <span class="s1">&#39;Angular truncation       : </span><span class="si">%.3e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">lTrunc</span>
+    <span class="n">lMin</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">lvDiss_avg</span><span class="p">,</span> <span class="n">lbDiss_avg</span><span class="p">)</span>
+    <span class="n">ellMin</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">dmean</span> <span class="o">/</span> <span class="n">lMin</span><span class="p">)</span>
+    <span class="n">nphi</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">3.</span> <span class="o">*</span> <span class="n">ellMin</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">lTrunc</span> <span class="o">&lt;</span> <span class="n">lMin</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">OKGREEN</span> <span class="o">+</span> <span class="n">st</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">lTrunc</span> <span class="o">&gt;=</span> <span class="n">lMin</span> <span class="ow">and</span> <span class="n">lTrunc</span> <span class="o">&lt;</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">lMin</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">MODERATE</span> <span class="o">+</span> <span class="n">st</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="s1">&#39;You might need l_max=</span><span class="si">%i</span><span class="s1">, N_phi=</span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span> <span class="n">ellMin</span><span class="p">,</span> <span class="n">nphi</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">MODERATE</span> <span class="o">+</span> <span class="n">st</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">WARNING</span> <span class="o">+</span> <span class="n">st</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="s1">&#39;You might need l_max=</span><span class="si">%i</span><span class="s1">, N_phi=</span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span> <span class="n">ellMin</span><span class="p">,</span> <span class="n">nphi</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">WARNING</span> <span class="o">+</span> <span class="n">st</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
+
+    <span class="c1"># Spectra</span>
+    <span class="n">dats</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="s1">&#39;kin_spec_ave.*&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dats</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ave</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ave</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">sp</span> <span class="o">=</span> <span class="n">MagicSpectrum</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;kin&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ave</span><span class="o">=</span><span class="n">ave</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">ekin_l</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">ekin_poll</span><span class="o">+</span><span class="n">sp</span><span class="o">.</span><span class="n">ekin_torl</span>
+    <span class="n">ratio</span> <span class="o">=</span> <span class="n">ekin_l</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">/</span><span class="n">ekin_l</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">sp</span> <span class="o">=</span> <span class="n">MagicSpectrum</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;mag&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ave</span><span class="o">=</span><span class="n">ave</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">emag_l</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">emag_poll</span><span class="o">+</span><span class="n">sp</span><span class="o">.</span><span class="n">emag_torl</span>
+    <span class="n">ratio_mag</span> <span class="o">=</span> <span class="n">emag_l</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">/</span><span class="n">emag_l</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">ratio_cmb</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">emagcmb_l</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">/</span><span class="n">sp</span><span class="o">.</span><span class="n">emagcmb_l</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="n">st</span> <span class="o">=</span> <span class="s1">&#39;Vol. kin. energy spectra (largest/smallest): </span><span class="si">%.2e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">ratio</span>
+    <span class="n">st_mag</span> <span class="o">=</span> <span class="s1">&#39;Vol. mag. energy spectra (largest/smallest): </span><span class="si">%.2e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">ratio_mag</span>
+    <span class="n">st_cmb</span> <span class="o">=</span> <span class="s1">&#39;CMB mag. energy spectra (largest/smallest) : </span><span class="si">%.2e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">ratio_cmb</span>
+
+    <span class="k">if</span> <span class="n">ratio</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">OKGREEN</span> <span class="o">+</span> <span class="n">st</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">ratio</span> <span class="o">&lt;=</span> <span class="mi">100</span> <span class="ow">and</span> <span class="n">ratio</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">MODERATE</span> <span class="o">+</span> <span class="n">st</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">WARNING</span> <span class="o">+</span> <span class="n">st</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ratio_mag</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">OKGREEN</span> <span class="o">+</span> <span class="n">st_mag</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">ratio_mag</span> <span class="o">&lt;=</span> <span class="mi">100</span> <span class="ow">and</span> <span class="n">ratio_mag</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">MODERATE</span> <span class="o">+</span> <span class="n">st_mag</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">WARNING</span> <span class="o">+</span> <span class="n">st_mag</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ratio_cmb</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">OKGREEN</span> <span class="o">+</span> <span class="n">st_cmb</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">ratio_cmb</span> <span class="o">&lt;=</span> <span class="mi">100</span> <span class="ow">and</span> <span class="n">ratio_cmb</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">MODERATE</span> <span class="o">+</span> <span class="n">st_cmb</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">WARNING</span> <span class="o">+</span> <span class="n">st_cmb</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+
+    <span class="c1"># determine the relevant tags</span>
+    <span class="n">logs</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="s1">&#39;log.*&#39;</span><span class="p">)</span>
+    <span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">lg</span> <span class="ow">in</span> <span class="n">logs</span><span class="p">:</span>
+        <span class="n">stp</span> <span class="o">=</span> <span class="n">MagicSetup</span><span class="p">(</span><span class="n">nml</span><span class="o">=</span><span class="n">lg</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">stp</span><span class="o">.</span><span class="n">start_time</span> <span class="o">&gt;=</span> <span class="n">tstart</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;eKinR.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">stp</span><span class="o">.</span><span class="n">tag</span><span class="p">):</span>
+            <span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stp</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">rad</span> <span class="o">=</span> <span class="n">MagicRadial</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;eKinR&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">rad</span> <span class="o">=</span> <span class="n">MagicRadial</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;eKinR&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Number of points in viscous BL</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">BOLD</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">UNDERLINE</span> <span class="o">+</span> <span class="s1">&#39;Radial resolution:&#39;</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rad</span><span class="o">.</span><span class="n">ktopv</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">rad</span><span class="o">.</span><span class="n">kbotv</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">eKR</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">ekin_pol</span><span class="o">+</span><span class="n">rad</span><span class="o">.</span><span class="n">ekin_tor</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">eKR</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">ekin_pol</span>
+    <span class="n">ind</span> <span class="o">=</span> <span class="n">argrelextrema</span><span class="p">(</span><span class="n">eKR</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">greater</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">ntop</span> <span class="o">=</span> <span class="n">ind</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
+    <span class="n">nbot</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">eKR</span><span class="p">)</span><span class="o">-</span><span class="n">ind</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">nmin</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">nbot</span><span class="p">,</span> <span class="n">ntop</span><span class="p">)</span>
+    <span class="n">st_bot</span> <span class="o">=</span> <span class="s1">&#39;Number of points in bottom viscous B.L.: </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">nbot</span>
+    <span class="n">st_top</span> <span class="o">=</span> <span class="s1">&#39;Number of points in top viscous B.L.   : </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">ntop</span>
+
+    <span class="k">if</span> <span class="n">nbot</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">OKGREEN</span> <span class="o">+</span> <span class="n">st_bot</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">nbot</span> <span class="o">&gt;=</span><span class="mi">5</span> <span class="ow">and</span> <span class="n">nbot</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">MODERATE</span> <span class="o">+</span> <span class="n">st_bot</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">WARNING</span> <span class="o">+</span> <span class="n">st_bot</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ntop</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">OKGREEN</span> <span class="o">+</span> <span class="n">st_top</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">ntop</span> <span class="o">&gt;=</span><span class="mi">5</span> <span class="ow">and</span> <span class="n">ntop</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">MODERATE</span> <span class="o">+</span> <span class="n">st_top</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">WARNING</span> <span class="o">+</span> <span class="n">st_top</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+
+    <span class="c1"># Number of points in thermal BL</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">rad</span> <span class="o">=</span> <span class="n">MagicRadial</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;heatR&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">rad</span> <span class="o">=</span> <span class="n">MagicRadial</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;heatR&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rad</span><span class="o">.</span><span class="n">ktops</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">ind</span> <span class="o">=</span> <span class="n">argrelextrema</span><span class="p">(</span><span class="n">rad</span><span class="o">.</span><span class="n">entropy_SD</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">greater</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">ntop</span> <span class="o">=</span> <span class="n">ind</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
+        <span class="n">st_top</span> <span class="o">=</span> <span class="s1">&#39;Number of points in top thermal B.L.   : </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">ntop</span>
+        <span class="k">if</span> <span class="n">ntop</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">OKGREEN</span> <span class="o">+</span> <span class="n">st_top</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">ntop</span> <span class="o">&gt;=</span><span class="mi">5</span> <span class="ow">and</span> <span class="n">ntop</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">MODERATE</span> <span class="o">+</span> <span class="n">st_top</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">WARNING</span> <span class="o">+</span> <span class="n">st_top</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">rad</span><span class="o">.</span><span class="n">kbots</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">ind</span> <span class="o">=</span> <span class="n">argrelextrema</span><span class="p">(</span><span class="n">rad</span><span class="o">.</span><span class="n">entropy_SD</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">greater</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">nbot</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rad</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span><span class="o">-</span><span class="n">ind</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">st_bot</span> <span class="o">=</span> <span class="s1">&#39;Number of points in bottom thermal B.L.: </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">nbot</span>
+        <span class="k">if</span> <span class="n">nbot</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">OKGREEN</span> <span class="o">+</span> <span class="n">st_bot</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">nbot</span> <span class="o">&gt;=</span><span class="mi">5</span> <span class="ow">and</span> <span class="n">nbot</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">MODERATE</span> <span class="o">+</span> <span class="n">st_bot</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">WARNING</span> <span class="o">+</span> <span class="n">st_bot</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span></div>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">magic.checker</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+    </div>
+  </body>
+</html>

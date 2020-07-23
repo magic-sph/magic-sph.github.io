@@ -1,20 +1,25 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>Pre-calculations &#8212; Magic 5.9 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-calculations &#8212; Magic 5.10 documentation</title>
     <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Magic 5.10 documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Time stepping" href="timeAdvance.html" />
@@ -92,8 +97,9 @@
         <li class="right" >
           <a href="initModules.html" title="Code initialization"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.9 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../api.html" accesskey="U">Description of the Fortran modules</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../api.html" accesskey="U">Description of the Fortran modules</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Pre-calculations</a></li> 
       </ul>
     </div>  
 
@@ -114,6 +120,7 @@
 </dl>
 <p class="rubric">Needed modules</p>
 <ul class="simple">
+<li><p><code class="xref f f-mod docutils literal notranslate"><span class="pre">iso_fortran_env</span></code> (<code class="xref f f-func docutils literal notranslate"><span class="pre">output_unit()</span></code>)</p></li>
 <li><p><a class="reference internal" href="baseModules.html#f/constants" title="f/constants: module containing constants and parameters used in the code."><code class="xref f f-mod docutils literal notranslate"><span class="pre">constants</span></code></a>: module containing constants and parameters used in the code.</p></li>
 <li><p><a class="reference internal" href="baseModules.html#f/num_param" title="f/num_param: Module containing numerical and control parameters"><code class="xref f f-mod docutils literal notranslate"><span class="pre">num_param</span></code></a>: Module containing numerical and control parameters</p></li>
 <li><p><a class="reference internal" href="baseModules.html#f/output_data" title="f/output_data: This module contains the parameters for output control"><code class="xref f f-mod docutils literal notranslate"><span class="pre">output_data</span></code></a>: This module contains the parameters for output control</p></li>
@@ -128,7 +135,7 @@
 <li><p><a class="reference internal" href="derInt.html#f/integration" title="f/integration: Radial integration functions"><code class="xref f f-mod docutils literal notranslate"><span class="pre">integration</span></code></a> (<a class="reference internal" href="derInt.html#f/integration/rint_r" title="f/integration/rint_r"><code class="xref f f-func docutils literal notranslate"><span class="pre">rint_r()</span></code></a>): Radial integration functions</p></li>
 <li><p><a class="reference internal" href="misc.html#f/useful" title="f/useful: library with several useful subroutines"><code class="xref f f-mod docutils literal notranslate"><span class="pre">useful</span></code></a> (<a class="reference internal" href="misc.html#f/useful/logwrite" title="f/useful/logwrite"><code class="xref f f-func docutils literal notranslate"><span class="pre">logwrite()</span></code></a>, <a class="reference internal" href="misc.html#f/useful/abortrun" title="f/useful/abortrun"><code class="xref f f-func docutils literal notranslate"><span class="pre">abortrun()</span></code></a>): library with several useful subroutines</p></li>
 <li><p><a class="reference internal" href="baseModules.html#f/special" title="f/special: This module contains all variables for the case of an imposed IC dipole, an imposed external magnetic field and a special boundary forcing to excite inertial modes"><code class="xref f f-mod docutils literal notranslate"><span class="pre">special</span></code></a> (<a class="reference internal" href="baseModules.html#f/special/l_curr" title="f/special/l_curr"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_curr()</span></code></a>, <a class="reference internal" href="baseModules.html#f/special/fac_loop" title="f/special/fac_loop"><code class="xref f f-func docutils literal notranslate"><span class="pre">fac_loop()</span></code></a>, <a class="reference internal" href="baseModules.html#f/special/loopradratio" title="f/special/loopradratio"><code class="xref f f-func docutils literal notranslate"><span class="pre">loopradratio()</span></code></a>, <a class="reference internal" href="baseModules.html#f/special/amp_curr" title="f/special/amp_curr"><code class="xref f f-func docutils literal notranslate"><span class="pre">amp_curr()</span></code></a>, <a class="reference internal" href="baseModules.html#f/special/le" title="f/special/le"><code class="xref f f-func docutils literal notranslate"><span class="pre">le()</span></code></a>): This module contains all variables for the case of an imposed IC dipole, an imposed external magnetic field and a special boundary forcing to excite inertial modes</p></li>
-<li><p><code class="xref f f-mod docutils literal notranslate"><span class="pre">time_schemes</span></code> (<code class="xref f f-func docutils literal notranslate"><span class="pre">type_tscheme()</span></code>): This module defines an abstract class type_tscheme which is employed for the time advance of the code.</p></li>
+<li><p><a class="reference internal" href="timeAdvance.html#f/time_schemes" title="f/time_schemes: This module defines an abstract class type_tscheme which is employed for the time advance of the code."><code class="xref f f-mod docutils literal notranslate"><span class="pre">time_schemes</span></code></a> (<code class="xref f f-func docutils literal notranslate"><span class="pre">type_tscheme()</span></code>): This module defines an abstract class type_tscheme which is employed for the time advance of the code.</p></li>
 </ul>
 <p class="rubric">Variables</p>
 <p class="rubric">Subroutines and functions</p>
@@ -222,7 +229,7 @@ routine.</p>
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>n_out</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Normalized OC surface          :’‘,ES14.6)’) surf_cmb</p>
+<dd class="field-odd"><p><strong>n_out</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Normalized OC surface          :’’,ES14.6)’) surf_cmb</p>
 </dd>
 <dt class="field-even">Called from</dt>
 <dd class="field-even"><p><a class="reference internal" href="magic.html#f/magic" title="f/magic"><code class="xref f f-prog docutils literal notranslate"><span class="pre">magic</span></code></a></p>
@@ -242,7 +249,7 @@ temperature, cheb transforms, etc.)</p>
 <p class="rubric">Quick access</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/radial_functions/alpha0" title="f/radial_functions/alpha0"><code class="xref f f-var docutils literal notranslate"><span class="pre">alpha0</span></code></a>, <a class="reference internal" href="#f/radial_functions/alpha1" title="f/radial_functions/alpha1"><code class="xref f f-var docutils literal notranslate"><span class="pre">alpha1</span></code></a>, <a class="reference internal" href="#f/radial_functions/alpha2" title="f/radial_functions/alpha2"><code class="xref f f-var docutils literal notranslate"><span class="pre">alpha2</span></code></a>, <a class="reference internal" href="#f/radial_functions/beta" title="f/radial_functions/beta"><code class="xref f f-var docutils literal notranslate"><span class="pre">beta</span></code></a>, <a class="reference internal" href="#f/radial_functions/cheb_ic" title="f/radial_functions/cheb_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">cheb_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/cheb_int" title="f/radial_functions/cheb_int"><code class="xref f f-var docutils literal notranslate"><span class="pre">cheb_int</span></code></a>, <a class="reference internal" href="#f/radial_functions/cheb_int_ic" title="f/radial_functions/cheb_int_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">cheb_int_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/cheb_norm_ic" title="f/radial_functions/cheb_norm_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">cheb_norm_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/chebt_ic" title="f/radial_functions/chebt_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">chebt_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/chebt_ic_even" title="f/radial_functions/chebt_ic_even"><code class="xref f f-var docutils literal notranslate"><span class="pre">chebt_ic_even</span></code></a>, <a class="reference internal" href="#f/radial_functions/d2cheb_ic" title="f/radial_functions/d2cheb_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">d2cheb_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/d2temp0" title="f/radial_functions/d2temp0"><code class="xref f f-var docutils literal notranslate"><span class="pre">d2temp0</span></code></a>, <a class="reference internal" href="#f/radial_functions/dbeta" title="f/radial_functions/dbeta"><code class="xref f f-var docutils literal notranslate"><span class="pre">dbeta</span></code></a>, <a class="reference internal" href="#f/radial_functions/dcheb_ic" title="f/radial_functions/dcheb_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">dcheb_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/ddbeta" title="f/radial_functions/ddbeta"><code class="xref f f-var docutils literal notranslate"><span class="pre">ddbeta</span></code></a>, <a class="reference internal" href="#f/radial_functions/ddlalpha0" title="f/radial_functions/ddlalpha0"><code class="xref f f-var docutils literal notranslate"><span class="pre">ddlalpha0</span></code></a>, <a class="reference internal" href="#f/radial_functions/ddltemp0" title="f/radial_functions/ddltemp0"><code class="xref f f-var docutils literal notranslate"><span class="pre">ddltemp0</span></code></a>, <a class="reference internal" href="#f/radial_functions/ddlvisc" title="f/radial_functions/ddlvisc"><code class="xref f f-var docutils literal notranslate"><span class="pre">ddlvisc</span></code></a>, <a class="reference internal" href="#f/radial_functions/dentropy0" title="f/radial_functions/dentropy0"><code class="xref f f-var docutils literal notranslate"><span class="pre">dentropy0</span></code></a>, <a class="reference internal" href="#f/radial_functions/divktemp0" title="f/radial_functions/divktemp0"><code class="xref f f-var docutils literal notranslate"><span class="pre">divktemp0</span></code></a>, <a class="reference internal" href="#f/radial_functions/dlalpha0" title="f/radial_functions/dlalpha0"><code class="xref f f-var docutils literal notranslate"><span class="pre">dlalpha0</span></code></a>, <a class="reference internal" href="#f/radial_functions/dlkappa" title="f/radial_functions/dlkappa"><code class="xref f f-var docutils literal notranslate"><span class="pre">dlkappa</span></code></a>, <a class="reference internal" href="#f/radial_functions/dllambda" title="f/radial_functions/dllambda"><code class="xref f f-var docutils literal notranslate"><span class="pre">dllambda</span></code></a>, <a class="reference internal" href="#f/radial_functions/dltemp0" title="f/radial_functions/dltemp0"><code class="xref f f-var docutils literal notranslate"><span class="pre">dltemp0</span></code></a>, <a class="reference internal" href="#f/radial_functions/dlvisc" title="f/radial_functions/dlvisc"><code class="xref f f-var docutils literal notranslate"><span class="pre">dlvisc</span></code></a>, <a class="reference internal" href="#f/radial_functions/dr_fac_ic" title="f/radial_functions/dr_fac_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">dr_fac_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/epscprof" title="f/radial_functions/epscprof"><code class="xref f f-var docutils literal notranslate"><span class="pre">epscprof</span></code></a>, <a class="reference internal" href="#f/radial_functions/jvarcon" title="f/radial_functions/jvarcon"><code class="xref f f-var docutils literal notranslate"><span class="pre">jvarcon</span></code></a>, <a class="reference internal" href="#f/radial_functions/kappa" title="f/radial_functions/kappa"><code class="xref f f-var docutils literal notranslate"><span class="pre">kappa</span></code></a>, <a class="reference internal" href="#f/radial_functions/l_r" title="f/radial_functions/l_r"><code class="xref f f-var docutils literal notranslate"><span class="pre">l_r</span></code></a>, <a class="reference internal" href="#f/radial_functions/lambda" title="f/radial_functions/lambda"><code class="xref f f-var docutils literal notranslate"><span class="pre">lambda</span></code></a>, <a class="reference internal" href="#f/radial_functions/ndd_costf1" title="f/radial_functions/ndd_costf1"><code class="xref f f-var docutils literal notranslate"><span class="pre">ndd_costf1</span></code></a>, <a class="reference internal" href="#f/radial_functions/ndd_costf1_ic" title="f/radial_functions/ndd_costf1_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">ndd_costf1_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/ndd_costf2_ic" title="f/radial_functions/ndd_costf2_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">ndd_costf2_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/ndi_costf1_ic" title="f/radial_functions/ndi_costf1_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">ndi_costf1_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/ndi_costf2_ic" title="f/radial_functions/ndi_costf2_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">ndi_costf2_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/o_r_ic" title="f/radial_functions/o_r_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">o_r_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/o_r_ic2" title="f/radial_functions/o_r_ic2"><code class="xref f f-var docutils literal notranslate"><span class="pre">o_r_ic2</span></code></a>, <a class="reference internal" href="#f/radial_functions/ogrun" title="f/radial_functions/ogrun"><code class="xref f f-var docutils literal notranslate"><span class="pre">ogrun</span></code></a>, <a class="reference internal" href="#f/radial_functions/opressure0" title="f/radial_functions/opressure0"><code class="xref f f-var docutils literal notranslate"><span class="pre">opressure0</span></code></a>, <a class="reference internal" href="#f/radial_functions/or1" title="f/radial_functions/or1"><code class="xref f f-var docutils literal notranslate"><span class="pre">or1</span></code></a>, <a class="reference internal" href="#f/radial_functions/or2" title="f/radial_functions/or2"><code class="xref f f-var docutils literal notranslate"><span class="pre">or2</span></code></a>, <a class="reference internal" href="#f/radial_functions/or3" title="f/radial_functions/or3"><code class="xref f f-var docutils literal notranslate"><span class="pre">or3</span></code></a>, <a class="reference internal" href="#f/radial_functions/or4" title="f/radial_functions/or4"><code class="xref f f-var docutils literal notranslate"><span class="pre">or4</span></code></a>, <a class="reference internal" href="#f/radial_functions/orho1" title="f/radial_functions/orho1"><code class="xref f f-var docutils literal notranslate"><span class="pre">orho1</span></code></a>, <a class="reference internal" href="#f/radial_functions/orho2" title="f/radial_functions/orho2"><code class="xref f f-var docutils literal notranslate"><span class="pre">orho2</span></code></a>, <a class="reference internal" href="#f/radial_functions/otemp1" title="f/radial_functions/otemp1"><code class="xref f f-var docutils literal notranslate"><span class="pre">otemp1</span></code></a>, <a class="reference internal" href="#f/radial_functions/r" title="f/radial_functions/r"><code class="xref f f-var docutils literal notranslate"><span class="pre">r</span></code></a>, <a class="reference internal" href="#f/radial_functions/r_cmb" title="f/radial_functions/r_cmb"><code class="xref f f-var docutils literal notranslate"><span class="pre">r_cmb</span></code></a>, <a class="reference internal" href="#f/radial_functions/r_ic" title="f/radial_functions/r_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">r_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/r_icb" title="f/radial_functions/r_icb"><code class="xref f f-var docutils literal notranslate"><span class="pre">r_icb</span></code></a>, <a class="reference internal" href="#f/radial_functions/r_surface" title="f/radial_functions/r_surface"><code class="xref f f-var docutils literal notranslate"><span class="pre">r_surface</span></code></a>, <a class="reference internal" href="#f/radial_functions/rgrav" title="f/radial_functions/rgrav"><code class="xref f f-var docutils literal notranslate"><span class="pre">rgrav</span></code></a>, <a class="reference internal" href="#f/radial_functions/rho0" title="f/radial_functions/rho0"><code class="xref f f-var docutils literal notranslate"><span class="pre">rho0</span></code></a>, <a class="reference internal" href="#f/radial_functions/sigma" title="f/radial_functions/sigma"><code class="xref f f-var docutils literal notranslate"><span class="pre">sigma</span></code></a>, <a class="reference internal" href="#f/radial_functions/temp0" title="f/radial_functions/temp0"><code class="xref f f-var docutils literal notranslate"><span class="pre">temp0</span></code></a>, <a class="reference internal" href="#f/radial_functions/visc" title="f/radial_functions/visc"><code class="xref f f-var docutils literal notranslate"><span class="pre">visc</span></code></a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#f/radial_functions/alpha0" title="f/radial_functions/alpha0"><code class="xref f f-var docutils literal notranslate"><span class="pre">alpha0</span></code></a>, <a class="reference internal" href="#f/radial_functions/alpha1" title="f/radial_functions/alpha1"><code class="xref f f-var docutils literal notranslate"><span class="pre">alpha1</span></code></a>, <a class="reference internal" href="#f/radial_functions/alpha2" title="f/radial_functions/alpha2"><code class="xref f f-var docutils literal notranslate"><span class="pre">alpha2</span></code></a>, <a class="reference internal" href="#f/radial_functions/beta" title="f/radial_functions/beta"><code class="xref f f-var docutils literal notranslate"><span class="pre">beta</span></code></a>, <a class="reference internal" href="#f/radial_functions/cheb_ic" title="f/radial_functions/cheb_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">cheb_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/cheb_int" title="f/radial_functions/cheb_int"><code class="xref f f-var docutils literal notranslate"><span class="pre">cheb_int</span></code></a>, <a class="reference internal" href="#f/radial_functions/cheb_int_ic" title="f/radial_functions/cheb_int_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">cheb_int_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/cheb_norm_ic" title="f/radial_functions/cheb_norm_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">cheb_norm_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/chebt_ic" title="f/radial_functions/chebt_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">chebt_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/chebt_ic_even" title="f/radial_functions/chebt_ic_even"><code class="xref f f-var docutils literal notranslate"><span class="pre">chebt_ic_even</span></code></a>, <a class="reference internal" href="#f/radial_functions/d2cheb_ic" title="f/radial_functions/d2cheb_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">d2cheb_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/d2temp0" title="f/radial_functions/d2temp0"><code class="xref f f-var docutils literal notranslate"><span class="pre">d2temp0</span></code></a>, <a class="reference internal" href="#f/radial_functions/dbeta" title="f/radial_functions/dbeta"><code class="xref f f-var docutils literal notranslate"><span class="pre">dbeta</span></code></a>, <a class="reference internal" href="#f/radial_functions/dcheb_ic" title="f/radial_functions/dcheb_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">dcheb_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/ddbeta" title="f/radial_functions/ddbeta"><code class="xref f f-var docutils literal notranslate"><span class="pre">ddbeta</span></code></a>, <a class="reference internal" href="#f/radial_functions/ddlalpha0" title="f/radial_functions/ddlalpha0"><code class="xref f f-var docutils literal notranslate"><span class="pre">ddlalpha0</span></code></a>, <a class="reference internal" href="#f/radial_functions/ddltemp0" title="f/radial_functions/ddltemp0"><code class="xref f f-var docutils literal notranslate"><span class="pre">ddltemp0</span></code></a>, <a class="reference internal" href="#f/radial_functions/ddlvisc" title="f/radial_functions/ddlvisc"><code class="xref f f-var docutils literal notranslate"><span class="pre">ddlvisc</span></code></a>, <a class="reference internal" href="#f/radial_functions/dentropy0" title="f/radial_functions/dentropy0"><code class="xref f f-var docutils literal notranslate"><span class="pre">dentropy0</span></code></a>, <a class="reference internal" href="#f/radial_functions/divktemp0" title="f/radial_functions/divktemp0"><code class="xref f f-var docutils literal notranslate"><span class="pre">divktemp0</span></code></a>, <a class="reference internal" href="#f/radial_functions/dlalpha0" title="f/radial_functions/dlalpha0"><code class="xref f f-var docutils literal notranslate"><span class="pre">dlalpha0</span></code></a>, <a class="reference internal" href="#f/radial_functions/dlkappa" title="f/radial_functions/dlkappa"><code class="xref f f-var docutils literal notranslate"><span class="pre">dlkappa</span></code></a>, <a class="reference internal" href="#f/radial_functions/dllambda" title="f/radial_functions/dllambda"><code class="xref f f-var docutils literal notranslate"><span class="pre">dllambda</span></code></a>, <a class="reference internal" href="#f/radial_functions/dltemp0" title="f/radial_functions/dltemp0"><code class="xref f f-var docutils literal notranslate"><span class="pre">dltemp0</span></code></a>, <a class="reference internal" href="#f/radial_functions/dlvisc" title="f/radial_functions/dlvisc"><code class="xref f f-var docutils literal notranslate"><span class="pre">dlvisc</span></code></a>, <a class="reference internal" href="#f/radial_functions/dr_fac_ic" title="f/radial_functions/dr_fac_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">dr_fac_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/dr_top_ic" title="f/radial_functions/dr_top_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">dr_top_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/epscprof" title="f/radial_functions/epscprof"><code class="xref f f-var docutils literal notranslate"><span class="pre">epscprof</span></code></a>, <a class="reference internal" href="#f/radial_functions/jvarcon" title="f/radial_functions/jvarcon"><code class="xref f f-var docutils literal notranslate"><span class="pre">jvarcon</span></code></a>, <a class="reference internal" href="#f/radial_functions/kappa" title="f/radial_functions/kappa"><code class="xref f f-var docutils literal notranslate"><span class="pre">kappa</span></code></a>, <a class="reference internal" href="#f/radial_functions/l_r" title="f/radial_functions/l_r"><code class="xref f f-var docutils literal notranslate"><span class="pre">l_r</span></code></a>, <a class="reference internal" href="#f/radial_functions/lambda" title="f/radial_functions/lambda"><code class="xref f f-var docutils literal notranslate"><span class="pre">lambda</span></code></a>, <a class="reference internal" href="#f/radial_functions/ndd_costf1" title="f/radial_functions/ndd_costf1"><code class="xref f f-var docutils literal notranslate"><span class="pre">ndd_costf1</span></code></a>, <a class="reference internal" href="#f/radial_functions/ndd_costf1_ic" title="f/radial_functions/ndd_costf1_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">ndd_costf1_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/ndd_costf2_ic" title="f/radial_functions/ndd_costf2_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">ndd_costf2_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/ndi_costf1_ic" title="f/radial_functions/ndi_costf1_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">ndi_costf1_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/ndi_costf2_ic" title="f/radial_functions/ndi_costf2_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">ndi_costf2_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/o_r_ic" title="f/radial_functions/o_r_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">o_r_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/o_r_ic2" title="f/radial_functions/o_r_ic2"><code class="xref f f-var docutils literal notranslate"><span class="pre">o_r_ic2</span></code></a>, <a class="reference internal" href="#f/radial_functions/ogrun" title="f/radial_functions/ogrun"><code class="xref f f-var docutils literal notranslate"><span class="pre">ogrun</span></code></a>, <a class="reference internal" href="#f/radial_functions/opressure0" title="f/radial_functions/opressure0"><code class="xref f f-var docutils literal notranslate"><span class="pre">opressure0</span></code></a>, <a class="reference internal" href="#f/radial_functions/or1" title="f/radial_functions/or1"><code class="xref f f-var docutils literal notranslate"><span class="pre">or1</span></code></a>, <a class="reference internal" href="#f/radial_functions/or2" title="f/radial_functions/or2"><code class="xref f f-var docutils literal notranslate"><span class="pre">or2</span></code></a>, <a class="reference internal" href="#f/radial_functions/or3" title="f/radial_functions/or3"><code class="xref f f-var docutils literal notranslate"><span class="pre">or3</span></code></a>, <a class="reference internal" href="#f/radial_functions/or4" title="f/radial_functions/or4"><code class="xref f f-var docutils literal notranslate"><span class="pre">or4</span></code></a>, <a class="reference internal" href="#f/radial_functions/orho1" title="f/radial_functions/orho1"><code class="xref f f-var docutils literal notranslate"><span class="pre">orho1</span></code></a>, <a class="reference internal" href="#f/radial_functions/orho2" title="f/radial_functions/orho2"><code class="xref f f-var docutils literal notranslate"><span class="pre">orho2</span></code></a>, <a class="reference internal" href="#f/radial_functions/otemp1" title="f/radial_functions/otemp1"><code class="xref f f-var docutils literal notranslate"><span class="pre">otemp1</span></code></a>, <a class="reference internal" href="#f/radial_functions/r" title="f/radial_functions/r"><code class="xref f f-var docutils literal notranslate"><span class="pre">r</span></code></a>, <a class="reference internal" href="#f/radial_functions/r_cmb" title="f/radial_functions/r_cmb"><code class="xref f f-var docutils literal notranslate"><span class="pre">r_cmb</span></code></a>, <a class="reference internal" href="#f/radial_functions/r_ic" title="f/radial_functions/r_ic"><code class="xref f f-var docutils literal notranslate"><span class="pre">r_ic</span></code></a>, <a class="reference internal" href="#f/radial_functions/r_icb" title="f/radial_functions/r_icb"><code class="xref f f-var docutils literal notranslate"><span class="pre">r_icb</span></code></a>, <a class="reference internal" href="#f/radial_functions/r_surface" title="f/radial_functions/r_surface"><code class="xref f f-var docutils literal notranslate"><span class="pre">r_surface</span></code></a>, <a class="reference internal" href="#f/radial_functions/rgrav" title="f/radial_functions/rgrav"><code class="xref f f-var docutils literal notranslate"><span class="pre">rgrav</span></code></a>, <a class="reference internal" href="#f/radial_functions/rho0" title="f/radial_functions/rho0"><code class="xref f f-var docutils literal notranslate"><span class="pre">rho0</span></code></a>, <a class="reference internal" href="#f/radial_functions/sigma" title="f/radial_functions/sigma"><code class="xref f f-var docutils literal notranslate"><span class="pre">sigma</span></code></a>, <a class="reference internal" href="#f/radial_functions/temp0" title="f/radial_functions/temp0"><code class="xref f f-var docutils literal notranslate"><span class="pre">temp0</span></code></a>, <a class="reference internal" href="#f/radial_functions/visc" title="f/radial_functions/visc"><code class="xref f f-var docutils literal notranslate"><span class="pre">visc</span></code></a></p>
 </dd>
 <dt class="field-even">Routines</dt>
 <dd class="field-even"><p><a class="reference internal" href="#f/radial_functions/finalize_radial_functions" title="f/radial_functions/finalize_radial_functions"><code class="xref f f-func docutils literal notranslate"><span class="pre">finalize_radial_functions()</span></code></a>, <a class="reference internal" href="#f/radial_functions/getbackground" title="f/radial_functions/getbackground"><code class="xref f f-func docutils literal notranslate"><span class="pre">getbackground()</span></code></a>, <a class="reference internal" href="#f/radial_functions/getentropygradient" title="f/radial_functions/getentropygradient"><code class="xref f f-func docutils literal notranslate"><span class="pre">getentropygradient()</span></code></a>, <a class="reference internal" href="#f/radial_functions/initialize_radial_functions" title="f/radial_functions/initialize_radial_functions"><code class="xref f f-func docutils literal notranslate"><span class="pre">initialize_radial_functions()</span></code></a>, <a class="reference internal" href="#f/radial_functions/polynomialbackground" title="f/radial_functions/polynomialbackground"><code class="xref f f-func docutils literal notranslate"><span class="pre">polynomialbackground()</span></code></a>, <a class="reference internal" href="#f/radial_functions/radial" title="f/radial_functions/radial"><code class="xref f f-func docutils literal notranslate"><span class="pre">radial()</span></code></a>, <a class="reference internal" href="#f/radial_functions/transportproperties" title="f/radial_functions/transportproperties"><code class="xref f f-func docutils literal notranslate"><span class="pre">transportproperties()</span></code></a></p>
@@ -250,9 +257,10 @@ temperature, cheb transforms, etc.)</p>
 </dl>
 <p class="rubric">Needed modules</p>
 <ul class="simple">
+<li><p><code class="xref f f-mod docutils literal notranslate"><span class="pre">iso_fortran_env</span></code> (<code class="xref f f-func docutils literal notranslate"><span class="pre">output_unit()</span></code>)</p></li>
 <li><p><a class="reference internal" href="baseModules.html#f/truncation" title="f/truncation: This module defines the grid points and the truncation"><code class="xref f f-mod docutils literal notranslate"><span class="pre">truncation</span></code></a> (<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max"><code class="xref f f-func docutils literal notranslate"><span class="pre">n_r_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/n_cheb_max" title="f/truncation/n_cheb_max"><code class="xref f f-func docutils literal notranslate"><span class="pre">n_cheb_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/n_r_ic_max" title="f/truncation/n_r_ic_max"><code class="xref f f-func docutils literal notranslate"><span class="pre">n_r_ic_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/fd_ratio" title="f/truncation/fd_ratio"><code class="xref f f-func docutils literal notranslate"><span class="pre">fd_ratio()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/fd_stretch" title="f/truncation/fd_stretch"><code class="xref f f-func docutils literal notranslate"><span class="pre">fd_stretch()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/fd_order" title="f/truncation/fd_order"><code class="xref f f-func docutils literal notranslate"><span class="pre">fd_order()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/fd_order_bound" title="f/truncation/fd_order_bound"><code class="xref f f-func docutils literal notranslate"><span class="pre">fd_order_bound()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/l_max" title="f/truncation/l_max"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_max()</span></code></a>): This module defines the grid points and the truncation</p></li>
 <li><p><a class="reference internal" href="legFourierChebAlgebra.html#f/algebra" title="f/algebra"><code class="xref f f-mod docutils literal notranslate"><span class="pre">algebra</span></code></a> (<a class="reference internal" href="legFourierChebAlgebra.html#f/algebra/prepare_mat" title="f/algebra/prepare_mat"><code class="xref f f-func docutils literal notranslate"><span class="pre">prepare_mat()</span></code></a>, <a class="reference internal" href="legFourierChebAlgebra.html#f/algebra/solve_mat" title="f/algebra/solve_mat"><code class="xref f f-func docutils literal notranslate"><span class="pre">solve_mat()</span></code></a>)</p></li>
-<li><p><a class="reference internal" href="baseModules.html#f/constants" title="f/constants: module containing constants and parameters used in the code."><code class="xref f f-mod docutils literal notranslate"><span class="pre">constants</span></code></a> (<a class="reference internal" href="baseModules.html#f/constants/sq4pi" title="f/constants/sq4pi"><code class="xref f f-func docutils literal notranslate"><span class="pre">sq4pi()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/one" title="f/constants/one"><code class="xref f f-func docutils literal notranslate"><span class="pre">one()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/two" title="f/constants/two"><code class="xref f f-func docutils literal notranslate"><span class="pre">two()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/three" title="f/constants/three"><code class="xref f f-func docutils literal notranslate"><span class="pre">three()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/four" title="f/constants/four"><code class="xref f f-func docutils literal notranslate"><span class="pre">four()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/half" title="f/constants/half"><code class="xref f f-func docutils literal notranslate"><span class="pre">half()</span></code></a>): module containing constants and parameters used in the code.</p></li>
+<li><p><a class="reference internal" href="baseModules.html#f/constants" title="f/constants: module containing constants and parameters used in the code."><code class="xref f f-mod docutils literal notranslate"><span class="pre">constants</span></code></a> (<a class="reference internal" href="baseModules.html#f/constants/sq4pi" title="f/constants/sq4pi"><code class="xref f f-func docutils literal notranslate"><span class="pre">sq4pi()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/one" title="f/constants/one"><code class="xref f f-func docutils literal notranslate"><span class="pre">one()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/two" title="f/constants/two"><code class="xref f f-func docutils literal notranslate"><span class="pre">two()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/three" title="f/constants/three"><code class="xref f f-func docutils literal notranslate"><span class="pre">three()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/four" title="f/constants/four"><code class="xref f f-func docutils literal notranslate"><span class="pre">four()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/half" title="f/constants/half"><code class="xref f f-func docutils literal notranslate"><span class="pre">half()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/pi" title="f/constants/pi"><code class="xref f f-func docutils literal notranslate"><span class="pre">pi()</span></code></a>): module containing constants and parameters used in the code.</p></li>
 <li><p><a class="reference internal" href="baseModules.html#f/physical_parameters" title="f/physical_parameters: Module containing the physical parameters"><code class="xref f f-mod docutils literal notranslate"><span class="pre">physical_parameters</span></code></a>: Module containing the physical parameters</p></li>
 <li><p><a class="reference internal" href="baseModules.html#f/logic" title="f/logic: Module containing the logicals that control the run"><code class="xref f f-mod docutils literal notranslate"><span class="pre">logic</span></code></a> (<a class="reference internal" href="baseModules.html#f/logic/l_mag" title="f/logic/l_mag"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_mag()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_cond_ic" title="f/logic/l_cond_ic"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_cond_ic()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_heat" title="f/logic/l_heat"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_heat()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_anelastic_liquid" title="f/logic/l_anelastic_liquid"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_anelastic_liquid()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_isothermal" title="f/logic/l_isothermal"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_isothermal()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_anel" title="f/logic/l_anel"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_anel()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_non_adia" title="f/logic/l_non_adia"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_non_adia()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_centrifuge" title="f/logic/l_centrifuge"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_centrifuge()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_temperature_diff" title="f/logic/l_temperature_diff"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_temperature_diff()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_single_matrix" title="f/logic/l_single_matrix"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_single_matrix()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_var_l" title="f/logic/l_var_l"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_var_l()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_finite_diff" title="f/logic/l_finite_diff"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_finite_diff()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_newmap" title="f/logic/l_newmap"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_newmap()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_full_sphere" title="f/logic/l_full_sphere"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_full_sphere()</span></code></a>): Module containing the logicals that control the run</p></li>
 <li><p><a class="reference internal" href="parallelModules.html#f/radial_data" title="f/radial_data: This module defines the MPI decomposition in the radial direction."><code class="xref f f-mod docutils literal notranslate"><span class="pre">radial_data</span></code></a> (<a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart"><code class="xref f f-func docutils literal notranslate"><span class="pre">nrstart()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop"><code class="xref f f-func docutils literal notranslate"><span class="pre">nrstop()</span></code></a>): This module defines the MPI decomposition in the radial direction.</p></li>
@@ -271,397 +279,404 @@ temperature, cheb transforms, etc.)</p>
 </ul>
 <p class="rubric">Variables</p>
 <ul>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/alpha0">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">alpha0</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/alpha0" title="Permalink to this definition">¶</a></dt>
 <dd><p>Thermal expansion coefficient</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/alpha1">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">alpha1</code><em> [</em><em>real</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/radial_functions/alpha1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Input parameter for non-linear map to define degree of spacing (0.0:2.0)</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/alpha2">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">alpha2</code><em> [</em><em>real</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/radial_functions/alpha2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Input parameter for non-linear map to define central point of different spacing (-1.0:1.0)</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/beta">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">beta</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/beta" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inverse of density scale height drho0/rho0</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/cheb_ic">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">cheb_ic</code> (*,*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/cheb_ic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Chebyshev polynomials for IC</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/cheb_int">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">cheb_int</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/cheb_int" title="Permalink to this definition">¶</a></dt>
 <dd><p>Array for cheb integrals</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/cheb_int_ic">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">cheb_int_ic</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/cheb_int_ic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Array for integrals of cheb for IC</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/cheb_norm_ic">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">cheb_norm_ic</code><em> [</em><em>real</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/radial_functions/cheb_norm_ic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Chebyshev normalisation for IC</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/chebt_ic">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">chebt_ic</code><em> [</em><em>costf_odd_t</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/radial_functions/chebt_ic" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/chebt_ic_even">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">chebt_ic_even</code><em> [</em><em>costf_even_t</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/radial_functions/chebt_ic_even" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/d2cheb_ic">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">d2cheb_ic</code> (*,*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/d2cheb_ic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Second radial derivative cheb_ic</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/d2temp0">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">d2temp0</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/private</em><em>]</em><a class="headerlink" href="#f/radial_functions/d2temp0" title="Permalink to this definition">¶</a></dt>
 <dd><p>Second rad. derivative of background temperature</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/dbeta">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">dbeta</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/dbeta" title="Permalink to this definition">¶</a></dt>
 <dd><p>Radial gradient of beta</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/dcheb_ic">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">dcheb_ic</code> (*,*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/dcheb_ic" title="Permalink to this definition">¶</a></dt>
 <dd><p>First radial derivative of cheb_ic</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/ddbeta">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">ddbeta</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/ddbeta" title="Permalink to this definition">¶</a></dt>
 <dd><p>2nd derivative of beta</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/ddlalpha0">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">ddlalpha0</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/ddlalpha0" title="Permalink to this definition">¶</a></dt>
 <dd><p><span class="math notranslate nohighlight">\(d/dr(1/alpha d\alpha/dr)\)</span></p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/ddltemp0">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">ddltemp0</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/ddltemp0" title="Permalink to this definition">¶</a></dt>
 <dd><p><span class="math notranslate nohighlight">\(d/dr(1/T dT/dr)\)</span></p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/ddlvisc">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">ddlvisc</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/ddlvisc" title="Permalink to this definition">¶</a></dt>
 <dd><p>2nd derivative of kinematic viscosity</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/dentropy0">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">dentropy0</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/dentropy0" title="Permalink to this definition">¶</a></dt>
 <dd><p>Radial gradient of background entropy</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/divktemp0">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">divktemp0</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/divktemp0" title="Permalink to this definition">¶</a></dt>
 <dd><p>Term for liquid anelastic approximation</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/dlalpha0">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">dlalpha0</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/dlalpha0" title="Permalink to this definition">¶</a></dt>
 <dd><p><span class="math notranslate nohighlight">\(1/\alpha d\alpha/dr\)</span></p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/dlkappa">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">dlkappa</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/dlkappa" title="Permalink to this definition">¶</a></dt>
 <dd><p>Derivative of thermal diffusivity</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/dllambda">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">dllambda</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/dllambda" title="Permalink to this definition">¶</a></dt>
 <dd><p>Derivative of magnetic diffusivity</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/dltemp0">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">dltemp0</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/dltemp0" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inverse of temperature scale height</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/dlvisc">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">dlvisc</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/dlvisc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Derivative of kinematic viscosity</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/dr_fac_ic">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">dr_fac_ic</code><em> [</em><em>real</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/radial_functions/dr_fac_ic" title="Permalink to this definition">¶</a></dt>
 <dd><p>For IC: <span class="math notranslate nohighlight">\(2/(2 r_i)\)</span></p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
+<dt id="f/radial_functions/dr_top_ic">
+<code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">dr_top_ic</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/dr_top_ic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Derivative in real space for r=r_i</p>
+</dd></dl>
+
+</li>
+<li><dl class="f variable">
 <dt id="f/radial_functions/epscprof">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">epscprof</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/epscprof" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sources in heat equations</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/jvarcon">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">jvarcon</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/jvarcon" title="Permalink to this definition">¶</a></dt>
 <dd><p>Analytical solution for toroidal field potential aj (see init_fields.f90)</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/kappa">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">kappa</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/kappa" title="Permalink to this definition">¶</a></dt>
 <dd><p>Thermal diffusivity</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/l_r">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">l_r</code> (*)<em> [</em><em>integer</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/l_r" title="Permalink to this definition">¶</a></dt>
 <dd><p>Variable degree with radius</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/lambda">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">lambda</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/lambda" title="Permalink to this definition">¶</a></dt>
 <dd><p>Array of magnetic diffusivity</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/ndd_costf1">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">ndd_costf1</code><em> [</em><em>integer</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/radial_functions/ndd_costf1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Radii for transform</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/ndd_costf1_ic">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">ndd_costf1_ic</code><em> [</em><em>integer</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/radial_functions/ndd_costf1_ic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Radii for transform</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/ndd_costf2_ic">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">ndd_costf2_ic</code><em> [</em><em>integer</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/radial_functions/ndd_costf2_ic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Radii for transform</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/ndi_costf1_ic">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">ndi_costf1_ic</code><em> [</em><em>integer</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/radial_functions/ndi_costf1_ic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Radii for transform</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/ndi_costf2_ic">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">ndi_costf2_ic</code><em> [</em><em>integer</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/radial_functions/ndi_costf2_ic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Radii for transform</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/o_r_ic">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">o_r_ic</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/o_r_ic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inverse of IC radii</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/o_r_ic2">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">o_r_ic2</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/o_r_ic2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inverse of square of IC radii</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/ogrun">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">ogrun</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/ogrun" title="Permalink to this definition">¶</a></dt>
 <dd><p><span class="math notranslate nohighlight">\(1/\Gamma\)</span></p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/opressure0">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">opressure0</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/opressure0" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inverse background pressure (for centrifugal acceleration)</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/or1">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">or1</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/or1" title="Permalink to this definition">¶</a></dt>
 <dd><p><span class="math notranslate nohighlight">\(1/r\)</span></p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/or2">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">or2</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/or2" title="Permalink to this definition">¶</a></dt>
 <dd><p><span class="math notranslate nohighlight">\(1/r^2\)</span></p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/or3">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">or3</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/or3" title="Permalink to this definition">¶</a></dt>
 <dd><p><span class="math notranslate nohighlight">\(1/r^3\)</span></p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/or4">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">or4</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/or4" title="Permalink to this definition">¶</a></dt>
 <dd><p><span class="math notranslate nohighlight">\(1/r^4\)</span></p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/orho1">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">orho1</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/orho1" title="Permalink to this definition">¶</a></dt>
 <dd><p><span class="math notranslate nohighlight">\(1/\tilde{\rho}\)</span></p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/orho2">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">orho2</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/orho2" title="Permalink to this definition">¶</a></dt>
 <dd><p><span class="math notranslate nohighlight">\(1/\tilde{\rho}^2\)</span></p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/otemp1">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">otemp1</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/otemp1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inverse of background temperature</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/r">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">r</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/r" title="Permalink to this definition">¶</a></dt>
 <dd><p>radii</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/r_cmb">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">r_cmb</code><em> [</em><em>real</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/radial_functions/r_cmb" title="Permalink to this definition">¶</a></dt>
 <dd><p>OC radius</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/r_ic">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">r_ic</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/r_ic" title="Permalink to this definition">¶</a></dt>
 <dd><p>IC radii</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/r_icb">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">r_icb</code><em> [</em><em>real</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/radial_functions/r_icb" title="Permalink to this definition">¶</a></dt>
 <dd><p>IC radius</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/r_surface">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">r_surface</code><em> [</em><em>real</em><em>,</em><em>public</em><em>]</em><a class="headerlink" href="#f/radial_functions/r_surface" title="Permalink to this definition">¶</a></dt>
 <dd><p>Surface radius for extrapolation</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/rgrav">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">rgrav</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/rgrav" title="Permalink to this definition">¶</a></dt>
 <dd><p>Buoyancy term <cite>dtemp0/Di</cite></p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/rho0">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">rho0</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/rho0" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inverse of background density</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/sigma">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">sigma</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/sigma" title="Permalink to this definition">¶</a></dt>
 <dd><p>Electrical conductivity</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/temp0">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">temp0</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/temp0" title="Permalink to this definition">¶</a></dt>
 <dd><p>Background temperature</p>
 </dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/radial_functions/visc">
 <code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">visc</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/radial_functions/visc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Kinematic viscosity</p>
@@ -786,7 +801,7 @@ and latitude plus help arrays depending on degree and order</p>
 <p class="rubric">Quick access</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/horizontal_data/cosn2" title="f/horizontal_data/cosn2"><code class="xref f f-var docutils literal notranslate"><span class="pre">cosn2</span></code></a>, <a class="reference internal" href="#f/horizontal_data/costheta" title="f/horizontal_data/costheta"><code class="xref f f-var docutils literal notranslate"><span class="pre">costheta</span></code></a>, <a class="reference internal" href="#f/horizontal_data/d_mc2m" title="f/horizontal_data/d_mc2m"><code class="xref f f-var docutils literal notranslate"><span class="pre">d_mc2m</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dlh" title="f/horizontal_data/dlh"><code class="xref f f-var docutils literal notranslate"><span class="pre">dlh</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dphi" title="f/horizontal_data/dphi"><code class="xref f f-var docutils literal notranslate"><span class="pre">dphi</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dpl0eq" title="f/horizontal_data/dpl0eq"><code class="xref f f-var docutils literal notranslate"><span class="pre">dpl0eq</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dplm" title="f/horizontal_data/dplm"><code class="xref f f-var docutils literal notranslate"><span class="pre">dplm</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dtheta1a" title="f/horizontal_data/dtheta1a"><code class="xref f f-var docutils literal notranslate"><span class="pre">dtheta1a</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dtheta1s" title="f/horizontal_data/dtheta1s"><code class="xref f f-var docutils literal notranslate"><span class="pre">dtheta1s</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dtheta2a" title="f/horizontal_data/dtheta2a"><code class="xref f f-var docutils literal notranslate"><span class="pre">dtheta2a</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dtheta2s" title="f/horizontal_data/dtheta2s"><code class="xref f f-var docutils literal notranslate"><span class="pre">dtheta2s</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dtheta3a" title="f/horizontal_data/dtheta3a"><code class="xref f f-var docutils literal notranslate"><span class="pre">dtheta3a</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dtheta3s" title="f/horizontal_data/dtheta3s"><code class="xref f f-var docutils literal notranslate"><span class="pre">dtheta3s</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dtheta4a" title="f/horizontal_data/dtheta4a"><code class="xref f f-var docutils literal notranslate"><span class="pre">dtheta4a</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dtheta4s" title="f/horizontal_data/dtheta4s"><code class="xref f f-var docutils literal notranslate"><span class="pre">dtheta4s</span></code></a>, <a class="reference internal" href="#f/horizontal_data/gauss" title="f/horizontal_data/gauss"><code class="xref f f-var docutils literal notranslate"><span class="pre">gauss</span></code></a>, <a class="reference internal" href="#f/horizontal_data/hdif_b" title="f/horizontal_data/hdif_b"><code class="xref f f-var docutils literal notranslate"><span class="pre">hdif_b</span></code></a>, <a class="reference internal" href="#f/horizontal_data/hdif_s" title="f/horizontal_data/hdif_s"><code class="xref f f-var docutils literal notranslate"><span class="pre">hdif_s</span></code></a>, <a class="reference internal" href="#f/horizontal_data/hdif_v" title="f/horizontal_data/hdif_v"><code class="xref f f-var docutils literal notranslate"><span class="pre">hdif_v</span></code></a>, <a class="reference internal" href="#f/horizontal_data/hdif_xi" title="f/horizontal_data/hdif_xi"><code class="xref f f-var docutils literal notranslate"><span class="pre">hdif_xi</span></code></a>, <a class="reference internal" href="#f/horizontal_data/lmodd" title="f/horizontal_data/lmodd"><code class="xref f f-var docutils literal notranslate"><span class="pre">lmodd</span></code></a>, <a class="reference internal" href="#f/horizontal_data/lmoddp" title="f/horizontal_data/lmoddp"><code class="xref f f-var docutils literal notranslate"><span class="pre">lmoddp</span></code></a>, <a class="reference internal" href="#f/horizontal_data/lstart" title="f/horizontal_data/lstart"><code class="xref f f-var docutils literal notranslate"><span class="pre">lstart</span></code></a>, <a class="reference internal" href="#f/horizontal_data/lstartp" title="f/horizontal_data/lstartp"><code class="xref f f-var docutils literal notranslate"><span class="pre">lstartp</span></code></a>, <a class="reference internal" href="#f/horizontal_data/lstop" title="f/horizontal_data/lstop"><code class="xref f f-var docutils literal notranslate"><span class="pre">lstop</span></code></a>, <a class="reference internal" href="#f/horizontal_data/lstopp" title="f/horizontal_data/lstopp"><code class="xref f f-var docutils literal notranslate"><span class="pre">lstopp</span></code></a>, <a class="reference internal" href="#f/horizontal_data/n_theta_cal2ord" title="f/horizontal_data/n_theta_cal2ord"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_theta_cal2ord</span></code></a>, <a class="reference internal" href="#f/horizontal_data/o_sin_theta" title="f/horizontal_data/o_sin_theta"><code class="xref f f-var docutils literal notranslate"><span class="pre">o_sin_theta</span></code></a>, <a class="reference internal" href="#f/horizontal_data/o_sin_theta_e2" title="f/horizontal_data/o_sin_theta_e2"><code class="xref f f-var docutils literal notranslate"><span class="pre">o_sin_theta_e2</span></code></a>, <a class="reference internal" href="#f/horizontal_data/osn1" title="f/horizontal_data/osn1"><code class="xref f f-var docutils literal notranslate"><span class="pre">osn1</span></code></a>, <a class="reference internal" href="#f/horizontal_data/osn2" title="f/horizontal_data/osn2"><code class="xref f f-var docutils literal notranslate"><span class="pre">osn2</span></code></a>, <a class="reference internal" href="#f/horizontal_data/phi" title="f/horizontal_data/phi"><code class="xref f f-var docutils literal notranslate"><span class="pre">phi</span></code></a>, <a class="reference internal" href="#f/horizontal_data/plm" title="f/horizontal_data/plm"><code class="xref f f-var docutils literal notranslate"><span class="pre">plm</span></code></a>, <a class="reference internal" href="#f/horizontal_data/sintheta" title="f/horizontal_data/sintheta"><code class="xref f f-var docutils literal notranslate"><span class="pre">sintheta</span></code></a>, <a class="reference internal" href="#f/horizontal_data/sn2" title="f/horizontal_data/sn2"><code class="xref f f-var docutils literal notranslate"><span class="pre">sn2</span></code></a>, <a class="reference internal" href="#f/horizontal_data/theta" title="f/horizontal_data/theta"><code class="xref f f-var docutils literal notranslate"><span class="pre">theta</span></code></a>, <a class="reference internal" href="#f/horizontal_data/theta_ord" title="f/horizontal_data/theta_ord"><code class="xref f f-var docutils literal notranslate"><span class="pre">theta_ord</span></code></a>, <a class="reference internal" href="#f/horizontal_data/wdplm" title="f/horizontal_data/wdplm"><code class="xref f f-var docutils literal notranslate"><span class="pre">wdplm</span></code></a>, <a class="reference internal" href="#f/horizontal_data/wplm" title="f/horizontal_data/wplm"><code class="xref f f-var docutils literal notranslate"><span class="pre">wplm</span></code></a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#f/horizontal_data/cosn2" title="f/horizontal_data/cosn2"><code class="xref f f-var docutils literal notranslate"><span class="pre">cosn2</span></code></a>, <a class="reference internal" href="#f/horizontal_data/cosn_theta_e2" title="f/horizontal_data/cosn_theta_e2"><code class="xref f f-var docutils literal notranslate"><span class="pre">cosn_theta_e2</span></code></a>, <a class="reference internal" href="#f/horizontal_data/costheta" title="f/horizontal_data/costheta"><code class="xref f f-var docutils literal notranslate"><span class="pre">costheta</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dlh" title="f/horizontal_data/dlh"><code class="xref f f-var docutils literal notranslate"><span class="pre">dlh</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dphi" title="f/horizontal_data/dphi"><code class="xref f f-var docutils literal notranslate"><span class="pre">dphi</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dpl0eq" title="f/horizontal_data/dpl0eq"><code class="xref f f-var docutils literal notranslate"><span class="pre">dpl0eq</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dtheta1a" title="f/horizontal_data/dtheta1a"><code class="xref f f-var docutils literal notranslate"><span class="pre">dtheta1a</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dtheta1s" title="f/horizontal_data/dtheta1s"><code class="xref f f-var docutils literal notranslate"><span class="pre">dtheta1s</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dtheta2a" title="f/horizontal_data/dtheta2a"><code class="xref f f-var docutils literal notranslate"><span class="pre">dtheta2a</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dtheta2s" title="f/horizontal_data/dtheta2s"><code class="xref f f-var docutils literal notranslate"><span class="pre">dtheta2s</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dtheta3a" title="f/horizontal_data/dtheta3a"><code class="xref f f-var docutils literal notranslate"><span class="pre">dtheta3a</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dtheta3s" title="f/horizontal_data/dtheta3s"><code class="xref f f-var docutils literal notranslate"><span class="pre">dtheta3s</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dtheta4a" title="f/horizontal_data/dtheta4a"><code class="xref f f-var docutils literal notranslate"><span class="pre">dtheta4a</span></code></a>, <a class="reference internal" href="#f/horizontal_data/dtheta4s" title="f/horizontal_data/dtheta4s"><code class="xref f f-var docutils literal notranslate"><span class="pre">dtheta4s</span></code></a>, <a class="reference internal" href="#f/horizontal_data/gauss" title="f/horizontal_data/gauss"><code class="xref f f-var docutils literal notranslate"><span class="pre">gauss</span></code></a>, <a class="reference internal" href="#f/horizontal_data/hdif_b" title="f/horizontal_data/hdif_b"><code class="xref f f-var docutils literal notranslate"><span class="pre">hdif_b</span></code></a>, <a class="reference internal" href="#f/horizontal_data/hdif_s" title="f/horizontal_data/hdif_s"><code class="xref f f-var docutils literal notranslate"><span class="pre">hdif_s</span></code></a>, <a class="reference internal" href="#f/horizontal_data/hdif_v" title="f/horizontal_data/hdif_v"><code class="xref f f-var docutils literal notranslate"><span class="pre">hdif_v</span></code></a>, <a class="reference internal" href="#f/horizontal_data/hdif_xi" title="f/horizontal_data/hdif_xi"><code class="xref f f-var docutils literal notranslate"><span class="pre">hdif_xi</span></code></a>, <a class="reference internal" href="#f/horizontal_data/n_theta_cal2ord" title="f/horizontal_data/n_theta_cal2ord"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_theta_cal2ord</span></code></a>, <a class="reference internal" href="#f/horizontal_data/o_sin_theta" title="f/horizontal_data/o_sin_theta"><code class="xref f f-var docutils literal notranslate"><span class="pre">o_sin_theta</span></code></a>, <a class="reference internal" href="#f/horizontal_data/o_sin_theta_e2" title="f/horizontal_data/o_sin_theta_e2"><code class="xref f f-var docutils literal notranslate"><span class="pre">o_sin_theta_e2</span></code></a>, <a class="reference internal" href="#f/horizontal_data/osn1" title="f/horizontal_data/osn1"><code class="xref f f-var docutils literal notranslate"><span class="pre">osn1</span></code></a>, <a class="reference internal" href="#f/horizontal_data/osn2" title="f/horizontal_data/osn2"><code class="xref f f-var docutils literal notranslate"><span class="pre">osn2</span></code></a>, <a class="reference internal" href="#f/horizontal_data/phi" title="f/horizontal_data/phi"><code class="xref f f-var docutils literal notranslate"><span class="pre">phi</span></code></a>, <a class="reference internal" href="#f/horizontal_data/sintheta" title="f/horizontal_data/sintheta"><code class="xref f f-var docutils literal notranslate"><span class="pre">sintheta</span></code></a>, <a class="reference internal" href="#f/horizontal_data/sn2" title="f/horizontal_data/sn2"><code class="xref f f-var docutils literal notranslate"><span class="pre">sn2</span></code></a>, <a class="reference internal" href="#f/horizontal_data/theta" title="f/horizontal_data/theta"><code class="xref f f-var docutils literal notranslate"><span class="pre">theta</span></code></a>, <a class="reference internal" href="#f/horizontal_data/theta_ord" title="f/horizontal_data/theta_ord"><code class="xref f f-var docutils literal notranslate"><span class="pre">theta_ord</span></code></a></p>
 </dd>
 <dt class="field-even">Routines</dt>
 <dd class="field-even"><p><a class="reference internal" href="#f/horizontal_data/finalize_horizontal_data" title="f/horizontal_data/finalize_horizontal_data"><code class="xref f f-func docutils literal notranslate"><span class="pre">finalize_horizontal_data()</span></code></a>, <a class="reference internal" href="#f/horizontal_data/gauleg" title="f/horizontal_data/gauleg"><code class="xref f f-func docutils literal notranslate"><span class="pre">gauleg()</span></code></a>, <a class="reference internal" href="#f/horizontal_data/horizontal" title="f/horizontal_data/horizontal"><code class="xref f f-func docutils literal notranslate"><span class="pre">horizontal()</span></code></a>, <a class="reference internal" href="#f/horizontal_data/initialize_horizontal_data" title="f/horizontal_data/initialize_horizontal_data"><code class="xref f f-func docutils literal notranslate"><span class="pre">initialize_horizontal_data()</span></code></a></p>
@@ -794,251 +809,191 @@ and latitude plus help arrays depending on degree and order</p>
 </dl>
 <p class="rubric">Needed modules</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="baseModules.html#f/truncation" title="f/truncation: This module defines the grid points and the truncation"><code class="xref f f-mod docutils literal notranslate"><span class="pre">truncation</span></code></a> (<a class="reference internal" href="baseModules.html#f/truncation/l_max" title="f/truncation/l_max"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/lmp_max" title="f/truncation/lmp_max"><code class="xref f f-func docutils literal notranslate"><span class="pre">lmp_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/n_theta_max" title="f/truncation/n_theta_max"><code class="xref f f-func docutils literal notranslate"><span class="pre">n_theta_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/n_phi_max" title="f/truncation/n_phi_max"><code class="xref f f-func docutils literal notranslate"><span class="pre">n_phi_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max"><code class="xref f f-func docutils literal notranslate"><span class="pre">lm_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/n_m_max" title="f/truncation/n_m_max"><code class="xref f f-func docutils literal notranslate"><span class="pre">n_m_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/minc" title="f/truncation/minc"><code class="xref f f-func docutils literal notranslate"><span class="pre">minc()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/m_max" title="f/truncation/m_max"><code class="xref f f-func docutils literal notranslate"><span class="pre">m_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/l_axi" title="f/truncation/l_axi"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_axi()</span></code></a>): This module defines the grid points and the truncation</p></li>
+<li><p><a class="reference internal" href="baseModules.html#f/truncation" title="f/truncation: This module defines the grid points and the truncation"><code class="xref f f-mod docutils literal notranslate"><span class="pre">truncation</span></code></a> (<a class="reference internal" href="baseModules.html#f/truncation/l_max" title="f/truncation/l_max"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/lmp_max" title="f/truncation/lmp_max"><code class="xref f f-func docutils literal notranslate"><span class="pre">lmp_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/n_theta_max" title="f/truncation/n_theta_max"><code class="xref f f-func docutils literal notranslate"><span class="pre">n_theta_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/n_phi_max" title="f/truncation/n_phi_max"><code class="xref f f-func docutils literal notranslate"><span class="pre">n_phi_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/nlat_padded" title="f/truncation/nlat_padded"><code class="xref f f-func docutils literal notranslate"><span class="pre">nlat_padded()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max"><code class="xref f f-func docutils literal notranslate"><span class="pre">lm_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/n_m_max" title="f/truncation/n_m_max"><code class="xref f f-func docutils literal notranslate"><span class="pre">n_m_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/minc" title="f/truncation/minc"><code class="xref f f-func docutils literal notranslate"><span class="pre">minc()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/m_max" title="f/truncation/m_max"><code class="xref f f-func docutils literal notranslate"><span class="pre">m_max()</span></code></a>, <a class="reference internal" href="baseModules.html#f/truncation/l_axi" title="f/truncation/l_axi"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_axi()</span></code></a>): This module defines the grid points and the truncation</p></li>
 <li><p><a class="reference internal" href="#f/radial_functions" title="f/radial_functions: This module initiates all the radial functions (transport properties, density, temperature, cheb transforms, etc.)"><code class="xref f f-mod docutils literal notranslate"><span class="pre">radial_functions</span></code></a> (<a class="reference internal" href="#f/radial_functions/r_cmb" title="f/radial_functions/r_cmb"><code class="xref f f-func docutils literal notranslate"><span class="pre">r_cmb()</span></code></a>): This module initiates all the radial functions (transport properties, density, temperature, cheb transforms, etc.)</p></li>
 <li><p><a class="reference internal" href="baseModules.html#f/physical_parameters" title="f/physical_parameters: Module containing the physical parameters"><code class="xref f f-mod docutils literal notranslate"><span class="pre">physical_parameters</span></code></a> (<a class="reference internal" href="baseModules.html#f/physical_parameters/ek" title="f/physical_parameters/ek"><code class="xref f f-func docutils literal notranslate"><span class="pre">ek()</span></code></a>): Module containing the physical parameters</p></li>
 <li><p><a class="reference internal" href="baseModules.html#f/num_param" title="f/num_param: Module containing numerical and control parameters"><code class="xref f f-mod docutils literal notranslate"><span class="pre">num_param</span></code></a> (<a class="reference internal" href="baseModules.html#f/num_param/difeta" title="f/num_param/difeta"><code class="xref f f-func docutils literal notranslate"><span class="pre">difeta()</span></code></a>, <a class="reference internal" href="baseModules.html#f/num_param/difnu" title="f/num_param/difnu"><code class="xref f f-func docutils literal notranslate"><span class="pre">difnu()</span></code></a>, <a class="reference internal" href="baseModules.html#f/num_param/difkap" title="f/num_param/difkap"><code class="xref f f-func docutils literal notranslate"><span class="pre">difkap()</span></code></a>, <a class="reference internal" href="baseModules.html#f/num_param/ldif" title="f/num_param/ldif"><code class="xref f f-func docutils literal notranslate"><span class="pre">ldif()</span></code></a>, <a class="reference internal" href="baseModules.html#f/num_param/ldifexp" title="f/num_param/ldifexp"><code class="xref f f-func docutils literal notranslate"><span class="pre">ldifexp()</span></code></a>, <a class="reference internal" href="baseModules.html#f/num_param/difchem" title="f/num_param/difchem"><code class="xref f f-func docutils literal notranslate"><span class="pre">difchem()</span></code></a>): Module containing numerical and control parameters</p></li>
 <li><p><a class="reference internal" href="blocking.html#f/blocking" title="f/blocking: Module containing blocking information"><code class="xref f f-mod docutils literal notranslate"><span class="pre">blocking</span></code></a> (<a class="reference internal" href="blocking.html#f/blocking/lmp2l" title="f/blocking/lmp2l"><code class="xref f f-func docutils literal notranslate"><span class="pre">lmp2l()</span></code></a>, <a class="reference internal" href="blocking.html#f/blocking/lmp2lm" title="f/blocking/lmp2lm"><code class="xref f f-func docutils literal notranslate"><span class="pre">lmp2lm()</span></code></a>, <a class="reference internal" href="blocking.html#f/blocking/lm2l" title="f/blocking/lm2l"><code class="xref f f-func docutils literal notranslate"><span class="pre">lm2l()</span></code></a>, <a class="reference internal" href="blocking.html#f/blocking/lm2m" title="f/blocking/lm2m"><code class="xref f f-func docutils literal notranslate"><span class="pre">lm2m()</span></code></a>, <a class="reference internal" href="blocking.html#f/blocking/lo_map" title="f/blocking/lo_map"><code class="xref f f-func docutils literal notranslate"><span class="pre">lo_map()</span></code></a>): Module containing blocking information</p></li>
-<li><p><a class="reference internal" href="baseModules.html#f/logic" title="f/logic: Module containing the logicals that control the run"><code class="xref f f-mod docutils literal notranslate"><span class="pre">logic</span></code></a> (<a class="reference internal" href="baseModules.html#f/logic/l_non_rot" title="f/logic/l_non_rot"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_non_rot()</span></code></a>, <a class="reference internal" href="baseModules.html#f/logic/l_rms" title="f/logic/l_rms"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_rms()</span></code></a>): Module containing the logicals that control the run</p></li>
+<li><p><a class="reference internal" href="baseModules.html#f/logic" title="f/logic: Module containing the logicals that control the run"><code class="xref f f-mod docutils literal notranslate"><span class="pre">logic</span></code></a> (<a class="reference internal" href="baseModules.html#f/logic/l_non_rot" title="f/logic/l_non_rot"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_non_rot()</span></code></a>): Module containing the logicals that control the run</p></li>
 <li><p><a class="reference internal" href="legFourierChebAlgebra.html#f/plms_theta" title="f/plms_theta"><code class="xref f f-mod docutils literal notranslate"><span class="pre">plms_theta</span></code></a> (<a class="reference internal" href="legFourierChebAlgebra.html#f/plms_theta/plm_theta" title="f/plms_theta/plm_theta"><code class="xref f f-func docutils literal notranslate"><span class="pre">plm_theta()</span></code></a>)</p></li>
-<li><p><a class="reference internal" href="legFourierChebAlgebra.html#f/fft" title="f/fft: This file contains the subroutines called by fftJW: fft99a, fft99b, wpass2, wpass3, wpass4 and wpass5"><code class="xref f f-mod docutils literal notranslate"><span class="pre">fft</span></code></a>: This file contains the subroutines called by fftJW: fft99a, fft99b, wpass2, wpass3, wpass4 and wpass5</p></li>
+<li><p><a class="reference internal" href="legFourierChebAlgebra.html#f/fft" title="f/fft: This is the FFTW version of the fft module"><code class="xref f f-mod docutils literal notranslate"><span class="pre">fft</span></code></a>: This is the FFTW version of the fft module</p></li>
 <li><p><a class="reference internal" href="baseModules.html#f/constants" title="f/constants: module containing constants and parameters used in the code."><code class="xref f f-mod docutils literal notranslate"><span class="pre">constants</span></code></a> (<a class="reference internal" href="baseModules.html#f/constants/pi" title="f/constants/pi"><code class="xref f f-func docutils literal notranslate"><span class="pre">pi()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/zero" title="f/constants/zero"><code class="xref f f-func docutils literal notranslate"><span class="pre">zero()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/one" title="f/constants/one"><code class="xref f f-func docutils literal notranslate"><span class="pre">one()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/two" title="f/constants/two"><code class="xref f f-func docutils literal notranslate"><span class="pre">two()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/half" title="f/constants/half"><code class="xref f f-func docutils literal notranslate"><span class="pre">half()</span></code></a>): module containing constants and parameters used in the code.</p></li>
 <li><p><a class="reference internal" href="baseModules.html#f/precision_mod" title="f/precision_mod: This module controls the precision used in MagIC"><code class="xref f f-mod docutils literal notranslate"><span class="pre">precision_mod</span></code></a>: This module controls the precision used in MagIC</p></li>
 <li><p><a class="reference internal" href="misc.html#f/mem_alloc" title="f/mem_alloc: This little module is used to estimate the global memory allocation used in MagIC"><code class="xref f f-mod docutils literal notranslate"><span class="pre">mem_alloc</span></code></a> (<a class="reference internal" href="misc.html#f/mem_alloc/bytes_allocated" title="f/mem_alloc/bytes_allocated"><code class="xref f f-func docutils literal notranslate"><span class="pre">bytes_allocated()</span></code></a>): This little module is used to estimate the global memory allocation used in MagIC</p></li>
 </ul>
 <p class="rubric">Variables</p>
 <ul>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/cosn2">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">cosn2</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/cosn2" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
+<dt id="f/horizontal_data/cosn_theta_e2">
+<code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">cosn_theta_e2</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/cosn_theta_e2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
 <dt id="f/horizontal_data/costheta">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">costheta</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/costheta" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
-<dt id="f/horizontal_data/d_mc2m">
-<code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">d_mc2m</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/d_mc2m" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/dlh">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">dlh</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/dlh" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/dphi">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">dphi</code> (*)<em> [</em><em>complex</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/dphi" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/dpl0eq">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">dpl0eq</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/dpl0eq" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
-<dt id="f/horizontal_data/dplm">
-<code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">dplm</code> (*,*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/dplm" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/dtheta1a">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">dtheta1a</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/dtheta1a" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/dtheta1s">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">dtheta1s</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/dtheta1s" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/dtheta2a">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">dtheta2a</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/dtheta2a" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/dtheta2s">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">dtheta2s</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/dtheta2s" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/dtheta3a">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">dtheta3a</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/dtheta3a" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/dtheta3s">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">dtheta3s</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/dtheta3s" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/dtheta4a">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">dtheta4a</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/dtheta4a" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/dtheta4s">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">dtheta4s</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/dtheta4s" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/gauss">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">gauss</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/gauss" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/hdif_b">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">hdif_b</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/hdif_b" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/hdif_s">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">hdif_s</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/hdif_s" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/hdif_v">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">hdif_v</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/hdif_v" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/hdif_xi">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">hdif_xi</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/hdif_xi" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
-<dt id="f/horizontal_data/lmodd">
-<code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">lmodd</code> (*)<em> [</em><em>logical</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/lmodd" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</li>
-<li><dl class="variable">
-<dt id="f/horizontal_data/lmoddp">
-<code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">lmoddp</code> (*)<em> [</em><em>logical</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/lmoddp" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</li>
-<li><dl class="variable">
-<dt id="f/horizontal_data/lstart">
-<code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">lstart</code> (*)<em> [</em><em>integer</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/lstart" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</li>
-<li><dl class="variable">
-<dt id="f/horizontal_data/lstartp">
-<code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">lstartp</code> (*)<em> [</em><em>integer</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/lstartp" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</li>
-<li><dl class="variable">
-<dt id="f/horizontal_data/lstop">
-<code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">lstop</code> (*)<em> [</em><em>integer</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/lstop" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</li>
-<li><dl class="variable">
-<dt id="f/horizontal_data/lstopp">
-<code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">lstopp</code> (*)<em> [</em><em>integer</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/lstopp" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/n_theta_cal2ord">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">n_theta_cal2ord</code> (*)<em> [</em><em>integer</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/n_theta_cal2ord" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/o_sin_theta">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">o_sin_theta</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/o_sin_theta" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/o_sin_theta_e2">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">o_sin_theta_e2</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/o_sin_theta_e2" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/osn1">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">osn1</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/osn1" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/osn2">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">osn2</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/osn2" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/phi">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">phi</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/phi" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
-<dt id="f/horizontal_data/plm">
-<code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">plm</code> (*,*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/plm" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/sintheta">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">sintheta</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/sintheta" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/sn2">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">sn2</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/sn2" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/theta">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">theta</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/theta" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
-<li><dl class="variable">
+<li><dl class="f variable">
 <dt id="f/horizontal_data/theta_ord">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">theta_ord</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/theta_ord" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</li>
-<li><dl class="variable">
-<dt id="f/horizontal_data/wdplm">
-<code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">wdplm</code> (*,*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/wdplm" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</li>
-<li><dl class="variable">
-<dt id="f/horizontal_data/wplm">
-<code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">wplm</code> (*,*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/wplm" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
@@ -1104,7 +1059,7 @@ The respective weights for Gauss-integration are given in gauss(i).</p>
 </ul>
 </dd>
 <dt class="field-even">Called from</dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/horizontal_data/horizontal" title="f/horizontal_data/horizontal"><code class="xref f f-func docutils literal notranslate"><span class="pre">horizontal()</span></code></a></p>
+<dd class="field-even"><p><a class="reference internal" href="#f/horizontal_data/horizontal" title="f/horizontal_data/horizontal"><code class="xref f f-func docutils literal notranslate"><span class="pre">horizontal()</span></code></a>, <a class="reference internal" href="legFourierChebAlgebra.html#f/shtransforms/initialize_transforms" title="f/shtransforms/initialize_transforms"><code class="xref f f-func docutils literal notranslate"><span class="pre">initialize_transforms()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1113,6 +1068,7 @@ The respective weights for Gauss-integration are given in gauss(i).</p>
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -1150,7 +1106,7 @@ The respective weights for Gauss-integration are given in gauss(i).</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -1173,13 +1129,14 @@ The respective weights for Gauss-integration are given in gauss(i).</p>
         <li class="right" >
           <a href="initModules.html" title="Code initialization"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.9 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../api.html" >Description of the Fortran modules</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../api.html" >Description of the Fortran modules</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Pre-calculations</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
     </div>
   </body>
 </html>

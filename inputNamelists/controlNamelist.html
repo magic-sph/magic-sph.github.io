@@ -1,20 +1,25 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>Control namelist &#8212; Magic 5.9 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control namelist &#8212; Magic 5.10 documentation</title>
     <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Magic 5.10 documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Physical parameters namelist" href="physNamelist.html" />
@@ -92,8 +97,9 @@
         <li class="right" >
           <a href="gridNamelist.html" title="Grid namelist"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.9 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="namelists.html" accesskey="U">Input parameters</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="namelists.html" accesskey="U">Input parameters</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Control namelist</a></li> 
       </ul>
     </div>  
 
@@ -266,20 +272,35 @@ the timestep size is controlled as follows</p>
 <tr class="row-odd"><td><p>time_scheme=’ARS222’</p></td>
 <td><p>Semi-implicit S-DIRK of 2nd order</p></td>
 </tr>
-<tr class="row-even"><td><p>time_scheme=’CK232’</p></td>
+<tr class="row-even"><td><p>time_scheme=’ARS232’</p></td>
 <td><p>Semi-implicit S-DIRK of 2nd order</p></td>
 </tr>
-<tr class="row-odd"><td><p>time_scheme=’LZ232’</p></td>
+<tr class="row-odd"><td><p>time_scheme=’CK232’</p></td>
 <td><p>Semi-implicit S-DIRK of 2nd order</p></td>
 </tr>
-<tr class="row-even"><td><p>time_scheme=’ARS443’</p></td>
+<tr class="row-even"><td><p>time_scheme=’LZ232’</p></td>
+<td><p>Semi-implicit S-DIRK of 2nd order</p></td>
+</tr>
+<tr class="row-odd"><td><p>time_scheme=’CB3’</p></td>
 <td><p>Semi-implicit S-DIRK of 3rd order</p></td>
 </tr>
-<tr class="row-odd"><td><p>time_scheme=’BPR353’</p></td>
+<tr class="row-even"><td><p>time_scheme=’ARS343’</p></td>
 <td><p>Semi-implicit S-DIRK of 3rd order</p></td>
 </tr>
-<tr class="row-even"><td><p>time_scheme=’LZ453’</p></td>
+<tr class="row-odd"><td><p>time_scheme=’ARS443’</p></td>
 <td><p>Semi-implicit S-DIRK of 3rd order</p></td>
+</tr>
+<tr class="row-even"><td><p>time_scheme=’BPR353’</p></td>
+<td><p>Semi-implicit S-DIRK of 3rd order</p></td>
+</tr>
+<tr class="row-odd"><td><p>time_scheme=’LZ453’</p></td>
+<td><p>Semi-implicit S-DIRK of 3rd order</p></td>
+</tr>
+<tr class="row-even"><td><p>time_scheme=’KC343’</p></td>
+<td><p>Semi-implicit S-DIRK of 3rd order</p></td>
+</tr>
+<tr class="row-odd"><td><p>time_scheme=’KC564’</p></td>
+<td><p>Semi-implicit S-DIRK of 4th order</p></td>
 </tr>
 </tbody>
 </table>
@@ -449,7 +470,7 @@ as <span class="math notranslate nohighlight">\(\epsilon=\left(\frac{1-\sqrt{1-\
 </table>
 </div></blockquote>
 </li>
-<li><p><strong>mpi_transp</strong> (default <code class="xref f f-var docutils literal notranslate"><span class="pre">mpi_transp=&quot;auto&quot;</span></code>) is a character string. It allows to change the way the global MPI transposes are handled by the code. By default, the code tries to determine by itself the fastest method. One can nevertheless force the code to use local communicators (such as Isend/Irecv/waitall),make use of the native alltoallv MPI variant or choose the alltoallw variant instead.</p>
+<li><p><strong>mpi_transp</strong> (default <code class="xref f f-var docutils literal notranslate"><span class="pre">mpi_transp=&quot;auto&quot;</span></code>) is a character string. It allows to change the way the global MPI transposes are handled by the code. By default, the code tries to determine by itself the fastest method. One can nevertheless force the code to use local communicators (such as Isend/Irecv/waitall), make use of the native alltoallv MPI variant or choose the alltoallw variant instead.</p>
 <blockquote>
 <div><table class="docutils align-default">
 <colgroup>
@@ -473,12 +494,34 @@ as <span class="math notranslate nohighlight">\(\epsilon=\left(\frac{1-\sqrt{1-\
 </table>
 </div></blockquote>
 </li>
+<li><p><strong>mpi_packing</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/num_param/mpi_packing" title="f/num_param/mpi_packing"><code class="xref f f-var docutils literal notranslate"><span class="pre">mpi_packing=&quot;packed&quot;</span></code></a>) is a character string. It allows to change the size of the global MPI transposes. One can choose between some packing of the fields into buffers (default) or a sequence of single field transposes. There is a possible automatic detection but testing unfortunately reveals frequent false detection.</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>mpi_packing=’auto’</p></td>
+<td><p>Automatic determination of the fastest transpose</p></td>
+</tr>
+<tr class="row-even"><td><p>mpi_packing=’packed’</p></td>
+<td><p>Pack some fields into buffers</p></td>
+</tr>
+<tr class="row-odd"><td><p>mpi_packing=’single’</p></td>
+<td><p>Transpose each field individually</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</li>
 <li><p><strong>l_adv_curl</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/logic/l_adv_curl" title="f/logic/l_adv_curl"><code class="xref f f-var docutils literal notranslate"><span class="pre">l_adv_curl=.false.</span></code></a>) is a logical. When set to True, the advection term is treated as <span class="math notranslate nohighlight">\(\vec{u}\times\vec{\omega}\)</span> instead of <span class="math notranslate nohighlight">\(\vec{u}\vec{\nabla}\vec{u}\)</span>. The practical consequence of that is to reduce the number of spectral/spatial Spherical Harmonic Transforms and hence to speed-up the code. Because of the treatment of the viscous heating term in the anelastic approximation, this is only an option when considering Boussinesq models.</p></li>
 </ul>
 </div>
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -521,7 +564,7 @@ as <span class="math notranslate nohighlight">\(\epsilon=\left(\frac{1-\sqrt{1-\
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -544,13 +587,14 @@ as <span class="math notranslate nohighlight">\(\epsilon=\left(\frac{1-\sqrt{1-\
         <li class="right" >
           <a href="gridNamelist.html" title="Grid namelist"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.9 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="namelists.html" >Input parameters</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="namelists.html" >Input parameters</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Control namelist</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
     </div>
   </body>
 </html>

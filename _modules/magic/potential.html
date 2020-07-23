@@ -1,20 +1,25 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>magic.potential &#8212; Magic 5.9 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>magic.potential &#8212; Magic 5.10 documentation</title>
     <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Magic 5.10 documentation"
+          href="../../_static/opensearch.xml"/>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
@@ -84,8 +89,9 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.9 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">magic.potential</a></li> 
       </ul>
     </div>  
 
@@ -101,17 +107,13 @@
 <span class="kn">from</span> <span class="nn">.libmagic</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">.spectralTransforms</span> <span class="kn">import</span> <span class="n">SpectralTransforms</span>
 <span class="kn">from</span> <span class="nn">.plotlib</span> <span class="kn">import</span> <span class="n">radialContour</span><span class="p">,</span> <span class="n">merContour</span><span class="p">,</span> <span class="n">equatContour</span>
-<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">.npfile</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="k">if</span> <span class="n">buildSo</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="kn">import</span> <span class="nn">magic.lmrreader_single3</span> <span class="k">as</span> <span class="nn">Psngl</span>
-    <span class="k">elif</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="kn">import</span> <span class="nn">magic.lmrreader_single2</span> <span class="k">as</span> <span class="nn">Psngl</span>
-
+    <span class="kn">import</span> <span class="nn">magic.lmrreader_single</span> <span class="k">as</span> <span class="nn">Psngl</span>
     <span class="n">readingMode</span> <span class="o">=</span> <span class="s1">&#39;f2py&#39;</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="n">readingMode</span> <span class="o">=</span> <span class="s1">&#39;python&#39;</span>
@@ -178,7 +180,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="MagicPotential.__init__"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicPotential.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;V&#39;</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ave</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ipot</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">precision</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                 <span class="n">precision</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ic</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param field: &#39;B&#39;, &#39;V&#39;, &#39;T&#39; or &#39;Xi&#39; (magnetic field, velocity field,</span>
 <span class="sd">                      temperature or chemical composition)</span>
@@ -196,7 +198,12 @@
 <span class="sd">        :type precision: str</span>
 <span class="sd">        :param verbose: some info about the SHT layout</span>
 <span class="sd">        :type verbose: bool</span>
+<span class="sd">        :param ic: read or don&#39;t read the inner core</span>
+<span class="sd">        :type ic: bool</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">field</span> <span class="o">!=</span> <span class="s1">&#39;B&#39;</span><span class="p">:</span>
+            <span class="n">ic</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;radial_scheme&#39;</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">radial_scheme</span> <span class="o">==</span> <span class="s1">&#39;FD&#39;</span><span class="p">:</span>
@@ -251,7 +258,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># This will be over-written later</span>
 
         <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">endian</span><span class="p">,</span> <span class="n">record_marker</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="n">precision</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">endian</span><span class="p">,</span> <span class="n">record_marker</span><span class="p">,</span> <span class="n">ic</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="n">precision</span><span class="p">)</span>
         <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Time to read </span><span class="si">%s</span><span class="s1">: </span><span class="si">%.2e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">t2</span><span class="o">-</span><span class="n">t1</span><span class="p">))</span>
@@ -273,7 +280,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">idx</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">ell</span></div>
 
-<div class="viewcode-block" id="MagicPotential.read"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicPotential.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">endian</span><span class="p">,</span> <span class="n">record_marker</span><span class="p">,</span>
+<div class="viewcode-block" id="MagicPotential.read"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicPotential.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">endian</span><span class="p">,</span> <span class="n">record_marker</span><span class="p">,</span> <span class="n">ic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
              <span class="n">precision</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This routine defines a reader for the various versions of the lmr</span>
@@ -290,6 +297,8 @@
 <span class="sd">        :param record_marker: a boolean to specify whether the file contains</span>
 <span class="sd">                              record marker</span>
 <span class="sd">        :type record_marker: bool</span>
+<span class="sd">        :param ic: read or don&#39;t read the inner core</span>
+<span class="sd">        :type ic: bool</span>
 <span class="sd">        :param precision: single or double precision</span>
 <span class="sd">        :type precision: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -322,6 +331,15 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">tor</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">tor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tor</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lm_max</span><span class="p">))</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">tor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tor</span><span class="o">.</span><span class="n">T</span>
+
+                <span class="c1"># Read inner core</span>
+                <span class="k">if</span> <span class="n">ic</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">pol_ic</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">pol_ic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pol_ic</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lm_max</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">pol_ic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pol_ic</span><span class="o">.</span><span class="n">T</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">tor_ic</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">tor_ic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tor_ic</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lm_max</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">tor_ic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tor_ic</span><span class="o">.</span><span class="n">T</span>
 
                 <span class="n">infile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
@@ -357,17 +375,34 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">tor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">tor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tor</span><span class="o">.</span><span class="n">T</span>
 
+                <span class="n">dt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">(</span><span class="si">%i</span><span class="s2">,</span><span class="si">%i</span><span class="s2">)c8&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span>
+                                               <span class="bp">self</span><span class="o">.</span><span class="n">lm_max</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pol</span><span class="o">.</span><span class="n">T</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">field</span> <span class="o">!=</span> <span class="s1">&#39;T&#39;</span> <span class="ow">and</span> <span class="n">field</span> <span class="o">!=</span> <span class="s1">&#39;Xi&#39;</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">tor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">tor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tor</span><span class="o">.</span><span class="n">T</span>
+
+                <span class="k">if</span> <span class="n">ic</span><span class="p">:</span>
+                    <span class="n">dt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">(</span><span class="si">%i</span><span class="s2">,</span><span class="si">%i</span><span class="s2">)c8&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="p">,</span>
+                                                   <span class="bp">self</span><span class="o">.</span><span class="n">lm_max</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">pol_ic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">pol_ic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pol_ic</span><span class="o">.</span><span class="n">T</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">tor_ic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">tor_ic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tor_ic</span><span class="o">.</span><span class="n">T</span>
+
+
                 <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
         <span class="k">else</span><span class="p">:</span>  <span class="c1"># F2py reader</span>
 
-            <span class="k">if</span> <span class="p">(</span><span class="n">field</span> <span class="o">!=</span> <span class="s1">&#39;T&#39;</span> <span class="ow">and</span> <span class="n">field</span> <span class="o">!=</span> <span class="s1">&#39;Xi&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">field</span> <span class="o">!=</span> <span class="s1">&#39;T&#39;</span> <span class="ow">and</span> <span class="n">field</span> <span class="o">!=</span> <span class="s1">&#39;Xi&#39;</span><span class="p">:</span>
                 <span class="n">l_read_tor</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">l_read_tor</span> <span class="o">=</span> <span class="kc">False</span>
 
             <span class="n">Prd</span> <span class="o">=</span> <span class="n">Psngl</span><span class="o">.</span><span class="n">potreader_single</span>
-            <span class="n">Prd</span><span class="o">.</span><span class="n">readpot</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="p">,</span> <span class="n">l_read_tor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
+            <span class="n">Prd</span><span class="o">.</span><span class="n">readpot</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="p">,</span> <span class="n">l_read_tor</span><span class="p">,</span> <span class="n">ic</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">version</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">n_r_max</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">l_max</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">l_max</span>
@@ -391,8 +426,18 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">time</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">pol</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">pol</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">field</span> <span class="o">!=</span> <span class="s1">&#39;T&#39;</span> <span class="ow">and</span> <span class="n">field</span> <span class="o">!=</span> <span class="s1">&#39;Xi&#39;</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">tor</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">tor</span></div>
+            <span class="k">if</span> <span class="n">field</span> <span class="o">!=</span> <span class="s1">&#39;T&#39;</span> <span class="ow">and</span> <span class="n">field</span> <span class="o">!=</span> <span class="s1">&#39;Xi&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tor</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">tor</span>
+
+            <span class="k">if</span> <span class="n">ic</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pol_ic</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">pol_ic</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tor_ic</span> <span class="o">=</span> <span class="n">Prd</span><span class="o">.</span><span class="n">tor_ic</span>
+
+        <span class="k">if</span> <span class="n">ic</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">radius_ic</span> <span class="o">=</span> <span class="n">chebgrid</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                      <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">radius_ic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius_ic</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">radius_ic</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.</span></div>
 
 <div class="viewcode-block" id="MagicPotential.avg"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicPotential.avg">[docs]</a>    <span class="k">def</span> <span class="nf">avg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;vphi&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">defaultLevels</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="n">defaultCm</span><span class="p">,</span>
             <span class="n">normed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tit</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
@@ -746,6 +791,7 @@
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -760,7 +806,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -777,13 +823,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.9 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">magic.potential</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
     </div>
   </body>
 </html>

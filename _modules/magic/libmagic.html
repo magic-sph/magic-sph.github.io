@@ -1,20 +1,25 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>magic.libmagic &#8212; Magic 5.9 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>magic.libmagic &#8212; Magic 5.10 documentation</title>
     <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Magic 5.10 documentation"
+          href="../../_static/opensearch.xml"/>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
@@ -84,8 +89,9 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.9 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">magic.libmagic</a></li> 
       </ul>
     </div>  
 
@@ -557,6 +563,73 @@
     <span class="n">beta</span> <span class="o">=</span> <span class="o">-</span><span class="n">ofr</span><span class="o">*</span><span class="n">grav</span><span class="o">*</span><span class="n">polind</span><span class="o">/</span><span class="n">temp0</span>
     <span class="k">return</span> <span class="n">temp0</span><span class="p">,</span> <span class="n">rho0</span><span class="p">,</span> <span class="n">beta</span></div>
 
+<div class="viewcode-block" id="fd_grid"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.fd_grid">[docs]</a><span class="k">def</span> <span class="nf">fd_grid</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">fd_stretching</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">fd_ratio</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function defines a stretched grid between a and b</span>
+
+<span class="sd">    &gt;&gt;&gt; r_icb = 0.5 ; r_cmb = 1.5; n_r_max=64</span>
+<span class="sd">    &gt;&gt;&gt; rr = fd_grid(n_r_max, r_cmb, r_icb)</span>
+
+<span class="sd">    :param nr: number of radial grid points</span>
+<span class="sd">    :type nr: int</span>
+<span class="sd">    :param a: upper boundary of the grid</span>
+<span class="sd">    :type a: float</span>
+<span class="sd">    :param b: lower boundary of the grid</span>
+<span class="sd">    :type b: float</span>
+<span class="sd">    :param fd_stretching: fraction of points in the bulk</span>
+<span class="sd">    :type fd_stretching: float</span>
+<span class="sd">    :param fd_ratio: ratio of minimum to maximum spacing</span>
+<span class="sd">    :type fd_ratio: float</span>
+<span class="sd">    :returns: the radial grid</span>
+<span class="sd">    :returns: the radial grid</span>
+<span class="sd">    :rtype: numpy.ndarray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">ratio1</span> <span class="o">=</span> <span class="n">fd_stretching</span>
+    <span class="n">ratio2</span> <span class="o">=</span> <span class="n">fd_ratio</span>
+
+    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="o">-</span><span class="mf">1.0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1.0e-12</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s1">&#39;Not implemented yet&#39;</span><span class="p">)</span>
+
+    <span class="n">rr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">rr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span>
+
+    <span class="k">if</span> <span class="n">ratio2</span> <span class="o">==</span> <span class="mf">1.0</span><span class="p">:</span> <span class="c1"># Regular grid</span>
+        <span class="n">dr_before</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">nr</span><span class="p">)</span><span class="o">-</span><span class="mf">1.</span><span class="p">)</span>
+        <span class="n">dr_after</span> <span class="o">=</span> <span class="n">dr_before</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nr</span><span class="p">):</span>
+            <span class="n">rr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">rr</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">dr_before</span>
+    
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">n_boundary_points</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span> <span class="nb">float</span><span class="p">(</span><span class="n">nr</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">ratio1</span><span class="p">))</span> <span class="p">)</span>
+        <span class="n">ratio1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">nr</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">n_boundary_points</span><span class="p">)</span> <span class="o">-</span><span class="mf">1.</span>
+
+        <span class="n">n_bulk_points</span> <span class="o">=</span> <span class="n">nr</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">n_boundary_points</span>
+
+        <span class="n">dr_after</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">ratio2</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">n_boundary_points</span><span class="p">))</span>
+        <span class="n">dr_before</span> <span class="o">=</span> <span class="mf">1.</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_boundary_points</span><span class="p">):</span>
+            <span class="n">dr_before</span> <span class="o">=</span> <span class="n">dr_before</span><span class="o">*</span><span class="n">dr_after</span>
+        <span class="n">dr_before</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">n_bulk_points</span><span class="p">)</span><span class="o">+</span> \
+                    <span class="mf">2.</span><span class="o">*</span><span class="n">dr_after</span><span class="o">*</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">dr_before</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="n">dr_after</span><span class="p">)))</span>
+    
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_boundary_points</span><span class="p">):</span>
+            <span class="n">dr_before</span> <span class="o">=</span> <span class="n">dr_before</span><span class="o">*</span><span class="n">dr_after</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_boundary_points</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">rr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rr</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">dr_before</span>
+            <span class="n">dr_before</span> <span class="o">=</span> <span class="n">dr_before</span><span class="o">/</span><span class="n">dr_after</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_bulk_points</span><span class="p">):</span>
+            <span class="n">rr</span><span class="p">[</span><span class="n">n_boundary_points</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rr</span><span class="p">[</span><span class="n">n_boundary_points</span><span class="o">+</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">dr_before</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_boundary_points</span><span class="p">):</span>
+            <span class="n">dr_before</span> <span class="o">=</span> <span class="n">dr_before</span><span class="o">*</span><span class="n">dr_after</span>
+            <span class="n">rr</span><span class="p">[</span><span class="n">n_boundary_points</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="n">n_bulk_points</span><span class="o">+</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> \
+                <span class="n">rr</span><span class="p">[</span><span class="n">n_boundary_points</span><span class="o">+</span><span class="n">n_bulk_points</span><span class="o">+</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">dr_before</span>
+
+    <span class="k">return</span> <span class="n">rr</span></div>
+
 <div class="viewcode-block" id="chebgrid"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.chebgrid">[docs]</a><span class="k">def</span> <span class="nf">chebgrid</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function defines a Gauss-Lobatto grid from a to b.</span>
@@ -564,7 +637,7 @@
 <span class="sd">    &gt;&gt;&gt; r_icb = 0.5 ; r_cmb = 1.5; n_r_max=65</span>
 <span class="sd">    &gt;&gt;&gt; rr = chebgrid(n_r_max, r_icb, r_cmb)</span>
 
-<span class="sd">    :param nr: number of radial grid points</span>
+<span class="sd">    :param nr: number of radial grid points plus one (Nr+1)</span>
 <span class="sd">    :type nr: int</span>
 <span class="sd">    :param a: lower limit of the Gauss-Lobatto grid</span>
 <span class="sd">    :type a: float</span>
@@ -1128,6 +1201,7 @@
     <span class="k">return</span> <span class="n">factors</span></div>
 </pre></div>
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -1142,7 +1216,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -1159,13 +1233,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.9 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">magic.libmagic</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
     </div>
   </body>
 </html>

@@ -1,20 +1,25 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>Log file: log.TAG &#8212; Magic 5.9 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log file: log.TAG &#8212; Magic 5.10 documentation</title>
     <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Magic 5.10 documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Default time-series outputs" href="outTimeSeriesStd.html" />
@@ -92,8 +97,9 @@
         <li class="right" >
           <a href="outFiles.html" title="Output files"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.9 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="outFiles.html" accesskey="U">Output files</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="outFiles.html" accesskey="U">Output files</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Log file: <code class="docutils literal notranslate"><span class="pre">log.TAG</span></code></a></li> 
       </ul>
     </div>  
 
@@ -133,9 +139,10 @@ step and tells the user whenever a <a class="reference internal" href="outGraph.
 total density) at the end of the run.</p></li>
 <li><p><strong>Time averages</strong>:  this part gives time averaged kinetic and magnetic
 energies (total, poloidal, toroidal, total density) and time averaged
-parameters (Rm, Elsass, Rol etc.). If <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlStd.html#varl-average"><span class="std std-ref">l_average=.true.</span></a>,
-this section also provides information about average spectra and graphic
-files being written.</p></li>
+parameters (Rm, Elsass, Rol etc.). If <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlStd.html#varl-spec-avg"><span class="std std-ref">l_spec_avg=.true.</span></a>,
+this section also provides information about average spectra being written.
+If <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlStd.html#varl-average"><span class="std std-ref">l_average=.true.</span></a>, it is additionally mentioned that
+time averaged graphic files are written.</p></li>
 <li><p><strong>Wall times</strong>: this is the last part of the log file and it provides
 information about the mean wall time for running different parts of the code.
 These values can be used to judge the speed and scaling capabilities of
@@ -144,7 +151,7 @@ your computer.</p></li>
 </div></blockquote>
 <p>Most of these informations can be parsed and stored into a python class using
 <a class="reference internal" href="../apiPython/timeSeries.html#magic.MagicSetup" title="magic.MagicSetup"><code class="xref py py-class docutils literal notranslate"><span class="pre">MagicSetup</span></code></a>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># read log.N0m2</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># read log.N0m2</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stp</span> <span class="o">=</span> <span class="n">MagicSetup</span><span class="p">(</span><span class="n">nml</span><span class="o">=</span><span class="s1">&#39;log.N0m2&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">stp</span><span class="o">.</span><span class="n">ek</span><span class="p">,</span> <span class="n">stp</span><span class="o">.</span><span class="n">prmag</span><span class="p">)</span> <span class="c1"># print Ekman and magnetic Prandtl numbers</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">stp</span><span class="o">.</span><span class="n">l_max</span><span class="p">)</span> <span class="c1"># print l_max</span>
@@ -153,6 +160,7 @@ your computer.</p></li>
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -180,7 +188,7 @@ your computer.</p></li>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -203,13 +211,14 @@ your computer.</p></li>
         <li class="right" >
           <a href="outFiles.html" title="Output files"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.9 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="outFiles.html" >Output files</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="outFiles.html" >Output files</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Log file: <code class="docutils literal notranslate"><span class="pre">log.TAG</span></code></a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
     </div>
   </body>
 </html>
