@@ -1489,9 +1489,6 @@ helicity</p>
 <dd><blockquote>
 <div><p>Purpose of this subroutine is to calculate the viscous torque
 on mantle or inner core respectively.</p>
-<div class="math notranslate nohighlight">
-\[\Gamma_\nu=4\sqrt{\pi/3}\nu r\left[ \frac{\partial z_{10}}{\partial r}
--(\frac{2}{r}+\beta)z_{10} \right]\]</div>
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1514,32 +1511,34 @@ on mantle or inner core respectively.</p>
 <dt id="f/outrot/get_lorentz_torque">
 <em class="property">subroutine  </em><code class="sig-prename descclassname">outrot/</code><code class="sig-name descname">get_lorentz_torque</code><span class="sig-paren">(</span><em class="sig-param">lorentz_torque</em>, <em class="sig-param">br</em>, <em class="sig-param">bp</em>, <em class="sig-param">nr</em><span class="sig-paren">)</span><a class="headerlink" href="#f/outrot/get_lorentz_torque" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
-<div><p>Purpose of this subroutine is to calculate the Lorentz torque
-on mantle or inner core respectively.</p>
+<div><p>Purpose of this subroutine is to calculate the lorentz torque
+on mantle or inner core respectively.
+Blocking in theta can be used to increased performance.
+If no blocking required set n_theta_block=n_theta_max,
+where n_theta_max is the absolut number of thetas used.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">lorentz_torque</span></code> must be set to zero before loop over
+<p>Lorentz_torque must be set to zero before loop over
 theta blocks is started.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>subroutine returns <code class="docutils literal notranslate"><span class="pre">-lorentz_torque</span></code> if used at CMB
+<p>subroutine returns -lorentz_torque if used at CMB
 to calculate torque on mantle because if the inward
 surface normal vector.</p>
 </div>
 <p>The Prandtl number is always the Prandtl number of the outer
 core. This comes in via scaling of the magnetic field.
-Theta alternates between northern and southern hemisphere in
-<code class="docutils literal notranslate"><span class="pre">br</span></code> and <code class="docutils literal notranslate"><span class="pre">bp</span></code> but not in gauss. This has to be cared for, and we
-use: <code class="docutils literal notranslate"><span class="pre">gauss(latitude)=gauss(-latitude)</span></code> here.</p>
+Theta alternates between northern and southern hemisphere in</p>
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>lorentz_torque</strong><em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em> :: Lorentz torque</p></li>
-<li><p><strong>br</strong> (,)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: array containing <span class="math notranslate nohighlight">\(r^2 B_r\)</span></p></li>
-<li><p><strong>bp</strong> (,)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: array containing <span class="math notranslate nohighlight">\(r\sin\theta B_\phi\)</span></p></li>
-<li><p><strong>nr</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: radial level</p></li>
+<li><p><strong>br</strong> (,)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: array containing
+use: gauss(latitude)=gauss(-latitude) here.</p></li>
+<li><p><strong>lorentz_torque</strong><em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em> :: lorentz_torque for theta(1:n_theta)</p></li>
+<li><p><strong>bp</strong> (,)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: array containing</p></li>
+<li><p><strong>nr</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
 </ul>
 </dd>
 <dt class="field-even">Called from</dt>
@@ -1553,7 +1552,7 @@ use: <code class="docutils literal notranslate"><span class="pre">gauss(latitude
 <em class="property">subroutine  </em><code class="sig-prename descclassname">outrot/</code><code class="sig-name descname">get_angular_moment</code><span class="sig-paren">(</span><em class="sig-param">z10</em>, <em class="sig-param">z11</em>, <em class="sig-param">omega_ic</em>, <em class="sig-param">omega_ma</em>, <em class="sig-param">angular_moment_oc</em>, <em class="sig-param">angular_moment_ic</em>, <em class="sig-param">angular_moment_ma</em><span class="sig-paren">)</span><a class="headerlink" href="#f/outrot/get_angular_moment" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Calculates angular momentum of outer core, inner core and
-mantle. For outer core we need <code class="docutils literal notranslate"><span class="pre">z(l=1|m=0,1|r)</span></code>, for
+mantle. For outer core we need z(l=1|m=0,1|r), for
 inner core and mantle the respective rotation rates are needed.</p>
 </div></blockquote>
 <dl class="field-list simple">

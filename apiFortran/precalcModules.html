@@ -144,7 +144,9 @@
 <em class="property">subroutine  </em><code class="sig-prename descclassname">precalculations/</code><code class="sig-name descname">precalc</code><span class="sig-paren">(</span><em class="sig-param">tscheme</em><span class="sig-paren">)</span><a class="headerlink" href="#f/precalculations/precalc" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Purpose of this subroutine is to initialize the calc values,
-arrays, constants that are used all over the code.</p>
+arrays, constants that are used all over the code.
+The stuff is stored in the common blocks.
+MPI: This is called by every processors.</p>
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -163,7 +165,7 @@ arrays, constants that are used all over the code.</p>
 <dt id="f/precalculations/precalctimes">
 <em class="property">subroutine  </em><code class="sig-prename descclassname">precalculations/</code><code class="sig-name descname">precalctimes</code><span class="sig-paren">(</span><em class="sig-param">time</em>, <em class="sig-param">n_time_step</em><span class="sig-paren">)</span><a class="headerlink" href="#f/precalculations/precalctimes" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
-<div><p>Precalc. after time, time and dt has been read from startfile.</p>
+<div><p>Precalc. after time, time and dthas been read from startfile.</p>
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -186,24 +188,23 @@ arrays, constants that are used all over the code.</p>
 <em class="property">subroutine  </em><code class="sig-prename descclassname">precalculations/</code><code class="sig-name descname">get_hit_times</code><span class="sig-paren">(</span><em class="sig-param">t</em>, <em class="sig-param">n_t_max</em>, <em class="sig-param">n_t</em>, <em class="sig-param">l_t</em>, <em class="sig-param">t_start</em>, <em class="sig-param">t_stop</em>, <em class="sig-param">dt</em>, <em class="sig-param">n_tot</em>, <em class="sig-param">n_step</em>, <em class="sig-param">string_bn</em>, <em class="sig-param">time</em>, <em class="sig-param">tscale</em><span class="sig-paren">)</span><a class="headerlink" href="#f/precalculations/get_hit_times" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>This subroutine checks whether any specific times t(*) are given
-on input. If so, it returns their number n_r and sets l_t to true.
-If not, t(*) may also be defined by giving a time step dt or a
-number n_tot of desired output times and <code class="docutils literal notranslate"><span class="pre">t_stop&gt;t_start</span></code>.</p>
+on input. If so, it returns their number n_r and sets l_t
+to true. If not, t(*) may also be defined by giving a time step</p>
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
+<li><p><strong>dt</strong><em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em> :: Time step for output</p></li>
 <li><p><strong>t</strong> (n_t_max)<em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em> :: Times for output</p></li>
 <li><p><strong>n_t</strong><em> [</em><em>integer</em><em>,</em><em>out</em><em>]</em> :: No. of output times</p></li>
 <li><p><strong>l_t</strong><em> [</em><em>logical</em><em>,</em><em>out</em><em>]</em> :: =.true. if output times are defined</p></li>
 <li><p><strong>t_start</strong><em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em> :: Starting time for output</p></li>
 <li><p><strong>t_stop</strong><em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em> :: Stop time for output</p></li>
-<li><p><strong>dt</strong><em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em> :: Time step for output</p></li>
 <li><p><strong>n_tot</strong><em> [</em><em>integer</em><em>,</em><em>inout</em><em>]</em> :: No. of output (times) if no times defined</p></li>
 <li><p><strong>n_step</strong><em> [</em><em>integer</em><em>,</em><em>inout</em><em>]</em> :: Ouput step in no. of time steps</p></li>
 <li><p><strong>string_bn</strong><em> [</em><em>character</em><em>,</em><em>in</em><em>]</em></p></li>
 <li><p><strong>time</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: Time of start file</p></li>
-<li><p><strong>tscale</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: Scale unit for time</p></li>
+<li><p><strong>tscale</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></p></li>
 </ul>
 </dd>
 <dt class="field-even">Options</dt>
@@ -228,7 +229,7 @@ routine.</p>
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>n_out</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Normalized OC surface          :’’,ES14.6)’) surf_cmb</p>
+<dd class="field-odd"><p><strong>n_out</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Normalized OC surface          :’‘,ES14.6)’) surf_cmb</p>
 </dd>
 <dt class="field-even">Called from</dt>
 <dd class="field-even"><p><a class="reference internal" href="magic.html#f/magic" title="f/magic"><code class="xref f f-prog docutils literal notranslate"><span class="pre">magic</span></code></a></p>
@@ -698,8 +699,7 @@ temperature, cheb transforms, etc.)</p>
 <dl class="subroutine">
 <dt id="f/radial_functions/finalize_radial_functions">
 <em class="property">subroutine  </em><code class="sig-prename descclassname">radial_functions/</code><code class="sig-name descname">finalize_radial_functions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#f/radial_functions/finalize_radial_functions" title="Permalink to this definition">¶</a></dt>
-<dd><p>Memory deallocation of radial functions</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">Called from</dt>
 <dd class="field-odd"><p><a class="reference internal" href="magic.html#f/magic" title="f/magic"><code class="xref f f-prog docutils literal notranslate"><span class="pre">magic</span></code></a></p>
 </dd>
@@ -816,7 +816,7 @@ and latitude plus help arrays depending on degree and order</p>
 <li><p><a class="reference internal" href="blocking.html#f/blocking" title="f/blocking: Module containing blocking information"><code class="xref f f-mod docutils literal notranslate"><span class="pre">blocking</span></code></a> (<a class="reference internal" href="blocking.html#f/blocking/lmp2l" title="f/blocking/lmp2l"><code class="xref f f-func docutils literal notranslate"><span class="pre">lmp2l()</span></code></a>, <a class="reference internal" href="blocking.html#f/blocking/lmp2lm" title="f/blocking/lmp2lm"><code class="xref f f-func docutils literal notranslate"><span class="pre">lmp2lm()</span></code></a>, <a class="reference internal" href="blocking.html#f/blocking/lm2l" title="f/blocking/lm2l"><code class="xref f f-func docutils literal notranslate"><span class="pre">lm2l()</span></code></a>, <a class="reference internal" href="blocking.html#f/blocking/lm2m" title="f/blocking/lm2m"><code class="xref f f-func docutils literal notranslate"><span class="pre">lm2m()</span></code></a>, <a class="reference internal" href="blocking.html#f/blocking/lo_map" title="f/blocking/lo_map"><code class="xref f f-func docutils literal notranslate"><span class="pre">lo_map()</span></code></a>): Module containing blocking information</p></li>
 <li><p><a class="reference internal" href="baseModules.html#f/logic" title="f/logic: Module containing the logicals that control the run"><code class="xref f f-mod docutils literal notranslate"><span class="pre">logic</span></code></a> (<a class="reference internal" href="baseModules.html#f/logic/l_non_rot" title="f/logic/l_non_rot"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_non_rot()</span></code></a>): Module containing the logicals that control the run</p></li>
 <li><p><a class="reference internal" href="legFourierChebAlgebra.html#f/plms_theta" title="f/plms_theta"><code class="xref f f-mod docutils literal notranslate"><span class="pre">plms_theta</span></code></a> (<a class="reference internal" href="legFourierChebAlgebra.html#f/plms_theta/plm_theta" title="f/plms_theta/plm_theta"><code class="xref f f-func docutils literal notranslate"><span class="pre">plm_theta()</span></code></a>)</p></li>
-<li><p><a class="reference internal" href="legFourierChebAlgebra.html#f/fft" title="f/fft: This module contains the native subroutines used to compute FFT's. They are based on the FFT99 package from Temperton: http://www.cesm.ucar.edu/models/cesm1.2/cesm/cesmBbrowser/html_code/cam/fft99.F90.html"><code class="xref f f-mod docutils literal notranslate"><span class="pre">fft</span></code></a>: This module contains the native subroutines used to compute FFT’s. They are based on the FFT99 package from Temperton: <a class="reference external" href="http://www.cesm.ucar.edu/models/cesm1.2/cesm/cesmBbrowser/html_code/cam/fft99.F90.html">http://www.cesm.ucar.edu/models/cesm1.2/cesm/cesmBbrowser/html_code/cam/fft99.F90.html</a></p></li>
+<li><p><a class="reference internal" href="legFourierChebAlgebra.html#f/fft" title="f/fft: This is the FFTW version of the fft module"><code class="xref f f-mod docutils literal notranslate"><span class="pre">fft</span></code></a>: This is the FFTW version of the fft module</p></li>
 <li><p><a class="reference internal" href="baseModules.html#f/constants" title="f/constants: module containing constants and parameters used in the code."><code class="xref f f-mod docutils literal notranslate"><span class="pre">constants</span></code></a> (<a class="reference internal" href="baseModules.html#f/constants/pi" title="f/constants/pi"><code class="xref f f-func docutils literal notranslate"><span class="pre">pi()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/zero" title="f/constants/zero"><code class="xref f f-func docutils literal notranslate"><span class="pre">zero()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/one" title="f/constants/one"><code class="xref f f-func docutils literal notranslate"><span class="pre">one()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/two" title="f/constants/two"><code class="xref f f-func docutils literal notranslate"><span class="pre">two()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/half" title="f/constants/half"><code class="xref f f-func docutils literal notranslate"><span class="pre">half()</span></code></a>): module containing constants and parameters used in the code.</p></li>
 <li><p><a class="reference internal" href="baseModules.html#f/precision_mod" title="f/precision_mod: This module controls the precision used in MagIC"><code class="xref f f-mod docutils literal notranslate"><span class="pre">precision_mod</span></code></a>: This module controls the precision used in MagIC</p></li>
 <li><p><a class="reference internal" href="misc.html#f/mem_alloc" title="f/mem_alloc: This little module is used to estimate the global memory allocation used in MagIC"><code class="xref f f-mod docutils literal notranslate"><span class="pre">mem_alloc</span></code></a> (<a class="reference internal" href="misc.html#f/mem_alloc/bytes_allocated" title="f/mem_alloc/bytes_allocated"><code class="xref f f-func docutils literal notranslate"><span class="pre">bytes_allocated()</span></code></a>): This little module is used to estimate the global memory allocation used in MagIC</p></li>
@@ -832,29 +832,25 @@ and latitude plus help arrays depending on degree and order</p>
 <li><dl class="f variable">
 <dt id="f/horizontal_data/cosn_theta_e2">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">cosn_theta_e2</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/cosn_theta_e2" title="Permalink to this definition">¶</a></dt>
-<dd><p><span class="math notranslate nohighlight">\(\cos\theta/\sin^2\theta\)</span></p>
-</dd></dl>
+<dd></dd></dl>
 
 </li>
 <li><dl class="f variable">
 <dt id="f/horizontal_data/costheta">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">costheta</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/costheta" title="Permalink to this definition">¶</a></dt>
-<dd><p><span class="math notranslate nohighlight">\(\cos\theta\)</span></p>
-</dd></dl>
+<dd></dd></dl>
 
 </li>
 <li><dl class="f variable">
 <dt id="f/horizontal_data/dlh">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">dlh</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/dlh" title="Permalink to this definition">¶</a></dt>
-<dd><p><span class="math notranslate nohighlight">\(\ell(\ell+1)\)</span></p>
-</dd></dl>
+<dd></dd></dl>
 
 </li>
 <li><dl class="f variable">
 <dt id="f/horizontal_data/dphi">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">dphi</code> (*)<em> [</em><em>complex</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/dphi" title="Permalink to this definition">¶</a></dt>
-<dd><p><span class="math notranslate nohighlight">\(\mathrm{i} m\)</span></p>
-</dd></dl>
+<dd></dd></dl>
 
 </li>
 <li><dl class="f variable">
@@ -950,15 +946,13 @@ and latitude plus help arrays depending on degree and order</p>
 <li><dl class="f variable">
 <dt id="f/horizontal_data/o_sin_theta">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">o_sin_theta</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/o_sin_theta" title="Permalink to this definition">¶</a></dt>
-<dd><p><span class="math notranslate nohighlight">\(1/\sin\theta\)</span></p>
-</dd></dl>
+<dd></dd></dl>
 
 </li>
 <li><dl class="f variable">
 <dt id="f/horizontal_data/o_sin_theta_e2">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">o_sin_theta_e2</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/o_sin_theta_e2" title="Permalink to this definition">¶</a></dt>
-<dd><p><span class="math notranslate nohighlight">\(1/\sin^2\theta\)</span></p>
-</dd></dl>
+<dd></dd></dl>
 
 </li>
 <li><dl class="f variable">
@@ -982,8 +976,7 @@ and latitude plus help arrays depending on degree and order</p>
 <li><dl class="f variable">
 <dt id="f/horizontal_data/sintheta">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">sintheta</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/sintheta" title="Permalink to this definition">¶</a></dt>
-<dd><p><span class="math notranslate nohighlight">\(\sin\theta\)</span></p>
-</dd></dl>
+<dd></dd></dl>
 
 </li>
 <li><dl class="f variable">
@@ -995,15 +988,13 @@ and latitude plus help arrays depending on degree and order</p>
 <li><dl class="f variable">
 <dt id="f/horizontal_data/theta">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">theta</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/theta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gauss points (scrambled)</p>
-</dd></dl>
+<dd></dd></dl>
 
 </li>
 <li><dl class="f variable">
 <dt id="f/horizontal_data/theta_ord">
 <code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">theta_ord</code> (*)<em> [</em><em>real</em><em>,</em><em>allocatable/public</em><em>]</em><a class="headerlink" href="#f/horizontal_data/theta_ord" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gauss points (unscrambled)</p>
-</dd></dl>
+<dd></dd></dl>
 
 </li>
 </ul>
@@ -1011,8 +1002,7 @@ and latitude plus help arrays depending on degree and order</p>
 <dl class="subroutine">
 <dt id="f/horizontal_data/initialize_horizontal_data">
 <em class="property">subroutine  </em><code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">initialize_horizontal_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#f/horizontal_data/initialize_horizontal_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Memory allocation of horizontal functions</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">Called from</dt>
 <dd class="field-odd"><p><a class="reference internal" href="magic.html#f/magic" title="f/magic"><code class="xref f f-prog docutils literal notranslate"><span class="pre">magic</span></code></a></p>
 </dd>
@@ -1022,8 +1012,7 @@ and latitude plus help arrays depending on degree and order</p>
 <dl class="subroutine">
 <dt id="f/horizontal_data/finalize_horizontal_data">
 <em class="property">subroutine  </em><code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">finalize_horizontal_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#f/horizontal_data/finalize_horizontal_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Memory deallocation of horizontal functions</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">Called from</dt>
 <dd class="field-odd"><p><a class="reference internal" href="magic.html#f/magic" title="f/magic"><code class="xref f f-prog docutils literal notranslate"><span class="pre">magic</span></code></a></p>
 </dd>
@@ -1036,9 +1025,9 @@ and latitude plus help arrays depending on degree and order</p>
 <dl class="subroutine">
 <dt id="f/horizontal_data/horizontal">
 <em class="property">subroutine  </em><code class="sig-prename descclassname">horizontal_data/</code><code class="sig-name descname">horizontal</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#f/horizontal_data/horizontal" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates functions of <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span>, for example
-the Legendre functions,  and functions of degree <span class="math notranslate nohighlight">\(\ell\)</span> and
-order <span class="math notranslate nohighlight">\(m\)</span> of the legendres.</p>
+<dd><p>Calculates functions of theta and phi, for exmample the
+Legendre functions, and functions of degree l and order m
+of the legendres.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Called from</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#f/precalculations/precalc" title="f/precalculations/precalc"><code class="xref f f-func docutils literal notranslate"><span class="pre">precalc()</span></code></a></p>
