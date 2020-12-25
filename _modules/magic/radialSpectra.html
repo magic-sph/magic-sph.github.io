@@ -4,16 +4,15 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>magic.radialSpectra &#8212; Magic 5.10 documentation</title>
-    <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
     
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
@@ -102,7 +101,7 @@
             
   <h1>Source code for magic.radialSpectra</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="kn">from</span> <span class="nn">magic</span> <span class="k">import</span> <span class="n">npfile</span><span class="p">,</span> <span class="n">MagicSetup</span><span class="p">,</span> <span class="n">scanDir</span><span class="p">,</span> <span class="n">chebgrid</span>
+<span class="kn">from</span> <span class="nn">magic</span> <span class="kn">import</span> <span class="n">npfile</span><span class="p">,</span> <span class="n">MagicSetup</span><span class="p">,</span> <span class="n">scanDir</span><span class="p">,</span> <span class="n">chebgrid</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
@@ -119,7 +118,7 @@
 <span class="sd">    &gt;&gt;&gt; rsp = MagicRSpec(tag=&#39;test*&#39;, field=&#39;Br&#39;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MagicRSpec.__init__"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicRSpec.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;Br&#39;</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">avg</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="MagicRSpec.__init__"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicRSpec.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;Br&#39;</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">avg</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param tag: if you specify a pattern, it tries to read the corresponding</span>
 <span class="sd">                    files and stack them.</span>
@@ -160,13 +159,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">]</span> <span class="o">=</span> <span class="n">outerCoreGrid</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">innerCoreGrid</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="p">]</span>
 
-        <span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;r</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">field</span> <span class="o">+</span><span class="s1">&#39;Spec&#39;</span>
-        <span class="n">files</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">tag</span><span class="p">))</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;r</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">field</span><span class="p">)</span> <span class="o">+</span><span class="s1">&#39;Spec&#39;</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">tag</span><span class="p">))</span>
 
         <span class="c1"># Read the rB[rp]Spec.TAG files (stack them)</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">file</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Reading </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">file</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Reading </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">file</span><span class="p">))</span>
             <span class="n">f</span> <span class="o">=</span> <span class="n">npfile</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
 
             <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
@@ -273,8 +272,8 @@
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+        &#169; Copyright 2020, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.1.
     </div>
   </body>
 </html>

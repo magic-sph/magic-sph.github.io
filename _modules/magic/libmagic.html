@@ -4,16 +4,15 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>magic.libmagic &#8212; Magic 5.10 documentation</title>
-    <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
     
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
@@ -105,7 +104,7 @@
 <span class="kn">import</span> <span class="nn">scipy.interpolate</span> <span class="k">as</span> <span class="nn">S</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">glob</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">.npfile</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.npfile</span> <span class="kn">import</span> <span class="o">*</span>
 
 
 <div class="viewcode-block" id="selectField"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.selectField">[docs]</a><span class="k">def</span> <span class="nf">selectField</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">labTex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ic</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -384,8 +383,9 @@
     <span class="n">avgReEq</span> <span class="o">=</span> <span class="n">fac</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">reEquat</span><span class="p">[</span><span class="n">ind</span><span class="p">:],</span> <span class="n">par</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">ind</span><span class="p">:])</span>
     <span class="n">roEq</span> <span class="o">=</span> <span class="n">avgReEq</span><span class="o">*</span><span class="n">par</span><span class="o">.</span><span class="n">ek</span><span class="o">*</span><span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="n">par</span><span class="o">.</span><span class="n">radratio</span><span class="p">)</span>
     <span class="n">avgRolC</span> <span class="o">=</span> <span class="n">fac</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">rolc</span><span class="p">[</span><span class="n">ind</span><span class="p">:],</span> <span class="n">par</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">ind</span><span class="p">:])</span>
-    <span class="n">st</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%10.3e%5.2f%6.2f%11.3e%11.3e%11.3e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">ek</span><span class="p">,</span> <span class="n">par</span><span class="o">.</span><span class="n">strat</span><span class="p">,</span> <span class="n">par</span><span class="o">.</span><span class="n">pr</span><span class="p">,</span>
-                                                 <span class="n">par</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span> <span class="n">roEq</span><span class="p">,</span> <span class="n">avgRolC</span><span class="p">)</span>
+    <span class="n">st</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:10.3e}{:5.2f}{:6.2f}{:11.3e}{:11.3e}{:11.3e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">ek</span><span class="p">,</span>
+        <span class="n">par</span><span class="o">.</span><span class="n">strat</span><span class="p">,</span> <span class="n">par</span><span class="o">.</span><span class="n">pr</span><span class="p">,</span> <span class="n">par</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span> <span class="n">roEq</span><span class="p">,</span> <span class="n">avgRolC</span><span class="p">)</span>
+
     <span class="k">return</span> <span class="n">st</span></div>
 
 <div class="viewcode-block" id="progressbar"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.progressbar">[docs]</a><span class="k">def</span> <span class="nf">progressbar</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
@@ -407,7 +407,8 @@
     <span class="n">count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">_show</span><span class="p">(</span><span class="n">_i</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="o">*</span><span class="n">_i</span><span class="o">/</span><span class="n">count</span><span class="p">)</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">[</span><span class="si">%s%s</span><span class="s2">] </span><span class="si">%i</span><span class="s2">/</span><span class="si">%i</span><span class="se">\r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="s2">&quot;#&quot;</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="o">*</span><span class="p">(</span><span class="n">size</span><span class="o">-</span><span class="n">x</span><span class="p">),</span> <span class="n">_i</span><span class="p">,</span> <span class="n">count</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">[</span><span class="si">{}{}</span><span class="s2">] </span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="se">\r</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="s2">&quot;#&quot;</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="o">*</span><span class="p">(</span><span class="n">size</span><span class="o">-</span><span class="n">x</span><span class="p">),</span>
+                                                   <span class="n">_i</span><span class="p">,</span> <span class="n">count</span><span class="p">))</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 
     <span class="n">_show</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -781,9 +782,7 @@
 <span class="sd">    &gt;&gt;&gt; dt_ekinpol = timeder(ts,field=&#39;ekin_pol&#39;)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span>
-                      <span class="n">time</span><span class="p">,</span>
-                      <span class="n">edge_order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">edge_order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">out</span></div>
 
@@ -797,12 +796,8 @@
 <span class="sd">    &gt;&gt;&gt; dt_ekinpol = secondtimeder(ts,field=&#39;ekin_pol&#39;)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span>
-                      <span class="n">time</span><span class="p">,</span>
-                      <span class="n">edge_order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span>
-                      <span class="n">time</span><span class="p">,</span>
-                      <span class="n">edge_order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">edge_order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">edge_order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">out</span></div>
 
 <div class="viewcode-block" id="phideravg"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.phideravg">[docs]</a><span class="k">def</span> <span class="nf">phideravg</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
@@ -1100,7 +1095,8 @@
 <span class="sd">    :returns: the total CPU time</span>
 <span class="sd">    :rtype: float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">threads</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[\s]*\![\s]*nThreads\:[\s]*(.*)&#39;</span><span class="p">)</span>
+    <span class="n">threads_old</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[\s]*\![\s]*nThreads\:[\s]*(.*)&#39;</span><span class="p">)</span>
+    <span class="n">threads_new</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[\s]*\![\s]*Number of OMP threads\:[\s]*(.*)&#39;</span><span class="p">)</span>
     <span class="n">ranks</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[\s]*\![\s\w]*ranks[\s\w]*\:[\s]*(.*)&#39;</span><span class="p">)</span>
     <span class="n">runTime</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[\s\!\w]*time:[\s]*([0-9]*)d[\s\:]*([0-9]*)h[\s\:]*([0-9]*)m[\s\:]*([0-9]*)s[\s\:]*([0-9]*)ms.*&#39;</span><span class="p">)</span>
     <span class="n">runTime_new</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39; \! Total run time:[\s]*([0-9]*)[\s]*h[\s]*([0-9]*)[\s]*m[\s]*([0-9]*)[\s]*s[\s]*([0-9]*)[\s]*ms[\s]*&#39;</span><span class="p">)</span>
@@ -1111,8 +1107,10 @@
     <span class="n">nRanks</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># In case the old OpenMP version is used</span>
     <span class="n">realTime</span> <span class="o">=</span> <span class="mf">0.</span>
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">tab</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">threads</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
-            <span class="n">nThreads</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">threads</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">threads_old</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+            <span class="n">nThreads</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">threads_old</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">threads_new</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+            <span class="n">nThreads</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">threads_new</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
         <span class="k">elif</span> <span class="n">ranks</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
             <span class="n">nRanks</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ranks</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
         <span class="k">elif</span> <span class="n">runTime</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
@@ -1130,6 +1128,7 @@
             <span class="n">realTime</span> <span class="o">=</span> <span class="n">hours</span><span class="o">+</span><span class="mf">1.</span><span class="o">/</span><span class="mi">60</span><span class="o">*</span><span class="nb">min</span><span class="o">+</span><span class="mf">1.</span><span class="o">/</span><span class="mi">3600</span><span class="o">*</span><span class="n">sec</span><span class="o">+</span><span class="mf">1.</span><span class="o">/</span><span class="mf">3.6e6</span><span class="o">*</span><span class="n">ms</span>
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="n">cpuTime</span> <span class="o">=</span> <span class="n">nThreads</span><span class="o">*</span><span class="n">nRanks</span><span class="o">*</span><span class="n">realTime</span>
+
     <span class="k">return</span> <span class="n">cpuTime</span></div>
 
 <div class="viewcode-block" id="ReadBinaryTimeseries"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.ReadBinaryTimeseries">[docs]</a><span class="k">def</span> <span class="nf">ReadBinaryTimeseries</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span>
@@ -1178,6 +1177,7 @@
     <span class="n">totCpuTime</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">logFiles</span><span class="p">:</span>
         <span class="n">totCpuTime</span> <span class="o">+=</span> <span class="n">getCpuTime</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
     <span class="k">return</span> <span class="n">totCpuTime</span></div>
 
 <div class="viewcode-block" id="prime_factors"><a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.prime_factors">[docs]</a><span class="k">def</span> <span class="nf">prime_factors</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
@@ -1198,6 +1198,7 @@
             <span class="n">factors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">factors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
     <span class="k">return</span> <span class="n">factors</span></div>
 </pre></div>
 
@@ -1239,8 +1240,8 @@
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+        &#169; Copyright 2020, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.1.
     </div>
   </body>
 </html>

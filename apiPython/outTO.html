@@ -4,16 +4,15 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Support for TO outputs &#8212; Magic 5.10 documentation</title>
-    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
     
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
@@ -112,7 +111,7 @@
 <span id="secpythonto"></span><h1>Support for <code class="docutils literal notranslate"><span class="pre">TO</span></code> outputs<a class="headerlink" href="#support-for-to-outputs" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="magic.TOMovie">
-<em class="property">class </em><code class="sig-prename descclassname">magic.</code><code class="sig-name descname">TOMovie</code><span class="sig-paren">(</span><em class="sig-param">file=None</em>, <em class="sig-param">iplot=True</em>, <em class="sig-param">cm='RdYlBu_r'</em>, <em class="sig-param">cut=0.8</em>, <em class="sig-param">levels=16</em>, <em class="sig-param">avg=True</em>, <em class="sig-param">precision=&lt;class 'numpy.float32'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/TOreaders.html#TOMovie"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.TOMovie" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">magic.</code><code class="sig-name descname">TOMovie</code><span class="sig-paren">(</span><em class="sig-param">file=None</em>, <em class="sig-param">iplot=True</em>, <em class="sig-param">cm='seismic'</em>, <em class="sig-param">cut=0.5</em>, <em class="sig-param">levels=33</em>, <em class="sig-param">avg=True</em>, <em class="sig-param">precision=&lt;class 'numpy.float32'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/TOreaders.html#TOMovie"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.TOMovie" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class allows to read and display the <a class="reference internal" href="../outputFiles/outTOFiles.html#secto-moviefile"><span class="std std-ref">TO_mov.TAG</span></a>
 generated when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlTO.html#varl-tomovie"><span class="std std-ref">l_TOmovie=.true.</span></a> is True.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># This will allow you to pick up one TO_mov files among the existing ones</span>
@@ -137,12 +136,12 @@ extrapolation to allow any summation.</p>
 
 <dl class="py method">
 <dt id="magic.TOMovie.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">file=None</em>, <em class="sig-param">iplot=True</em>, <em class="sig-param">cm='RdYlBu_r'</em>, <em class="sig-param">cut=0.8</em>, <em class="sig-param">levels=16</em>, <em class="sig-param">avg=True</em>, <em class="sig-param">precision=&lt;class 'numpy.float32'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/TOreaders.html#TOMovie.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.TOMovie.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">file=None</em>, <em class="sig-param">iplot=True</em>, <em class="sig-param">cm='seismic'</em>, <em class="sig-param">cut=0.5</em>, <em class="sig-param">levels=33</em>, <em class="sig-param">avg=True</em>, <em class="sig-param">precision=&lt;class 'numpy.float32'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/TOreaders.html#TOMovie.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.TOMovie.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>file</strong> (<em>str</em>) – the filename of the TO_mov file</p></li>
-<li><p><strong>cmap</strong> (<em>str</em>) – the name of the color map</p></li>
+<li><p><strong>cm</strong> (<em>str</em>) – the name of the color map</p></li>
 <li><p><strong>levels</strong> (<em>int</em>) – the number of contour levels</p></li>
 <li><p><strong>cut</strong> (<em>float</em>) – adjust the contour extrema to max(abs(data))*cut</p></li>
 <li><p><strong>iplot</strong> (<em>bool</em>) – a boolean to specify if one wants to plot or not the
@@ -180,38 +179,6 @@ precision, np.float64 for double precision</p></li>
 </dd></dl>
 
 <dl class="py class">
-<dt id="magic.MagicTOZ">
-<em class="property">class </em><code class="sig-prename descclassname">magic.</code><code class="sig-name descname">MagicTOZ</code><span class="sig-paren">(</span><em class="sig-param">datadir='.'</em>, <em class="sig-param">itoz=None</em>, <em class="sig-param">tag=None</em>, <em class="sig-param">precision=&lt;class 'numpy.float32'&gt;</em>, <em class="sig-param">ave=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/TOreaders.html#MagicTOZ"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicTOZ" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class can be used to read the TOZ.TAG files produced by the TO outputs</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># read the content of TOZ_1.tag</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># where tag is the most recent file in the current directory</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">toz</span> <span class="o">=</span> <span class="n">MagicTOZ</span><span class="p">(</span><span class="n">itoz</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># read the content of TOZ_ave.test</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">toz</span> <span class="o">=</span> <span class="n">MagicTOZ</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">ave</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-<dl class="py method">
-<dt id="magic.MagicTOZ.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">datadir='.'</em>, <em class="sig-param">itoz=None</em>, <em class="sig-param">tag=None</em>, <em class="sig-param">precision=&lt;class 'numpy.float32'&gt;</em>, <em class="sig-param">ave=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/TOreaders.html#MagicTOZ.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicTOZ.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>datadir</strong> (<em>str</em>) – current working directory</p></li>
-<li><p><strong>tag</strong> (<em>str</em>) – file suffix (tag), if not specified the most recent one in
-the current directory is chosen</p></li>
-<li><p><strong>precision</strong> (<em>str</em>) – single or double precision</p></li>
-<li><p><strong>iplot</strong> (<em>bool</em>) – display the output plot when set to True (default is
-True)</p></li>
-<li><p><strong>ave</strong> (<em>bool</em>) – plot a time-averaged TOZ file when set to True</p></li>
-<li><p><strong>itoz</strong> (<em>int</em>) – the number of the TOZ file you want to plot</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
 <dt id="magic.MagicTOHemi">
 <em class="property">class </em><code class="sig-prename descclassname">magic.</code><code class="sig-name descname">MagicTOHemi</code><span class="sig-paren">(</span><em class="sig-param">datadir='.'</em>, <em class="sig-param">hemi='n'</em>, <em class="sig-param">tag=None</em>, <em class="sig-param">precision=&lt;class 'numpy.float32'&gt;</em>, <em class="sig-param">iplot=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/TOreaders.html#MagicTOHemi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicTOHemi" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class can be used to read and display z-integrated quantities
@@ -240,40 +207,6 @@ True)</p></li>
 <dl class="py method">
 <dt id="magic.MagicTOHemi.plot">
 <code class="sig-name descname">plot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/TOreaders.html#MagicTOHemi.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicTOHemi.plot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plotting function</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt id="magic.MagicTaySphere">
-<em class="property">class </em><code class="sig-prename descclassname">magic.</code><code class="sig-name descname">MagicTaySphere</code><span class="sig-paren">(</span><em class="sig-param">datadir='.'</em>, <em class="sig-param">tag=None</em>, <em class="sig-param">precision=&lt;class 'numpy.float32'&gt;</em>, <em class="sig-param">iplot=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/TOreaders.html#MagicTaySphere"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicTaySphere" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class can be used to read and display quantities
-produced by the TO outputs. Those are basically the TaySphere.TAG files</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">to</span> <span class="o">=</span> <span class="n">MagicTaySphere</span><span class="p">(</span><span class="n">iplot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># For the Northern hemisphere</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">to</span><span class="o">.</span><span class="n">e_kin</span><span class="p">)</span>
-</pre></div>
-</div>
-<dl class="py method">
-<dt id="magic.MagicTaySphere.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">datadir='.'</em>, <em class="sig-param">tag=None</em>, <em class="sig-param">precision=&lt;class 'numpy.float32'&gt;</em>, <em class="sig-param">iplot=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/TOreaders.html#MagicTaySphere.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicTaySphere.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>datadir</strong> (<em>str</em>) – current working directory</p></li>
-<li><p><strong>tag</strong> (<em>str</em>) – file suffix (tag), if not specified the most recent one in
-the current directory is chosen</p></li>
-<li><p><strong>precision</strong> (<em>str</em>) – single or double precision</p></li>
-<li><p><strong>iplot</strong> (<em>bool</em>) – display the output plot when set to True (default is
-True)</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="magic.MagicTaySphere.plot">
-<code class="sig-name descname">plot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/TOreaders.html#MagicTaySphere.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#magic.MagicTaySphere.plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plotting function</p>
 </dd></dl>
 
@@ -339,8 +272,8 @@ True)</p></li>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+        &#169; Copyright 2020, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.1.
     </div>
   </body>
 </html>

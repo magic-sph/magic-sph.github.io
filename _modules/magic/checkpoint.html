@@ -4,16 +4,15 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>magic.checkpoint &#8212; Magic 5.10 documentation</title>
-    <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
     
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
@@ -104,7 +103,7 @@
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">scipy.interpolate</span> <span class="k">as</span> <span class="nn">sint</span>
-<span class="kn">from</span> <span class="nn">magic.libmagic</span> <span class="k">import</span> <span class="n">chebgrid</span><span class="p">,</span> <span class="n">fd_grid</span><span class="p">,</span> <span class="n">scanDir</span>
+<span class="kn">from</span> <span class="nn">magic.libmagic</span> <span class="kn">import</span> <span class="n">chebgrid</span><span class="p">,</span> <span class="n">fd_grid</span><span class="p">,</span> <span class="n">scanDir</span>
 
 <div class="viewcode-block" id="get_truncation"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.get_truncation">[docs]</a><span class="k">def</span> <span class="nf">get_truncation</span><span class="p">(</span><span class="n">n_theta_max</span><span class="p">,</span> <span class="n">nalias</span><span class="p">,</span> <span class="n">minc</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -253,7 +252,7 @@
 <span class="sd">    &gt;&gt;&gt; chk.xshells2magic(&#39;st0&#39;, 161, rscheme=&#39;cheb&#39;, cond_state=&#39;deltaT&#39;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MagicCheckpoint.__init__"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.MagicCheckpoint.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l_read</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="MagicCheckpoint.__init__"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.MagicCheckpoint.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l_read</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param l_read: a boolean to decide whether one reads a checkpoint or not</span>
 <span class="sd">        :type l_read: bool</span>
@@ -422,13 +421,21 @@
         <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">tscheme</span><span class="p">)</span>
         <span class="n">par</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
         <span class="n">par</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-        <span class="n">dt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0e-6</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;dt&#39;</span><span class="p">):</span>
+            <span class="n">dt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0e-6</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">dt</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
         <span class="n">par</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
         <span class="n">par</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
 
-        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">1.0e-3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
-                     <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="c1"># Control parameters</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;ra&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;sc&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;prmag&#39;</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">raxi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prmag</span><span class="p">,</span>
+                          <span class="bp">self</span><span class="o">.</span><span class="n">ek</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma_ratio</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">1.0e-3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+                         <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">x</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
 
         <span class="c1"># Truncation</span>
@@ -493,7 +500,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fd_ratio</span> <span class="o">=</span> <span class="mf">0.1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fd_stretch</span> <span class="o">=</span> <span class="mf">0.3</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rscheme_version</span> <span class="o">=</span> <span class="s1">&#39;fd&#39;</span><span class="o">+</span><span class="s1">&#39;</span><span class="si">%70s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rscheme_version</span> <span class="o">=</span> <span class="s1">&#39;fd&#39;</span><span class="o">+</span><span class="s1">&#39;</span><span class="si">{:&gt;70s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fd_stretch</span> <span class="o">=</span> <span class="n">fd_stretch</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fd_ratio</span> <span class="o">=</span> <span class="n">fd_ratio</span>
         <span class="n">rnew</span> <span class="o">=</span> <span class="n">fd_grid</span><span class="p">(</span><span class="n">n_r_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
@@ -531,7 +538,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">alph1</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">alph2</span> <span class="o">=</span> <span class="mi">0</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">rscheme_version</span> <span class="o">=</span> <span class="s1">&#39;cheb&#39;</span><span class="o">+</span><span class="s1">&#39;</span><span class="si">%68s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rscheme_version</span> <span class="o">=</span> <span class="s1">&#39;cheb&#39;</span><span class="o">+</span><span class="s1">&#39;</span><span class="si">{:&gt;68s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
         <span class="n">rnew</span> <span class="o">=</span> <span class="n">chebgrid</span><span class="p">(</span><span class="n">n_r_max</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
         <span class="n">tmp</span> <span class="o">=</span> <span class="n">interp_one_field</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wpol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">rnew</span><span class="p">)</span>
@@ -581,10 +588,10 @@
         <span class="kn">import</span> <span class="nn">pyxshells</span> <span class="k">as</span> <span class="nn">pyx</span>
 
         <span class="c1"># xshells grid</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="n">pyx</span><span class="o">.</span><span class="n">load_field</span><span class="p">(</span><span class="s1">&#39;fieldU.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">xsh_trailing</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;fieldT.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">xsh_trailing</span><span class="p">):</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">pyx</span><span class="o">.</span><span class="n">load_field</span><span class="p">(</span><span class="s1">&#39;fieldU.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xsh_trailing</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;fieldT.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xsh_trailing</span><span class="p">)):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">l_heat</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;fieldB.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">xsh_trailing</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;fieldB.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xsh_trailing</span><span class="p">)):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">l_mag</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">l_press</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">l_chem</span> <span class="o">=</span> <span class="kc">False</span>
@@ -604,12 +611,12 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">map</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">alph1</span> <span class="o">=</span> <span class="mf">1.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">alph2</span> <span class="o">=</span> <span class="mf">0.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">rscheme_version</span> <span class="o">=</span> <span class="s1">&#39;cheb&#39;</span><span class="o">+</span><span class="s1">&#39;</span><span class="si">%68s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="s1">&#39;&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rscheme_version</span> <span class="o">=</span> <span class="s1">&#39;cheb&#39;</span><span class="o">+</span><span class="s1">&#39;</span><span class="si">{:&gt;68s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">fd_grid</span><span class="p">(</span><span class="n">n_r_max</span><span class="p">,</span> <span class="n">ro</span><span class="p">,</span> <span class="n">ri</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fd_stretch</span> <span class="o">=</span> <span class="mf">0.3</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fd_ratio</span> <span class="o">=</span> <span class="mf">0.1</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">rscheme_version</span> <span class="o">=</span> <span class="s1">&#39;fd&#39;</span><span class="o">+</span><span class="s1">&#39;</span><span class="si">%70s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="s1">&#39;&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rscheme_version</span> <span class="o">=</span> <span class="s1">&#39;fd&#39;</span><span class="o">+</span><span class="s1">&#39;</span><span class="si">{:&gt;70s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">l_max</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">lmax</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">m_max</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">mmax</span>
@@ -633,7 +640,7 @@
                                      <span class="n">rfac</span><span class="o">=</span><span class="n">rr_xsh</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_heat</span><span class="p">:</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="n">pyx</span><span class="o">.</span><span class="n">load_field</span><span class="p">(</span><span class="s1">&#39;fieldT.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">xsh_trailing</span><span class="p">)</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">pyx</span><span class="o">.</span><span class="n">load_field</span><span class="p">(</span><span class="s1">&#39;fieldT.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xsh_trailing</span><span class="p">))</span>
             <span class="n">field_xsh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nr_xsh</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lm_max</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">)</span>
             <span class="n">field_xsh</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">entropy</span> <span class="o">=</span> <span class="n">interp_one_field</span><span class="p">(</span><span class="n">field_xsh</span><span class="p">,</span> <span class="n">rr_xsh</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
@@ -652,7 +659,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">entropy</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">4.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">*</span> <span class="n">tcond</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_mag</span><span class="p">:</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="n">pyx</span><span class="o">.</span><span class="n">load_field</span><span class="p">(</span><span class="s1">&#39;fieldB.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">xsh_trailing</span><span class="p">)</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">pyx</span><span class="o">.</span><span class="n">load_field</span><span class="p">(</span><span class="s1">&#39;fieldB.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xsh_trailing</span><span class="p">))</span>
             <span class="n">field_xsh</span> <span class="o">=</span> <span class="n">scale_b</span> <span class="o">*</span> <span class="n">f</span><span class="o">.</span><span class="n">pol_full</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">bpol</span> <span class="o">=</span> <span class="n">interp_one_field</span><span class="p">(</span><span class="n">field_xsh</span><span class="p">,</span> <span class="n">rr_xsh</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span>
                                          <span class="n">rfac</span><span class="o">=</span><span class="n">rr_xsh</span><span class="p">)</span>
@@ -671,12 +678,12 @@
 <span class="sd">        :type filename: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="kn">from</span> <span class="nn">magic</span> <span class="k">import</span> <span class="n">SpectralTransforms</span><span class="p">,</span> <span class="n">thetaderavg</span><span class="p">,</span> <span class="n">phideravg</span><span class="p">,</span> <span class="n">MagicRadial</span>
+        <span class="kn">from</span> <span class="nn">magic</span> <span class="kn">import</span> <span class="n">SpectralTransforms</span><span class="p">,</span> <span class="n">thetaderavg</span><span class="p">,</span> <span class="n">phideravg</span><span class="p">,</span> <span class="n">MagicRadial</span>
 
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="s1">&#39;tag&#39;</span><span class="p">):</span>
             <span class="n">tag</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">tag</span>
 
-            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;anel.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">tag</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;anel.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">)):</span>
                 <span class="n">r</span> <span class="o">=</span> <span class="n">MagicRadial</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;anel&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
                 <span class="n">rho0</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">rho0</span>
             <span class="k">else</span><span class="p">:</span>
@@ -702,7 +709,7 @@
         <span class="n">ro</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span> <span class="o">=</span> <span class="n">ri</span><span class="o">/</span><span class="n">ro</span>
         <span class="k">if</span> <span class="n">gr</span><span class="o">.</span><span class="n">radial_scheme</span> <span class="o">==</span> <span class="s1">&#39;CHEB&#39;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">rscheme_version</span> <span class="o">=</span> <span class="s1">&#39;cheb&#39;</span><span class="o">+</span><span class="s1">&#39;</span><span class="si">%68s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="s1">&#39;&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rscheme_version</span> <span class="o">=</span> <span class="s1">&#39;cheb&#39;</span><span class="o">+</span><span class="s1">&#39;</span><span class="si">{:&gt;68s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">n_cheb_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="o">-</span><span class="mi">2</span>
             <span class="k">if</span> <span class="n">gr</span><span class="o">.</span><span class="n">l_newmap</span> <span class="o">==</span> <span class="s1">&#39;F&#39;</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">map</span> <span class="o">=</span> <span class="mi">0</span>
@@ -711,7 +718,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">alph1</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">alph1</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">alph2</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">alph2</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">rscheme_version</span> <span class="o">=</span> <span class="s1">&#39;fd&#39;</span><span class="o">+</span><span class="s1">&#39;</span><span class="si">%70s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="s1">&#39;&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rscheme_version</span> <span class="o">=</span> <span class="s1">&#39;fd&#39;</span><span class="o">+</span><span class="s1">&#39;</span><span class="si">{:&gt;70s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fd_stretch</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">fd_stretch</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fd_ratio</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">fd_ratio</span>
 
@@ -858,7 +865,7 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">magic</span> <span class="k">import</span> <span class="n">MagicGraph</span>
+    <span class="kn">from</span> <span class="nn">magic</span> <span class="kn">import</span> <span class="n">MagicGraph</span>
     <span class="n">chk</span> <span class="o">=</span> <span class="n">MagicCheckpoint</span><span class="p">(</span><span class="n">l_read</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="c1">#chk.fd2cheb(33)</span>
     <span class="c1">#chk.write(&#39;checkpoint_cheb.tmp&#39;)</span>
@@ -906,8 +913,8 @@
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+        &#169; Copyright 2020, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.1.
     </div>
   </body>
 </html>

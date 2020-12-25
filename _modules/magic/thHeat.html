@@ -4,16 +4,15 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>magic.thHeat &#8212; Magic 5.10 documentation</title>
-    <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
     
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
@@ -105,9 +104,9 @@
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">matplotlib.mlab</span> <span class="k">as</span> <span class="nn">mlab</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">magic</span> <span class="k">import</span> <span class="n">scanDir</span><span class="p">,</span> <span class="n">MagicSetup</span><span class="p">,</span> <span class="n">Movie</span><span class="p">,</span> <span class="n">matder</span><span class="p">,</span> <span class="n">chebgrid</span><span class="p">,</span> <span class="n">rderavg</span><span class="p">,</span> <span class="n">AvgField</span>
+<span class="kn">from</span> <span class="nn">magic</span> <span class="kn">import</span> <span class="n">scanDir</span><span class="p">,</span> <span class="n">MagicSetup</span><span class="p">,</span> <span class="n">Movie</span><span class="p">,</span> <span class="n">matder</span><span class="p">,</span> <span class="n">chebgrid</span><span class="p">,</span> <span class="n">rderavg</span><span class="p">,</span> <span class="n">AvgField</span>
 <span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">pickle</span>
-<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="k">import</span> <span class="n">simps</span><span class="p">,</span> <span class="n">trapz</span>
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">simps</span><span class="p">,</span> <span class="n">trapz</span>
 
 
 <div class="viewcode-block" id="ThetaHeat"><a class="viewcode-back" href="../../apiPython/misc.html#magic.ThetaHeat">[docs]</a><span class="k">class</span> <span class="nc">ThetaHeat</span><span class="p">(</span><span class="n">MagicSetup</span><span class="p">):</span>
@@ -136,7 +135,7 @@
 <span class="sd">    &gt;&gt;&gt; print(th)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ThetaHeat.__init__"><a class="viewcode-back" href="../../apiPython/misc.html#magic.ThetaHeat.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pickleName</span><span class="o">=</span><span class="s1">&#39;thHeat.pickle&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="ThetaHeat.__init__"><a class="viewcode-back" href="../../apiPython/misc.html#magic.ThetaHeat.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pickleName</span><span class="o">=</span><span class="s1">&#39;thHeat.pickle&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param iplot: a boolean to toggle the plots on/off</span>
 <span class="sd">        :type iplot: bool</span>
@@ -156,11 +155,11 @@
             <span class="k">for</span> <span class="n">lg</span> <span class="ow">in</span> <span class="n">logFiles</span><span class="p">:</span>
                 <span class="n">nml</span> <span class="o">=</span> <span class="n">MagicSetup</span><span class="p">(</span><span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nml</span><span class="o">=</span><span class="n">lg</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">nml</span><span class="o">.</span><span class="n">start_time</span> <span class="o">&gt;</span>  <span class="n">tstart</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;bLayersR.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">nml</span><span class="o">.</span><span class="n">tag</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;bLayersR.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nml</span><span class="o">.</span><span class="n">tag</span><span class="p">)):</span>
                         <span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nml</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="n">nml</span><span class="o">.</span><span class="n">tag</span><span class="p">]</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Only 1 tag: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">tags</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Only 1 tag: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tags</span><span class="p">))</span>
             <span class="n">MagicSetup</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nml</span><span class="o">=</span><span class="n">logFiles</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
             <span class="n">a</span> <span class="o">=</span> <span class="n">AvgField</span><span class="p">()</span>
@@ -174,7 +173,7 @@
             <span class="c1"># reading ATmov</span>
             <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
-                <span class="n">f</span> <span class="o">=</span> <span class="s1">&#39;ATmov.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">tag</span>
+                <span class="n">f</span> <span class="o">=</span> <span class="s1">&#39;ATmov.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
                     <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                         <span class="n">m</span> <span class="o">=</span> <span class="n">Movie</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -187,7 +186,7 @@
             <span class="c1"># reading AHF_mov</span>
             <span class="n">kk</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
-                <span class="n">f</span> <span class="o">=</span> <span class="s1">&#39;AHF_mov.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">tag</span>
+                <span class="n">f</span> <span class="o">=</span> <span class="s1">&#39;AHF_mov.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
                     <span class="k">if</span> <span class="n">kk</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                         <span class="n">m1</span> <span class="o">=</span> <span class="n">Movie</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -369,7 +368,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ThetaHeat.__str__"><a class="viewcode-back" href="../../apiPython/misc.html#magic.ThetaHeat.__str__">[docs]</a>    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ThetaHeat.__str__"><a class="viewcode-back" href="../../apiPython/misc.html#magic.ThetaHeat.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Formatted outputs</span>
 
@@ -381,16 +380,19 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">ek</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ek</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">st</span> <span class="o">=</span><span class="s1">&#39;</span><span class="si">%9.3e%9.2e%9.2e%9.2e%5.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span> <span class="n">ek</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prmag</span><span class="p">,</span>
-                                               <span class="bp">self</span><span class="o">.</span><span class="n">strat</span><span class="p">)</span>
+            <span class="n">st</span> <span class="o">=</span><span class="s1">&#39;</span><span class="si">{:9.3e}{:9.2e}{:9.2e}{:9.2e}{:5.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span> <span class="n">ek</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prmag</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">strat</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">st</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%.3e%12.5e%5.2f%6.2f%6.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span> <span class="n">ek</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">strat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="p">,</span>
-                                                <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">)</span>
+            <span class="n">st</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:.3e}{:12.5e}{:5.2f}{:6.2f}{:6.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span> <span class="n">ek</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">strat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">)</span>
 
-        <span class="n">st</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">%12.5e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nuss</span><span class="p">)</span>
-        <span class="n">st</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">%12.5e%12.5e%12.5e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nussBotEq</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nussBot45</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nussBotPo</span><span class="p">)</span>
-        <span class="n">st</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">%12.5e%12.5e%12.5e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nussTopEq</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nussTop45</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nussTopPo</span><span class="p">)</span>
-        <span class="n">st</span> <span class="o">+=</span> <span class="s1">&#39; </span><span class="si">%12.5e</span><span class="s1"> </span><span class="si">%12.5e</span><span class="s1"> </span><span class="si">%12.5e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">betaEq</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta45</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">betaPol</span><span class="p">)</span>
+        <span class="n">st</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">{:12.5e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nuss</span><span class="p">)</span>
+        <span class="n">st</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">{:12.5e}{:12.5e}{:12.5e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nussBotEq</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nussBot45</span><span class="p">,</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">nussBotPo</span><span class="p">)</span>
+        <span class="n">st</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">{:12.5e}{:12.5e}{:12.5e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nussTopEq</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nussTop45</span><span class="p">,</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">nussTopPo</span><span class="p">)</span>
+        <span class="n">st</span> <span class="o">+=</span> <span class="s1">&#39; </span><span class="si">{:12.5e}</span><span class="s1"> </span><span class="si">{:12.5e}</span><span class="s1"> </span><span class="si">{:12.5e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">betaEq</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta45</span><span class="p">,</span>
+                                                   <span class="bp">self</span><span class="o">.</span><span class="n">betaPol</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">st</span></div>
 
@@ -488,8 +490,8 @@
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+        &#169; Copyright 2020, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.1.
     </div>
   </body>
 </html>

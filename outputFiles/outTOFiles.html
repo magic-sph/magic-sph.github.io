@@ -4,16 +4,15 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TO outputs &#8212; Magic 5.10 documentation</title>
-    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
     
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
@@ -114,8 +113,30 @@
 <p class="admonition-title">Note</p>
 <p>These output files are <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlTO.html#varl-to"><span class="std std-ref">l_TO=.true.</span></a></p>
 </div>
-<div class="section" id="toz-tag-and-tozm-tag">
-<h2><code class="docutils literal notranslate"><span class="pre">TOZ_#.TAG</span></code> and <code class="docutils literal notranslate"><span class="pre">TOZM.TAG</span></code><a class="headerlink" href="#toz-tag-and-tozm-tag" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tay-tag">
+<span id="sectayfile"></span><h2><code class="docutils literal notranslate"><span class="pre">Tay.TAG</span></code><a class="headerlink" href="#tay-tag" title="Permalink to this headline">¶</a></h2>
+<p>This file contains the time series of the Taylorisation as well as some measures
+of the relative geostrophic energy.</p>
+<p>This file can be read using <a class="reference internal" href="../apiPython/timeSeries.html#magic.MagicTs" title="magic.MagicTs"><code class="xref py py-class docutils literal notranslate"><span class="pre">MagicTs</span></code></a> with
+the following options:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># To load the most recent &#39;Tay.TAG&#39; file in a directory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ts</span> <span class="o">=</span> <span class="n">MagicTs</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;Tay&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tonhs-tag-and-toshs-tag">
+<h2><code class="docutils literal notranslate"><span class="pre">TOnhs.TAG</span></code> and <code class="docutils literal notranslate"><span class="pre">TOshs.TAG</span></code><a class="headerlink" href="#tonhs-tag-and-toshs-tag" title="Permalink to this headline">¶</a></h2>
+<p>Those files correspond to the z-averaging of the axisymmetric phi component of the
+Navier-Stokes equations. It contains the different cylindrical profiles of the
+forces involved the zonal equation as well as some additional measures of the
+Taylorization of the solution. shs corresponds to Southern Hemisphere (inside the
+tangent cylinder), while nhs corresponds to Nothern Hemisphere).</p>
+<p>Those files can be read using <a class="reference internal" href="../apiPython/outTO.html#magic.MagicTOHemi" title="magic.MagicTOHemi"><code class="xref py py-class docutils literal notranslate"><span class="pre">MagicTOHemi</span></code></a> with
+the following options:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># To load &#39;TOshs.test&#39; and plot the time-averaged forces:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tos</span> <span class="o">=</span> <span class="n">MagicTOHemi</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">hemi</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="to-mov-tag-files">
 <span id="secto-moviefile"></span><h2><code class="docutils literal notranslate"><span class="pre">TO_mov.TAG</span></code> files<a class="headerlink" href="#to-mov-tag-files" title="Permalink to this headline">¶</a></h2>
@@ -236,7 +257,8 @@ can be found in the subroutine <a class="reference internal" href="../apiFortran
   <h3><a href="../contents.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">TO</span></code> outputs</a><ul>
-<li><a class="reference internal" href="#toz-tag-and-tozm-tag"><code class="docutils literal notranslate"><span class="pre">TOZ_#.TAG</span></code> and <code class="docutils literal notranslate"><span class="pre">TOZM.TAG</span></code></a></li>
+<li><a class="reference internal" href="#tay-tag"><code class="docutils literal notranslate"><span class="pre">Tay.TAG</span></code></a></li>
+<li><a class="reference internal" href="#tonhs-tag-and-toshs-tag"><code class="docutils literal notranslate"><span class="pre">TOnhs.TAG</span></code> and <code class="docutils literal notranslate"><span class="pre">TOshs.TAG</span></code></a></li>
 <li><a class="reference internal" href="#to-mov-tag-files"><code class="docutils literal notranslate"><span class="pre">TO_mov.TAG</span></code> files</a></li>
 </ul>
 </li>
@@ -293,8 +315,8 @@ can be found in the subroutine <a class="reference internal" href="../apiFortran
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+        &#169; Copyright 2020, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.1.
     </div>
   </body>
 </html>
