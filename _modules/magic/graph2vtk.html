@@ -1,22 +1,24 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>magic.graph2vtk &#8212; Magic 5.10 documentation</title>
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>magic.graph2vtk &#8212; Magic 6.0 documentation</title>
     <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Magic 5.10 documentation"
+          title="Search within Magic 6.0 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -88,9 +90,8 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.10 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">magic.graph2vtk</a></li> 
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -366,15 +367,17 @@
         <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;Xi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">14</span>
         <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;xifluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">15</span>
         <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;Xifluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">15</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;phase&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16</span>
 
         <span class="c1"># Change default scalars and vectors in non-magnetic cases</span>
-        <span class="k">if</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">7</span> <span class="ow">or</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
-            <span class="k">if</span> <span class="s1">&#39;emag&#39;</span> <span class="ow">in</span> <span class="n">keyScal</span><span class="p">:</span>
-                <span class="n">keyScal</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">&#39;emag&#39;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="s1">&#39;br&#39;</span> <span class="ow">in</span> <span class="n">keyScal</span><span class="p">:</span>
-                <span class="n">keyScal</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">&#39;br&#39;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="s1">&#39;Br&#39;</span> <span class="ow">in</span> <span class="n">keyScal</span><span class="p">:</span>
-                <span class="n">keyScal</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">&#39;Br&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="s1">&#39;mode&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">7</span> <span class="ow">or</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">&#39;emag&#39;</span> <span class="ow">in</span> <span class="n">keyScal</span><span class="p">:</span>
+                    <span class="n">keyScal</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">&#39;emag&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">&#39;br&#39;</span> <span class="ow">in</span> <span class="n">keyScal</span><span class="p">:</span>
+                    <span class="n">keyScal</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">&#39;br&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">&#39;Br&#39;</span> <span class="ow">in</span> <span class="n">keyScal</span><span class="p">:</span>
+                    <span class="n">keyScal</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">&#39;Br&#39;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scals</span><span class="p">),</span> <span class="s1">&#39;i&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">scal</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">scals</span><span class="p">):</span>
@@ -404,15 +407,16 @@
         <span class="n">keyVec</span><span class="p">[</span><span class="s1">&#39;bfluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
         <span class="n">keyVec</span><span class="p">[</span><span class="s1">&#39;Bfluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
 
-        <span class="k">if</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">7</span> <span class="ow">or</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
-            <span class="k">if</span> <span class="s1">&#39;bfluc&#39;</span> <span class="ow">in</span> <span class="n">keyVec</span><span class="p">:</span>
-                <span class="n">keyVec</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">&#39;bfluct&#39;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="s1">&#39;Bfluct&#39;</span> <span class="ow">in</span> <span class="n">keyVec</span><span class="p">:</span>
-                <span class="n">keyVec</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">&#39;Bfluct&#39;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="s1">&#39;b&#39;</span> <span class="ow">in</span> <span class="n">keyVec</span><span class="p">:</span>
-                <span class="n">keyVec</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="s1">&#39;B&#39;</span><span class="ow">in</span> <span class="n">keyVec</span><span class="p">:</span>
-                <span class="n">keyVec</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="s1">&#39;mode&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">7</span> <span class="ow">or</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">&#39;bfluc&#39;</span> <span class="ow">in</span> <span class="n">keyVec</span><span class="p">:</span>
+                    <span class="n">keyVec</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">&#39;bfluct&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">&#39;Bfluct&#39;</span> <span class="ow">in</span> <span class="n">keyVec</span><span class="p">:</span>
+                    <span class="n">keyVec</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">&#39;Bfluct&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">&#39;b&#39;</span> <span class="ow">in</span> <span class="n">keyVec</span><span class="p">:</span>
+                    <span class="n">keyVec</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">&#39;B&#39;</span> <span class="ow">in</span> <span class="n">keyVec</span><span class="p">:</span>
+                    <span class="n">keyVec</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vecs</span><span class="p">),</span> <span class="s1">&#39;i&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">vec</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vecs</span><span class="p">):</span>
@@ -584,6 +588,13 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">-</span>\
                                      <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
+            <span class="k">elif</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">16</span><span class="p">:</span> <span class="c1"># phase field</span>
+                <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">phase</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                              <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">phase</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
             <span class="k">if</span> <span class="n">potExtra</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">:]</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">pot</span><span class="o">.</span><span class="n">brout</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">pot</span><span class="o">.</span><span class="n">btout</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span>\
@@ -754,22 +765,23 @@
     <span class="n">Graph2Vtk</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">scals</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;tfluct&#39;</span><span class="p">,</span> <span class="s1">&#39;emag&#39;</span><span class="p">],</span> <span class="n">vecs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">],</span> <span class="n">potExtra</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
-            <div class="clearer"></div>
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
+  <h3>Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -786,14 +798,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 5.10 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">magic.graph2vtk</a></li> 
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2020, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.1.
+        &#169; Copyright 2021, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>

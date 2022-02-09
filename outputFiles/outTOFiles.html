@@ -1,22 +1,23 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TO outputs &#8212; Magic 5.10 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>TO outputs &#8212; Magic 6.0 documentation</title>
     <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Magic 5.10 documentation"
+          title="Search within Magic 6.0 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -96,9 +97,8 @@
         <li class="right" >
           <a href="outCoeffFiles.html" title="Poloidal and toroidal potentials at given depths"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.10 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="outFiles.html" accesskey="U">Output files</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><code class="docutils literal notranslate"><span class="pre">TO</span></code> outputs</a></li> 
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 6.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="outFiles.html" accesskey="U">Output files</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -110,16 +110,54 @@
   <div class="section" id="to-outputs">
 <span id="sectooutputfiles"></span><h1><code class="docutils literal notranslate"><span class="pre">TO</span></code> outputs<a class="headerlink" href="#to-outputs" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>These output files are <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlTO.html#varl-to"><span class="std std-ref">l_TO=.true.</span></a></p>
+<p class="first admonition-title">Note</p>
+<p class="last">These output files are <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlTO.html#varl-to"><span class="std std-ref">l_TO=.true.</span></a></p>
 </div>
 <div class="section" id="tay-tag">
 <span id="sectayfile"></span><h2><code class="docutils literal notranslate"><span class="pre">Tay.TAG</span></code><a class="headerlink" href="#tay-tag" title="Permalink to this headline">¶</a></h2>
-<p>This file contains the time series of the Taylorisation as well as some measures
-of the relative geostrophic energy.</p>
+<p>This file contains the time series of the Taylorization as well as some measures
+of the relative geostrophic energy. It is written by the subroutine
+<a class="reference internal" href="../apiFortran/IOAdd.html#f/outto_mod/outto" title="f/outto_mod/outto"><code class="xref f f-subr docutils literal notranslate"><span class="pre">outTO</span></code></a>.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">No. of column</th>
+<th class="head">Contents</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>time</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>Relative fraction of toroidal axisymmetric energy (squared)</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>Relative fraction of geostrophic energy (squared)</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>Taylorization</td>
+</tr>
+<tr class="row-even"><td>5</td>
+<td>A Taylorization measure based on Reynolds stresses</td>
+</tr>
+<tr class="row-odd"><td>6</td>
+<td>A Taylorization measure based on viscous stresses</td>
+</tr>
+<tr class="row-even"><td>7</td>
+<td>Total kinetic energy computed on the cylindrical grid
+(to estimate the accuracy of the method)</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
 <p>This file can be read using <a class="reference internal" href="../apiPython/timeSeries.html#magic.MagicTs" title="magic.MagicTs"><code class="xref py py-class docutils literal notranslate"><span class="pre">MagicTs</span></code></a> with
 the following options:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># To load the most recent &#39;Tay.TAG&#39; file in a directory</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># To load the most recent &#39;Tay.TAG&#39; file in a directory</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ts</span> <span class="o">=</span> <span class="n">MagicTs</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;Tay&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -130,10 +168,10 @@ the following options:</p>
 Navier-Stokes equations. It contains the different cylindrical profiles of the
 forces involved the zonal equation as well as some additional measures of the
 Taylorization of the solution. shs corresponds to Southern Hemisphere (inside the
-tangent cylinder), while nhs corresponds to Nothern Hemisphere).</p>
+tangent cylinder), while nhs corresponds to Northern Hemisphere).</p>
 <p>Those files can be read using <a class="reference internal" href="../apiPython/outTO.html#magic.MagicTOHemi" title="magic.MagicTOHemi"><code class="xref py py-class docutils literal notranslate"><span class="pre">MagicTOHemi</span></code></a> with
 the following options:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># To load &#39;TOshs.test&#39; and plot the time-averaged forces:</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># To load &#39;TOshs.test&#39; and plot the time-averaged forces:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tos</span> <span class="o">=</span> <span class="n">MagicTOHemi</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">hemi</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -141,8 +179,8 @@ the following options:</p>
 <div class="section" id="to-mov-tag-files">
 <span id="secto-moviefile"></span><h2><code class="docutils literal notranslate"><span class="pre">TO_mov.TAG</span></code> files<a class="headerlink" href="#to-mov-tag-files" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlTO.html#varl-tomovie"><span class="std std-ref">l_TOmovie=.true.</span></a></p>
+<p class="first admonition-title">Note</p>
+<p class="last">This file is <strong>only</strong> written when <a class="reference internal" href="../inputNamelists/outputNamelist/outputNmlTO.html#varl-tomovie"><span class="std std-ref">l_TOmovie=.true.</span></a></p>
 </div>
 <p>This file contains the time evolution of the different forces that enter the
 phi-average of the azimuthal component of the Navier-Stokes equation. This is a
@@ -240,7 +278,7 @@ can be found in the subroutine <a class="reference internal" href="../apiFortran
 </div>
 </div></blockquote>
 <p>This file can be read using <a class="reference internal" href="../apiPython/outTO.html#magic.TOMovie" title="magic.TOMovie"><code class="xref py py-class docutils literal notranslate"><span class="pre">TOMovie</span></code></a> with the following options:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># To load &#39;TO_mov.test&#39; and time-average it:</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># To load &#39;TO_mov.test&#39; and time-average it:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">to</span> <span class="o">=</span> <span class="n">TOMOvie</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s1">&#39;TO_mov.test&#39;</span><span class="p">,</span> <span class="n">avg</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">65</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;seismic&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -248,7 +286,6 @@ can be found in the subroutine <a class="reference internal" href="../apiFortran
 </div>
 
 
-            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -278,15 +315,17 @@ can be found in the subroutine <a class="reference internal" href="../apiFortran
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
+  <h3>Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -309,14 +348,13 @@ can be found in the subroutine <a class="reference internal" href="../apiFortran
         <li class="right" >
           <a href="outCoeffFiles.html" title="Poloidal and toroidal potentials at given depths"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 5.10 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="outFiles.html" >Output files</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><code class="docutils literal notranslate"><span class="pre">TO</span></code> outputs</a></li> 
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 6.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="outFiles.html" >Output files</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2020, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.1.
+        &#169; Copyright 2021, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>
