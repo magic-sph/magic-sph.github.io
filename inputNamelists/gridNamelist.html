@@ -1,20 +1,19 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Grid namelist &#8212; Magic 6.0 documentation</title>
-    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/magic.css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
           title="Search within Magic 6.0 documentation"
@@ -98,7 +97,8 @@
           <a href="namelists.html" title="Input parameters"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../contents.html">Magic 6.0 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="namelists.html" accesskey="U">Input parameters</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="namelists.html" accesskey="U">Input parameters</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Grid namelist</a></li> 
       </ul>
     </div>  
 
@@ -113,42 +113,36 @@
 <div class="section" id="outer-core">
 <h2>Outer Core<a class="headerlink" href="#outer-core" title="Permalink to this headline">¶</a></h2>
 <ul id="varn-r-max">
-<li><p class="first"><strong>n_r_max</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_r_max=33</span></code></a>) is an integer which gives the number of grid points in the radial direction in the outer core (<span class="math notranslate nohighlight">\([r_i,r_o]\)</span>). If Chebyshev polynomials are used for the radial integration scheme, there are some constraints on the value of <cite>n_r_max</cite>: first of all it must be of the form <code class="docutils literal notranslate"><span class="pre">4*n+1</span></code>, where <code class="docutils literal notranslate"><span class="pre">n</span></code> is an integer; and second the prime decomposition of <cite>n_r_max-1</cite> should only contain multiple of 3, 4 and 5 (this second condition comes from the limitations of the built-in discrete cosine transforms). This constraint is released when finite differences are used.</p>
+<li><p><strong>n_r_max</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_r_max=33</span></code></a>) is an integer which gives the number of grid points in the radial direction in the outer core (<span class="math notranslate nohighlight">\([r_i,r_o]\)</span>). If Chebyshev polynomials are used for the radial integration scheme, there are some constraints on the value of <cite>n_r_max</cite>: first of all it must be of the form <code class="docutils literal notranslate"><span class="pre">4*n+1</span></code>, where <code class="docutils literal notranslate"><span class="pre">n</span></code> is an integer; and second the prime decomposition of <cite>n_r_max-1</cite> should only contain multiple of 3, 4 and 5 (this second condition comes from the limitations of the built-in discrete cosine transforms). This constraint is released when finite differences are used.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If Chebyshev polynomials are used, the possible values for <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_r_max</span></code></a> below 220 are hence: 17, 21, 25, 33, 37, 41, 49, 61, 65, 73, 81, 97, 101, 109, 121, 129, 145, 161, 181, 193, 201, 217,…</p>
+<p class="admonition-title">Note</p>
+<p>If Chebyshev polynomials are used, the possible values for <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_r_max</span></code></a> below 220 are hence: 17, 21, 25, 33, 37, 41, 49, 61, 65, 73, 81, 97, 101, 109, 121, 129, 145, 161, 181, 193, 201, 217,…</p>
 </div>
 </li>
-<li><p class="first"><strong>n_cheb_max</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_cheb_max" title="f/truncation/n_cheb_max"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_cheb_max=31</span></code></a>) is an integer which is the number of terms in the Chebyshev polynomial expansion to be used in the radial direction - the highest degree of Chebyshev polynomial used being <code class="docutils literal notranslate"><span class="pre">n_cheb_max-1</span></code>. Note that <code class="docutils literal notranslate"><span class="pre">n_cheb_max</span> <span class="pre">&lt;=</span> <span class="pre">n_r_max</span></code>. This quantity will not be used if finite differences are used.</p>
-</li>
-<li><p class="first"><strong>n_phi_tot</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_phi_tot" title="f/truncation/n_phi_tot"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_phi_tot=192</span></code></a>) is an integer which gives the number of longitudinal/azimuthal grid points. It has the following constraints:</p>
+<li><p><strong>n_cheb_max</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_cheb_max" title="f/truncation/n_cheb_max"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_cheb_max=31</span></code></a>) is an integer which is the number of terms in the Chebyshev polynomial expansion to be used in the radial direction - the highest degree of Chebyshev polynomial used being <code class="docutils literal notranslate"><span class="pre">n_cheb_max-1</span></code>. Note that <code class="docutils literal notranslate"><span class="pre">n_cheb_max</span> <span class="pre">&lt;=</span> <span class="pre">n_r_max</span></code>. This quantity will not be used if finite differences are used.</p></li>
+<li><p><strong>n_phi_tot</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_phi_tot" title="f/truncation/n_phi_tot"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_phi_tot=192</span></code></a>) is an integer which gives the number of longitudinal/azimuthal grid points. It has the following constraints:</p>
 <ul class="simple">
-<li><a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_phi_tot" title="f/truncation/n_phi_tot"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_phi_tot</span></code></a> must be a multiple of <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/minc" title="f/truncation/minc"><code class="xref f f-var docutils literal notranslate"><span class="pre">minc</span></code></a> (see below)</li>
-<li><code class="docutils literal notranslate"><span class="pre">n_phi_tot/minc</span></code> must be a multiple of 4</li>
-<li><a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_phi_tot" title="f/truncation/n_phi_tot"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_phi_tot</span></code></a> must be a multiple of 16</li>
+<li><p><a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_phi_tot" title="f/truncation/n_phi_tot"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_phi_tot</span></code></a> must be a multiple of <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/minc" title="f/truncation/minc"><code class="xref f f-var docutils literal notranslate"><span class="pre">minc</span></code></a> (see below)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_phi_tot/minc</span></code> must be a multiple of 4</p></li>
+<li><p><a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_phi_tot" title="f/truncation/n_phi_tot"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_phi_tot</span></code></a> must be a multiple of 16</p></li>
 </ul>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The possible values for <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_phi_max" title="f/truncation/n_phi_max"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_phi_max</span></code></a> are thus: 16, 32, 48, 64, 96, 128, 192, 256, 288? 320, 384, 400, 512, 576, 640, 768, 864, 1024, 1280, 1536, 1792, 2048, …</p>
+<p class="admonition-title">Note</p>
+<p>The possible values for <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_phi_max" title="f/truncation/n_phi_max"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_phi_max</span></code></a> are thus: 16, 32, 48, 64, 96, 128, 192, 256, 288? 320, 384, 400, 512, 576, 640, 768, 864, 1024, 1280, 1536, 1792, 2048, …</p>
 </div>
 </li>
-<li><p class="first"><strong>l_axi</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/l_axi" title="f/truncation/l_axi"><code class="xref f f-var docutils literal notranslate"><span class="pre">l_axi=.false.</span></code></a>) is a logical. When set to true, one considers only the axisymmetric mode (i.e. MagIC becomes a 2-D axisymmetric code).</p>
-</li>
-<li><p class="first"><strong>n_theta_axi</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_theta_axi" title="f/truncation/n_theta_axi"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_theta_axi=0</span></code></a>) is an integer which gives the number of latitudinal grid points when MagIC computes only the axisymmetric mode.</p>
-</li>
-<li><p class="first"><strong>fd_order</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/fd_order" title="f/truncation/fd_order"><code class="xref f f-var docutils literal notranslate"><span class="pre">fd_order=2</span></code></a>) is an integer. This is the order of the finite difference scheme for the bulk points (possible values are 2, 4, 6).</p>
-</li>
-<li><p class="first"><strong>fd_order_bound</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/fd_order_bound" title="f/truncation/fd_order_bound"><code class="xref f f-var docutils literal notranslate"><span class="pre">fd_order_bound=2</span></code></a>) is an integer. This is the order of the finite difference scheme for the boundary points (possible values are 1,2,3,4,5,6, …). This has to be smaller than the order of the scheme used for the bulk points.</p>
-</li>
-<li><p class="first"><strong>fd_stretch</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/fd_stretch" title="f/truncation/fd_stretch"><code class="xref f f-var docutils literal notranslate"><span class="pre">fd_stretch=0.3</span></code></a>) is a real. It controls the ratio between the number of points in the boundary layers and in the bulk.</p>
-</li>
-<li><p class="first"><strong>fd_ratio</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/fd_ratio" title="f/truncation/fd_ratio"><code class="xref f f-var docutils literal notranslate"><span class="pre">fd_ratio=0.1</span></code></a>) is a real. It controls the ratio between the smallest grid spacing and the largest grid spacing.</p>
+<li><p><strong>l_axi</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/l_axi" title="f/truncation/l_axi"><code class="xref f f-var docutils literal notranslate"><span class="pre">l_axi=.false.</span></code></a>) is a logical. When set to true, one considers only the axisymmetric mode (i.e. MagIC becomes a 2-D axisymmetric code).</p></li>
+<li><p><strong>n_theta_axi</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_theta_axi" title="f/truncation/n_theta_axi"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_theta_axi=0</span></code></a>) is an integer which gives the number of latitudinal grid points when MagIC computes only the axisymmetric mode.</p></li>
+<li><p><strong>fd_order</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/fd_order" title="f/truncation/fd_order"><code class="xref f f-var docutils literal notranslate"><span class="pre">fd_order=2</span></code></a>) is an integer. This is the order of the finite difference scheme for the bulk points (possible values are 2, 4, 6).</p></li>
+<li><p><strong>fd_order_bound</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/fd_order_bound" title="f/truncation/fd_order_bound"><code class="xref f f-var docutils literal notranslate"><span class="pre">fd_order_bound=2</span></code></a>) is an integer. This is the order of the finite difference scheme for the boundary points (possible values are 1,2,3,4,5,6, …). This has to be smaller than the order of the scheme used for the bulk points.</p></li>
+<li><p><strong>fd_stretch</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/fd_stretch" title="f/truncation/fd_stretch"><code class="xref f f-var docutils literal notranslate"><span class="pre">fd_stretch=0.3</span></code></a>) is a real. It controls the ratio between the number of points in the boundary layers and in the bulk.</p></li>
+<li><p><strong>fd_ratio</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/fd_ratio" title="f/truncation/fd_ratio"><code class="xref f f-var docutils literal notranslate"><span class="pre">fd_ratio=0.1</span></code></a>) is a real. It controls the ratio between the smallest grid spacing and the largest grid spacing.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">When <cite>fd_ratio</cite> is set to 1, the radial grid is regularly-spaced.</p>
+<p class="admonition-title">Note</p>
+<p>When <cite>fd_ratio</cite> is set to 1, the radial grid is regularly-spaced.</p>
 </div>
 </li>
-<li><p class="first"><strong>l_var_l</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/logic/l_var_l" title="f/logic/l_var_l"><code class="xref f f-var docutils literal notranslate"><span class="pre">l_var_l=.false.</span></code></a>) is a logical. The spherical harmonic degree is a function of radius, when set to true. This practically reduces the number of spherical harmonic transforms in parts of the fluid domain but it comes at the price of an MPI inbalance. This feature is useful when computing full sphere geometry to avoid a too severe time step limitation close to the center. Right now the form of the radial dependence follows:</p>
+<li><p><strong>l_var_l</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/logic/l_var_l" title="f/logic/l_var_l"><code class="xref f f-var docutils literal notranslate"><span class="pre">l_var_l=.false.</span></code></a>) is a logical. The spherical harmonic degree is a function of radius, when set to true. This practically reduces the number of spherical harmonic transforms in parts of the fluid domain but it comes at the price of an MPI inbalance. This feature is useful when computing full sphere geometry to avoid a too severe time step limitation close to the center. Right now the form of the radial dependence follows:</p>
 <div class="math notranslate nohighlight">
 \[\ell(r) = 1+(\ell_{\hbox{max}}-1)\sqrt{\frac{r}{r_o}}\]</div>
 </li>
@@ -157,19 +151,19 @@
 <div class="section" id="inner-core">
 <h2>Inner Core<a class="headerlink" href="#inner-core" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><strong>n_r_ic_max</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_r_ic_max" title="f/truncation/n_r_ic_max"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_r_ic_max=17</span></code></a>) is an integer which gives the number of grid points in the radial direction in the inner core (<span class="math notranslate nohighlight">\([0,r_i]\)</span>). It too, must be of the form <code class="docutils literal notranslate"><span class="pre">4*n+1</span></code>, where <code class="docutils literal notranslate"><span class="pre">n</span></code> is an integer.</li>
-<li><strong>n_cheb_ic_max</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_cheb_ic_max" title="f/truncation/n_cheb_ic_max"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_cheb_ic_max=15</span></code></a>) is the number of terms in the Chebyshev polynomial expansion in the radial direction in the inner core. Only Chebyshev polynomials of even degrees are used in the expansion giving the highest degree used to be <code class="docutils literal notranslate"><span class="pre">2*n_cheb_ic_max-2</span></code>. Note that here too, <code class="docutils literal notranslate"><span class="pre">n_cheb_ic_max</span> <span class="pre">&lt;=</span> <span class="pre">n_r_max</span></code>.</li>
+<li><p><strong>n_r_ic_max</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_r_ic_max" title="f/truncation/n_r_ic_max"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_r_ic_max=17</span></code></a>) is an integer which gives the number of grid points in the radial direction in the inner core (<span class="math notranslate nohighlight">\([0,r_i]\)</span>). It too, must be of the form <code class="docutils literal notranslate"><span class="pre">4*n+1</span></code>, where <code class="docutils literal notranslate"><span class="pre">n</span></code> is an integer.</p></li>
+<li><p><strong>n_cheb_ic_max</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_cheb_ic_max" title="f/truncation/n_cheb_ic_max"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_cheb_ic_max=15</span></code></a>) is the number of terms in the Chebyshev polynomial expansion in the radial direction in the inner core. Only Chebyshev polynomials of even degrees are used in the expansion giving the highest degree used to be <code class="docutils literal notranslate"><span class="pre">2*n_cheb_ic_max-2</span></code>. Note that here too, <code class="docutils literal notranslate"><span class="pre">n_cheb_ic_max</span> <span class="pre">&lt;=</span> <span class="pre">n_r_max</span></code>.</p></li>
 </ul>
 </div>
 <div class="section" id="symmetry-and-aliasing">
 <h2>Symmetry and aliasing<a class="headerlink" href="#symmetry-and-aliasing" title="Permalink to this headline">¶</a></h2>
 <ul class="simple" id="varminc">
-<li><strong>minc</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/minc" title="f/truncation/minc"><code class="xref f f-var docutils literal notranslate"><span class="pre">minc=1</span></code></a>) is an integer which gives the longitudinal symmetry. e.g: <code class="docutils literal notranslate"><span class="pre">minc=n</span></code> would give an n-fold rotational symmetry in the azimuthal direction. One can use this to reduce computational costs when the symmetry of the solution is known. The orders of the spherical harmonic expansion (<code class="docutils literal notranslate"><span class="pre">m</span></code>) are multiples of <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/minc" title="f/truncation/minc"><code class="xref f f-var docutils literal notranslate"><span class="pre">minc</span></code></a>.</li>
-<li><strong>nalias</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/nalias" title="f/truncation/nalias"><code class="xref f f-var docutils literal notranslate"><span class="pre">nalias=20</span></code></a>) is an integer which determines antialiasing used in the spherical harmonic representation. Note that <code class="docutils literal notranslate"><span class="pre">20</span> <span class="pre">&lt;=</span> <span class="pre">nalias</span> <span class="pre">&lt;=</span> <span class="pre">30</span></code>.</li>
+<li><p><strong>minc</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/minc" title="f/truncation/minc"><code class="xref f f-var docutils literal notranslate"><span class="pre">minc=1</span></code></a>) is an integer which gives the longitudinal symmetry. e.g: <code class="docutils literal notranslate"><span class="pre">minc=n</span></code> would give an n-fold rotational symmetry in the azimuthal direction. One can use this to reduce computational costs when the symmetry of the solution is known. The orders of the spherical harmonic expansion (<code class="docutils literal notranslate"><span class="pre">m</span></code>) are multiples of <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/minc" title="f/truncation/minc"><code class="xref f f-var docutils literal notranslate"><span class="pre">minc</span></code></a>.</p></li>
+<li><p><strong>nalias</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/nalias" title="f/truncation/nalias"><code class="xref f f-var docutils literal notranslate"><span class="pre">nalias=20</span></code></a>) is an integer which determines antialiasing used in the spherical harmonic representation. Note that <code class="docutils literal notranslate"><span class="pre">20</span> <span class="pre">&lt;=</span> <span class="pre">nalias</span> <span class="pre">&lt;=</span> <span class="pre">30</span></code>.</p></li>
 </ul>
 <p>The number of grid points in latitude <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_theta_max" title="f/truncation/n_theta_max"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_theta_max</span> <span class="pre">=</span> <span class="pre">n_phi_tot/2</span></code></a>. The maximum degree (<a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/l_max" title="f/truncation/l_max"><code class="xref f f-var docutils literal notranslate"><span class="pre">l_max</span></code></a>) and maximum order (<a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/m_max" title="f/truncation/m_max"><code class="xref f f-var docutils literal notranslate"><span class="pre">m_max</span></code></a>) of the spherical harmonic expansion are determined by <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/nalias" title="f/truncation/nalias"><code class="xref f f-var docutils literal notranslate"><span class="pre">nalias</span></code></a>:</p>
 <blockquote>
-<div><div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="n">l_max</span> <span class="o">=</span> <span class="p">(</span><span class="n">nalias</span> <span class="o">*</span> <span class="n">n_theta_max</span><span class="p">)</span><span class="o">/</span><span class="mi">30</span>
+<div><div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="n">l_max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">nalias</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n_theta_max</span><span class="p">)</span><span class="o">/</span><span class="mi">30</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -177,13 +171,15 @@
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../contents.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Grid namelist</a><ul>
 <li><a class="reference internal" href="#outer-core">Outer Core</a></li>
 <li><a class="reference internal" href="#inner-core">Inner Core</a></li>
@@ -192,12 +188,17 @@
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="namelists.html"
-                        title="previous chapter">Input parameters</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="controlNamelist.html"
-                        title="next chapter">Control namelist</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="namelists.html"
+                          title="previous chapter">Input parameters</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="controlNamelist.html"
+                          title="next chapter">Control namelist</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -206,17 +207,15 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -240,12 +239,13 @@
           <a href="namelists.html" title="Input parameters"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../contents.html">Magic 6.0 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="namelists.html" >Input parameters</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="namelists.html" >Input parameters</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Grid namelist</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
     </div>
   </body>
 </html>
