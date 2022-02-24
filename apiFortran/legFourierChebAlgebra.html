@@ -155,7 +155,7 @@
 <li><p><span class="sig-name descname">% </span><span class="sig-name descname">order_boundary</span><em> [</em><em>integer</em><em>]</em></p></li>
 <li><p><span class="sig-name descname">% </span><span class="sig-name descname">rmat</span> (,)<em> [</em><em>real</em><em>,</em><em>allocatable</em><em>]</em></p></li>
 <li><p><span class="sig-name descname">% </span><span class="sig-name descname">rnorm</span><em> [</em><em>real</em><em>]</em></p></li>
-<li><p><span class="sig-name descname">% </span><span class="sig-name descname">version</span><em> [</em><em>character</em><em>]</em></p></li>
+<li><p><span class="sig-name descname">% </span><span class="sig-name descname">version</span><em> [</em><em>character(len=72)</em><em>]</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -562,15 +562,13 @@ Spaced Grids, Bengt Fornberg, Mathematics of compuation, 51, 184, 1988, 699-706<
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>z</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: grid points where approximations are to be accurate</p></li>
 <li><p><strong>x</strong> (1 + <a class="reference internal" href="#f/fft/nd" title="f/fft/nd">nd</a>)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: hrid point locations</p></li>
+<li><p><strong>nd</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-1 + shape(x, 0)</em><em>]</em> :: dimension of <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">c</span></code></p></li>
 <li><p><strong>m</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: highest deriative for which weights are sought</p></li>
 <li><p><strong>c</strong> (1 + <a class="reference internal" href="#f/fft/nd" title="f/fft/nd">nd</a>,1 + m)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></p></li>
 </ul>
 </dd>
-<dt class="field-even">Options</dt>
-<dd class="field-even"><p><strong>nd</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-1 + shape(x, 0)</em><em>]</em> :: dimension of <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">c</span></code></p>
-</dd>
-<dt class="field-odd">Called from</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/finite_differences/get_fd_coeffs" title="f/finite_differences/get_fd_coeffs"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_fd_coeffs()</span></code></a></p>
+<dt class="field-even">Called from</dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/finite_differences/get_fd_coeffs" title="f/finite_differences/get_fd_coeffs"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_fd_coeffs()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1169,18 +1167,16 @@ where <code class="docutils literal notranslate"><span class="pre">c(k)=a(k)+i*b
 <li><p><strong>ifax</strong> (*)<em> [</em><em>integer</em><em>,</em><em>inout</em><em>]</em> :: previously prepared list of factors of n/2</p></li>
 <li><p><strong>inc</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: increment within each data vector</p></li>
 <li><p><strong>jump</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: increment between the start of each data vector</p></li>
+<li><p><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-lot + shape(work, 0)) / lot</em><em>]</em> :: length of the data vectors</p></li>
 <li><p><strong>lot</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: number of data vectors</p></li>
 <li><p><strong>isign</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: sign of the FFT</p></li>
 </ul>
 </dd>
-<dt class="field-even">Options</dt>
-<dd class="field-even"><p><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-lot + shape(work, 0)) / lot</em><em>]</em> :: length of the data vectors</p>
+<dt class="field-even">Called from</dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/fft/fft_to_real" title="f/fft/fft_to_real"><code class="xref f f-func docutils literal notranslate"><span class="pre">fft_to_real()</span></code></a>, <a class="reference internal" href="#f/fft/fft_many" title="f/fft/fft_many"><code class="xref f f-func docutils literal notranslate"><span class="pre">fft_many()</span></code></a>, <a class="reference internal" href="#f/fft/ifft_many" title="f/fft/ifft_many"><code class="xref f f-func docutils literal notranslate"><span class="pre">ifft_many()</span></code></a></p>
 </dd>
-<dt class="field-odd">Called from</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/fft/fft_to_real" title="f/fft/fft_to_real"><code class="xref f f-func docutils literal notranslate"><span class="pre">fft_to_real()</span></code></a>, <a class="reference internal" href="#f/fft/fft_many" title="f/fft/fft_many"><code class="xref f f-func docutils literal notranslate"><span class="pre">fft_many()</span></code></a>, <a class="reference internal" href="#f/fft/ifft_many" title="f/fft/ifft_many"><code class="xref f f-func docutils literal notranslate"><span class="pre">ifft_many()</span></code></a></p>
-</dd>
-<dt class="field-even">Call to</dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/fft/fft99a" title="f/fft/fft99a"><code class="xref f f-func docutils literal notranslate"><span class="pre">fft99a()</span></code></a>, <a class="reference internal" href="#f/fft/vpassm" title="f/fft/vpassm"><code class="xref f f-func docutils literal notranslate"><span class="pre">vpassm()</span></code></a>, <a class="reference internal" href="#f/fft/fft99b" title="f/fft/fft99b"><code class="xref f f-func docutils literal notranslate"><span class="pre">fft99b()</span></code></a></p>
+<dt class="field-odd">Call to</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#f/fft/fft99a" title="f/fft/fft99a"><code class="xref f f-func docutils literal notranslate"><span class="pre">fft99a()</span></code></a>, <a class="reference internal" href="#f/fft/vpassm" title="f/fft/vpassm"><code class="xref f f-func docutils literal notranslate"><span class="pre">vpassm()</span></code></a>, <a class="reference internal" href="#f/fft/fft99b" title="f/fft/fft99b"><code class="xref f f-func docutils literal notranslate"><span class="pre">fft99b()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2123,8 +2119,10 @@ inner core.</p>
 <li><p><strong>nx</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
 <li><p><strong>ny</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
 <li><p><strong>l_pivot</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>nfull</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
 </ul>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p><strong>nfull</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2250,8 +2248,10 @@ inner core.</p>
 <li><p><strong>nx</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
 <li><p><strong>ny</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
 <li><p><strong>l_pivot</strong><em> [</em><em>logical</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>nfull</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
 </ul>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p><strong>nfull</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2493,18 +2493,14 @@ to solve  a * x = b for a single real vector b</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>abd</strong> (1 + 2 * kl + ku,n)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></p></li>
 <li><p><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>kl</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-1 - ku + shape(abd, 0)) / 2</em><em>]</em></p></li>
+<li><p><strong>ku</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-1 - 2 * kl + shape(abd, 0)</em><em>]</em></p></li>
 <li><p><strong>pivot</strong> (n)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
 <li><p><strong>rhs</strong> (n)<em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em></p></li>
 </ul>
 </dd>
-<dt class="field-even">Options</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>kl</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-1 - ku + shape(abd, 0)) / 2</em><em>]</em></p></li>
-<li><p><strong>ku</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-1 - 2 * kl + shape(abd, 0)</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-odd">Called from</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/algebra/solve_bordered_real_rhs" title="f/algebra/solve_bordered_real_rhs"><code class="xref f f-func docutils literal notranslate"><span class="pre">solve_bordered_real_rhs()</span></code></a>, <a class="reference internal" href="#f/algebra/solve_bordered_complex_rhs" title="f/algebra/solve_bordered_complex_rhs"><code class="xref f f-func docutils literal notranslate"><span class="pre">solve_bordered_complex_rhs()</span></code></a></p>
+<dt class="field-even">Called from</dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/algebra/solve_bordered_real_rhs" title="f/algebra/solve_bordered_real_rhs"><code class="xref f f-func docutils literal notranslate"><span class="pre">solve_bordered_real_rhs()</span></code></a>, <a class="reference internal" href="#f/algebra/solve_bordered_complex_rhs" title="f/algebra/solve_bordered_complex_rhs"><code class="xref f f-func docutils literal notranslate"><span class="pre">solve_bordered_complex_rhs()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2517,14 +2513,10 @@ to solve  a * x = b for a single real vector b</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>abd</strong> (1 + 2 * kl + ku,n)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></p></li>
 <li><p><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
-<li><p><strong>pivot</strong> (n)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>rhs</strong> (n)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Options</dt>
-<dd class="field-even"><ul class="simple">
 <li><p><strong>kl</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-1 - ku + shape(abd, 0)) / 2</em><em>]</em></p></li>
 <li><p><strong>ku</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-1 - 2 * kl + shape(abd, 0)</em><em>]</em></p></li>
+<li><p><strong>pivot</strong> (n)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>rhs</strong> (n)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2538,19 +2530,15 @@ to solve  a * x = b for a single real vector b</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>abd</strong> (1 + 2 * kl + ku,n)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></p></li>
 <li><p><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>kl</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-1 - ku + shape(abd, 0)) / 2</em><em>]</em></p></li>
+<li><p><strong>ku</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-1 - 2 * kl + shape(abd, 0)</em><em>]</em></p></li>
 <li><p><strong>pivot</strong> (n)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
 <li><p><strong>rhs</strong> (,)<em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em></p></li>
 <li><p><strong>nrhss</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
 </ul>
 </dd>
-<dt class="field-even">Options</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>kl</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-1 - ku + shape(abd, 0)) / 2</em><em>]</em></p></li>
-<li><p><strong>ku</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-1 - 2 * kl + shape(abd, 0)</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-odd">Called from</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/algebra/solve_bordered_real_rhs_multi" title="f/algebra/solve_bordered_real_rhs_multi"><code class="xref f f-func docutils literal notranslate"><span class="pre">solve_bordered_real_rhs_multi()</span></code></a>, <a class="reference internal" href="#f/algebra/prepare_bordered" title="f/algebra/prepare_bordered"><code class="xref f f-func docutils literal notranslate"><span class="pre">prepare_bordered()</span></code></a></p>
+<dt class="field-even">Called from</dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/algebra/solve_bordered_real_rhs_multi" title="f/algebra/solve_bordered_real_rhs_multi"><code class="xref f f-func docutils literal notranslate"><span class="pre">solve_bordered_real_rhs_multi()</span></code></a>, <a class="reference internal" href="#f/algebra/prepare_bordered" title="f/algebra/prepare_bordered"><code class="xref f f-func docutils literal notranslate"><span class="pre">prepare_bordered()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2563,18 +2551,14 @@ to solve  a * x = b for a single real vector b</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>abd</strong> (1 + 2 * kl + ku,n)<em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em></p></li>
 <li><p><strong>n</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>kl</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-1 - ku + shape(abd, 0)) / 2</em><em>]</em></p></li>
+<li><p><strong>ku</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-1 - 2 * kl + shape(abd, 0)</em><em>]</em></p></li>
 <li><p><strong>pivot</strong> (n)<em> [</em><em>integer</em><em>,</em><em>out</em><em>]</em></p></li>
 <li><p><strong>info</strong><em> [</em><em>integer</em><em>,</em><em>out</em><em>]</em></p></li>
 </ul>
 </dd>
-<dt class="field-even">Options</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>kl</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-1 - ku + shape(abd, 0)) / 2</em><em>]</em></p></li>
-<li><p><strong>ku</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-1 - 2 * kl + shape(abd, 0)</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-odd">Called from</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/algebra/prepare_bordered" title="f/algebra/prepare_bordered"><code class="xref f f-func docutils literal notranslate"><span class="pre">prepare_bordered()</span></code></a></p>
+<dt class="field-even">Called from</dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/algebra/prepare_bordered" title="f/algebra/prepare_bordered"><code class="xref f f-func docutils literal notranslate"><span class="pre">prepare_bordered()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2665,20 +2649,16 @@ to solve  a * x = b for a single real vector b</p>
 <li><p><strong>a4</strong> (n_boundaries,n_boundaries)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></p></li>
 <li><p><strong>lena1</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
 <li><p><strong>n_boundaries</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>kl</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-1 - ku + shape(a1, 0)) / 2</em><em>]</em></p></li>
+<li><p><strong>ku</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-1 - 2 * kl + shape(a1, 0)</em><em>]</em></p></li>
 <li><p><strong>pivota1</strong> (lena1)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
 <li><p><strong>pivota4</strong> (n_boundaries)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
 <li><p><strong>rhs</strong> (lenrhs)<em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em></p></li>
 <li><p><strong>lenrhs</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
 </ul>
 </dd>
-<dt class="field-even">Options</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>kl</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-1 - ku + shape(a1, 0)) / 2</em><em>]</em></p></li>
-<li><p><strong>ku</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-1 - 2 * kl + shape(a1, 0)</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-odd">Call to</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/algebra/solve_band_real_rhs" title="f/algebra/solve_band_real_rhs"><code class="xref f f-func docutils literal notranslate"><span class="pre">solve_band_real_rhs()</span></code></a>, <a class="reference internal" href="#f/algebra/solve_mat_real_rhs" title="f/algebra/solve_mat_real_rhs"><code class="xref f f-func docutils literal notranslate"><span class="pre">solve_mat_real_rhs()</span></code></a>, <a class="reference internal" href="#f/algebra/gemv" title="f/algebra/gemv"><code class="xref f f-func docutils literal notranslate"><span class="pre">gemv()</span></code></a></p>
+<dt class="field-even">Call to</dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/algebra/solve_band_real_rhs" title="f/algebra/solve_band_real_rhs"><code class="xref f f-func docutils literal notranslate"><span class="pre">solve_band_real_rhs()</span></code></a>, <a class="reference internal" href="#f/algebra/solve_mat_real_rhs" title="f/algebra/solve_mat_real_rhs"><code class="xref f f-func docutils literal notranslate"><span class="pre">solve_mat_real_rhs()</span></code></a>, <a class="reference internal" href="#f/algebra/gemv" title="f/algebra/gemv"><code class="xref f f-func docutils literal notranslate"><span class="pre">gemv()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2696,20 +2676,16 @@ to solve  a * x = b for a single real vector b</p>
 <li><p><strong>a4</strong> (n_boundaries,n_boundaries)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></p></li>
 <li><p><strong>lena1</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
 <li><p><strong>n_boundaries</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>kl</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-1 - ku + shape(a1, 0)) / 2</em><em>]</em></p></li>
+<li><p><strong>ku</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-1 - 2 * kl + shape(a1, 0)</em><em>]</em></p></li>
 <li><p><strong>pivota1</strong> (lena1)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
 <li><p><strong>pivota4</strong> (n_boundaries)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
 <li><p><strong>rhs</strong> (lenrhs)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></p></li>
 <li><p><strong>lenrhs</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
 </ul>
 </dd>
-<dt class="field-even">Options</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>kl</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-1 - ku + shape(a1, 0)) / 2</em><em>]</em></p></li>
-<li><p><strong>ku</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-1 - 2 * kl + shape(a1, 0)</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-odd">Call to</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/algebra/solve_band_real_rhs" title="f/algebra/solve_band_real_rhs"><code class="xref f f-func docutils literal notranslate"><span class="pre">solve_band_real_rhs()</span></code></a>, <a class="reference internal" href="#f/algebra/solve_mat_real_rhs" title="f/algebra/solve_mat_real_rhs"><code class="xref f f-func docutils literal notranslate"><span class="pre">solve_mat_real_rhs()</span></code></a>, <a class="reference internal" href="#f/algebra/gemv" title="f/algebra/gemv"><code class="xref f f-func docutils literal notranslate"><span class="pre">gemv()</span></code></a></p>
+<dt class="field-even">Call to</dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/algebra/solve_band_real_rhs" title="f/algebra/solve_band_real_rhs"><code class="xref f f-func docutils literal notranslate"><span class="pre">solve_band_real_rhs()</span></code></a>, <a class="reference internal" href="#f/algebra/solve_mat_real_rhs" title="f/algebra/solve_mat_real_rhs"><code class="xref f f-func docutils literal notranslate"><span class="pre">solve_mat_real_rhs()</span></code></a>, <a class="reference internal" href="#f/algebra/gemv" title="f/algebra/gemv"><code class="xref f f-func docutils literal notranslate"><span class="pre">gemv()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2727,20 +2703,16 @@ to solve  a * x = b for a single real vector b</p>
 <li><p><strong>a4</strong> (n_boundaries,n_boundaries)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></p></li>
 <li><p><strong>lena1</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
 <li><p><strong>n_boundaries</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>kl</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-1 - ku + shape(a1, 0)) / 2</em><em>]</em></p></li>
+<li><p><strong>ku</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-1 - 2 * kl + shape(a1, 0)</em><em>]</em></p></li>
 <li><p><strong>pivota1</strong> (lena1)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
 <li><p><strong>pivota4</strong> (n_boundaries)<em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
 <li><p><strong>rhs</strong> (,)<em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em></p></li>
 <li><p><strong>nrhss</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
 </ul>
 </dd>
-<dt class="field-even">Options</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>kl</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-1 - ku + shape(a1, 0)) / 2</em><em>]</em></p></li>
-<li><p><strong>ku</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-1 - 2 * kl + shape(a1, 0)</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-odd">Call to</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/algebra/solve_band_real_rhs_multi" title="f/algebra/solve_band_real_rhs_multi"><code class="xref f f-func docutils literal notranslate"><span class="pre">solve_band_real_rhs_multi()</span></code></a>, <a class="reference internal" href="#f/algebra/solve_mat_real_rhs_multi" title="f/algebra/solve_mat_real_rhs_multi"><code class="xref f f-func docutils literal notranslate"><span class="pre">solve_mat_real_rhs_multi()</span></code></a>, <a class="reference internal" href="#f/algebra/gemm" title="f/algebra/gemm"><code class="xref f f-func docutils literal notranslate"><span class="pre">gemm()</span></code></a></p>
+<dt class="field-even">Call to</dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/algebra/solve_band_real_rhs_multi" title="f/algebra/solve_band_real_rhs_multi"><code class="xref f f-func docutils literal notranslate"><span class="pre">solve_band_real_rhs_multi()</span></code></a>, <a class="reference internal" href="#f/algebra/solve_mat_real_rhs_multi" title="f/algebra/solve_mat_real_rhs_multi"><code class="xref f f-func docutils literal notranslate"><span class="pre">solve_mat_real_rhs_multi()</span></code></a>, <a class="reference internal" href="#f/algebra/gemm" title="f/algebra/gemm"><code class="xref f f-func docutils literal notranslate"><span class="pre">gemm()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2758,22 +2730,18 @@ to solve  a * x = b for a single real vector b</p>
 <li><p><strong>a4</strong> (n_boundaries,n_boundaries)<em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em></p></li>
 <li><p><strong>lena1</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
 <li><p><strong>n_boundaries</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>kl</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-1 - ku + shape(a1, 0)) / 2</em><em>]</em></p></li>
+<li><p><strong>ku</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-1 - 2 * kl + shape(a1, 0)</em><em>]</em></p></li>
 <li><p><strong>pivota1</strong> (lena1)<em> [</em><em>integer</em><em>,</em><em>out</em><em>]</em></p></li>
 <li><p><strong>pivota4</strong> (n_boundaries)<em> [</em><em>integer</em><em>,</em><em>out</em><em>]</em></p></li>
 <li><p><strong>info</strong><em> [</em><em>integer</em><em>,</em><em>out</em><em>]</em></p></li>
 </ul>
 </dd>
-<dt class="field-even">Options</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>kl</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-1 - ku + shape(a1, 0)) / 2</em><em>]</em></p></li>
-<li><p><strong>ku</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-1 - 2 * kl + shape(a1, 0)</em><em>]</em></p></li>
-</ul>
+<dt class="field-even">Called from</dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/dense_matrices/prepare" title="f/dense_matrices/prepare"><code class="xref f f-func docutils literal notranslate"><span class="pre">prepare()</span></code></a></p>
 </dd>
-<dt class="field-odd">Called from</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/dense_matrices/prepare" title="f/dense_matrices/prepare"><code class="xref f f-func docutils literal notranslate"><span class="pre">prepare()</span></code></a></p>
-</dd>
-<dt class="field-even">Call to</dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/algebra/prepare_band" title="f/algebra/prepare_band"><code class="xref f f-func docutils literal notranslate"><span class="pre">prepare_band()</span></code></a>, <a class="reference internal" href="#f/algebra/solve_band_real_rhs_multi" title="f/algebra/solve_band_real_rhs_multi"><code class="xref f f-func docutils literal notranslate"><span class="pre">solve_band_real_rhs_multi()</span></code></a>, <a class="reference internal" href="#f/algebra/prepare_mat" title="f/algebra/prepare_mat"><code class="xref f f-func docutils literal notranslate"><span class="pre">prepare_mat()</span></code></a></p>
+<dt class="field-odd">Call to</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#f/algebra/prepare_band" title="f/algebra/prepare_band"><code class="xref f f-func docutils literal notranslate"><span class="pre">prepare_band()</span></code></a>, <a class="reference internal" href="#f/algebra/solve_band_real_rhs_multi" title="f/algebra/solve_band_real_rhs_multi"><code class="xref f f-func docutils literal notranslate"><span class="pre">solve_band_real_rhs_multi()</span></code></a>, <a class="reference internal" href="#f/algebra/prepare_mat" title="f/algebra/prepare_mat"><code class="xref f f-func docutils literal notranslate"><span class="pre">prepare_mat()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>

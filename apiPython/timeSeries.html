@@ -215,34 +215,53 @@ stacking all the corresponding files from the working directory
 <h1>Averaging the time series<a class="headerlink" href="#averaging-the-time-series" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="magic.AvgField">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">magic.</span></span><span class="sig-name descname"><span class="pre">AvgField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tstart</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dipExtra</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">perpPar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/series.html#AvgField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#magic.AvgField" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class calculates the time-average properties from time series. It will
-store the input starting time in a small file named <code class="docutils literal notranslate"><span class="pre">tInitAvg</span></code>, such that
-the next time you use it you don’t need to give <code class="docutils literal notranslate"><span class="pre">tstart</span></code> again.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Average from t=2.11 and also store the additional dipole.TAG informations</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">AvgField</span><span class="p">(</span><span class="n">tstart</span><span class="o">=</span><span class="mf">2.11</span><span class="p">,</span> <span class="n">dipExtra</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">magic.</span></span><span class="sig-name descname"><span class="pre">AvgField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tstart</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/home/gastine/magic/python/magic/model.json'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datadir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/averages.html#AvgField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#magic.AvgField" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class computes the time-average properties from time series, spectra
+and radial profiles. It will store the input starting time in a small file
+named <code class="docutils literal notranslate"><span class="pre">tInitAvg</span></code>, such that the next time you use it you don’t need to
+provide <code class="docutils literal notranslate"><span class="pre">tstart</span></code> again. By default, the outputs are stored in a 
+fully documented JSON file named avg.json: this is split into several
+categories, namely numerical parameters, physical parameters, time averaged
+scalar quantities, time averaged spectra and time-averaged radial profiles.
+The quantities stored in the JSON file are entirely controlled by an input
+model file wich enlists the different quantities of interest. 
+A default example file named <code class="docutils literal notranslate"><span class="pre">model.json</span></code> is provided in
+<code class="docutils literal notranslate"><span class="pre">$MAGIC_HOME/python/magic</span></code>, and an example of how to build a dedicated one
+is provided below.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Average from t=2.11</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">AvgField</span><span class="p">(</span><span class="n">tstart</span><span class="o">=</span><span class="mf">2.11</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Average only the files that match the pattern N0m2[a-c]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">AvgField</span><span class="p">(</span><span class="n">tstart</span><span class="o">=</span><span class="mf">2.11</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;N0m2[a-c]&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Average only the files that match the pattern N0m2Z*</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">AvgField</span><span class="p">(</span><span class="n">tstart</span><span class="o">=</span><span class="mf">2.11</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;N0m2Z*&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="c1"># print the formatted output</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Custom JSON model to select averages</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">json_model</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;phys_param&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;ek&#39;</span><span class="p">],</span>
+<span class="go">                   &#39;time_series&#39;: { &#39;heat&#39;: [&#39;topnuss&#39;, &#39;botnuss&#39;],</span>
+<span class="go">                                    &#39;e_kin&#39;: [&#39;ekin_pol&#39;, &#39;ekin_tor&#39;],</span>
+<span class="go">                                    &#39;par&#39;: [&#39;rm&#39;] },</span>
+<span class="go">                   &#39;spectra&#39;: {},</span>
+<span class="go">                   &#39;radial_profiles&#39;: {&#39;powerR&#39;: [&#39;viscDiss&#39;, &#39;buoPower&#39;]}</span>
+<span class="go">                 }</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Compute the selected averages in the dirctory mydir                 </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">AvgField</span><span class="p">(</span><span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;mydir&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">json_model</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="magic.AvgField.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tstart</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dipExtra</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">perpPar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/series.html#AvgField.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#magic.AvgField.__init__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tstart</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/home/gastine/magic/python/magic/model.json'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datadir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/averages.html#AvgField.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#magic.AvgField.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tstart</strong> (<em>float</em>) – the starting time for averaging</p></li>
 <li><p><strong>tag</strong> (<em>str</em>) – if you specify an input tag (generic regExp pattern),
 the averaging process will only happen on the time series
 that match this input pattern</p></li>
-<li><p><strong>dipExtra</strong> (<em>bool</em>) – if this parameter is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, then additional
-values extracted from <a class="reference internal" href="../outputFiles/outTimeSeriesStd.html#secdipolefile"><span class="std std-ref">dipole.TAG</span></a>
-are also computed</p></li>
-<li><p><strong>perpPar</strong> (<em>bool</em>) – additional values extracted from <a class="reference internal" href="../outputFiles/outTimeSeriesSupp.html#secperpparfile"><span class="std std-ref">perpPar.TAG</span></a>
-are also computed</p></li>
+<li><p><strong>tstart</strong> (<em>float</em>) – the starting time for averaging</p></li>
+<li><p><strong>datadir</strong> (<em>str</em>) – working directory</p></li>
+<li><p><strong>std</strong> (<em>bool</em>) – compute the standard deviation when set to True</p></li>
+<li><p><strong>write</strong> (<em>bool</em>) – write the outputs in a JSON file</p></li>
+<li><p><strong>model</strong> (<em>str</em>) – this is the path of a JSON file which defines which fields will be
+handled in the time-averaging process. This can be any
+python attributes wich is defined in MagicTs, MagicSpectrum
+or MagicRadial.</p></li>
 </ul>
 </dd>
 </dl>
@@ -250,7 +269,7 @@ are also computed</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="magic.AvgField.__str__">
-<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/series.html#AvgField.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#magic.AvgField.__str__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/averages.html#AvgField.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#magic.AvgField.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Formatted output</p>
 </dd></dl>
 
@@ -258,6 +277,41 @@ are also computed</p></li>
 <dt class="sig sig-object py" id="magic.AvgField.__weakref__">
 <span class="sig-name descname"><span class="pre">__weakref__</span></span><a class="headerlink" href="#magic.AvgField.__weakref__" title="Permalink to this definition">¶</a></dt>
 <dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="magic.AvgField.get_tags">
+<span class="sig-name descname"><span class="pre">get_tags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tstart</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/averages.html#AvgField.get_tags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#magic.AvgField.get_tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>This routine returns a list of tags which have been generated after tstart</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tstart</strong> (<em>float</em>) – starting averaging time</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a list of tags</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="magic.AvgField.write_header">
+<span class="sig-name descname"><span class="pre">write_header</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/averages.html#AvgField.write_header"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#magic.AvgField.write_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write header in case an ascii output is requested</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="magic.AvgField.write_json">
+<span class="sig-name descname"><span class="pre">write_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datadir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/averages.html#AvgField.write_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#magic.AvgField.write_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function writes the averages as a simple JSON file stored in the
+directory ‘avg.json’</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>datadir</strong> (<em>str</em>) – working directory</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
