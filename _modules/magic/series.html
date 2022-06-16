@@ -1,21 +1,22 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>magic.series &#8212; Magic 6.0 documentation</title>
+    <title>magic.series &#8212; Magic 6.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/magic.css" />
     
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Magic 6.0 documentation"
+          title="Search within Magic 6.1 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -87,7 +88,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.1 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">magic.series</a></li> 
       </ul>
@@ -131,6 +132,7 @@
 <span class="sd">       * Earth-likeness of the CMB field: :ref:`earth_like.TAG &lt;secEarthLikeFile&gt;`</span>
 <span class="sd">       * Parallel and perpendicular decomposition: :ref:`perpPar.TAG &lt;secperpParFile&gt;`</span>
 <span class="sd">       * Phase field: :ref:`phase.TAG &lt;secphaseFile&gt;`</span>
+<span class="sd">       * Hemisphericity: :ref:`hemi.TAG &lt;secHemiFile&gt;`</span>
 <span class="sd">       * RMS force balance: :ref:`dtVrms.TAG &lt;secdtVrmsFile&gt;`</span>
 <span class="sd">       * RMS induction terms: :ref:`dtBrms.TAG &lt;secdtBrmsFile&gt;`</span>
 <span class="sd">       * Time-evolution of m-spectra: :ref:`am_[kin|mag]_[pol|tor].TAG &lt;secTimeSpectraFiles&gt;`</span>
@@ -453,6 +455,16 @@
             <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Relative energy fraction in solidus&#39;</span><span class="p">)</span>
             <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">==</span> <span class="s1">&#39;hemi&#39;</span><span class="p">:</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hemi_emag</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Emag&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hemi_br</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;|Br| volume&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hemi_cmb</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;|Br| CMB&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+            <span class="c1">#ax.set_xlim(self.time[0], self.time[-1])</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">==</span> <span class="s1">&#39;earth_like&#39;</span><span class="p">:</span>
             <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
             <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
@@ -693,15 +705,15 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">ekin_tor</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ekin_pol_axi</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ekin_tor_axi</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_pol_symeq</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_tor_symeq</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_pol_asymeq</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">7</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_tor_asymeq</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">8</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_pol_es</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_tor_es</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_pol_es_axi</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">7</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_tor_es_axi</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">8</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ekin_tot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_pol</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_tor</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_es</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_pol_symeq</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_tor_symeq</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_eas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_pol_asymeq</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_tor_asymeq</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_pol_naxi</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ekin_pol</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">ekin_pol_axi</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_tor_naxi</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ekin_tor</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">ekin_tor_axi</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_es</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_pol_es</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_tor_es</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_es_axi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_pol_es_axi</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_tor_es_axi</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_pol_naxi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_pol</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">ekin_pol_axi</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ekin_tor_naxi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ekin_tor</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">ekin_tor_axi</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">==</span> <span class="s1">&#39;e_mag_oc&#39;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">emagoc_pol</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
@@ -712,11 +724,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">ext_nrj_pol_axi</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">emagoc_pol_es</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">7</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">emagoc_tor_es</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">8</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">emagoc_pol_eas</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">9</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">emagoc_tor_eas</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">10</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">emagoc_pol_es_axi</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">9</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">emagoc_tor_es_axi</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">10</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">emag_tot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">emagoc_pol</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">emagoc_tor</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">emag_es</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">emagoc_pol_es</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">emagoc_tor_es</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">emag_eas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">emagoc_pol_eas</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">emagoc_tor_eas</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">emag_es_axi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">emagoc_pol_es_axi</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">emagoc_tor_es_axi</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">==</span> <span class="s1">&#39;e_mag_ic&#39;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">emagic_pol</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
@@ -742,8 +754,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">e_dip_ax</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">12</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ecmb</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">13</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">egeo</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">14</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ratio</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">17</span><span class="p">]</span> <span class="c1"># (e_cmb-e_as_cmb)/e_cmb</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">epol_axi_cmb</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">ratio</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">ecmb</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">ecmb</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ratio_cmb_as</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">16</span><span class="p">]</span> <span class="c1"># (e_cmb-e_es_cmb)/e_cmb</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ratio_cmb_naxi</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">17</span><span class="p">]</span> <span class="c1"># (e_cmb-e_axi_cmb)/e_cmb</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ratio_l11_cmb_as</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">18</span><span class="p">]</span> <span class="c1"># (e_geo-e_es_geo)/e_geo</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ratio_l11_cmb_naxi</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">19</span><span class="p">]</span> <span class="c1"># (e_geo-e_axi_geo)/e_geo</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">epol_axi_cmb</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">ratio_cmb_naxi</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">ecmb</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">ecmb</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dip3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">epol_axi_cmb</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">ecmb</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">e_tot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">e_dip</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">dipTot</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">==</span> <span class="s1">&#39;AM&#39;</span><span class="p">:</span>
@@ -908,6 +923,15 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">flux_cmb</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">flux_icb</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">7</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dEnthdt</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">8</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">==</span> <span class="s1">&#39;hemi&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hemi_vr</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hemi_ekin</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hemi_br</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hemi_emag</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hemi_cmb</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ekin</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">emag</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">7</span><span class="p">]</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">==</span> <span class="s1">&#39;dtVrms&#39;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">InerRms</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
@@ -1043,7 +1067,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -1060,14 +1084,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.1 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">magic.series</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.1.
     </div>
   </body>
 </html>
