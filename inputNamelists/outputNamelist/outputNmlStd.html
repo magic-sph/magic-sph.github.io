@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>Standard time-series outputs &#8212; Magic 6.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
@@ -15,6 +15,7 @@
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
@@ -223,7 +224,7 @@ Those data are stored in the files named <a class="reference internal" href="../
 <ul id="varl-movie">
 <li><p><strong>l_movie</strong> (default <a class="reference internal" href="../../apiFortran/baseModules.html#f/logic/l_movie" title="f/logic/l_movie"><code class="xref f f-var docutils literal notranslate"><span class="pre">l_movie=.false.</span></code></a>) is a logical. It needs to be turned on to get movie computed.</p>
 <p>Several movie-files can be produced during a run (it is now limited to 30 by
-the variable``n_movies_max`` in the module <code class="xref f f-mod docutils literal notranslate"><span class="pre">movie</span></code>). The movies are
+the variable <code class="docutils literal notranslate"><span class="pre">n_movies_max</span></code> in the module <code class="xref f f-mod docutils literal notranslate"><span class="pre">movie</span></code>). The movies are
 defined by a keyword determining the fields to be plotted and an expression
 that determines the nature of movie (<span class="math notranslate nohighlight">\(r\)</span>-slice, <span class="math notranslate nohighlight">\(\theta\)</span>-slice,
 <span class="math notranslate nohighlight">\(\phi\)</span>-slice, etc.). The code searches this information in a
@@ -309,28 +310,40 @@ keywords for movie calculations and their corresponding physical meaning:</p>
 <td><p>Axisymmetric component of the velocity field for <span class="math notranslate nohighlight">\(\phi=cst.\)</span></p></td>
 </tr>
 <tr class="row-odd"><td><p>Vz</p></td>
-<td><p>Vertical component of the velocity  at the equator + vertical component of the vorticity at the equator (closest point to equator).</p></td>
+<td><p>Vertical component of the velocity <span class="math notranslate nohighlight">\(u_z\)</span>.</p></td>
 </tr>
-<tr class="row-even"><td><p>Voz</p></td>
+<tr class="row-even"><td><p>Vs</p></td>
+<td><p>Cylindrical radil component of the velocity <span class="math notranslate nohighlight">\(u_s\)</span>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Voz</p></td>
 <td><p>Vertical component of the vorticity <span class="math notranslate nohighlight">\(\omega_z\)</span>.</p></td>
 </tr>
-<tr class="row-odd"><td><p>Vor</p></td>
+<tr class="row-even"><td><p>Vor</p></td>
 <td><p>Radial component of the vorticity  <span class="math notranslate nohighlight">\(\omega_r\)</span>.</p></td>
 </tr>
-<tr class="row-even"><td><p>Vop</p></td>
+<tr class="row-odd"><td><p>Vop</p></td>
 <td><p>Azimuthal component of vorticity  <span class="math notranslate nohighlight">\(\omega_\phi\)</span></p></td>
 </tr>
-<tr class="row-odd"><td><p>Tem[perature] or Entropy</p></td>
+<tr class="row-even"><td><p>Tem[perature] or Entropy</p></td>
 <td><p>Temperature/Entropy</p></td>
 </tr>
-<tr class="row-even"><td><p>Entropy (or Tem[perature]) AX[ISYMMETRIC] or AT</p></td>
+<tr class="row-odd"><td><p>Entropy (or Tem[perature]) AX[ISYMMETRIC] or AT</p></td>
 <td><p>Axisymmetric temperature/entropy field for <span class="math notranslate nohighlight">\(\phi=cst.\)</span></p></td>
 </tr>
-<tr class="row-odd"><td><p>Heat t[ransport]</p></td>
+<tr class="row-even"><td><p>Heat t[ransport]</p></td>
 <td><p>Radial advection of temperature <span class="math notranslate nohighlight">\(u_r\frac{\partial s}{\partial r}\)</span></p></td>
 </tr>
-<tr class="row-even"><td><p>HEATF AX[iSYMMETRIC]</p></td>
+<tr class="row-odd"><td><p>HEATF AX[iSYMMETRIC]</p></td>
 <td><p>Conducting heat flux <span class="math notranslate nohighlight">\(\partial s /\partial r\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Voz geos</p></td>
+<td><p>Vertical component of the vorticity <span class="math notranslate nohighlight">\(\omega_z\)</span> averaged over the rotation axis.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Vs geos</p></td>
+<td><p>Cylindrical radial component of the velocity <span class="math notranslate nohighlight">\(u_s\)</span> averaged over the rotation axis.</p></td>
+</tr>
+<tr class="row-even"><td><p>Vp geos</p></td>
+<td><p>Azimuthal component of the velocity <span class="math notranslate nohighlight">\(u_\phi\)</span> averaged over the rotation axis.</p></td>
 </tr>
 <tr class="row-odd"><td><p>FL Pro</p></td>
 <td><p>Axisymmetric field line stretching.</p></td>
@@ -593,7 +606,7 @@ desired <code class="docutils literal notranslate"><span class="pre">movie</span
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
   </body>
 </html>

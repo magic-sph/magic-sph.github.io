@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>Support for the spectra files (kin|mag|u2)_spec_#.TAG &#8212; Magic 6.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
@@ -15,6 +15,7 @@
     <script src="../_static/underscore.js"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
@@ -127,6 +128,8 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sp</span> <span class="o">=</span> <span class="n">MagicSpectrum</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;e_kin&#39;</span><span class="p">,</span> <span class="n">ispec</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># display the content of mag_spec_ave.test on one single figure</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sp</span> <span class="o">=</span> <span class="n">MagicSpectrum</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;e_mag&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">ave</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># display both kinetic and magnetic energy spectra on same graph</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sp</span> <span class="o">=</span> <span class="n">MagicSpectrum</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;combined&#39;</span><span class="p">,</span> <span class="n">ave</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="py method">
@@ -146,6 +149,31 @@ the current directory is chosen</p></li>
 <li><p><strong>datadir</strong> (<em>str</em>) – current working directory</p></li>
 <li><p><strong>quiet</strong> (<em>bool</em>) – when set to True, makes the output silent (default False)</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="magic.MagicSpectrum.get_file">
+<span class="sig-name descname"><span class="pre">get_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ispec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datadir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quiet</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/magic/spectrum.html#MagicSpectrum.get_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#magic.MagicSpectrum.get_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>This routine is used to determine which files need do be read
+or stacked. The outputs are stored in a look-up table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ispec</strong> (<em>int</em>) – the number of the spectrum you want to plot</p></li>
+<li><p><strong>datadir</strong> (<em>str</em>) – current working directory</p></li>
+<li><p><strong>tag</strong> (<em>str</em>) – file suffix (tag), if not specified the most recent one in
+the current directory is chosen</p></li>
+<li><p><strong>tags</strong> (<em>list</em>) – a list of tags to be considered</p></li>
+<li><p><strong>quiet</strong> (<em>bool</em>) – when set to True, makes the output silent (default False)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns speclut<span class="colon">:</span></dt>
+<dd class="field-even"><p>a look-up table which contains the different fields</p>
+</dd>
+<dt class="field-odd">Rtype speclut<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -230,8 +258,23 @@ in the current directory is chosen</p></li>
   <div>
     <h3><a href="../contents.html">Table of Contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">Support for the spectra files <code class="docutils literal notranslate"><span class="pre">(kin|mag|u2)_spec_#.TAG</span></code></a></li>
-<li><a class="reference internal" href="#support-for-the-2-d-spectra-files">Support for the 2-D spectra files</a></li>
+<li><a class="reference internal" href="#">Support for the spectra files <code class="docutils literal notranslate"><span class="pre">(kin|mag|u2)_spec_#.TAG</span></code></a><ul>
+<li><a class="reference internal" href="#magic.MagicSpectrum"><code class="docutils literal notranslate"><span class="pre">MagicSpectrum</span></code></a><ul>
+<li><a class="reference internal" href="#magic.MagicSpectrum.__init__"><code class="docutils literal notranslate"><span class="pre">MagicSpectrum.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#magic.MagicSpectrum.get_file"><code class="docutils literal notranslate"><span class="pre">MagicSpectrum.get_file()</span></code></a></li>
+<li><a class="reference internal" href="#magic.MagicSpectrum.plot"><code class="docutils literal notranslate"><span class="pre">MagicSpectrum.plot()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#support-for-the-2-d-spectra-files">Support for the 2-D spectra files</a><ul>
+<li><a class="reference internal" href="#magic.MagicSpectrum2D"><code class="docutils literal notranslate"><span class="pre">MagicSpectrum2D</span></code></a><ul>
+<li><a class="reference internal" href="#magic.MagicSpectrum2D.__init__"><code class="docutils literal notranslate"><span class="pre">MagicSpectrum2D.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#magic.MagicSpectrum2D.plot"><code class="docutils literal notranslate"><span class="pre">MagicSpectrum2D.plot()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
   </div>
@@ -291,7 +334,7 @@ in the current directory is chosen</p></li>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
   </body>
 </html>

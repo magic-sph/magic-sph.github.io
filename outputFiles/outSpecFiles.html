@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>Spectra &#8212; Magic 6.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
@@ -15,6 +15,7 @@
     <script src="../_static/underscore.js"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
@@ -245,8 +246,9 @@ subroutine <a class="reference internal" href="../apiFortran/IOGeneral.html#f/sp
 </section>
 <section id="t-spec-tag">
 <span id="sectspecfile"></span><h2><code class="docutils literal notranslate"><span class="pre">T_spec_#.TAG</span></code><a class="headerlink" href="#t-spec-tag" title="Permalink to this heading">¶</a></h2>
-<p>This file contains the temperature/entropy spectra. It is written by the subroutine
-<a class="reference internal" href="../apiFortran/IOGeneral.html#f/spectra/spectrum_temp" title="f/spectra/spectrum_temp"><code class="xref f f-subr docutils literal notranslate"><span class="pre">spectrum_temp</span></code></a>.</p>
+<p>This file contains the temperature/entropy spectra, those are defined by taking the
+square of temperature/entropy. It is written by the subroutine
+<a class="reference internal" href="../apiFortran/IOGeneral.html#f/spectra/spectrum" title="f/spectra/spectrum"><code class="xref f f-subr docutils literal notranslate"><span class="pre">spectrum</span></code></a>.</p>
 <blockquote>
 <div><table class="docutils align-default">
 <thead>
@@ -259,28 +261,78 @@ subroutine <a class="reference internal" href="../apiFortran/IOGeneral.html#f/sp
 <td><p>degree / order</p></td>
 </tr>
 <tr class="row-odd"><td><p>2</p></td>
-<td><p>RMS temperature/entropy versus degree</p></td>
+<td><p>Square temperature/entropy versus degree</p></td>
 </tr>
 <tr class="row-even"><td><p>3</p></td>
-<td><p>RMS temperature/entropy versus order</p></td>
+<td><p>Square temperature/entropy versus order</p></td>
 </tr>
 <tr class="row-odd"><td><p>4</p></td>
-<td><p>RMS temperature/entropy at the ICB versus degree</p></td>
+<td><p>Square temperature/entropy at the ICB versus degree</p></td>
 </tr>
 <tr class="row-even"><td><p>5</p></td>
-<td><p>RMS temperature/entropy at the ICB versus order</p></td>
+<td><p>Square temperature/entropy at the ICB versus order</p></td>
 </tr>
 <tr class="row-odd"><td><p>6</p></td>
-<td><p>RMS radial derivative of temperature/entropy at the ICB
+<td><p>Square radial derivative of temperature/entropy at the ICB
 versus degree</p></td>
 </tr>
 <tr class="row-even"><td><p>7</p></td>
-<td><p>RMS radial derivative of temperature/entropy at the ICB
+<td><p>Square radial derivative of temperature/entropy at the ICB
 versus order</p></td>
 </tr>
 </tbody>
 </table>
 </div></blockquote>
+<p>This file can be read using <a class="reference internal" href="../apiPython/spectra.html#magic.MagicSpectrum" title="magic.MagicSpectrum"><code class="xref py py-class docutils literal notranslate"><span class="pre">MagicSpectrum</span></code></a> with the following options:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># To read the file ``T_spec_3.test_a``:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sp</span> <span class="o">=</span> <span class="n">MagicSpectrum</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="n">ispec</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;test_a&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="xi-spec-tag">
+<span id="secxispecfile"></span><h2><code class="docutils literal notranslate"><span class="pre">Xi_spec_#.TAG</span></code><a class="headerlink" href="#xi-spec-tag" title="Permalink to this heading">¶</a></h2>
+<p>This file contains the spectra of chemical composition, this is defined by taking the
+square of chemical composition. It is written by the subroutine
+<a class="reference internal" href="../apiFortran/IOGeneral.html#f/spectra/spectrum" title="f/spectra/spectrum"><code class="xref f f-subr docutils literal notranslate"><span class="pre">spectrum</span></code></a>.</p>
+<blockquote>
+<div><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>No. of column</p></th>
+<th class="head"><p>Contents</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>degree / order</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>Square chemical composition versus degree</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Square chemical composition versus order</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>Square chemical composition at the ICB versus degree</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>Square chemical composition at the ICB versus order</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>Square radial derivative of chemical composition at the ICB
+versus degree</p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>Square radial derivative of chemical composition at the ICB
+versus order</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>This file can be read using <a class="reference internal" href="../apiPython/spectra.html#magic.MagicSpectrum" title="magic.MagicSpectrum"><code class="xref py py-class docutils literal notranslate"><span class="pre">MagicSpectrum</span></code></a> with the following options:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># To read the file ``Xi_spec_ave.test``:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sp</span> <span class="o">=</span> <span class="n">MagicSpectrum</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;Xi&#39;</span><span class="p">,</span> <span class="n">ave</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 <section id="d-spectra-2d-kin-mag-spec-tag-and-2d-kin-mag-spec-ave-tag">
 <span id="sec2dspectra"></span><h2>2D spectra <code class="docutils literal notranslate"><span class="pre">2D_[kin|mag]_spec_#.TAG</span></code> and <code class="docutils literal notranslate"><span class="pre">2D_[kin|mag]_spec_ave.TAG</span></code><a class="headerlink" href="#d-spectra-2d-kin-mag-spec-tag-and-2d-kin-mag-spec-ave-tag" title="Permalink to this heading">¶</a></h2>
@@ -871,6 +923,7 @@ files):</p>
 <li><a class="reference internal" href="#mag-spec-tag"><code class="docutils literal notranslate"><span class="pre">mag_spec_#.TAG</span></code></a></li>
 <li><a class="reference internal" href="#u2-spec-tag"><code class="docutils literal notranslate"><span class="pre">u2_spec_#.TAG</span></code></a></li>
 <li><a class="reference internal" href="#t-spec-tag"><code class="docutils literal notranslate"><span class="pre">T_spec_#.TAG</span></code></a></li>
+<li><a class="reference internal" href="#xi-spec-tag"><code class="docutils literal notranslate"><span class="pre">Xi_spec_#.TAG</span></code></a></li>
 <li><a class="reference internal" href="#d-spectra-2d-kin-mag-spec-tag-and-2d-kin-mag-spec-ave-tag">2D spectra <code class="docutils literal notranslate"><span class="pre">2D_[kin|mag]_spec_#.TAG</span></code> and <code class="docutils literal notranslate"><span class="pre">2D_[kin|mag]_spec_ave.TAG</span></code></a></li>
 <li><a class="reference internal" href="#kin-spec-ave-tag"><code class="docutils literal notranslate"><span class="pre">kin_spec_ave.TAG</span></code></a></li>
 <li><a class="reference internal" href="#mag-spec-ave-tag"><code class="docutils literal notranslate"><span class="pre">mag_spec_ave.TAG</span></code></a></li>
@@ -939,7 +992,7 @@ files):</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
   </body>
 </html>

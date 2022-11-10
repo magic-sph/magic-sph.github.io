@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>Radial derivatives and integration &#8212; Magic 6.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
@@ -15,6 +15,7 @@
     <script src="../_static/underscore.js"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
           title="Search within Magic 6.1 documentation"
@@ -129,7 +130,7 @@
 <li><p><a class="reference internal" href="baseModules.html#f/precision_mod" title="f/precision_mod: This module controls the precision used in MagIC"><code class="xref f f-mod docutils literal notranslate"><span class="pre">precision_mod</span></code></a>: This module controls the precision used in MagIC</p></li>
 <li><p><a class="reference internal" href="misc.html#f/mem_alloc" title="f/mem_alloc: This little module is used to estimate the global memory allocation used in MagIC"><code class="xref f f-mod docutils literal notranslate"><span class="pre">mem_alloc</span></code></a>: This little module is used to estimate the global memory allocation used in MagIC</p></li>
 <li><p><a class="reference internal" href="legFourierChebAlgebra.html#f/cosine_transform_odd" title="f/cosine_transform_odd: This module contains the built-in type I discrete Cosine Transforms. This implementation is based on Numerical Recipes and FFTPACK. This only works for ``n_r_max-1 = 2**a 3**b 5**c``, with a,b,c integers...."><code class="xref f f-mod docutils literal notranslate"><span class="pre">cosine_transform_odd</span></code></a>: This module contains the built-in type I discrete Cosine Transforms. This implementation is based on Numerical Recipes and FFTPACK. This only works for <code class="docutils literal notranslate"><span class="pre">n_r_max-1</span> <span class="pre">=</span> <span class="pre">2**a</span> <span class="pre">3**b</span> <span class="pre">5**c</span></code>, with a,b,c integers….</p></li>
-<li><p><a class="reference internal" href="legFourierChebAlgebra.html#f/radial_scheme" title="f/radial_scheme: This is an abstract type that defines the radial scheme used in MagIC"><code class="xref f f-mod docutils literal notranslate"><span class="pre">radial_scheme</span></code></a> (<code class="xref f f-func docutils literal notranslate"><span class="pre">type_rscheme()</span></code>): This is an abstract type that defines the radial scheme used in MagIC</p></li>
+<li><p><a class="reference internal" href="legFourierChebAlgebra.html#f/radial_scheme" title="f/radial_scheme: This is an abstract type that defines the radial scheme used in MagIC"><code class="xref f f-mod docutils literal notranslate"><span class="pre">radial_scheme</span></code></a> (<a class="reference internal" href="legFourierChebAlgebra.html#f/radial_scheme/type_rscheme" title="f/radial_scheme/type_rscheme"><code class="xref f f-func docutils literal notranslate"><span class="pre">type_rscheme()</span></code></a>): This is an abstract type that defines the radial scheme used in MagIC</p></li>
 <li><p><a class="reference internal" href="baseModules.html#f/logic" title="f/logic: Module containing the logicals that control the run"><code class="xref f f-mod docutils literal notranslate"><span class="pre">logic</span></code></a> (<a class="reference internal" href="baseModules.html#f/logic/l_finite_diff" title="f/logic/l_finite_diff"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_finite_diff()</span></code></a>): Module containing the logicals that control the run</p></li>
 <li><p><a class="reference internal" href="parallelModules.html#f/parallel_mod" title="f/parallel_mod: This module contains the blocking information"><code class="xref f f-mod docutils literal notranslate"><span class="pre">parallel_mod</span></code></a>: This module contains the blocking information</p></li>
 <li><p><a class="reference internal" href="misc.html#f/useful" title="f/useful: This module contains several useful routines."><code class="xref f f-mod docutils literal notranslate"><span class="pre">useful</span></code></a> (<a class="reference internal" href="misc.html#f/useful/abortrun" title="f/useful/abortrun"><code class="xref f f-func docutils literal notranslate"><span class="pre">abortrun()</span></code></a>): This module contains several useful routines.</p></li>
@@ -171,9 +172,9 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>llm</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>ulm</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>n_r_max</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>llm</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>ulm</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
 </ul>
 </dd>
 <dt class="field-even">Called from<span class="colon">:</span></dt>
@@ -195,7 +196,7 @@
 
 <dl>
 <dt class="sig sig-object f" id="f/radial_der/get_dcheb_complex">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">radial_der/</span></span><span class="sig-name descname"><span class="pre">get_dcheb_complex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">f</span></em>, <em class="sig-param"><span class="pre">df</span></em>, <em class="sig-param"><span class="pre">n_f_max</span></em>, <em class="sig-param"><span class="pre">n_f_start</span></em>, <em class="sig-param"><span class="pre">n_f_stop</span></em>, <em class="sig-param"><span class="pre">n_r_max</span></em>, <em class="sig-param"><span class="pre">n_cheb_max</span></em>, <em class="sig-param"><span class="pre">d_fac</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/radial_der/get_dcheb_complex" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">radial_der/</span></span><span class="sig-name descname"><span class="pre">get_dcheb_complex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">f</span></em>, <em class="sig-param"><span class="pre">df</span></em>, <em class="sig-param"><span class="pre">n_f_max</span></em>, <em class="sig-param"><span class="pre">n_f_start</span></em>, <em class="sig-param"><span class="pre">n_f_stop</span></em>, <em class="sig-param"><span class="pre">n_r_max</span></em>, <em class="sig-param"><span class="pre">n_cheb_max</span></em>, <em class="sig-param"><span class="pre">d_fac</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">use_gpu</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#f/radial_der/get_dcheb_complex" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Returns Chebyshev coeffitients of first derivative df and second
 derivative ddf for a function whose cheb-coeff. are given as
@@ -204,15 +205,18 @@ columns in array f(n_f_max,n_r_max).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: Max no of functions</p></li>
-<li><p><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: No of function to start with</p></li>
-<li><p><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: No of function to stop with</p></li>
-<li><p><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: second dimension of f,df,ddf</p></li>
-<li><p><strong>n_cheb_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Number of cheb modes</p></li>
-<li><p><strong>d_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</p></li>
+<li><p><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>n_f_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: Max no of functions</p></li>
+<li><p><strong>n_f_start</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: No of function to start with</p></li>
+<li><p><strong>n_f_stop</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: No of function to stop with</p></li>
+<li><p><strong>n_r_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: second dimension of f,df,ddf</p></li>
+<li><p><strong>n_cheb_max</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: Number of cheb modes</p></li>
+<li><p><strong>d_fac</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</p></li>
 </ul>
+</dd>
+<dt class="field-even">Options<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>use_gpu</strong><em> [</em><em>logical </em><em>,</em><em>in,</em><em>]</em></p>
 </dd>
 </dl>
 </dd></dl>
@@ -223,11 +227,11 @@ columns in array f(n_f_max,n_r_max).</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>df</strong> (<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: Dimension of f,df,ddf</p></li>
-<li><p><strong>n_cheb_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Number of cheb modes</p></li>
-<li><p><strong>d_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</p></li>
+<li><p><strong>f</strong> (<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>df</strong> (<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>real </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>n_r_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: Dimension of f,df,ddf</p></li>
+<li><p><strong>n_cheb_max</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: Number of cheb modes</p></li>
+<li><p><strong>d_fac</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</p></li>
 </ul>
 </dd>
 </dl>
@@ -235,7 +239,7 @@ columns in array f(n_f_max,n_r_max).</p>
 
 <dl>
 <dt class="sig sig-object f" id="f/radial_der/get_ddcheb">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">radial_der/</span></span><span class="sig-name descname"><span class="pre">get_ddcheb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">f</span></em>, <em class="sig-param"><span class="pre">df</span></em>, <em class="sig-param"><span class="pre">ddf</span></em>, <em class="sig-param"><span class="pre">n_f_max</span></em>, <em class="sig-param"><span class="pre">n_f_start</span></em>, <em class="sig-param"><span class="pre">n_f_stop</span></em>, <em class="sig-param"><span class="pre">n_r_max</span></em>, <em class="sig-param"><span class="pre">n_cheb_max</span></em>, <em class="sig-param"><span class="pre">d_fac</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/radial_der/get_ddcheb" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">radial_der/</span></span><span class="sig-name descname"><span class="pre">get_ddcheb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">f</span></em>, <em class="sig-param"><span class="pre">df</span></em>, <em class="sig-param"><span class="pre">ddf</span></em>, <em class="sig-param"><span class="pre">n_f_max</span></em>, <em class="sig-param"><span class="pre">n_f_start</span></em>, <em class="sig-param"><span class="pre">n_f_stop</span></em>, <em class="sig-param"><span class="pre">n_r_max</span></em>, <em class="sig-param"><span class="pre">n_cheb_max</span></em>, <em class="sig-param"><span class="pre">d_fac</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">use_gpu</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#f/radial_der/get_ddcheb" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Returns Chebyshev coefficients of first derivative df and second
 derivative ddf for a function whose cheb-coeff. are given as
@@ -244,26 +248,29 @@ columns in array f(n_c_tot,n_r_max).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: First dimension of f,df,ddf</p></li>
-<li><p><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: No of column to start with</p></li>
-<li><p><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: No of column to stop with</p></li>
-<li><p><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: second dimension of f,df,ddf</p></li>
-<li><p><strong>n_cheb_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Number of cheb modes</p></li>
-<li><p><strong>d_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</p></li>
+<li><p><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>n_f_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: First dimension of f,df,ddf</p></li>
+<li><p><strong>n_f_start</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: No of column to start with</p></li>
+<li><p><strong>n_f_stop</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: No of column to stop with</p></li>
+<li><p><strong>n_r_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: second dimension of f,df,ddf</p></li>
+<li><p><strong>n_cheb_max</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: Number of cheb modes</p></li>
+<li><p><strong>d_fac</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</p></li>
 </ul>
 </dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/radial_der/get_ddr" title="f/radial_der/get_ddr"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_ddr()</span></code></a></p>
+<dt class="field-even">Options<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>use_gpu</strong><em> [</em><em>logical </em><em>,</em><em>in,</em><em>]</em></p>
+</dd>
+<dt class="field-odd">Called from<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#f/radial_der/get_ddr" title="f/radial_der/get_ddr"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_ddr()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl>
 <dt class="sig sig-object f" id="f/radial_der/get_dddcheb">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">radial_der/</span></span><span class="sig-name descname"><span class="pre">get_dddcheb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">f</span></em>, <em class="sig-param"><span class="pre">df</span></em>, <em class="sig-param"><span class="pre">ddf</span></em>, <em class="sig-param"><span class="pre">dddf</span></em>, <em class="sig-param"><span class="pre">n_f_max</span></em>, <em class="sig-param"><span class="pre">n_f_start</span></em>, <em class="sig-param"><span class="pre">n_f_stop</span></em>, <em class="sig-param"><span class="pre">n_r_max</span></em>, <em class="sig-param"><span class="pre">n_cheb_max</span></em>, <em class="sig-param"><span class="pre">d_fac</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/radial_der/get_dddcheb" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">radial_der/</span></span><span class="sig-name descname"><span class="pre">get_dddcheb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">f</span></em>, <em class="sig-param"><span class="pre">df</span></em>, <em class="sig-param"><span class="pre">ddf</span></em>, <em class="sig-param"><span class="pre">dddf</span></em>, <em class="sig-param"><span class="pre">n_f_max</span></em>, <em class="sig-param"><span class="pre">n_f_start</span></em>, <em class="sig-param"><span class="pre">n_f_stop</span></em>, <em class="sig-param"><span class="pre">n_r_max</span></em>, <em class="sig-param"><span class="pre">n_cheb_max</span></em>, <em class="sig-param"><span class="pre">d_fac</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">use_gpu</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#f/radial_der/get_dddcheb" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Returns chebychev coeffitiens of first derivative df and second
 derivative ddf for a function whose cheb-coeff. are given as
@@ -272,20 +279,23 @@ columns in array f(n_c_tot,n_r_max).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>dddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: First dimension of f,df,ddf</p></li>
-<li><p><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: No of column to start with</p></li>
-<li><p><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: No of column to stop with</p></li>
-<li><p><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: second dimension of f,df,ddf</p></li>
-<li><p><strong>n_cheb_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Number of cheb modes</p></li>
-<li><p><strong>d_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</p></li>
+<li><p><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>dddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>n_f_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: First dimension of f,df,ddf</p></li>
+<li><p><strong>n_f_start</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: No of column to start with</p></li>
+<li><p><strong>n_f_stop</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: No of column to stop with</p></li>
+<li><p><strong>n_r_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: second dimension of f,df,ddf</p></li>
+<li><p><strong>n_cheb_max</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: Number of cheb modes</p></li>
+<li><p><strong>d_fac</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</p></li>
 </ul>
 </dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/radial_der/get_dddr" title="f/radial_der/get_dddr"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_dddr()</span></code></a></p>
+<dt class="field-even">Options<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>use_gpu</strong><em> [</em><em>logical </em><em>,</em><em>in,</em><em>]</em></p>
+</dd>
+<dt class="field-odd">Called from<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#f/radial_der/get_dddr" title="f/radial_der/get_dddr"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_dddr()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -296,10 +306,10 @@ columns in array f(n_c_tot,n_r_max).</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>df</strong> (<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em> :: first derivative of f</p></li>
-<li><p><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: number of radial grid points</p></li>
-<li><p><strong>r_scheme</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>f</strong> (<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>df</strong> (<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>real </em><em>,</em><em>out</em><em>]</em> :: first derivative of f</p></li>
+<li><p><strong>n_r_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: number of radial grid points</p></li>
+<li><p><strong>r_scheme</strong><em> [</em><em>real </em><em>]</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -307,7 +317,7 @@ columns in array f(n_c_tot,n_r_max).</p>
 
 <dl>
 <dt class="sig sig-object f" id="f/radial_der/get_dr_complex">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">radial_der/</span></span><span class="sig-name descname"><span class="pre">get_dr_complex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">f</span></em>, <em class="sig-param"><span class="pre">df</span></em>, <em class="sig-param"><span class="pre">n_f_max</span></em>, <em class="sig-param"><span class="pre">n_f_start</span></em>, <em class="sig-param"><span class="pre">n_f_stop</span></em>, <em class="sig-param"><span class="pre">n_r_max</span></em>, <em class="sig-param"><span class="pre">r_scheme</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">nocopy</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">l_dct_in</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#f/radial_der/get_dr_complex" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">radial_der/</span></span><span class="sig-name descname"><span class="pre">get_dr_complex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">f</span></em>, <em class="sig-param"><span class="pre">df</span></em>, <em class="sig-param"><span class="pre">n_f_max</span></em>, <em class="sig-param"><span class="pre">n_f_start</span></em>, <em class="sig-param"><span class="pre">n_f_stop</span></em>, <em class="sig-param"><span class="pre">n_r_max</span></em>, <em class="sig-param"><span class="pre">r_scheme</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">nocopy</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">l_dct_in</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">use_gpu</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#f/radial_der/get_dr_complex" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Returns first radial derivative df of the input function f.
 Array f(n_f_max,*) may contain several functions numbered by
@@ -318,15 +328,20 @@ to a Chebychev representation using n_r_max radial grid points .</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: first derivative of f</p></li>
-<li><p><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: first dim of f</p></li>
-<li><p><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: first function to be treated</p></li>
-<li><p><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: last function to be treated</p></li>
-<li><p><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: number of radial grid points</p></li>
-<li><p><strong>r_scheme</strong><em> [</em><em>real</em><em>]</em></p></li>
-<li><p><strong>nocopy</strong><em> [</em><em>logical</em><em>,</em><em>in,</em><em>]</em></p></li>
-<li><p><strong>l_dct_in</strong><em> [</em><em>logical</em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>inout</em><em>]</em></p></li>
+<li><p><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em> :: first derivative of f</p></li>
+<li><p><strong>n_f_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: first dim of f</p></li>
+<li><p><strong>n_f_start</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: first function to be treated</p></li>
+<li><p><strong>n_f_stop</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: last function to be treated</p></li>
+<li><p><strong>n_r_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: number of radial grid points</p></li>
+<li><p><strong>r_scheme</strong><em> [</em><em>real </em><em>]</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Options<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>nocopy</strong><em> [</em><em>logical </em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>l_dct_in</strong><em> [</em><em>logical </em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>use_gpu</strong><em> [</em><em>logical </em><em>,</em><em>in,</em><em>]</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -346,22 +361,24 @@ to a Chebychev representation using n_r_max radial grid points.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: first derivative of f</p></li>
-<li><p><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: second derivative of f</p></li>
-<li><p><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: first dim of f</p></li>
-<li><p><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: first function to be treated</p></li>
-<li><p><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: last function to be treated</p></li>
-<li><p><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: number of radial grid points</p></li>
-<li><p><strong>r_scheme</strong><em> [</em><em>real</em><em>]</em></p></li>
-<li><p><strong>l_dct_in</strong><em> [</em><em>logical</em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em> :: first derivative of f</p></li>
+<li><p><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em> :: second derivative of f</p></li>
+<li><p><strong>n_f_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: first dim of f</p></li>
+<li><p><strong>n_f_start</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: first function to be treated</p></li>
+<li><p><strong>n_f_stop</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: last function to be treated</p></li>
+<li><p><strong>n_r_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: number of radial grid points</p></li>
+<li><p><strong>r_scheme</strong><em> [</em><em>real </em><em>]</em></p></li>
 </ul>
 </dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_mag_rhs_imp" title="f/updateb_mod/get_mag_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_mag_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatephi_mod/get_phase_rhs_imp" title="f/updatephi_mod/get_phase_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_phase_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/get_entropy_rhs_imp" title="f/updates_mod/get_entropy_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_entropy_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_pol_rhs_imp" title="f/updatewp_mod/get_pol_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_pol_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/assemble_pol" title="f/updatewp_mod/assemble_pol"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_pol()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/assemble_single" title="f/updatewps_mod/assemble_single"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_single()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/get_single_rhs_imp" title="f/updatewps_mod/get_single_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_single_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/get_comp_rhs_imp" title="f/updatexi_mod/get_comp_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_comp_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/get_tor_rhs_imp" title="f/updatez_mod/get_tor_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_tor_rhs_imp()</span></code></a></p>
+<dt class="field-even">Options<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>l_dct_in</strong><em> [</em><em>logical </em><em>,</em><em>in,</em><em>]</em></p>
 </dd>
-<dt class="field-odd">Call to<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/radial_der/get_ddcheb" title="f/radial_der/get_ddcheb"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_ddcheb()</span></code></a></p>
+<dt class="field-odd">Called from<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_mag_rhs_imp" title="f/updateb_mod/get_mag_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_mag_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatephi_mod/get_phase_rhs_imp" title="f/updatephi_mod/get_phase_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_phase_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/get_entropy_rhs_imp" title="f/updates_mod/get_entropy_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_entropy_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_pol_rhs_imp" title="f/updatewp_mod/get_pol_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_pol_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/assemble_pol" title="f/updatewp_mod/assemble_pol"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_pol()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/assemble_single" title="f/updatewps_mod/assemble_single"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_single()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/get_single_rhs_imp" title="f/updatewps_mod/get_single_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_single_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/get_comp_rhs_imp" title="f/updatexi_mod/get_comp_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_comp_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/get_tor_rhs_imp" title="f/updatez_mod/get_tor_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_tor_rhs_imp()</span></code></a></p>
+</dd>
+<dt class="field-even">Call to<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/radial_der/get_ddcheb" title="f/radial_der/get_ddcheb"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_ddcheb()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -380,23 +397,25 @@ to a Chebychev representation using n_r_max radial grid points.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: first derivative of f</p></li>
-<li><p><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: second derivative of f</p></li>
-<li><p><strong>dddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: third derivative of f</p></li>
-<li><p><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: first dim of f</p></li>
-<li><p><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: first function to be treated</p></li>
-<li><p><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: last function to be treated</p></li>
-<li><p><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: number of radial grid points</p></li>
-<li><p><strong>r_scheme</strong><em> [</em><em>real</em><em>]</em></p></li>
-<li><p><strong>l_dct_in</strong><em> [</em><em>logical</em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em> :: first derivative of f</p></li>
+<li><p><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em> :: second derivative of f</p></li>
+<li><p><strong>dddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em> :: third derivative of f</p></li>
+<li><p><strong>n_f_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: first dim of f</p></li>
+<li><p><strong>n_f_start</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: first function to be treated</p></li>
+<li><p><strong>n_f_stop</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: last function to be treated</p></li>
+<li><p><strong>n_r_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: number of radial grid points</p></li>
+<li><p><strong>r_scheme</strong><em> [</em><em>real </em><em>]</em></p></li>
 </ul>
 </dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_pol_rhs_imp" title="f/updatewp_mod/get_pol_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_pol_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/get_single_rhs_imp" title="f/updatewps_mod/get_single_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_single_rhs_imp()</span></code></a></p>
+<dt class="field-even">Options<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>l_dct_in</strong><em> [</em><em>logical </em><em>,</em><em>in,</em><em>]</em></p>
 </dd>
-<dt class="field-odd">Call to<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/radial_der/get_dddcheb" title="f/radial_der/get_dddcheb"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_dddcheb()</span></code></a></p>
+<dt class="field-odd">Called from<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_pol_rhs_imp" title="f/updatewp_mod/get_pol_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_pol_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/get_single_rhs_imp" title="f/updatewps_mod/get_single_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_single_rhs_imp()</span></code></a></p>
+</dd>
+<dt class="field-even">Call to<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/radial_der/get_dddcheb" title="f/radial_der/get_dddcheb"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_dddcheb()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -412,24 +431,20 @@ finite differences.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>df_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>lm_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
-<li><p><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>r_scheme</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>f_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>df_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>lm_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>nrstart</strong><em> [</em><em>integer </em><em>,</em><em>in,required</em><em>]</em></p></li>
+<li><p><strong>nrstop</strong><em> [</em><em>integer </em><em>,</em><em>in,required</em><em>]</em></p></li>
+<li><p><strong>n_r_max</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>r_scheme</strong><em> [</em><em>real </em><em>]</em></p></li>
 </ul>
 </dd>
-<dt class="field-even">Options<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>nrstart</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-1 - nrstop + shape(f_rloc, 1)) / (-1)</em><em>]</em></p></li>
-<li><p><strong>nrstop</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-1 + nrstart + shape(f_rloc, 1)</em><em>]</em></p></li>
-</ul>
+<dt class="field-even">Called from<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="IOAdd.html#f/rms/dtvrms" title="f/rms/dtvrms"><code class="xref f f-func docutils literal notranslate"><span class="pre">dtvrms()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/rms/dtbrms" title="f/rms/dtbrms"><code class="xref f f-func docutils literal notranslate"><span class="pre">dtbrms()</span></code></a>, <a class="reference internal" href="timeAdvance.html#f/step_time_mod/transp_lmloc_to_rloc" title="f/step_time_mod/transp_lmloc_to_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">transp_lmloc_to_rloc()</span></code></a>, <a class="reference internal" href="timeAdvance.html#f/step_time_mod/transp_rloc_to_lmloc_io" title="f/step_time_mod/transp_rloc_to_lmloc_io"><code class="xref f f-func docutils literal notranslate"><span class="pre">transp_rloc_to_lmloc_io()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/finish_exp_mag_rdist" title="f/updateb_mod/finish_exp_mag_rdist"><code class="xref f f-func docutils literal notranslate"><span class="pre">finish_exp_mag_rdist()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/finish_exp_entropy_rdist" title="f/updates_mod/finish_exp_entropy_rdist"><code class="xref f f-func docutils literal notranslate"><span class="pre">finish_exp_entropy_rdist()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/finish_exp_pol_rdist" title="f/updatewp_mod/finish_exp_pol_rdist"><code class="xref f f-func docutils literal notranslate"><span class="pre">finish_exp_pol_rdist()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_pol_rhs_imp_ghost" title="f/updatewp_mod/get_pol_rhs_imp_ghost"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_pol_rhs_imp_ghost()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/finish_exp_smat_rdist" title="f/updatewps_mod/finish_exp_smat_rdist"><code class="xref f f-func docutils literal notranslate"><span class="pre">finish_exp_smat_rdist()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/finish_exp_comp_rdist" title="f/updatexi_mod/finish_exp_comp_rdist"><code class="xref f f-func docutils literal notranslate"><span class="pre">finish_exp_comp_rdist()</span></code></a></p>
 </dd>
-<dt class="field-odd">Called from<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="IOAdd.html#f/rms/dtvrms" title="f/rms/dtvrms"><code class="xref f f-func docutils literal notranslate"><span class="pre">dtvrms()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/rms/dtbrms" title="f/rms/dtbrms"><code class="xref f f-func docutils literal notranslate"><span class="pre">dtbrms()</span></code></a>, <a class="reference internal" href="timeAdvance.html#f/step_time_mod/transp_lmloc_to_rloc" title="f/step_time_mod/transp_lmloc_to_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">transp_lmloc_to_rloc()</span></code></a>, <a class="reference internal" href="timeAdvance.html#f/step_time_mod/transp_rloc_to_lmloc_io" title="f/step_time_mod/transp_rloc_to_lmloc_io"><code class="xref f f-func docutils literal notranslate"><span class="pre">transp_rloc_to_lmloc_io()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/finish_exp_mag_rdist" title="f/updateb_mod/finish_exp_mag_rdist"><code class="xref f f-func docutils literal notranslate"><span class="pre">finish_exp_mag_rdist()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/finish_exp_entropy_rdist" title="f/updates_mod/finish_exp_entropy_rdist"><code class="xref f f-func docutils literal notranslate"><span class="pre">finish_exp_entropy_rdist()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/finish_exp_pol_rdist" title="f/updatewp_mod/finish_exp_pol_rdist"><code class="xref f f-func docutils literal notranslate"><span class="pre">finish_exp_pol_rdist()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_pol_rhs_imp_ghost" title="f/updatewp_mod/get_pol_rhs_imp_ghost"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_pol_rhs_imp_ghost()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/finish_exp_smat_rdist" title="f/updatewps_mod/finish_exp_smat_rdist"><code class="xref f f-func docutils literal notranslate"><span class="pre">finish_exp_smat_rdist()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/finish_exp_comp_rdist" title="f/updatexi_mod/finish_exp_comp_rdist"><code class="xref f f-func docutils literal notranslate"><span class="pre">finish_exp_comp_rdist()</span></code></a></p>
-</dd>
-<dt class="field-even">Call to<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="misc.html#f/useful/abortrun" title="f/useful/abortrun"><code class="xref f f-func docutils literal notranslate"><span class="pre">abortrun()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/parallel_mod/get_openmp_blocks" title="f/parallel_mod/get_openmp_blocks"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_openmp_blocks()</span></code></a>, <a class="reference internal" href="#f/radial_der/exch_ghosts" title="f/radial_der/exch_ghosts"><code class="xref f f-func docutils literal notranslate"><span class="pre">exch_ghosts()</span></code></a>, <a class="reference internal" href="#f/radial_der/get_bound_vals" title="f/radial_der/get_bound_vals"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_bound_vals()</span></code></a></p>
+<dt class="field-odd">Call to<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="misc.html#f/useful/abortrun" title="f/useful/abortrun"><code class="xref f f-func docutils literal notranslate"><span class="pre">abortrun()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/parallel_mod/get_openmp_blocks" title="f/parallel_mod/get_openmp_blocks"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_openmp_blocks()</span></code></a>, <a class="reference internal" href="#f/radial_der/exch_ghosts" title="f/radial_der/exch_ghosts"><code class="xref f f-func docutils literal notranslate"><span class="pre">exch_ghosts()</span></code></a>, <a class="reference internal" href="#f/radial_der/get_bound_vals" title="f/radial_der/get_bound_vals"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_bound_vals()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -445,25 +460,21 @@ This can only be used with finite differences.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>df_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>ddf_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>lm_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
-<li><p><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>r_scheme</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>f_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>df_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>ddf_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>lm_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>nrstart</strong><em> [</em><em>integer </em><em>,</em><em>in,required</em><em>]</em></p></li>
+<li><p><strong>nrstop</strong><em> [</em><em>integer </em><em>,</em><em>in,required</em><em>]</em></p></li>
+<li><p><strong>n_r_max</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>r_scheme</strong><em> [</em><em>real </em><em>]</em></p></li>
 </ul>
 </dd>
-<dt class="field-even">Options<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>nrstart</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-1 - nrstop + shape(f_rloc, 1)) / (-1)</em><em>]</em></p></li>
-<li><p><strong>nrstop</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-1 + nrstart + shape(f_rloc, 1)</em><em>]</em></p></li>
-</ul>
+<dt class="field-even">Called from<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="timeAdvance.html#f/step_time_mod/transp_lmloc_to_rloc" title="f/step_time_mod/transp_lmloc_to_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">transp_lmloc_to_rloc()</span></code></a></p>
 </dd>
-<dt class="field-odd">Called from<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="timeAdvance.html#f/step_time_mod/transp_lmloc_to_rloc" title="f/step_time_mod/transp_lmloc_to_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">transp_lmloc_to_rloc()</span></code></a></p>
-</dd>
-<dt class="field-even">Call to<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="misc.html#f/useful/abortrun" title="f/useful/abortrun"><code class="xref f f-func docutils literal notranslate"><span class="pre">abortrun()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/parallel_mod/get_openmp_blocks" title="f/parallel_mod/get_openmp_blocks"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_openmp_blocks()</span></code></a>, <a class="reference internal" href="#f/radial_der/exch_ghosts" title="f/radial_der/exch_ghosts"><code class="xref f f-func docutils literal notranslate"><span class="pre">exch_ghosts()</span></code></a>, <a class="reference internal" href="#f/radial_der/get_bound_vals" title="f/radial_der/get_bound_vals"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_bound_vals()</span></code></a></p>
+<dt class="field-odd">Call to<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="misc.html#f/useful/abortrun" title="f/useful/abortrun"><code class="xref f f-func docutils literal notranslate"><span class="pre">abortrun()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/parallel_mod/get_openmp_blocks" title="f/parallel_mod/get_openmp_blocks"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_openmp_blocks()</span></code></a>, <a class="reference internal" href="#f/radial_der/exch_ghosts" title="f/radial_der/exch_ghosts"><code class="xref f f-func docutils literal notranslate"><span class="pre">exch_ghosts()</span></code></a>, <a class="reference internal" href="#f/radial_der/get_bound_vals" title="f/radial_der/get_bound_vals"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_bound_vals()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -479,26 +490,22 @@ has the ghost zones properly filled.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,3 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>df_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>ddf_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>lm_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
-<li><p><strong>start_lm</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>stop_lm</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>r_scheme</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>f_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,3 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>df_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>ddf_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>lm_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>start_lm</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>stop_lm</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>nrstart</strong><em> [</em><em>integer </em><em>,</em><em>in,required</em><em>]</em></p></li>
+<li><p><strong>nrstop</strong><em> [</em><em>integer </em><em>,</em><em>in,required</em><em>]</em></p></li>
+<li><p><strong>r_scheme</strong><em> [</em><em>real </em><em>]</em></p></li>
 </ul>
 </dd>
-<dt class="field-even">Options<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>nrstart</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-3 - nrstop + shape(f_rloc, 1)) / (-1)</em><em>]</em></p></li>
-<li><p><strong>nrstop</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-3 + nrstart + shape(f_rloc, 1)</em><em>]</em></p></li>
-</ul>
+<dt class="field-even">Called from<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_mag_rhs_imp_ghost" title="f/updateb_mod/get_mag_rhs_imp_ghost"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_mag_rhs_imp_ghost()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatephi_mod/get_phase_rhs_imp_ghost" title="f/updatephi_mod/get_phase_rhs_imp_ghost"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_phase_rhs_imp_ghost()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/get_entropy_rhs_imp_ghost" title="f/updates_mod/get_entropy_rhs_imp_ghost"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_entropy_rhs_imp_ghost()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/get_comp_rhs_imp_ghost" title="f/updatexi_mod/get_comp_rhs_imp_ghost"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_comp_rhs_imp_ghost()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/get_tor_rhs_imp_ghost" title="f/updatez_mod/get_tor_rhs_imp_ghost"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_tor_rhs_imp_ghost()</span></code></a></p>
 </dd>
-<dt class="field-odd">Called from<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_mag_rhs_imp_ghost" title="f/updateb_mod/get_mag_rhs_imp_ghost"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_mag_rhs_imp_ghost()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatephi_mod/get_phase_rhs_imp_ghost" title="f/updatephi_mod/get_phase_rhs_imp_ghost"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_phase_rhs_imp_ghost()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/get_entropy_rhs_imp_ghost" title="f/updates_mod/get_entropy_rhs_imp_ghost"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_entropy_rhs_imp_ghost()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/get_comp_rhs_imp_ghost" title="f/updatexi_mod/get_comp_rhs_imp_ghost"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_comp_rhs_imp_ghost()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/get_tor_rhs_imp_ghost" title="f/updatez_mod/get_tor_rhs_imp_ghost"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_tor_rhs_imp_ghost()</span></code></a></p>
-</dd>
-<dt class="field-even">Call to<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="misc.html#f/useful/abortrun" title="f/useful/abortrun"><code class="xref f f-func docutils literal notranslate"><span class="pre">abortrun()</span></code></a></p>
+<dt class="field-odd">Call to<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="misc.html#f/useful/abortrun" title="f/useful/abortrun"><code class="xref f f-func docutils literal notranslate"><span class="pre">abortrun()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -514,28 +521,24 @@ has the ghost zones properly filled.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,5 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>df_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>ddf_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>dddf_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>ddddf_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>lm_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
-<li><p><strong>start_lm</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>stop_lm</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>r_scheme</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>f_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,5 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>df_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>ddf_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>dddf_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>ddddf_rloc</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>lm_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>start_lm</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>stop_lm</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>nrstart</strong><em> [</em><em>integer </em><em>,</em><em>in,required</em><em>]</em></p></li>
+<li><p><strong>nrstop</strong><em> [</em><em>integer </em><em>,</em><em>in,required</em><em>]</em></p></li>
+<li><p><strong>r_scheme</strong><em> [</em><em>real </em><em>]</em></p></li>
 </ul>
 </dd>
-<dt class="field-even">Options<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>nrstart</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-5 - nrstop + shape(f_rloc, 1)) / (-1)</em><em>]</em></p></li>
-<li><p><strong>nrstop</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-5 + nrstart + shape(f_rloc, 1)</em><em>]</em></p></li>
-</ul>
+<dt class="field-even">Called from<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_pol_rhs_imp_ghost" title="f/updatewp_mod/get_pol_rhs_imp_ghost"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_pol_rhs_imp_ghost()</span></code></a></p>
 </dd>
-<dt class="field-odd">Called from<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_pol_rhs_imp_ghost" title="f/updatewp_mod/get_pol_rhs_imp_ghost"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_pol_rhs_imp_ghost()</span></code></a></p>
-</dd>
-<dt class="field-even">Call to<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="misc.html#f/useful/abortrun" title="f/useful/abortrun"><code class="xref f f-func docutils literal notranslate"><span class="pre">abortrun()</span></code></a></p>
+<dt class="field-odd">Call to<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="misc.html#f/useful/abortrun" title="f/useful/abortrun"><code class="xref f f-func docutils literal notranslate"><span class="pre">abortrun()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -546,19 +549,15 @@ has the ghost zones properly filled.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 + 2 * nghosts - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>lm_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>f</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 + 2 * nghosts - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex </em><em>,</em><em>inout</em><em>]</em></p></li>
+<li><p><strong>lm_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>nrstart</strong><em> [</em><em>integer </em><em>,</em><em>in,required</em><em>]</em></p></li>
+<li><p><strong>nrstop</strong><em> [</em><em>integer </em><em>,</em><em>in,required</em><em>]</em></p></li>
+<li><p><strong>nghosts</strong><em> [</em><em>integer </em><em>,</em><em>in,required</em><em>]</em></p></li>
 </ul>
 </dd>
-<dt class="field-even">Options<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>nrstart</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-1 - 2 * nghosts - nrstop + shape(f, 1)) / (-1)</em><em>]</em></p></li>
-<li><p><strong>nrstop</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-1 - 2 * nghosts + nrstart + shape(f, 1)</em><em>]</em></p></li>
-<li><p><strong>nghosts</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-1 + nrstart - nrstop + shape(f, 1)) / 2</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-odd">Called from<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/radial_der/get_dr_rloc" title="f/radial_der/get_dr_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_dr_rloc()</span></code></a>, <a class="reference internal" href="#f/radial_der/get_ddr_rloc" title="f/radial_der/get_ddr_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_ddr_rloc()</span></code></a>, <a class="reference internal" href="initModules.html#f/start_fields/getstartfields" title="f/start_fields/getstartfields"><code class="xref f f-func docutils literal notranslate"><span class="pre">getstartfields()</span></code></a>, <a class="reference internal" href="timeAdvance.html#f/step_time_mod/start_from_another_scheme" title="f/step_time_mod/start_from_another_scheme"><code class="xref f f-func docutils literal notranslate"><span class="pre">start_from_another_scheme()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/assemble_mag_rloc" title="f/updateb_mod/assemble_mag_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_mag_rloc()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatephi_mod/assemble_phase_rloc" title="f/updatephi_mod/assemble_phase_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_phase_rloc()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/assemble_entropy_rloc" title="f/updates_mod/assemble_entropy_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_entropy_rloc()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/assemble_pol_rloc" title="f/updatewp_mod/assemble_pol_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_pol_rloc()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/assemble_comp_rloc" title="f/updatexi_mod/assemble_comp_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_comp_rloc()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/assemble_tor_rloc" title="f/updatez_mod/assemble_tor_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_tor_rloc()</span></code></a></p>
+<dt class="field-even">Called from<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/radial_der/get_dr_rloc" title="f/radial_der/get_dr_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_dr_rloc()</span></code></a>, <a class="reference internal" href="#f/radial_der/get_ddr_rloc" title="f/radial_der/get_ddr_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_ddr_rloc()</span></code></a>, <a class="reference internal" href="initModules.html#f/start_fields/getstartfields" title="f/start_fields/getstartfields"><code class="xref f f-func docutils literal notranslate"><span class="pre">getstartfields()</span></code></a>, <a class="reference internal" href="timeAdvance.html#f/step_time_mod/start_from_another_scheme" title="f/step_time_mod/start_from_another_scheme"><code class="xref f f-func docutils literal notranslate"><span class="pre">start_from_another_scheme()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/assemble_mag_rloc" title="f/updateb_mod/assemble_mag_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_mag_rloc()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatephi_mod/assemble_phase_rloc" title="f/updatephi_mod/assemble_phase_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_phase_rloc()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/assemble_entropy_rloc" title="f/updates_mod/assemble_entropy_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_entropy_rloc()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/assemble_pol_rloc" title="f/updatewp_mod/assemble_pol_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_pol_rloc()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/assemble_comp_rloc" title="f/updatexi_mod/assemble_comp_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_comp_rloc()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/assemble_tor_rloc" title="f/updatez_mod/assemble_tor_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_tor_rloc()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -569,13 +568,13 @@ has the ghost zones properly filled.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fbot</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,nbounds)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>ftop</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,nbounds)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>lm_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
-<li><p><strong>nrstart</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>nrstop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>nbounds</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>fbot</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,nbounds)<em> [</em><em>complex </em><em>,</em><em>inout</em><em>]</em></p></li>
+<li><p><strong>ftop</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,nbounds)<em> [</em><em>complex </em><em>,</em><em>inout</em><em>]</em></p></li>
+<li><p><strong>lm_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>nrstart</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>nrstop</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>n_r_max</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>nbounds</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em></p></li>
 </ul>
 </dd>
 <dt class="field-even">Called from<span class="colon">:</span></dt>
@@ -586,7 +585,7 @@ has the ghost zones properly filled.</p>
 
 <dl>
 <dt class="sig sig-object f" id="f/radial_der/bulk_to_ghost">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">radial_der/</span></span><span class="sig-name descname"><span class="pre">bulk_to_ghost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">x</span></em>, <em class="sig-param"><span class="pre">x_g</span></em>, <em class="sig-param"><span class="pre">ng</span></em>, <em class="sig-param"><span class="pre">nrstart</span></em>, <em class="sig-param"><span class="pre">nrstop</span></em>, <em class="sig-param"><span class="pre">lm_max</span></em>, <em class="sig-param"><span class="pre">start_lm</span></em>, <em class="sig-param"><span class="pre">stop_lm</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/radial_der/bulk_to_ghost" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">radial_der/</span></span><span class="sig-name descname"><span class="pre">bulk_to_ghost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">x</span></em>, <em class="sig-param"><span class="pre">x_g</span></em>, <em class="sig-param"><span class="pre">ng</span></em>, <em class="sig-param"><span class="pre">nrstart</span></em>, <em class="sig-param"><span class="pre">nrstop</span></em>, <em class="sig-param"><span class="pre">lm_max</span></em>, <em class="sig-param"><span class="pre">start_lm</span></em>, <em class="sig-param"><span class="pre">stop_lm</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">use_gpu</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#f/radial_der/bulk_to_ghost" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>This subroutine is used to copy an array that is defined from nRstart to
 nRstop to an array that is defined from nRstart-1 to nRstop+1</p>
@@ -594,19 +593,18 @@ nRstop to an array that is defined from nRstart-1 to nRstop+1</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>x_g</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 + 2 * ng - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>ng</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Number of ghost zones</p></li>
-<li><p><strong>lm_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
-<li><p><strong>start_lm</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>stop_lm</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>x</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>x_g</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,1 + 2 * ng - <a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + <a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>ng</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: Number of ghost zones</p></li>
+<li><p><strong>nrstart</strong><em> [</em><em>integer </em><em>,</em><em>in,required</em><em>]</em></p></li>
+<li><p><strong>nrstop</strong><em> [</em><em>integer </em><em>,</em><em>in,required</em><em>]</em></p></li>
+<li><p><strong>lm_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>start_lm</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>stop_lm</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
 </ul>
 </dd>
 <dt class="field-even">Options<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>nrstart</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=(-1 - nrstop + shape(x, 1)) / (-1)</em><em>]</em></p></li>
-<li><p><strong>nrstop</strong><em> [</em><em>integer</em><em>,</em><em>in,optional/default=-1 + nrstart + shape(x, 1)</em><em>]</em></p></li>
-</ul>
+<dd class="field-even"><p><strong>use_gpu</strong><em> [</em><em>logical </em><em>,</em><em>in,</em><em>]</em></p>
 </dd>
 <dt class="field-odd">Called from<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="initModules.html#f/start_fields/getstartfields" title="f/start_fields/getstartfields"><code class="xref f f-func docutils literal notranslate"><span class="pre">getstartfields()</span></code></a>, <a class="reference internal" href="timeAdvance.html#f/step_time_mod/start_from_another_scheme" title="f/step_time_mod/start_from_another_scheme"><code class="xref f f-func docutils literal notranslate"><span class="pre">start_from_another_scheme()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/assemble_mag_rloc" title="f/updateb_mod/assemble_mag_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_mag_rloc()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatephi_mod/assemble_phase_rloc" title="f/updatephi_mod/assemble_phase_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_phase_rloc()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/assemble_entropy_rloc" title="f/updates_mod/assemble_entropy_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_entropy_rloc()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/assemble_pol_rloc" title="f/updatewp_mod/assemble_pol_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_pol_rloc()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/assemble_comp_rloc" title="f/updatexi_mod/assemble_comp_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_comp_rloc()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/assemble_tor_rloc" title="f/updatez_mod/assemble_tor_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_tor_rloc()</span></code></a></p>
@@ -648,19 +646,19 @@ init_costf1 and init_costf2.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: first derivative of f</p></li>
-<li><p><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: second derivative of f</p></li>
-<li><p><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: first dim of f</p></li>
-<li><p><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: first function to be treated</p></li>
-<li><p><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: last function to be treated</p></li>
-<li><p><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: number of radial grid points</p></li>
-<li><p><strong>n_cheb_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: number of cheb modes</p></li>
-<li><p><strong>dr_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: mapping factor</p></li>
-<li><p><strong>work1</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: work array needed for costf</p></li>
-<li><p><strong>work2</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: work array needed for costf</p></li>
-<li><p><strong>chebt_odd</strong><em> [</em><em>costf_odd_t</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>chebt_even</strong><em> [</em><em>costf_even_t</em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em> :: first derivative of f</p></li>
+<li><p><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em> :: second derivative of f</p></li>
+<li><p><strong>n_f_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: first dim of f</p></li>
+<li><p><strong>n_f_start</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: first function to be treated</p></li>
+<li><p><strong>n_f_stop</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: last function to be treated</p></li>
+<li><p><strong>n_r_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: number of radial grid points</p></li>
+<li><p><strong>n_cheb_max</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: number of cheb modes</p></li>
+<li><p><strong>dr_fac</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em> :: mapping factor</p></li>
+<li><p><strong>work1</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em> :: work array needed for costf</p></li>
+<li><p><strong>work2</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em> :: work array needed for costf</p></li>
+<li><p><strong>chebt_odd</strong><em> [</em><em>costf_odd_t </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>chebt_even</strong><em> [</em><em>costf_even_t </em><em>,</em><em>in</em><em>]</em></p></li>
 </ul>
 </dd>
 <dt class="field-even">Called from<span class="colon">:</span></dt>
@@ -688,17 +686,17 @@ init_costf1 and init_costf2.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: first derivative of f</p></li>
-<li><p><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: first dim of f</p></li>
-<li><p><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: first function to be treated</p></li>
-<li><p><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: last function to be treated</p></li>
-<li><p><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: number of radial grid points</p></li>
-<li><p><strong>n_cheb_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: number of cheb modes</p></li>
-<li><p><strong>dr_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: mapping factor</p></li>
-<li><p><strong>work1</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: work array needed for costf</p></li>
-<li><p><strong>chebt_odd</strong><em> [</em><em>costf_odd_t</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>chebt_even</strong><em> [</em><em>costf_even_t</em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>inout</em><em>]</em></p></li>
+<li><p><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em> :: first derivative of f</p></li>
+<li><p><strong>n_f_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: first dim of f</p></li>
+<li><p><strong>n_f_start</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: first function to be treated</p></li>
+<li><p><strong>n_f_stop</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: last function to be treated</p></li>
+<li><p><strong>n_r_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: number of radial grid points</p></li>
+<li><p><strong>n_cheb_max</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: number of cheb modes</p></li>
+<li><p><strong>dr_fac</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em> :: mapping factor</p></li>
+<li><p><strong>work1</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em> :: work array needed for costf</p></li>
+<li><p><strong>chebt_odd</strong><em> [</em><em>costf_odd_t </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>chebt_even</strong><em> [</em><em>costf_even_t </em><em>,</em><em>in</em><em>]</em></p></li>
 </ul>
 </dd>
 <dt class="field-even">Called from<span class="colon">:</span></dt>
@@ -726,18 +724,18 @@ init_costf1 and init_costf2.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: first derivative of f</p></li>
-<li><p><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: second derivative of f</p></li>
-<li><p><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: first dim of f</p></li>
-<li><p><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: first function to be treated</p></li>
-<li><p><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: last function to be treated</p></li>
-<li><p><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: number of radial grid points</p></li>
-<li><p><strong>n_cheb_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: number of cheb modes</p></li>
-<li><p><strong>dr_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: mapping factor</p></li>
-<li><p><strong>work1</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em> :: work array needed for costf</p></li>
-<li><p><strong>chebt_odd</strong><em> [</em><em>costf_odd_t</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>chebt_even</strong><em> [</em><em>costf_even_t</em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>inout</em><em>]</em></p></li>
+<li><p><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em> :: first derivative of f</p></li>
+<li><p><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em> :: second derivative of f</p></li>
+<li><p><strong>n_f_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: first dim of f</p></li>
+<li><p><strong>n_f_start</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: first function to be treated</p></li>
+<li><p><strong>n_f_stop</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: last function to be treated</p></li>
+<li><p><strong>n_r_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: number of radial grid points</p></li>
+<li><p><strong>n_cheb_max</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: number of cheb modes</p></li>
+<li><p><strong>dr_fac</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em> :: mapping factor</p></li>
+<li><p><strong>work1</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em> :: work array needed for costf</p></li>
+<li><p><strong>chebt_odd</strong><em> [</em><em>costf_odd_t </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>chebt_even</strong><em> [</em><em>costf_even_t </em><em>,</em><em>in</em><em>]</em></p></li>
 </ul>
 </dd>
 <dt class="field-even">Called from<span class="colon">:</span></dt>
@@ -760,14 +758,14 @@ columns in array f(n_f_max,n_r_max).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: First dimension of f,df</p></li>
-<li><p><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: No of function to start with</p></li>
-<li><p><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: No of function to stop with</p></li>
-<li><p><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: second dimension of f,df</p></li>
-<li><p><strong>n_cheb_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Number of cheb modes</p></li>
-<li><p><strong>d_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</p></li>
+<li><p><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>n_f_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: First dimension of f,df</p></li>
+<li><p><strong>n_f_start</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: No of function to start with</p></li>
+<li><p><strong>n_f_stop</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: No of function to stop with</p></li>
+<li><p><strong>n_r_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: second dimension of f,df</p></li>
+<li><p><strong>n_cheb_max</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: Number of cheb modes</p></li>
+<li><p><strong>d_fac</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</p></li>
 </ul>
 </dd>
 <dt class="field-even">Called from<span class="colon">:</span></dt>
@@ -787,15 +785,15 @@ columns in array f(n_f_max,n_r_max).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>n_f_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: First dimension of f,df,ddf</p></li>
-<li><p><strong>n_f_start</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: No of function to start with</p></li>
-<li><p><strong>n_f_stop</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: No of function to stop with</p></li>
-<li><p><strong>n_r_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: second dimension of f,df,ddf</p></li>
-<li><p><strong>n_cheb_max</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em> :: Number of cheb modes</p></li>
-<li><p><strong>d_fac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</p></li>
+<li><p><strong>f</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>df</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>ddf</strong> (n_f_max,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>n_f_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: First dimension of f,df,ddf</p></li>
+<li><p><strong>n_f_start</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: No of function to start with</p></li>
+<li><p><strong>n_f_stop</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: No of function to stop with</p></li>
+<li><p><strong>n_r_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: second dimension of f,df,ddf</p></li>
+<li><p><strong>n_cheb_max</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: Number of cheb modes</p></li>
+<li><p><strong>d_fac</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em> :: factor for interval mapping</p></li>
 </ul>
 </dd>
 <dt class="field-even">Called from<span class="colon">:</span></dt>
@@ -819,7 +817,7 @@ columns in array f(n_f_max,n_r_max).</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="baseModules.html#f/precision_mod" title="f/precision_mod: This module controls the precision used in MagIC"><code class="xref f f-mod docutils literal notranslate"><span class="pre">precision_mod</span></code></a>: This module controls the precision used in MagIC</p></li>
 <li><p><a class="reference internal" href="baseModules.html#f/constants" title="f/constants: module containing constants and parameters used in the code."><code class="xref f f-mod docutils literal notranslate"><span class="pre">constants</span></code></a> (<a class="reference internal" href="baseModules.html#f/constants/half" title="f/constants/half"><code class="xref f f-func docutils literal notranslate"><span class="pre">half()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/one" title="f/constants/one"><code class="xref f f-func docutils literal notranslate"><span class="pre">one()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/two" title="f/constants/two"><code class="xref f f-func docutils literal notranslate"><span class="pre">two()</span></code></a>, <a class="reference internal" href="baseModules.html#f/constants/pi" title="f/constants/pi"><code class="xref f f-func docutils literal notranslate"><span class="pre">pi()</span></code></a>): module containing constants and parameters used in the code.</p></li>
-<li><p><a class="reference internal" href="legFourierChebAlgebra.html#f/radial_scheme" title="f/radial_scheme: This is an abstract type that defines the radial scheme used in MagIC"><code class="xref f f-mod docutils literal notranslate"><span class="pre">radial_scheme</span></code></a> (<code class="xref f f-func docutils literal notranslate"><span class="pre">type_rscheme()</span></code>): This is an abstract type that defines the radial scheme used in MagIC</p></li>
+<li><p><a class="reference internal" href="legFourierChebAlgebra.html#f/radial_scheme" title="f/radial_scheme: This is an abstract type that defines the radial scheme used in MagIC"><code class="xref f f-mod docutils literal notranslate"><span class="pre">radial_scheme</span></code></a> (<a class="reference internal" href="legFourierChebAlgebra.html#f/radial_scheme/type_rscheme" title="f/radial_scheme/type_rscheme"><code class="xref f f-func docutils literal notranslate"><span class="pre">type_rscheme()</span></code></a>): This is an abstract type that defines the radial scheme used in MagIC</p></li>
 <li><p><a class="reference internal" href="legFourierChebAlgebra.html#f/cosine_transform_odd" title="f/cosine_transform_odd: This module contains the built-in type I discrete Cosine Transforms. This implementation is based on Numerical Recipes and FFTPACK. This only works for ``n_r_max-1 = 2**a 3**b 5**c``, with a,b,c integers...."><code class="xref f f-mod docutils literal notranslate"><span class="pre">cosine_transform_odd</span></code></a>: This module contains the built-in type I discrete Cosine Transforms. This implementation is based on Numerical Recipes and FFTPACK. This only works for <code class="docutils literal notranslate"><span class="pre">n_r_max-1</span> <span class="pre">=</span> <span class="pre">2**a</span> <span class="pre">3**b</span> <span class="pre">5**c</span></code>, with a,b,c integers….</p></li>
 </ul>
 <p class="rubric">Variables</p>
@@ -835,17 +833,17 @@ radial Chebychev grid points.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (nrmax)<em> [</em><em>real</em><em>,</em><em>inout</em><em>]</em> :: This is zero order contribution</p></li>
-<li><p><strong>nrmax</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em> :: Only even chebs for IC</p></li>
-<li><p><strong>drfac</strong><em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>chebt</strong><em> [</em><em>costf_odd_t</em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>f</strong> (nrmax)<em> [</em><em>real </em><em>,</em><em>inout</em><em>]</em> :: This is zero order contribution</p></li>
+<li><p><strong>nrmax</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em> :: Only even chebs for IC</p></li>
+<li><p><strong>drfac</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>chebt</strong><em> [</em><em>costf_odd_t </em><em>,</em><em>in</em><em>]</em></p></li>
 </ul>
 </dd>
 <dt class="field-even">Return<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>rintic</strong><em> [</em><em>real</em><em>]</em></p>
+<dd class="field-even"><p><strong>rintic</strong><em> [</em><em>real </em><em>]</em></p>
 </dd>
 <dt class="field-odd">Called from<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="IOGeneral.html#f/magnetic_energy/get_e_mag" title="f/magnetic_energy/get_e_mag"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_e_mag()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/power/get_power" title="f/power/get_power"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_power()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/spectra/spectrum" title="f/spectra/spectrum"><code class="xref f f-func docutils literal notranslate"><span class="pre">spectrum()</span></code></a></p>
+<dd class="field-odd"><p><a class="reference internal" href="IOGeneral.html#f/magnetic_energy/get_e_mag" title="f/magnetic_energy/get_e_mag"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_e_mag()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/power/get_power" title="f/power/get_power"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_power()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/spectra/spectrum_vec_ic" title="f/spectra/spectrum_vec_ic"><code class="xref f f-func docutils literal notranslate"><span class="pre">spectrum_vec_ic()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -860,16 +858,16 @@ dr_fac2.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: Input function</p></li>
-<li><p><strong>r</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: Radius</p></li>
-<li><p><strong>r_scheme</strong><em> [</em><em>real</em><em>]</em> :: Radial scheme (FD or Cheb)</p></li>
+<li><p><strong>f</strong> (*)<em> [</em><em>real </em><em>,</em><em>in</em><em>]</em> :: Input function</p></li>
+<li><p><strong>r</strong> (*)<em> [</em><em>real </em><em>,</em><em>in</em><em>]</em> :: Radius</p></li>
+<li><p><strong>r_scheme</strong><em> [</em><em>real </em><em>]</em> :: Radial scheme (FD or Cheb)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>rint</strong><em> [</em><em>real</em><em>]</em></p>
+<dd class="field-even"><p><strong>rint</strong><em> [</em><em>real </em><em>]</em></p>
 </dd>
 <dt class="field-odd">Called from<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="IOAdd.html#f/rms/get_force" title="f/rms/get_force"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_force()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/rms/dtbrms" title="f/rms/dtbrms"><code class="xref f f-func docutils literal notranslate"><span class="pre">dtbrms()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/rms_helpers/get_poltorrms" title="f/rms_helpers/get_poltorrms"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_poltorrms()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/getdlm_mod/getdlm" title="f/getdlm_mod/getdlm"><code class="xref f f-func docutils literal notranslate"><span class="pre">getdlm()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/kinetic_energy/get_e_kin" title="f/kinetic_energy/get_e_kin"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_e_kin()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/kinetic_energy/get_u_square" title="f/kinetic_energy/get_u_square"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_u_square()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/magnetic_energy/get_e_mag" title="f/magnetic_energy/get_e_mag"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_e_mag()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/outmisc_mod/outhemi" title="f/outmisc_mod/outhemi"><code class="xref f f-func docutils literal notranslate"><span class="pre">outhemi()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/outmisc_mod/outhelicity" title="f/outmisc_mod/outhelicity"><code class="xref f f-func docutils literal notranslate"><span class="pre">outhelicity()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/outmisc_mod/outheat" title="f/outmisc_mod/outheat"><code class="xref f f-func docutils literal notranslate"><span class="pre">outheat()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/outmisc_mod/outphase" title="f/outmisc_mod/outphase"><code class="xref f f-func docutils literal notranslate"><span class="pre">outphase()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/outpar_mod/outperppar" title="f/outpar_mod/outperppar"><code class="xref f f-func docutils literal notranslate"><span class="pre">outperppar()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/outrot/get_angular_moment" title="f/outrot/get_angular_moment"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_angular_moment()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/outrot/get_angular_moment_rloc" title="f/outrot/get_angular_moment_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_angular_moment_rloc()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/output_mod/output" title="f/output_mod/output"><code class="xref f f-func docutils literal notranslate"><span class="pre">output()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/power/get_power" title="f/power/get_power"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_power()</span></code></a>, <a class="reference internal" href="precalcModules.html#f/precalculations/precalc" title="f/precalculations/precalc"><code class="xref f f-func docutils literal notranslate"><span class="pre">precalc()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/spectra/spectrum" title="f/spectra/spectrum"><code class="xref f f-func docutils literal notranslate"><span class="pre">spectrum()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/spectra/spectrum_temp" title="f/spectra/spectrum_temp"><code class="xref f f-func docutils literal notranslate"><span class="pre">spectrum_temp()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/spectra/get_amplitude" title="f/spectra/get_amplitude"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_amplitude()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/updatewp" title="f/updatewp_mod/updatewp"><code class="xref f f-func docutils literal notranslate"><span class="pre">updatewp()</span></code></a></p>
+<dd class="field-odd"><p><a class="reference internal" href="IOAdd.html#f/rms/get_force" title="f/rms/get_force"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_force()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/rms/dtbrms" title="f/rms/dtbrms"><code class="xref f f-func docutils literal notranslate"><span class="pre">dtbrms()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/rms_helpers/get_poltorrms" title="f/rms_helpers/get_poltorrms"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_poltorrms()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/getdlm_mod/getdlm" title="f/getdlm_mod/getdlm"><code class="xref f f-func docutils literal notranslate"><span class="pre">getdlm()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/kinetic_energy/get_e_kin" title="f/kinetic_energy/get_e_kin"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_e_kin()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/kinetic_energy/get_u_square" title="f/kinetic_energy/get_u_square"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_u_square()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/magnetic_energy/get_e_mag" title="f/magnetic_energy/get_e_mag"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_e_mag()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/outmisc_mod/outhemi" title="f/outmisc_mod/outhemi"><code class="xref f f-func docutils literal notranslate"><span class="pre">outhemi()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/outmisc_mod/outhelicity" title="f/outmisc_mod/outhelicity"><code class="xref f f-func docutils literal notranslate"><span class="pre">outhelicity()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/outmisc_mod/outheat" title="f/outmisc_mod/outheat"><code class="xref f f-func docutils literal notranslate"><span class="pre">outheat()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/outmisc_mod/outphase" title="f/outmisc_mod/outphase"><code class="xref f f-func docutils literal notranslate"><span class="pre">outphase()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/outmisc_mod/get_onset" title="f/outmisc_mod/get_onset"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_onset()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/outpar_mod/outperppar" title="f/outpar_mod/outperppar"><code class="xref f f-func docutils literal notranslate"><span class="pre">outperppar()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/outrot/get_angular_moment" title="f/outrot/get_angular_moment"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_angular_moment()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/outrot/get_angular_moment_rloc" title="f/outrot/get_angular_moment_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_angular_moment_rloc()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/output_mod/output" title="f/output_mod/output"><code class="xref f f-func docutils literal notranslate"><span class="pre">output()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/power/get_power" title="f/power/get_power"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_power()</span></code></a>, <a class="reference internal" href="precalcModules.html#f/precalculations/precalc" title="f/precalculations/precalc"><code class="xref f f-func docutils literal notranslate"><span class="pre">precalc()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/spectra/spectrum_scal" title="f/spectra/spectrum_scal"><code class="xref f f-func docutils literal notranslate"><span class="pre">spectrum_scal()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/spectra/spectrum_vec" title="f/spectra/spectrum_vec"><code class="xref f f-func docutils literal notranslate"><span class="pre">spectrum_vec()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/spectra/get_amplitude" title="f/spectra/get_amplitude"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_amplitude()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/updatewp" title="f/updatewp_mod/updatewp"><code class="xref f f-func docutils literal notranslate"><span class="pre">updatewp()</span></code></a></p>
 </dd>
 <dt class="field-even">Call to<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="#f/integration/simps" title="f/integration/simps"><code class="xref f f-func docutils literal notranslate"><span class="pre">simps()</span></code></a></p>
@@ -886,12 +884,12 @@ dr_fac2.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: Input function</p></li>
-<li><p><strong>r</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: Radius</p></li>
+<li><p><strong>f</strong> (*)<em> [</em><em>real </em><em>,</em><em>in</em><em>]</em> :: Input function</p></li>
+<li><p><strong>r</strong> (*)<em> [</em><em>real </em><em>,</em><em>in</em><em>]</em> :: Radius</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>rint</strong><em> [</em><em>real</em><em>]</em></p>
+<dd class="field-even"><p><strong>rint</strong><em> [</em><em>real </em><em>]</em></p>
 </dd>
 <dt class="field-odd">Called from<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#f/integration/rint_r" title="f/integration/rint_r"><code class="xref f f-func docutils literal notranslate"><span class="pre">rint_r()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/geos/initialize_geos" title="f/geos/initialize_geos"><code class="xref f f-func docutils literal notranslate"><span class="pre">initialize_geos()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/geos/outgeos" title="f/geos/outgeos"><code class="xref f f-func docutils literal notranslate"><span class="pre">outgeos()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/outto_mod/initialize_outto_mod" title="f/outto_mod/initialize_outto_mod"><code class="xref f f-func docutils literal notranslate"><span class="pre">initialize_outto_mod()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/outto_mod/outto" title="f/outto_mod/outto"><code class="xref f f-func docutils literal notranslate"><span class="pre">outto()</span></code></a></p>
@@ -908,18 +906,20 @@ dr_fac2.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>a</strong> (,)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>v</strong> (<a class="reference internal" href="IOAdd.html#f/outto_mod/n_s_max" title="f/outto_mod/n_s_max">n_s_max</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>n_s_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
-<li><p><strong>n_s_otc</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>r</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: Spherical radius</p></li>
-<li><p><strong>s</strong> (<a class="reference internal" href="IOAdd.html#f/outto_mod/n_s_max" title="f/outto_mod/n_s_max">n_s_max</a>)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: Cylindrical radius</p></li>
-<li><p><strong>theta</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: Colatitude</p></li>
-<li><p><strong>zdensin</strong><em> [</em><em>real</em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>a</strong> (*,*)<em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>v</strong> (<a class="reference internal" href="IOAdd.html#f/outto_mod/n_s_max" title="f/outto_mod/n_s_max">n_s_max</a>)<em> [</em><em>real </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>n_s_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>n_s_otc</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>r</strong> (*)<em> [</em><em>real </em><em>,</em><em>in</em><em>]</em> :: Spherical radius</p></li>
+<li><p><strong>s</strong> (<a class="reference internal" href="IOAdd.html#f/outto_mod/n_s_max" title="f/outto_mod/n_s_max">n_s_max</a>)<em> [</em><em>real </em><em>,</em><em>in</em><em>]</em> :: Cylindrical radius</p></li>
+<li><p><strong>theta</strong> (*)<em> [</em><em>real </em><em>,</em><em>in</em><em>]</em> :: Colatitude</p></li>
 </ul>
 </dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="IOAdd.html#f/geos/outgeos" title="f/geos/outgeos"><code class="xref f f-func docutils literal notranslate"><span class="pre">outgeos()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/geos/outomega" title="f/geos/outomega"><code class="xref f f-func docutils literal notranslate"><span class="pre">outomega()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/outto_mod/cylmean" title="f/outto_mod/cylmean"><code class="xref f f-func docutils literal notranslate"><span class="pre">cylmean()</span></code></a></p>
+<dt class="field-even">Options<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>zdensin</strong><em> [</em><em>real </em><em>,</em><em>in,</em><em>]</em></p>
+</dd>
+<dt class="field-odd">Called from<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="IOAdd.html#f/geos/outgeos" title="f/geos/outgeos"><code class="xref f f-func docutils literal notranslate"><span class="pre">outgeos()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/geos/outomega" title="f/geos/outomega"><code class="xref f f-func docutils literal notranslate"><span class="pre">outomega()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/outto_mod/cylmean" title="f/outto_mod/cylmean"><code class="xref f f-func docutils literal notranslate"><span class="pre">cylmean()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -933,19 +933,21 @@ dr_fac2.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>a</strong> (,)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>vn</strong> (<a class="reference internal" href="IOAdd.html#f/outto_mod/n_s_max" title="f/outto_mod/n_s_max">n_s_max</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>vs</strong> (<a class="reference internal" href="IOAdd.html#f/outto_mod/n_s_max" title="f/outto_mod/n_s_max">n_s_max</a>)<em> [</em><em>real</em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>n_s_max</strong><em> [</em><em>integer</em><em>,</em><em>in,</em><em>]</em></p></li>
-<li><p><strong>n_s_otc</strong><em> [</em><em>integer</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>r</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: Spherical radius</p></li>
-<li><p><strong>s</strong> (<a class="reference internal" href="IOAdd.html#f/outto_mod/n_s_max" title="f/outto_mod/n_s_max">n_s_max</a>)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: Cylindrical radius</p></li>
-<li><p><strong>theta</strong> (*)<em> [</em><em>real</em><em>,</em><em>in</em><em>]</em> :: Colatitude</p></li>
-<li><p><strong>zdensin</strong><em> [</em><em>real</em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>a</strong> (*,*)<em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>vn</strong> (<a class="reference internal" href="IOAdd.html#f/outto_mod/n_s_max" title="f/outto_mod/n_s_max">n_s_max</a>)<em> [</em><em>real </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>vs</strong> (<a class="reference internal" href="IOAdd.html#f/outto_mod/n_s_max" title="f/outto_mod/n_s_max">n_s_max</a>)<em> [</em><em>real </em><em>,</em><em>out</em><em>]</em></p></li>
+<li><p><strong>n_s_max</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em></p></li>
+<li><p><strong>n_s_otc</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>r</strong> (*)<em> [</em><em>real </em><em>,</em><em>in</em><em>]</em> :: Spherical radius</p></li>
+<li><p><strong>s</strong> (<a class="reference internal" href="IOAdd.html#f/outto_mod/n_s_max" title="f/outto_mod/n_s_max">n_s_max</a>)<em> [</em><em>real </em><em>,</em><em>in</em><em>]</em> :: Cylindrical radius</p></li>
+<li><p><strong>theta</strong> (*)<em> [</em><em>real </em><em>,</em><em>in</em><em>]</em> :: Colatitude</p></li>
 </ul>
 </dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="IOAdd.html#f/geos/outomega" title="f/geos/outomega"><code class="xref f f-func docutils literal notranslate"><span class="pre">outomega()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/outto_mod/cylmean" title="f/outto_mod/cylmean"><code class="xref f f-func docutils literal notranslate"><span class="pre">cylmean()</span></code></a></p>
+<dt class="field-even">Options<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>zdensin</strong><em> [</em><em>real </em><em>,</em><em>in,</em><em>]</em></p>
+</dd>
+<dt class="field-odd">Called from<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="IOAdd.html#f/geos/outomega" title="f/geos/outomega"><code class="xref f f-func docutils literal notranslate"><span class="pre">outomega()</span></code></a>, <a class="reference internal" href="IOAdd.html#f/outto_mod/cylmean" title="f/outto_mod/cylmean"><code class="xref f f-func docutils literal notranslate"><span class="pre">cylmean()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1028,7 +1030,7 @@ dr_fac2.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
   </body>
 </html>
