@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Grid namelist &#8212; Magic 6.1 documentation</title>
+    <title>Grid namelist &#8212; Magic 6.2 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/magic.css" />
     
@@ -19,7 +19,7 @@
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Magic 6.1 documentation"
+          title="Search within Magic 6.2 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -99,7 +99,7 @@
         <li class="right" >
           <a href="namelists.html" title="Input parameters"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 6.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 6.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="namelists.html" accesskey="U">Input parameters</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Grid namelist</a></li> 
       </ul>
@@ -156,8 +156,13 @@
 </li>
 <li><p><strong>l_var_l</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/logic/l_var_l" title="f/logic/l_var_l"><code class="xref f f-var docutils literal notranslate"><span class="pre">l_var_l=.false.</span></code></a>) is a logical. The spherical harmonic degree is a function of radius, when set to true. This practically reduces the number of spherical harmonic transforms in parts of the fluid domain but it comes at the price of an MPI inbalance. This feature is useful when computing full sphere geometry to avoid a too severe time step limitation close to the center. Right now the form of the radial dependence follows:</p>
 <div class="math notranslate nohighlight">
-\[\ell(r) = 1+(\ell_{\hbox{max}}-1)\sqrt{\frac{r}{r_o}}\]</div>
+\[\ell(r) = \max \left(1+\ell_{\hbox{max}}\sqrt{\frac{r}{\alpha_r r_o}},\ell_{\hbox{max}}\right)\]</div>
 </li>
+</ul>
+<p>In the above equation the parameter <span class="math notranslate nohighlight">\(\alpha_r\)</span> is set to control the radius above which the truncation reaches <span class="math notranslate nohighlight">\(\ell_{\hbox{max}}\)</span>. In the case of full spheres with <span class="math notranslate nohighlight">\(r_o=1\)</span>, one directly has <span class="math notranslate nohighlight">\(\ell(r)=\ell_{\hbox{max}}\)</span> for <span class="math notranslate nohighlight">\(r&gt;\alpha_r\)</span>.</p>
+<p>This parameter can be directly controlled by the following entry in the input namelist:</p>
+<ul class="simple">
+<li><p><strong>rcut_l</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/rcut_l" title="f/truncation/rcut_l"><code class="xref f f-var docutils literal notranslate"><span class="pre">rcut_l=0.1</span></code></a>) is a real. This corresponds to <span class="math notranslate nohighlight">\(\alpha_r\)</span> in the above equation.</p></li>
 </ul>
 </section>
 <section id="inner-core">
@@ -250,7 +255,7 @@
         <li class="right" >
           <a href="namelists.html" title="Input parameters"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 6.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 6.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="namelists.html" >Input parameters</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Grid namelist</a></li> 
       </ul>

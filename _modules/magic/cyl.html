@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>magic.cyl &#8212; Magic 6.1 documentation</title>
+    <title>magic.cyl &#8212; Magic 6.2 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/magic.css" />
     
@@ -17,7 +17,7 @@
     <script src="../../_static/sphinx_highlight.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Magic 6.1 documentation"
+          title="Search within Magic 6.2 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -89,7 +89,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">magic.cyl</a></li> 
       </ul>
@@ -197,7 +197,7 @@
 <span class="k">if</span> <span class="n">zavgMode</span> <span class="o">==</span> <span class="s1">&#39;f2py&#39;</span><span class="p">:</span>
 
     <span class="k">def</span> <span class="nf">zavg</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">ns</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;vp.pickle&#39;</span><span class="p">,</span>
-             <span class="n">normed</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+             <span class="n">normed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">colat</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This function computes a z-integration of a list of input arrays </span>
 <span class="sd">        (on the spherical grid). This works well for 2-D (phi-slice) arrays.</span>
@@ -220,6 +220,8 @@
 <span class="sd">        :param normed: a boolean to specify if ones wants to simply integrate </span>
 <span class="sd">                       over z or compute a z-average (default is True: average)</span>
 <span class="sd">        :type normed: bool</span>
+<span class="sd">        :param colat: an optional array containing the colatitudes</span>
+<span class="sd">        :type colat: numpy.ndarray</span>
 <span class="sd">        :returns: a python tuple that contains two numpy.ndarray and a list</span>
 <span class="sd">                  (height,cylRad,output) height[ns] is the height of the</span>
 <span class="sd">                  spherical shell for all radii. cylRad[ns] is the cylindrical</span>
@@ -234,7 +236,10 @@
             <span class="n">ntheta</span> <span class="o">=</span> <span class="nb">input</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="nb">input</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
             <span class="n">ntheta</span> <span class="o">=</span> <span class="nb">input</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">ntheta</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">colat</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">ntheta</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">theta</span> <span class="o">=</span> <span class="n">colat</span>
 
         <span class="n">height</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">cylRad</span><span class="p">)</span>
         <span class="n">height</span><span class="p">[</span><span class="n">cylRad</span> <span class="o">&gt;=</span> <span class="n">ri</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ro</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">cylRad</span><span class="p">[</span><span class="n">cylRad</span> <span class="o">&gt;=</span> <span class="n">ri</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
@@ -1132,7 +1137,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">magic.cyl</a></li> 
       </ul>
