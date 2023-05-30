@@ -1,26 +1,22 @@
-
 <!DOCTYPE html>
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Reading and storing check points (restart files) &#8212; Magic 6.2 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/magic.css" />
     
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/sphinx_highlight.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
           title="Search within Magic 6.2 documentation"
           href="../_static/opensearch.xml"/>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Useful additional libraries" href="misc.html" />
@@ -657,12 +653,11 @@ by MagIC using MPI-IO</p>
 
 <dl>
 <dt class="sig sig-object f" id="f/readcheckpoints/mapdatar">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">mapdatar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">datar</span></em>, <em class="sig-param"><span class="pre">r_old</span></em>, <em class="sig-param"><span class="pre">n_rad_tot</span></em>, <em class="sig-param"><span class="pre">n_r_max_old</span></em>, <em class="sig-param"><span class="pre">n_r_maxl</span></em>, <em class="sig-param"><span class="pre">lbc</span></em>, <em class="sig-param"><span class="pre">l_ic</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/readcheckpoints/mapdatar" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">mapdatar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">datar</span></em>, <em class="sig-param"><span class="pre">r_old</span></em>, <em class="sig-param"><span class="pre">n_rad_tot</span></em>, <em class="sig-param"><span class="pre">n_r_max_old</span></em>, <em class="sig-param"><span class="pre">n_r_maxl</span></em>, <em class="sig-param"><span class="pre">lbc</span></em>, <em class="sig-param"><span class="pre">l_ic</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">chebt_ic_old</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#f/readcheckpoints/mapdatar" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Copy (interpolate) data (read from disc file) from old grid structure
 to new grid. Linear interploation is used in r if the radial grid
-structure differs</p>
-<p>called in mapdata</p>
+structure differs.</p>
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -676,11 +671,14 @@ structure differs</p>
 <li><p><strong>l_ic</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
 </ul>
 </dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/readcheckpoints/maponefield_mpi" title="f/readcheckpoints/maponefield_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">maponefield_mpi()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/maponefield" title="f/readcheckpoints/maponefield"><code class="xref f f-func docutils literal notranslate"><span class="pre">maponefield()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/mapdatahydro" title="f/readcheckpoints/mapdatahydro"><code class="xref f f-func docutils literal notranslate"><span class="pre">mapdatahydro()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/mapdatamag" title="f/readcheckpoints/mapdatamag"><code class="xref f f-func docutils literal notranslate"><span class="pre">mapdatamag()</span></code></a></p>
+<dt class="field-even">Options<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>chebt_ic_old</strong><em> [</em><em>costf_odd_t </em><em>,</em><em>in,</em><em>]</em></p>
 </dd>
-<dt class="field-odd">Call to<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="misc.html#f/useful/polynomial_interpolation" title="f/useful/polynomial_interpolation"><code class="xref f f-func docutils literal notranslate"><span class="pre">polynomial_interpolation()</span></code></a></p>
+<dt class="field-odd">Called from<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#f/readcheckpoints/maponefield_mpi" title="f/readcheckpoints/maponefield_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">maponefield_mpi()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/maponefield" title="f/readcheckpoints/maponefield"><code class="xref f f-func docutils literal notranslate"><span class="pre">maponefield()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/mapdatahydro" title="f/readcheckpoints/mapdatahydro"><code class="xref f f-func docutils literal notranslate"><span class="pre">mapdatahydro()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/mapdatamag" title="f/readcheckpoints/mapdatamag"><code class="xref f f-func docutils literal notranslate"><span class="pre">mapdatamag()</span></code></a></p>
+</dd>
+<dt class="field-even">Call to<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="misc.html#f/useful/polynomial_interpolation" title="f/useful/polynomial_interpolation"><code class="xref f f-func docutils literal notranslate"><span class="pre">polynomial_interpolation()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1003,8 +1001,8 @@ This is using MPI-IO with R-distributed arrays.</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2021, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+        &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
     </div>
   </body>
 </html>
