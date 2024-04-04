@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="../../">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>magic.checkpoint &#8212; Magic 6.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/magic.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/magic.css?v=a97dc138" />
     
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/documentation_options.js?v=ef7fcc1c"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
           title="Search within Magic 6.2 documentation"
@@ -102,8 +102,10 @@
 <span class="kn">import</span> <span class="nn">scipy.interpolate</span> <span class="k">as</span> <span class="nn">sint</span>
 <span class="kn">from</span> <span class="nn">magic.libmagic</span> <span class="kn">import</span> <span class="n">chebgrid</span><span class="p">,</span> <span class="n">fd_grid</span><span class="p">,</span> <span class="n">scanDir</span>
 
-<div class="viewcode-block" id="get_truncation"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.get_truncation">[docs]</a><span class="k">def</span> <span class="nf">get_truncation</span><span class="p">(</span><span class="n">n_theta_max</span><span class="p">,</span> <span class="n">nalias</span><span class="p">,</span> <span class="n">minc</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="get_truncation">
+<a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.get_truncation">[docs]</a>
+<span class="k">def</span> <span class="nf">get_truncation</span><span class="p">(</span><span class="n">n_theta_max</span><span class="p">,</span> <span class="n">nalias</span><span class="p">,</span> <span class="n">minc</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This routine determines l_max, m_max and lm_max from the values</span>
 <span class="sd">    of n_theta_max, minc and nalias.</span>
 
@@ -123,8 +125,11 @@
 
     <span class="k">return</span> <span class="n">lmax</span><span class="p">,</span> <span class="n">mmax</span><span class="p">,</span> <span class="n">lm_max</span></div>
 
-<div class="viewcode-block" id="get_map"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.get_map">[docs]</a><span class="k">def</span> <span class="nf">get_map</span><span class="p">(</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">lmax</span><span class="p">,</span> <span class="n">mmin</span><span class="p">,</span> <span class="n">mmax</span><span class="p">,</span> <span class="n">minc</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="get_map">
+<a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.get_map">[docs]</a>
+<span class="k">def</span> <span class="nf">get_map</span><span class="p">(</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">lmax</span><span class="p">,</span> <span class="n">mmin</span><span class="p">,</span> <span class="n">mmax</span><span class="p">,</span> <span class="n">minc</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This routine determines the look-up tables to convert the indices</span>
 <span class="sd">    (l, m) to the single index lm.</span>
 
@@ -141,21 +146,24 @@
 <span class="sd">    :returns: returns a list of three look-up tables: idx, lm2l, lm2m</span>
 <span class="sd">    :rtype: list</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">lmax</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">mmax</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
-    <span class="n">lm2l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
-    <span class="n">lm2m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">lmax</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">mmax</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">lm2l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+    <span class="n">lm2m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">lm_max</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
     <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">mmin</span><span class="p">,</span> <span class="n">mmax</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">minc</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">lmax</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
             <span class="n">idx</span><span class="p">[</span><span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
             <span class="n">lm2l</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">l</span>
             <span class="n">lm2m</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span>
-            <span class="n">k</span> <span class="o">+=</span><span class="mi">1</span>
+            <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
 
     <span class="k">return</span> <span class="n">idx</span><span class="p">,</span> <span class="n">lm2l</span><span class="p">,</span> <span class="n">lm2m</span></div>
 
-<div class="viewcode-block" id="interp_one_field"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.interp_one_field">[docs]</a><span class="k">def</span> <span class="nf">interp_one_field</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">rold</span><span class="p">,</span> <span class="n">rnew</span><span class="p">,</span> <span class="n">rfac</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="interp_one_field">
+<a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.interp_one_field">[docs]</a>
+<span class="k">def</span> <span class="nf">interp_one_field</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">rold</span><span class="p">,</span> <span class="n">rnew</span><span class="p">,</span> <span class="n">rfac</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This routine interpolates a complex input field from an old radial grid</span>
 <span class="sd">    to a new one. </span>
 
@@ -207,8 +215,11 @@
 
     <span class="k">return</span> <span class="n">field_new</span></div>
 
-<div class="viewcode-block" id="Graph2Rst"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.Graph2Rst">[docs]</a><span class="k">def</span> <span class="nf">Graph2Rst</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;checkpoint_ave&#39;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Graph2Rst">
+<a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.Graph2Rst">[docs]</a>
+<span class="k">def</span> <span class="nf">Graph2Rst</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;checkpoint_ave&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function allows to transform an input Graphic file into a checkpoint</span>
 <span class="sd">    file format that can be read by MagIC to restart a simulation.</span>
 
@@ -226,8 +237,11 @@
     <span class="n">chk</span><span class="o">.</span><span class="n">graph2rst</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="MagicCheckpoint"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.MagicCheckpoint">[docs]</a><span class="k">class</span> <span class="nc">MagicCheckpoint</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MagicCheckpoint">
+<a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.MagicCheckpoint">[docs]</a>
+<span class="k">class</span> <span class="nc">MagicCheckpoint</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class allows to manipulate checkpoint files produced by MagIC. It</span>
 <span class="sd">    can read it as</span>
 
@@ -248,8 +262,10 @@
 <span class="sd">    &gt;&gt;&gt; chk.xshells2magic(&#39;st0&#39;, 161, rscheme=&#39;cheb&#39;, cond_state=&#39;deltaT&#39;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MagicCheckpoint.__init__"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.MagicCheckpoint.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l_read</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s1">&#39;l&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="MagicCheckpoint.__init__">
+<a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.MagicCheckpoint.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l_read</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s1">&#39;l&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param l_read: a boolean to decide whether one reads a checkpoint or not</span>
 <span class="sd">        :type l_read: bool</span>
 <span class="sd">        :param filename: name of the checkpoint file to be read</span>
@@ -261,8 +277,11 @@
                 <span class="n">filename</span> <span class="o">=</span> <span class="n">chks</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="n">endian</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MagicCheckpoint.read"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.MagicCheckpoint.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s1">&#39;l&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MagicCheckpoint.read">
+<a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.MagicCheckpoint.read">[docs]</a>
+    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s1">&#39;l&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This routine is used to read a checkpoint file. </span>
 
 <span class="sd">        :param filename: name of the checkpoint file</span>
@@ -291,6 +310,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">raxi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prmag</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ek</span><span class="p">,</span> \
                      <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma_ratio</span> <span class="o">=</span> \
                      <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stef</span> <span class="o">=</span> <span class="mf">0.</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">raxi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prmag</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ek</span><span class="p">,</span> \
                      <span class="bp">self</span><span class="o">.</span><span class="n">stef</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma_ratio</span> <span class="o">=</span> \
@@ -332,8 +352,9 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tscheme_family</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;MULTISTEP&#39;</span><span class="p">):</span>
             <span class="n">domega_ic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="p">(</span><span class="n">nexp</span><span class="o">+</span><span class="n">nimp</span><span class="o">+</span><span class="n">nold</span><span class="o">-</span><span class="mi">3</span><span class="p">))</span>
             <span class="n">domega_ma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="p">(</span><span class="n">nexp</span><span class="o">+</span><span class="n">nimp</span><span class="o">+</span><span class="n">nold</span><span class="o">-</span><span class="mi">3</span><span class="p">))</span>
-            <span class="n">lotorque_ic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="p">(</span><span class="n">nexp</span><span class="o">+</span><span class="n">nimp</span><span class="o">+</span><span class="n">nold</span><span class="o">-</span><span class="mi">3</span><span class="p">))</span>
-            <span class="n">lotorque_ma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="p">(</span><span class="n">nexp</span><span class="o">+</span><span class="n">nimp</span><span class="o">+</span><span class="n">nold</span><span class="o">-</span><span class="mi">3</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+                <span class="n">lotorque_ic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="p">(</span><span class="n">nexp</span><span class="o">+</span><span class="n">nimp</span><span class="o">+</span><span class="n">nold</span><span class="o">-</span><span class="mi">3</span><span class="p">))</span>
+                <span class="n">lotorque_ma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="p">(</span><span class="n">nexp</span><span class="o">+</span><span class="n">nimp</span><span class="o">+</span><span class="n">nold</span><span class="o">-</span><span class="mi">3</span><span class="p">))</span>
 
         <span class="n">om</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">omega_ic</span> <span class="o">=</span> <span class="n">om</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -427,8 +448,11 @@
                                   <span class="n">count</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lm_max</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="o">*</span><span class="p">(</span><span class="n">nexp</span><span class="o">+</span><span class="n">nimp</span><span class="o">+</span><span class="n">nold</span><span class="o">-</span><span class="mi">3</span><span class="p">))</span>
         <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="MagicCheckpoint.write"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.MagicCheckpoint.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MagicCheckpoint.write">
+<a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.MagicCheckpoint.write">[docs]</a>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This routine is used to store a checkpoint file. It only stores the</span>
 <span class="sd">        state vector not the past quantities required to restart a multistep</span>
 <span class="sd">        scheme.</span>
@@ -439,7 +463,7 @@
         <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span>
 
         <span class="c1"># Header</span>
-        <span class="n">version</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
         <span class="n">version</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
         <span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">time</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
@@ -450,7 +474,10 @@
         <span class="n">par</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
         <span class="n">par</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;dt&#39;</span><span class="p">):</span>
-            <span class="n">dt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="n">dt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">dt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0e-6</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">dt</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
@@ -460,7 +487,8 @@
         <span class="c1"># Control parameters</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;ra&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;sc&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;prmag&#39;</span><span class="p">):</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">raxi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prmag</span><span class="p">,</span>
-                          <span class="bp">self</span><span class="o">.</span><span class="n">ek</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma_ratio</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+                          <span class="bp">self</span><span class="o">.</span><span class="n">ek</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stef</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma_ratio</span><span class="p">],</span>
+                         <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">1.0e-3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
                          <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
@@ -469,6 +497,10 @@
         <span class="c1"># Truncation</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_theta_max</span><span class="p">,</span>  <span class="bp">self</span><span class="o">.</span><span class="n">n_phi_tot</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">,</span>
                       <span class="bp">self</span><span class="o">.</span><span class="n">nalias</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_r_ic_max</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">x</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s2">&quot;m_min&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">m_min</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">l_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">m_min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">m_max</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
         <span class="n">x</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
 
         <span class="c1"># Radial scheme</span>
@@ -494,7 +526,10 @@
         <span class="n">dumm</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
 
         <span class="c1"># Logicals</span>
-        <span class="n">flags</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">l_heat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_chem</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_mag</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s2">&quot;l_phase&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">l_phase</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="n">flags</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">l_heat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_chem</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_phase</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_mag</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>
                           <span class="bp">self</span><span class="o">.</span><span class="n">l_cond_ic</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
         <span class="n">flags</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
 
@@ -505,6 +540,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">entropy</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_chem</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">xi</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_phase</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">phase</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_mag</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">bpol</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">btor</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
@@ -514,8 +551,11 @@
 
         <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="MagicCheckpoint.cheb2fd"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.MagicCheckpoint.cheb2fd">[docs]</a>    <span class="k">def</span> <span class="nf">cheb2fd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_r_max</span><span class="p">,</span> <span class="n">fd_stretch</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">fd_ratio</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MagicCheckpoint.cheb2fd">
+<a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.MagicCheckpoint.cheb2fd">[docs]</a>
+    <span class="k">def</span> <span class="nf">cheb2fd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_r_max</span><span class="p">,</span> <span class="n">fd_stretch</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">fd_ratio</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This routine is used to convert a checkpoint that has a Gauss-Lobatto</span>
 <span class="sd">        grid into a finite-difference grid.</span>
 
@@ -542,6 +582,9 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_chem</span><span class="p">:</span>
             <span class="n">tmp</span> <span class="o">=</span> <span class="n">interp_one_field</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">rnew</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">xi</span> <span class="o">=</span> <span class="n">tmp</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_phase</span><span class="p">:</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">interp_one_field</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">phase</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">rnew</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">phase</span> <span class="o">=</span> <span class="n">tmp</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_mag</span><span class="p">:</span>
             <span class="n">tmp</span> <span class="o">=</span> <span class="n">interp_one_field</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bpol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">rnew</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">bpol</span> <span class="o">=</span> <span class="n">tmp</span>
@@ -551,8 +594,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">rnew</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span> <span class="o">=</span> <span class="n">n_r_max</span></div>
 
-<div class="viewcode-block" id="MagicCheckpoint.fd2cheb"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.MagicCheckpoint.fd2cheb">[docs]</a>    <span class="k">def</span> <span class="nf">fd2cheb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_r_max</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MagicCheckpoint.fd2cheb">
+<a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.MagicCheckpoint.fd2cheb">[docs]</a>
+    <span class="k">def</span> <span class="nf">fd2cheb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_r_max</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This routine is used to convert a checkpoint that has finite differences</span>
 <span class="sd">        in radius into a Gauss-Lobatto grid.</span>
 
@@ -577,6 +623,9 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_chem</span><span class="p">:</span>
             <span class="n">tmp</span> <span class="o">=</span> <span class="n">interp_one_field</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">rnew</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">xi</span> <span class="o">=</span> <span class="n">tmp</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_phase</span><span class="p">:</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">interp_one_field</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">phase</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">rnew</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">phase</span> <span class="o">=</span> <span class="n">tmp</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_mag</span><span class="p">:</span>
             <span class="n">tmp</span> <span class="o">=</span> <span class="n">interp_one_field</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bpol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">rnew</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">bpol</span> <span class="o">=</span> <span class="n">tmp</span>
@@ -586,10 +635,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">rnew</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_r_max</span> <span class="o">=</span> <span class="n">n_r_max</span></div>
 
-<div class="viewcode-block" id="MagicCheckpoint.xshells2magic"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.MagicCheckpoint.xshells2magic">[docs]</a>    <span class="k">def</span> <span class="nf">xshells2magic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xsh_trailing</span><span class="p">,</span> <span class="n">n_r_max</span><span class="p">,</span> <span class="n">rscheme</span><span class="o">=</span><span class="s1">&#39;cheb&#39;</span><span class="p">,</span>
+
+<div class="viewcode-block" id="MagicCheckpoint.xshells2magic">
+<a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.MagicCheckpoint.xshells2magic">[docs]</a>
+    <span class="k">def</span> <span class="nf">xshells2magic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xsh_trailing</span><span class="p">,</span> <span class="n">n_r_max</span><span class="p">,</span> <span class="n">rscheme</span><span class="o">=</span><span class="s1">&#39;cheb&#39;</span><span class="p">,</span>
                       <span class="n">cond_state</span><span class="o">=</span><span class="s1">&#39;deltaT&#39;</span><span class="p">,</span> <span class="n">scale_b</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span>
                       <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;checkpoint_end.from_xhells&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This routine is used to convert XSHELLS field[U,B,T].xsh_trailing files</span>
 <span class="sd">        into a MagIC checkpoint file.</span>
 
@@ -621,6 +673,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">l_mag</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">l_press</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">l_chem</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l_phase</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="c1"># Right now don&#39;t know where it is stored</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">l_cond_ic</span> <span class="o">=</span> <span class="kc">False</span>
 
@@ -672,7 +725,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">entropy</span> <span class="o">=</span> <span class="n">interp_one_field</span><span class="p">(</span><span class="n">field_xsh</span><span class="p">,</span> <span class="n">rr_xsh</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">cond_state</span> <span class="o">==</span> <span class="s1">&#39;deltaT&#39;</span><span class="p">:</span>
-                <span class="n">temp0</span> <span class="o">=</span> <span class="o">-</span><span class="n">ri</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="n">ri</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">ro</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+                <span class="c1">#temp0 = -ri**2/(ri**2+ro**2)</span>
+                <span class="n">temp0</span> <span class="o">=</span> <span class="mf">0.</span>
                 <span class="n">tcond</span> <span class="o">=</span> <span class="n">ro</span><span class="o">*</span><span class="n">ri</span><span class="o">/</span><span class="p">(</span><span class="n">ro</span><span class="o">-</span><span class="n">ri</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">+</span><span class="n">temp0</span><span class="o">-</span><span class="n">ri</span><span class="o">/</span><span class="p">(</span><span class="n">ro</span><span class="o">-</span><span class="n">ri</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">cond_state</span> <span class="o">==</span> <span class="s1">&#39;mixed&#39;</span><span class="p">:</span>
                 <span class="n">fi</span> <span class="o">=</span> <span class="mf">0.75</span>
@@ -695,8 +749,11 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MagicCheckpoint.graph2rst"><a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.MagicCheckpoint.graph2rst">[docs]</a>    <span class="k">def</span> <span class="nf">graph2rst</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gr</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;checkpoint_ave.from_chk&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MagicCheckpoint.graph2rst">
+<a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.checkpoint.MagicCheckpoint.graph2rst">[docs]</a>
+    <span class="k">def</span> <span class="nf">graph2rst</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gr</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;checkpoint_ave.from_chk&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param gr: the input graphic file one wants to convert into a restart</span>
 <span class="sd">                   file</span>
 <span class="sd">        :type gr: magic.MagicGraph</span>
@@ -889,7 +946,9 @@
                 <span class="c1">#    mask = ( self.lm2l &lt;= 5 ) * ( self.lm2m &lt;= 5)</span>
                 <span class="c1">#    self.btor_ic[i, mask] /= rdep[mask]</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
+</div>
+
 
 
 
@@ -942,8 +1001,8 @@
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
+    &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

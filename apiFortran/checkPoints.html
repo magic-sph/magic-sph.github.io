@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Reading and storing check points (restart files) &#8212; Magic 6.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/magic.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/magic.css?v=a97dc138" />
     
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/documentation_options.js?v=ef7fcc1c"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
           title="Search within Magic 6.2 documentation"
@@ -106,19 +106,19 @@
           <div class="body" role="main">
             
   <section id="reading-and-storing-check-points-restart-files">
-<span id="secfortranrestart"></span><h1>Reading and storing check points (restart files)<a class="headerlink" href="#reading-and-storing-check-points-restart-files" title="Permalink to this heading">¶</a></h1>
-<section id="f/readcheckpoints">
-<span id="readcheckpoints-f90"></span><h2><code class="docutils literal notranslate"><span class="pre">readCheckPoints.f90</span></code><a class="headerlink" href="#f/readcheckpoints" title="Permalink to this heading">¶</a></h2>
-<p class="rubric">Description</p>
+<span id="secfortranrestart"></span><h1>Reading and storing check points (restart files)<a class="headerlink" href="#reading-and-storing-check-points-restart-files" title="Link to this heading">¶</a></h1>
+<section id="readcheckpoints-f90">
+<h2><code class="docutils literal notranslate"><span class="pre">readCheckPoints.f90</span></code><a class="headerlink" href="#readcheckpoints-f90" title="Link to this heading">¶</a></h2>
+<p class="rubric" id="f/readcheckpoints">Description</p>
 <p>This module contains the functions that can help reading and
 mapping of the restart files</p>
 <p class="rubric">Quick access</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/readcheckpoints/bytes_allocated" title="f/readcheckpoints/bytes_allocated"><code class="xref f f-var docutils literal notranslate"><span class="pre">bytes_allocated</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/l_axi_old" title="f/readcheckpoints/l_axi_old"><code class="xref f f-var docutils literal notranslate"><span class="pre">l_axi_old</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/lreadr" title="f/readcheckpoints/lreadr"><code class="xref f f-var docutils literal notranslate"><span class="pre">lreadr</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/lreads" title="f/readcheckpoints/lreads"><code class="xref f f-var docutils literal notranslate"><span class="pre">lreads</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/lreadxi" title="f/readcheckpoints/lreadxi"><code class="xref f f-var docutils literal notranslate"><span class="pre">lreadxi</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/n_start_file" title="f/readcheckpoints/n_start_file"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_start_file</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/ratio1" title="f/readcheckpoints/ratio1"><code class="xref f f-var docutils literal notranslate"><span class="pre">ratio1</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/ratio1_old" title="f/readcheckpoints/ratio1_old"><code class="xref f f-var docutils literal notranslate"><span class="pre">ratio1_old</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/ratio2" title="f/readcheckpoints/ratio2"><code class="xref f f-var docutils literal notranslate"><span class="pre">ratio2</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/ratio2_old" title="f/readcheckpoints/ratio2_old"><code class="xref f f-var docutils literal notranslate"><span class="pre">ratio2_old</span></code></a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#f/readcheckpoints/bytes_allocated" title="f/readcheckpoints/bytes_allocated"><code class="xref f f-var docutils literal notranslate"><span class="pre">bytes_allocated</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/finish_start_fields" title="f/readcheckpoints/finish_start_fields"><code class="xref f f-var docutils literal notranslate"><span class="pre">finish_start_fields</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/getlm2lmo" title="f/readcheckpoints/getlm2lmo"><code class="xref f f-var docutils literal notranslate"><span class="pre">getlm2lmo</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/l_axi_old" title="f/readcheckpoints/l_axi_old"><code class="xref f f-var docutils literal notranslate"><span class="pre">l_axi_old</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/lreadr" title="f/readcheckpoints/lreadr"><code class="xref f f-var docutils literal notranslate"><span class="pre">lreadr</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/lreads" title="f/readcheckpoints/lreads"><code class="xref f f-var docutils literal notranslate"><span class="pre">lreads</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/lreadxi" title="f/readcheckpoints/lreadxi"><code class="xref f f-var docutils literal notranslate"><span class="pre">lreadxi</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/mapdatahydro" title="f/readcheckpoints/mapdatahydro"><code class="xref f f-var docutils literal notranslate"><span class="pre">mapdatahydro</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/mapdatamag" title="f/readcheckpoints/mapdatamag"><code class="xref f f-var docutils literal notranslate"><span class="pre">mapdatamag</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/mapdatar" title="f/readcheckpoints/mapdatar"><code class="xref f f-var docutils literal notranslate"><span class="pre">mapdatar</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/maponefield" title="f/readcheckpoints/maponefield"><code class="xref f f-var docutils literal notranslate"><span class="pre">maponefield</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/maponefield_mpi" title="f/readcheckpoints/maponefield_mpi"><code class="xref f f-var docutils literal notranslate"><span class="pre">maponefield_mpi</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/n_start_file" title="f/readcheckpoints/n_start_file"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_start_file</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/ratio1" title="f/readcheckpoints/ratio1"><code class="xref f f-var docutils literal notranslate"><span class="pre">ratio1</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/ratio1_old" title="f/readcheckpoints/ratio1_old"><code class="xref f f-var docutils literal notranslate"><span class="pre">ratio1_old</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/ratio2" title="f/readcheckpoints/ratio2"><code class="xref f f-var docutils literal notranslate"><span class="pre">ratio2</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/ratio2_old" title="f/readcheckpoints/ratio2_old"><code class="xref f f-var docutils literal notranslate"><span class="pre">ratio2_old</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/read_map_one_field" title="f/readcheckpoints/read_map_one_field"><code class="xref f f-var docutils literal notranslate"><span class="pre">read_map_one_field</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/read_map_one_field_mpi" title="f/readcheckpoints/read_map_one_field_mpi"><code class="xref f f-var docutils literal notranslate"><span class="pre">read_map_one_field_mpi</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/read_map_one_scalar" title="f/readcheckpoints/read_map_one_scalar"><code class="xref f f-var docutils literal notranslate"><span class="pre">read_map_one_scalar</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/read_map_one_scalar_mpi" title="f/readcheckpoints/read_map_one_scalar_mpi"><code class="xref f f-var docutils literal notranslate"><span class="pre">read_map_one_scalar_mpi</span></code></a></p>
 </dd>
 <dt class="field-even">Routines<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/readcheckpoints/finish_start_fields" title="f/readcheckpoints/finish_start_fields"><code class="xref f f-func docutils literal notranslate"><span class="pre">finish_start_fields()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/getlm2lmo" title="f/readcheckpoints/getlm2lmo"><code class="xref f f-func docutils literal notranslate"><span class="pre">getlm2lmo()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/mapdatahydro" title="f/readcheckpoints/mapdatahydro"><code class="xref f f-func docutils literal notranslate"><span class="pre">mapdatahydro()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/mapdatamag" title="f/readcheckpoints/mapdatamag"><code class="xref f f-func docutils literal notranslate"><span class="pre">mapdatamag()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/mapdatar" title="f/readcheckpoints/mapdatar"><code class="xref f f-func docutils literal notranslate"><span class="pre">mapdatar()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/maponefield" title="f/readcheckpoints/maponefield"><code class="xref f f-func docutils literal notranslate"><span class="pre">maponefield()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/maponefield_mpi" title="f/readcheckpoints/maponefield_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">maponefield_mpi()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/read_map_one_field" title="f/readcheckpoints/read_map_one_field"><code class="xref f f-func docutils literal notranslate"><span class="pre">read_map_one_field()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/read_map_one_field_mpi" title="f/readcheckpoints/read_map_one_field_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">read_map_one_field_mpi()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/read_map_one_scalar" title="f/readcheckpoints/read_map_one_scalar"><code class="xref f f-func docutils literal notranslate"><span class="pre">read_map_one_scalar()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/read_map_one_scalar_mpi" title="f/readcheckpoints/read_map_one_scalar_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">read_map_one_scalar_mpi()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/readstartfields" title="f/readcheckpoints/readstartfields"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/readstartfields_mpi" title="f/readcheckpoints/readstartfields_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields_mpi()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/readstartfields_old" title="f/readcheckpoints/readstartfields_old"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields_old()</span></code></a></p>
+<dd class="field-even"><p><a class="reference internal" href="#f/readcheckpoints/readstartfields" title="f/readcheckpoints/readstartfields"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/readstartfields_mpi" title="f/readcheckpoints/readstartfields_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields_mpi()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/readstartfields_old" title="f/readcheckpoints/readstartfields_old"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields_old()</span></code></a></p>
 </dd>
 </dl>
 <p class="rubric">Needed modules</p>
@@ -155,61 +155,133 @@ mapping of the restart files</p>
 <ul>
 <li><dl class="f variable">
 <dt class="sig sig-object f" id="f/readcheckpoints/bytes_allocated">
-<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">bytes_allocated</span></span><em> <span class="pre">[</span></em><em><span class="pre">integer</span></em><em><span class="pre">,</span></em><em><span class="pre">private/optional/default=0</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/bytes_allocated" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">bytes_allocated</span></span><em> <span class="pre">[</span></em><em><span class="pre">integer</span></em><em><span class="pre">,</span></em><em><span class="pre">private/optional/default=0</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/bytes_allocated" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/readcheckpoints/finish_start_fields">
+<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">finish_start_fields</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/finish_start_fields" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/readcheckpoints/getlm2lmo">
+<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">getlm2lmo</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/getlm2lmo" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
 <li><dl class="f variable">
 <dt class="sig sig-object f" id="f/readcheckpoints/l_axi_old">
-<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">l_axi_old</span></span><em> <span class="pre">[</span></em><em><span class="pre">logical</span></em><em><span class="pre">,</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/l_axi_old" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">l_axi_old</span></span><em> <span class="pre">[</span></em><em><span class="pre">logical</span></em><em><span class="pre">,</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/l_axi_old" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
 <li><dl class="f variable">
 <dt class="sig sig-object f" id="f/readcheckpoints/lreadr">
-<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">lreadr</span></span><em> <span class="pre">[</span></em><em><span class="pre">logical</span></em><em><span class="pre">,</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/lreadr" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">lreadr</span></span><em> <span class="pre">[</span></em><em><span class="pre">logical</span></em><em><span class="pre">,</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/lreadr" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
 <li><dl class="f variable">
 <dt class="sig sig-object f" id="f/readcheckpoints/lreads">
-<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">lreads</span></span><em> <span class="pre">[</span></em><em><span class="pre">logical</span></em><em><span class="pre">,</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/lreads" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">lreads</span></span><em> <span class="pre">[</span></em><em><span class="pre">logical</span></em><em><span class="pre">,</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/lreads" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
 <li><dl class="f variable">
 <dt class="sig sig-object f" id="f/readcheckpoints/lreadxi">
-<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">lreadxi</span></span><em> <span class="pre">[</span></em><em><span class="pre">logical</span></em><em><span class="pre">,</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/lreadxi" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">lreadxi</span></span><em> <span class="pre">[</span></em><em><span class="pre">logical</span></em><em><span class="pre">,</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/lreadxi" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/readcheckpoints/mapdatahydro">
+<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">mapdatahydro</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/mapdatahydro" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/readcheckpoints/mapdatamag">
+<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">mapdatamag</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/mapdatamag" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/readcheckpoints/mapdatar">
+<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">mapdatar</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/mapdatar" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/readcheckpoints/maponefield">
+<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">maponefield</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/maponefield" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/readcheckpoints/maponefield_mpi">
+<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">maponefield_mpi</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/maponefield_mpi" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
 <li><dl class="f variable">
 <dt class="sig sig-object f" id="f/readcheckpoints/n_start_file">
-<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">n_start_file</span></span><em> <span class="pre">[</span></em><em><span class="pre">integer</span></em><em><span class="pre">,</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/n_start_file" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">n_start_file</span></span><em> <span class="pre">[</span></em><em><span class="pre">integer</span></em><em><span class="pre">,</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/n_start_file" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/readcheckpoints/print_info">
+<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">print_info</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/print_info" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
 <li><dl class="f variable">
 <dt class="sig sig-object f" id="f/readcheckpoints/ratio1">
-<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">ratio1</span></span><em> <span class="pre">[</span></em><em><span class="pre">real</span></em><em><span class="pre">,</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/ratio1" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">ratio1</span></span><em> <span class="pre">[</span></em><em><span class="pre">real</span></em><em><span class="pre">,</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/ratio1" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
 <li><dl class="f variable">
 <dt class="sig sig-object f" id="f/readcheckpoints/ratio1_old">
-<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">ratio1_old</span></span><em> <span class="pre">[</span></em><em><span class="pre">real</span></em><em><span class="pre">,</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/ratio1_old" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">ratio1_old</span></span><em> <span class="pre">[</span></em><em><span class="pre">real</span></em><em><span class="pre">,</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/ratio1_old" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
 <li><dl class="f variable">
 <dt class="sig sig-object f" id="f/readcheckpoints/ratio2">
-<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">ratio2</span></span><em> <span class="pre">[</span></em><em><span class="pre">real</span></em><em><span class="pre">,</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/ratio2" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">ratio2</span></span><em> <span class="pre">[</span></em><em><span class="pre">real</span></em><em><span class="pre">,</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/ratio2" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
 <li><dl class="f variable">
 <dt class="sig sig-object f" id="f/readcheckpoints/ratio2_old">
-<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">ratio2_old</span></span><em> <span class="pre">[</span></em><em><span class="pre">real</span></em><em><span class="pre">,</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/ratio2_old" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">ratio2_old</span></span><em> <span class="pre">[</span></em><em><span class="pre">real</span></em><em><span class="pre">,</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/ratio2_old" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/readcheckpoints/read_map_one_field">
+<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">read_map_one_field</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/read_map_one_field" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/readcheckpoints/read_map_one_field_mpi">
+<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">read_map_one_field_mpi</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/read_map_one_field_mpi" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/readcheckpoints/read_map_one_scalar">
+<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">read_map_one_scalar</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/read_map_one_scalar" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/readcheckpoints/read_map_one_scalar_mpi">
+<span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">read_map_one_scalar_mpi</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/readcheckpoints/read_map_one_scalar_mpi" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
@@ -217,7 +289,7 @@ mapping of the restart files</p>
 <p class="rubric">Subroutines and functions</p>
 <dl>
 <dt class="sig sig-object f" id="f/readcheckpoints/readstartfields_old">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">readstartfields_old</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">w</span></em>, <em class="sig-param"><span class="pre">dwdt</span></em>, <em class="sig-param"><span class="pre">z</span></em>, <em class="sig-param"><span class="pre">dzdt</span></em>, <em class="sig-param"><span class="pre">p</span></em>, <em class="sig-param"><span class="pre">dpdt</span></em>, <em class="sig-param"><span class="pre">s</span></em>, <em class="sig-param"><span class="pre">dsdt</span></em>, <em class="sig-param"><span class="pre">xi</span></em>, <em class="sig-param"><span class="pre">dxidt</span></em>, <em class="sig-param"><span class="pre">phi</span></em>, <em class="sig-param"><span class="pre">dphidt</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">dbdt</span></em>, <em class="sig-param"><span class="pre">aj</span></em>, <em class="sig-param"><span class="pre">djdt</span></em>, <em class="sig-param"><span class="pre">b_ic</span></em>, <em class="sig-param"><span class="pre">dbdt_ic</span></em>, <em class="sig-param"><span class="pre">aj_ic</span></em>, <em class="sig-param"><span class="pre">djdt_ic</span></em>, <em class="sig-param"><span class="pre">omega_ic</span></em>, <em class="sig-param"><span class="pre">omega_ma</span></em>, <em class="sig-param"><span class="pre">domega_ic_dt</span></em>, <em class="sig-param"><span class="pre">domega_ma_dt</span></em>, <em class="sig-param"><span class="pre">lorentz_torque_ic_dt</span></em>, <em class="sig-param"><span class="pre">lorentz_torque_ma_dt</span></em>, <em class="sig-param"><span class="pre">time</span></em>, <em class="sig-param"><span class="pre">tscheme</span></em>, <em class="sig-param"><span class="pre">n_time_step</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/readcheckpoints/readstartfields_old" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">readstartfields_old</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">w</span></em>, <em class="sig-param"><span class="pre">dwdt</span></em>, <em class="sig-param"><span class="pre">z</span></em>, <em class="sig-param"><span class="pre">dzdt</span></em>, <em class="sig-param"><span class="pre">p</span></em>, <em class="sig-param"><span class="pre">dpdt</span></em>, <em class="sig-param"><span class="pre">s</span></em>, <em class="sig-param"><span class="pre">dsdt</span></em>, <em class="sig-param"><span class="pre">xi</span></em>, <em class="sig-param"><span class="pre">dxidt</span></em>, <em class="sig-param"><span class="pre">phi</span></em>, <em class="sig-param"><span class="pre">dphidt</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">dbdt</span></em>, <em class="sig-param"><span class="pre">aj</span></em>, <em class="sig-param"><span class="pre">djdt</span></em>, <em class="sig-param"><span class="pre">b_ic</span></em>, <em class="sig-param"><span class="pre">dbdt_ic</span></em>, <em class="sig-param"><span class="pre">aj_ic</span></em>, <em class="sig-param"><span class="pre">djdt_ic</span></em>, <em class="sig-param"><span class="pre">omega_ic</span></em>, <em class="sig-param"><span class="pre">omega_ma</span></em>, <em class="sig-param"><span class="pre">domega_ic_dt</span></em>, <em class="sig-param"><span class="pre">domega_ma_dt</span></em>, <em class="sig-param"><span class="pre">lorentz_torque_ic_dt</span></em>, <em class="sig-param"><span class="pre">lorentz_torque_ma_dt</span></em>, <em class="sig-param"><span class="pre">time</span></em>, <em class="sig-param"><span class="pre">tscheme</span></em>, <em class="sig-param"><span class="pre">n_time_step</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/readcheckpoints/readstartfields_old" title="Link to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>This subroutine is used to read the old restart files produced
 by MagIC. This is now deprecated with the change of the file format.
@@ -261,14 +333,14 @@ This is still needed to read old files.</p>
 <dd class="field-even"><p><a class="reference internal" href="initModules.html#f/start_fields/getstartfields" title="f/start_fields/getstartfields"><code class="xref f f-func docutils literal notranslate"><span class="pre">getstartfields()</span></code></a></p>
 </dd>
 <dt class="field-odd">Call to<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="misc.html#f/useful/abortrun" title="f/useful/abortrun"><code class="xref f f-func docutils literal notranslate"><span class="pre">abortrun()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/getlm2lmo" title="f/readcheckpoints/getlm2lmo"><code class="xref f f-func docutils literal notranslate"><span class="pre">getlm2lmo()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/mapdatahydro" title="f/readcheckpoints/mapdatahydro"><code class="xref f f-func docutils literal notranslate"><span class="pre">mapdatahydro()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/scatter_from_rank0_to_lo" title="f/communications/scatter_from_rank0_to_lo"><code class="xref f f-func docutils literal notranslate"><span class="pre">scatter_from_rank0_to_lo()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/get_single_rhs_imp" title="f/updatewps_mod/get_single_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_single_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_pol_rhs_imp" title="f/updatewp_mod/get_pol_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_pol_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/get_entropy_rhs_imp" title="f/updates_mod/get_entropy_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_entropy_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/get_tor_rhs_imp" title="f/updatez_mod/get_tor_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_tor_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/get_comp_rhs_imp" title="f/updatexi_mod/get_comp_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_comp_rhs_imp()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/mapdatamag" title="f/readcheckpoints/mapdatamag"><code class="xref f f-func docutils literal notranslate"><span class="pre">mapdatamag()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_mag_rhs_imp" title="f/updateb_mod/get_mag_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_mag_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_mag_ic_rhs_imp" title="f/updateb_mod/get_mag_ic_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_mag_ic_rhs_imp()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/finish_start_fields" title="f/readcheckpoints/finish_start_fields"><code class="xref f f-func docutils literal notranslate"><span class="pre">finish_start_fields()</span></code></a></p>
+<dd class="field-odd"><p><a class="reference internal" href="misc.html#f/useful/abortrun" title="f/useful/abortrun"><code class="xref f f-func docutils literal notranslate"><span class="pre">abortrun()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/scatter_from_rank0_to_lo" title="f/communications/scatter_from_rank0_to_lo"><code class="xref f f-func docutils literal notranslate"><span class="pre">scatter_from_rank0_to_lo()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/get_single_rhs_imp" title="f/updatewps_mod/get_single_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_single_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_pol_rhs_imp" title="f/updatewp_mod/get_pol_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_pol_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/get_entropy_rhs_imp" title="f/updates_mod/get_entropy_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_entropy_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/get_tor_rhs_imp" title="f/updatez_mod/get_tor_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_tor_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/get_comp_rhs_imp" title="f/updatexi_mod/get_comp_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_comp_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_mag_rhs_imp" title="f/updateb_mod/get_mag_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_mag_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_mag_ic_rhs_imp" title="f/updateb_mod/get_mag_ic_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_mag_ic_rhs_imp()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl>
 <dt class="sig sig-object f" id="f/readcheckpoints/readstartfields">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">readstartfields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">w</span></em>, <em class="sig-param"><span class="pre">dwdt</span></em>, <em class="sig-param"><span class="pre">z</span></em>, <em class="sig-param"><span class="pre">dzdt</span></em>, <em class="sig-param"><span class="pre">p</span></em>, <em class="sig-param"><span class="pre">dpdt</span></em>, <em class="sig-param"><span class="pre">s</span></em>, <em class="sig-param"><span class="pre">dsdt</span></em>, <em class="sig-param"><span class="pre">xi</span></em>, <em class="sig-param"><span class="pre">dxidt</span></em>, <em class="sig-param"><span class="pre">phi</span></em>, <em class="sig-param"><span class="pre">dphidt</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">dbdt</span></em>, <em class="sig-param"><span class="pre">aj</span></em>, <em class="sig-param"><span class="pre">djdt</span></em>, <em class="sig-param"><span class="pre">b_ic</span></em>, <em class="sig-param"><span class="pre">dbdt_ic</span></em>, <em class="sig-param"><span class="pre">aj_ic</span></em>, <em class="sig-param"><span class="pre">djdt_ic</span></em>, <em class="sig-param"><span class="pre">omega_ic</span></em>, <em class="sig-param"><span class="pre">omega_ma</span></em>, <em class="sig-param"><span class="pre">domega_ic_dt</span></em>, <em class="sig-param"><span class="pre">domega_ma_dt</span></em>, <em class="sig-param"><span class="pre">lorentz_torque_ic_dt</span></em>, <em class="sig-param"><span class="pre">lorentz_torque_ma_dt</span></em>, <em class="sig-param"><span class="pre">time</span></em>, <em class="sig-param"><span class="pre">tscheme</span></em>, <em class="sig-param"><span class="pre">n_time_step</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/readcheckpoints/readstartfields" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">readstartfields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">w</span></em>, <em class="sig-param"><span class="pre">dwdt</span></em>, <em class="sig-param"><span class="pre">z</span></em>, <em class="sig-param"><span class="pre">dzdt</span></em>, <em class="sig-param"><span class="pre">p</span></em>, <em class="sig-param"><span class="pre">dpdt</span></em>, <em class="sig-param"><span class="pre">s</span></em>, <em class="sig-param"><span class="pre">dsdt</span></em>, <em class="sig-param"><span class="pre">xi</span></em>, <em class="sig-param"><span class="pre">dxidt</span></em>, <em class="sig-param"><span class="pre">phi</span></em>, <em class="sig-param"><span class="pre">dphidt</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">dbdt</span></em>, <em class="sig-param"><span class="pre">aj</span></em>, <em class="sig-param"><span class="pre">djdt</span></em>, <em class="sig-param"><span class="pre">b_ic</span></em>, <em class="sig-param"><span class="pre">dbdt_ic</span></em>, <em class="sig-param"><span class="pre">aj_ic</span></em>, <em class="sig-param"><span class="pre">djdt_ic</span></em>, <em class="sig-param"><span class="pre">omega_ic</span></em>, <em class="sig-param"><span class="pre">omega_ma</span></em>, <em class="sig-param"><span class="pre">domega_ic_dt</span></em>, <em class="sig-param"><span class="pre">domega_ma_dt</span></em>, <em class="sig-param"><span class="pre">lorentz_torque_ic_dt</span></em>, <em class="sig-param"><span class="pre">lorentz_torque_ma_dt</span></em>, <em class="sig-param"><span class="pre">time</span></em>, <em class="sig-param"><span class="pre">tscheme</span></em>, <em class="sig-param"><span class="pre">n_time_step</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/readcheckpoints/readstartfields" title="Link to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>This subroutine is used to read the restart files produced
 by MagIC.</p>
@@ -311,72 +383,14 @@ by MagIC.</p>
 <dd class="field-even"><p><a class="reference internal" href="#f/readcheckpoints/readstartfields_mpi" title="f/readcheckpoints/readstartfields_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields_mpi()</span></code></a></p>
 </dd>
 <dt class="field-odd">Call to<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="misc.html#f/useful/abortrun" title="f/useful/abortrun"><code class="xref f f-func docutils literal notranslate"><span class="pre">abortrun()</span></code></a>, <a class="reference internal" href="timeAdvance.html#f/time_schemes/print_info" title="f/time_schemes/print_info"><code class="xref f f-func docutils literal notranslate"><span class="pre">print_info()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/getlm2lmo" title="f/readcheckpoints/getlm2lmo"><code class="xref f f-func docutils literal notranslate"><span class="pre">getlm2lmo()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/read_map_one_scalar" title="f/readcheckpoints/read_map_one_scalar"><code class="xref f f-func docutils literal notranslate"><span class="pre">read_map_one_scalar()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/read_map_one_field" title="f/readcheckpoints/read_map_one_field"><code class="xref f f-func docutils literal notranslate"><span class="pre">read_map_one_field()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/maponefield" title="f/readcheckpoints/maponefield"><code class="xref f f-func docutils literal notranslate"><span class="pre">maponefield()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/scatter_from_rank0_to_lo" title="f/communications/scatter_from_rank0_to_lo"><code class="xref f f-func docutils literal notranslate"><span class="pre">scatter_from_rank0_to_lo()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/finish_start_fields" title="f/readcheckpoints/finish_start_fields"><code class="xref f f-func docutils literal notranslate"><span class="pre">finish_start_fields()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/get_single_rhs_imp" title="f/updatewps_mod/get_single_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_single_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_pol_rhs_imp" title="f/updatewp_mod/get_pol_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_pol_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/get_entropy_rhs_imp" title="f/updates_mod/get_entropy_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_entropy_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/get_tor_rhs_imp" title="f/updatez_mod/get_tor_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_tor_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/get_comp_rhs_imp" title="f/updatexi_mod/get_comp_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_comp_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_mag_rhs_imp" title="f/updateb_mod/get_mag_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_mag_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_mag_ic_rhs_imp" title="f/updateb_mod/get_mag_ic_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_mag_ic_rhs_imp()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/readcheckpoints/read_map_one_scalar">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">read_map_one_scalar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">fh</span></em>, <em class="sig-param"><span class="pre">tscheme</span></em>, <em class="sig-param"><span class="pre">nexp_old</span></em>, <em class="sig-param"><span class="pre">nimp_old</span></em>, <em class="sig-param"><span class="pre">nold_old</span></em>, <em class="sig-param"><span class="pre">tscheme_family_old</span></em>, <em class="sig-param"><span class="pre">dscal_dt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/readcheckpoints/read_map_one_scalar" title="Permalink to this definition">¶</a></dt>
-<dd><p>– Input variables</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fh</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>tscheme</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>nexp_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>nimp_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>nold_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>tscheme_family_old</strong><em> [</em><em>character(len=*)</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>dscal_dt</strong><em> [</em><em>type_tscalar </em><em>,</em><em>inout</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/readcheckpoints/readstartfields" title="f/readcheckpoints/readstartfields"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/readcheckpoints/read_map_one_field">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">read_map_one_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">fh</span></em>, <em class="sig-param"><span class="pre">tscheme</span></em>, <em class="sig-param"><span class="pre">wold</span></em>, <em class="sig-param"><span class="pre">work</span></em>, <em class="sig-param"><span class="pre">scale_w</span></em>, <em class="sig-param"><span class="pre">r_old</span></em>, <em class="sig-param"><span class="pre">lm2lmo</span></em>, <em class="sig-param"><span class="pre">n_r_max_old</span></em>, <em class="sig-param"><span class="pre">n_r_maxl</span></em>, <em class="sig-param"><span class="pre">dim1</span></em>, <em class="sig-param"><span class="pre">nexp_old</span></em>, <em class="sig-param"><span class="pre">nimp_old</span></em>, <em class="sig-param"><span class="pre">nold_old</span></em>, <em class="sig-param"><span class="pre">tscheme_family_old</span></em>, <em class="sig-param"><span class="pre">w</span></em>, <em class="sig-param"><span class="pre">dwdt</span></em>, <em class="sig-param"><span class="pre">l_map</span></em>, <em class="sig-param"><span class="pre">l_transp</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/readcheckpoints/read_map_one_field" title="Permalink to this definition">¶</a></dt>
-<dd><p>— Input variables</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fh</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>tscheme</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>wold</strong> (*,*)<em> [</em><em>complex </em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>work</strong> (*,*)<em> [</em><em>complex </em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>scale_w</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>r_old</strong> (*)<em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>lm2lmo</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>)<em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>n_r_max_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>n_r_maxl</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>dim1</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>nexp_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>nimp_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>nold_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>tscheme_family_old</strong><em> [</em><em>character(len=*)</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>w</strong> (1 - <a class="reference internal" href="blocking.html#f/blocking/llm" title="f/blocking/llm">llm</a> + <a class="reference internal" href="blocking.html#f/blocking/ulm" title="f/blocking/ulm">ulm</a>,dim1)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>dwdt</strong><em> [</em><em>type_tarray </em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>l_map</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>l_transp</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em> :: do we need to transpose to lm-loc</p></li>
-</ul>
-</dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/readcheckpoints/readstartfields" title="f/readcheckpoints/readstartfields"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields()</span></code></a></p>
-</dd>
-<dt class="field-odd">Call to<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/readcheckpoints/maponefield" title="f/readcheckpoints/maponefield"><code class="xref f f-func docutils literal notranslate"><span class="pre">maponefield()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/scatter_from_rank0_to_lo" title="f/communications/scatter_from_rank0_to_lo"><code class="xref f f-func docutils literal notranslate"><span class="pre">scatter_from_rank0_to_lo()</span></code></a></p>
+<dd class="field-odd"><p><a class="reference internal" href="misc.html#f/useful/abortrun" title="f/useful/abortrun"><code class="xref f f-func docutils literal notranslate"><span class="pre">abortrun()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/scatter_from_rank0_to_lo" title="f/communications/scatter_from_rank0_to_lo"><code class="xref f f-func docutils literal notranslate"><span class="pre">scatter_from_rank0_to_lo()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/get_single_rhs_imp" title="f/updatewps_mod/get_single_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_single_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_pol_rhs_imp" title="f/updatewp_mod/get_pol_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_pol_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/get_entropy_rhs_imp" title="f/updates_mod/get_entropy_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_entropy_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/get_tor_rhs_imp" title="f/updatez_mod/get_tor_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_tor_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/get_comp_rhs_imp" title="f/updatexi_mod/get_comp_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_comp_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_mag_rhs_imp" title="f/updateb_mod/get_mag_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_mag_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_mag_ic_rhs_imp" title="f/updateb_mod/get_mag_ic_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_mag_ic_rhs_imp()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl>
 <dt class="sig sig-object f" id="f/readcheckpoints/readstartfields_mpi">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">readstartfields_mpi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">w</span></em>, <em class="sig-param"><span class="pre">dwdt</span></em>, <em class="sig-param"><span class="pre">z</span></em>, <em class="sig-param"><span class="pre">dzdt</span></em>, <em class="sig-param"><span class="pre">p</span></em>, <em class="sig-param"><span class="pre">dpdt</span></em>, <em class="sig-param"><span class="pre">s</span></em>, <em class="sig-param"><span class="pre">dsdt</span></em>, <em class="sig-param"><span class="pre">xi</span></em>, <em class="sig-param"><span class="pre">dxidt</span></em>, <em class="sig-param"><span class="pre">phi</span></em>, <em class="sig-param"><span class="pre">dphidt</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">dbdt</span></em>, <em class="sig-param"><span class="pre">aj</span></em>, <em class="sig-param"><span class="pre">djdt</span></em>, <em class="sig-param"><span class="pre">b_ic</span></em>, <em class="sig-param"><span class="pre">dbdt_ic</span></em>, <em class="sig-param"><span class="pre">aj_ic</span></em>, <em class="sig-param"><span class="pre">djdt_ic</span></em>, <em class="sig-param"><span class="pre">omega_ic</span></em>, <em class="sig-param"><span class="pre">omega_ma</span></em>, <em class="sig-param"><span class="pre">domega_ic_dt</span></em>, <em class="sig-param"><span class="pre">domega_ma_dt</span></em>, <em class="sig-param"><span class="pre">lorentz_torque_ic_dt</span></em>, <em class="sig-param"><span class="pre">lorentz_torque_ma_dt</span></em>, <em class="sig-param"><span class="pre">time</span></em>, <em class="sig-param"><span class="pre">tscheme</span></em>, <em class="sig-param"><span class="pre">n_time_step</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/readcheckpoints/readstartfields_mpi" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">readstartfields_mpi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">w</span></em>, <em class="sig-param"><span class="pre">dwdt</span></em>, <em class="sig-param"><span class="pre">z</span></em>, <em class="sig-param"><span class="pre">dzdt</span></em>, <em class="sig-param"><span class="pre">p</span></em>, <em class="sig-param"><span class="pre">dpdt</span></em>, <em class="sig-param"><span class="pre">s</span></em>, <em class="sig-param"><span class="pre">dsdt</span></em>, <em class="sig-param"><span class="pre">xi</span></em>, <em class="sig-param"><span class="pre">dxidt</span></em>, <em class="sig-param"><span class="pre">phi</span></em>, <em class="sig-param"><span class="pre">dphidt</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">dbdt</span></em>, <em class="sig-param"><span class="pre">aj</span></em>, <em class="sig-param"><span class="pre">djdt</span></em>, <em class="sig-param"><span class="pre">b_ic</span></em>, <em class="sig-param"><span class="pre">dbdt_ic</span></em>, <em class="sig-param"><span class="pre">aj_ic</span></em>, <em class="sig-param"><span class="pre">djdt_ic</span></em>, <em class="sig-param"><span class="pre">omega_ic</span></em>, <em class="sig-param"><span class="pre">omega_ma</span></em>, <em class="sig-param"><span class="pre">domega_ic_dt</span></em>, <em class="sig-param"><span class="pre">domega_ma_dt</span></em>, <em class="sig-param"><span class="pre">lorentz_torque_ic_dt</span></em>, <em class="sig-param"><span class="pre">lorentz_torque_ma_dt</span></em>, <em class="sig-param"><span class="pre">time</span></em>, <em class="sig-param"><span class="pre">tscheme</span></em>, <em class="sig-param"><span class="pre">n_time_step</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/readcheckpoints/readstartfields_mpi" title="Link to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>This subroutine is used to read the restart files produced
 by MagIC using MPI-IO</p>
@@ -419,329 +433,24 @@ by MagIC using MPI-IO</p>
 <dd class="field-even"><p><a class="reference internal" href="initModules.html#f/start_fields/getstartfields" title="f/start_fields/getstartfields"><code class="xref f f-func docutils literal notranslate"><span class="pre">getstartfields()</span></code></a></p>
 </dd>
 <dt class="field-odd">Call to<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="parallelModules.html#f/parallel_mod/mpiio_setup" title="f/parallel_mod/mpiio_setup"><code class="xref f f-func docutils literal notranslate"><span class="pre">mpiio_setup()</span></code></a>, <a class="reference internal" href="misc.html#f/useful/abortrun" title="f/useful/abortrun"><code class="xref f f-func docutils literal notranslate"><span class="pre">abortrun()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/readstartfields" title="f/readcheckpoints/readstartfields"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields()</span></code></a>, <a class="reference internal" href="timeAdvance.html#f/time_schemes/print_info" title="f/time_schemes/print_info"><code class="xref f f-func docutils literal notranslate"><span class="pre">print_info()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/getlm2lmo" title="f/readcheckpoints/getlm2lmo"><code class="xref f f-func docutils literal notranslate"><span class="pre">getlm2lmo()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/read_map_one_scalar_mpi" title="f/readcheckpoints/read_map_one_scalar_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">read_map_one_scalar_mpi()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/parallel_mod/getblocks" title="f/parallel_mod/getblocks"><code class="xref f f-func docutils literal notranslate"><span class="pre">getblocks()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/read_map_one_field_mpi" title="f/readcheckpoints/read_map_one_field_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">read_map_one_field_mpi()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/maponefield" title="f/readcheckpoints/maponefield"><code class="xref f f-func docutils literal notranslate"><span class="pre">maponefield()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/scatter_from_rank0_to_lo" title="f/communications/scatter_from_rank0_to_lo"><code class="xref f f-func docutils literal notranslate"><span class="pre">scatter_from_rank0_to_lo()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/get_single_rhs_imp" title="f/updatewps_mod/get_single_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_single_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_pol_rhs_imp" title="f/updatewp_mod/get_pol_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_pol_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/get_entropy_rhs_imp" title="f/updates_mod/get_entropy_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_entropy_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/get_tor_rhs_imp" title="f/updatez_mod/get_tor_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_tor_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/get_comp_rhs_imp" title="f/updatexi_mod/get_comp_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_comp_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_mag_rhs_imp" title="f/updateb_mod/get_mag_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_mag_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_mag_ic_rhs_imp" title="f/updateb_mod/get_mag_ic_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_mag_ic_rhs_imp()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/finish_start_fields" title="f/readcheckpoints/finish_start_fields"><code class="xref f f-func docutils literal notranslate"><span class="pre">finish_start_fields()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/readcheckpoints/read_map_one_scalar_mpi">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">read_map_one_scalar_mpi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">fh</span></em>, <em class="sig-param"><span class="pre">tscheme</span></em>, <em class="sig-param"><span class="pre">nexp_old</span></em>, <em class="sig-param"><span class="pre">nimp_old</span></em>, <em class="sig-param"><span class="pre">nold_old</span></em>, <em class="sig-param"><span class="pre">tscheme_family_old</span></em>, <em class="sig-param"><span class="pre">dscal_dt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/readcheckpoints/read_map_one_scalar_mpi" title="Permalink to this definition">¶</a></dt>
-<dd><p>– Input variables</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fh</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>tscheme</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>nexp_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>nimp_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>nold_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>tscheme_family_old</strong><em> [</em><em>character(len=*)</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>dscal_dt</strong><em> [</em><em>type_tscalar </em><em>,</em><em>inout</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/readcheckpoints/readstartfields_mpi" title="f/readcheckpoints/readstartfields_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields_mpi()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/readcheckpoints/read_map_one_field_mpi">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">read_map_one_field_mpi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">fh</span></em>, <em class="sig-param"><span class="pre">info</span></em>, <em class="sig-param"><span class="pre">datatype</span></em>, <em class="sig-param"><span class="pre">tscheme</span></em>, <em class="sig-param"><span class="pre">wold</span></em>, <em class="sig-param"><span class="pre">lm_max_old</span></em>, <em class="sig-param"><span class="pre">n_r_max_old</span></em>, <em class="sig-param"><span class="pre">nrstart_old</span></em>, <em class="sig-param"><span class="pre">nrstop_old</span></em>, <em class="sig-param"><span class="pre">radial_balance_old</span></em>, <em class="sig-param"><span class="pre">lm2lmo</span></em>, <em class="sig-param"><span class="pre">r_old</span></em>, <em class="sig-param"><span class="pre">n_r_maxl</span></em>, <em class="sig-param"><span class="pre">dim1</span></em>, <em class="sig-param"><span class="pre">scale_w</span></em>, <em class="sig-param"><span class="pre">nexp_old</span></em>, <em class="sig-param"><span class="pre">nimp_old</span></em>, <em class="sig-param"><span class="pre">nold_old</span></em>, <em class="sig-param"><span class="pre">tscheme_family_old</span></em>, <em class="sig-param"><span class="pre">w</span></em>, <em class="sig-param"><span class="pre">dwdt</span></em>, <em class="sig-param"><span class="pre">disp</span></em>, <em class="sig-param"><span class="pre">l_map</span></em>, <em class="sig-param"><span class="pre">l_transp</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">l_read_field_only</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#f/readcheckpoints/read_map_one_field_mpi" title="Permalink to this definition">¶</a></dt>
-<dd><p>— Input variables</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fh</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>info</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>datatype</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>tscheme</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>wold</strong> (lm_max_old,1 - nrstart_old + nrstop_old)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>lm_max_old</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em></p></li>
-<li><p><strong>n_r_max_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>nrstart_old</strong><em> [</em><em>integer </em><em>,</em><em>in,required</em><em>]</em></p></li>
-<li><p><strong>nrstop_old</strong><em> [</em><em>integer </em><em>,</em><em>in,required</em><em>]</em></p></li>
-<li><p><strong>radial_balance_old</strong> (<a class="reference internal" href="parallelModules.html#f/parallel_mod/n_procs" title="f/parallel_mod/n_procs">n_procs</a>)<em> [</em><em>load </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>lm2lmo</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>)<em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>r_old</strong> (*)<em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>n_r_maxl</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>dim1</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>scale_w</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>nexp_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>nimp_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>nold_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>tscheme_family_old</strong><em> [</em><em>character(len=*)</em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>w</strong> (1 - <a class="reference internal" href="blocking.html#f/blocking/llm" title="f/blocking/llm">llm</a> + <a class="reference internal" href="blocking.html#f/blocking/ulm" title="f/blocking/ulm">ulm</a>,dim1)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>dwdt</strong><em> [</em><em>type_tarray </em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>disp</strong><em> [</em><em>integer </em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>l_map</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>l_transp</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em> :: Do we need to transpose d?dt arrays?</p></li>
-</ul>
-</dd>
-<dt class="field-even">Options<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>l_read_field_only</strong><em> [</em><em>logical </em><em>,</em><em>in,</em><em>]</em></p>
-</dd>
-<dt class="field-odd">Called from<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/readcheckpoints/readstartfields_mpi" title="f/readcheckpoints/readstartfields_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields_mpi()</span></code></a></p>
-</dd>
-<dt class="field-even">Call to<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/readcheckpoints/maponefield_mpi" title="f/readcheckpoints/maponefield_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">maponefield_mpi()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/readcheckpoints/getlm2lmo">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">getlm2lmo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">n_r_max</span></em>, <em class="sig-param"><span class="pre">n_r_max_old</span></em>, <em class="sig-param"><span class="pre">l_max</span></em>, <em class="sig-param"><span class="pre">l_max_old</span></em>, <em class="sig-param"><span class="pre">m_min</span></em>, <em class="sig-param"><span class="pre">m_min_old</span></em>, <em class="sig-param"><span class="pre">m_max</span></em>, <em class="sig-param"><span class="pre">m_max_old</span></em>, <em class="sig-param"><span class="pre">minc</span></em>, <em class="sig-param"><span class="pre">minc_old</span></em>, <em class="sig-param"><span class="pre">lm_max</span></em>, <em class="sig-param"><span class="pre">lm_max_old</span></em>, <em class="sig-param"><span class="pre">lm2lmo</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/readcheckpoints/getlm2lmo" title="Permalink to this definition">¶</a></dt>
-<dd><p>— Input variables</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>n_r_max</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>n_r_max_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>l_max</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>l_max_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>m_min</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>m_min_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>m_max</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>m_max_old</strong><em> [</em><em>integer </em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>minc</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>minc_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>lm_max</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>lm_max_old</strong><em> [</em><em>integer </em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>lm2lmo</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>)<em> [</em><em>integer </em><em>,</em><em>out</em><em>]</em> :: data found in startfile</p></li>
-</ul>
-</dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/readcheckpoints/readstartfields_old" title="f/readcheckpoints/readstartfields_old"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields_old()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/readstartfields" title="f/readcheckpoints/readstartfields"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/readstartfields_mpi" title="f/readcheckpoints/readstartfields_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields_mpi()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/readcheckpoints/maponefield_mpi">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">maponefield_mpi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">wold</span></em>, <em class="sig-param"><span class="pre">lm_max_old</span></em>, <em class="sig-param"><span class="pre">n_r_max_old</span></em>, <em class="sig-param"><span class="pre">nrstart_old</span></em>, <em class="sig-param"><span class="pre">nrstop_old</span></em>, <em class="sig-param"><span class="pre">radial_balance_old</span></em>, <em class="sig-param"><span class="pre">lm2lmo</span></em>, <em class="sig-param"><span class="pre">r_old</span></em>, <em class="sig-param"><span class="pre">n_r_maxl</span></em>, <em class="sig-param"><span class="pre">dim1</span></em>, <em class="sig-param"><span class="pre">lbc1</span></em>, <em class="sig-param"><span class="pre">l_ic</span></em>, <em class="sig-param"><span class="pre">scale_w</span></em>, <em class="sig-param"><span class="pre">w</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/readcheckpoints/maponefield_mpi" title="Permalink to this definition">¶</a></dt>
-<dd><p>— Input variables</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>wold</strong> (lm_max_old,1 - nrstart_old + nrstop_old)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>lm_max_old</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em></p></li>
-<li><p><strong>n_r_max_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>nrstart_old</strong><em> [</em><em>integer </em><em>,</em><em>in,required</em><em>]</em></p></li>
-<li><p><strong>nrstop_old</strong><em> [</em><em>integer </em><em>,</em><em>in,required</em><em>]</em></p></li>
-<li><p><strong>radial_balance_old</strong> (<a class="reference internal" href="parallelModules.html#f/parallel_mod/n_procs" title="f/parallel_mod/n_procs">n_procs</a>)<em> [</em><em>load </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>lm2lmo</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>)<em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>r_old</strong> (*)<em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>n_r_maxl</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>dim1</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>lbc1</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>l_ic</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>scale_w</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>w</strong> (1 - <a class="reference internal" href="blocking.html#f/blocking/llm" title="f/blocking/llm">llm</a> + <a class="reference internal" href="blocking.html#f/blocking/ulm" title="f/blocking/ulm">ulm</a>,dim1)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/readcheckpoints/read_map_one_field_mpi" title="f/readcheckpoints/read_map_one_field_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">read_map_one_field_mpi()</span></code></a></p>
-</dd>
-<dt class="field-odd">Call to<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/readcheckpoints/mapdatar" title="f/readcheckpoints/mapdatar"><code class="xref f f-func docutils literal notranslate"><span class="pre">mapdatar()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/readcheckpoints/maponefield">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">maponefield</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">wo</span></em>, <em class="sig-param"><span class="pre">scale_w</span></em>, <em class="sig-param"><span class="pre">r_old</span></em>, <em class="sig-param"><span class="pre">lm2lmo</span></em>, <em class="sig-param"><span class="pre">n_r_max_old</span></em>, <em class="sig-param"><span class="pre">n_r_maxl</span></em>, <em class="sig-param"><span class="pre">dim1</span></em>, <em class="sig-param"><span class="pre">lbc1</span></em>, <em class="sig-param"><span class="pre">l_ic</span></em>, <em class="sig-param"><span class="pre">w</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/readcheckpoints/maponefield" title="Permalink to this definition">¶</a></dt>
-<dd><p>— Input variables</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>wo</strong> (*,*)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>scale_w</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>r_old</strong> (*)<em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>lm2lmo</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>)<em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>n_r_max_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>n_r_maxl</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>dim1</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>lbc1</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>l_ic</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>w</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,dim1)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/readcheckpoints/readstartfields" title="f/readcheckpoints/readstartfields"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/read_map_one_field" title="f/readcheckpoints/read_map_one_field"><code class="xref f f-func docutils literal notranslate"><span class="pre">read_map_one_field()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/readstartfields_mpi" title="f/readcheckpoints/readstartfields_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields_mpi()</span></code></a></p>
-</dd>
-<dt class="field-odd">Call to<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/readcheckpoints/mapdatar" title="f/readcheckpoints/mapdatar"><code class="xref f f-func docutils literal notranslate"><span class="pre">mapdatar()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/readcheckpoints/mapdatahydro">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">mapdatahydro</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">wo</span></em>, <em class="sig-param"><span class="pre">zo</span></em>, <em class="sig-param"><span class="pre">po</span></em>, <em class="sig-param"><span class="pre">so</span></em>, <em class="sig-param"><span class="pre">xio</span></em>, <em class="sig-param"><span class="pre">r_old</span></em>, <em class="sig-param"><span class="pre">lm2lmo</span></em>, <em class="sig-param"><span class="pre">n_r_max_old</span></em>, <em class="sig-param"><span class="pre">lm_max_old</span></em>, <em class="sig-param"><span class="pre">n_r_maxl</span></em>, <em class="sig-param"><span class="pre">lbc1</span></em>, <em class="sig-param"><span class="pre">lbc2</span></em>, <em class="sig-param"><span class="pre">lbc3</span></em>, <em class="sig-param"><span class="pre">lbc4</span></em>, <em class="sig-param"><span class="pre">lbc5</span></em>, <em class="sig-param"><span class="pre">w</span></em>, <em class="sig-param"><span class="pre">z</span></em>, <em class="sig-param"><span class="pre">p</span></em>, <em class="sig-param"><span class="pre">s</span></em>, <em class="sig-param"><span class="pre">xi</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/readcheckpoints/mapdatahydro" title="Permalink to this definition">¶</a></dt>
-<dd><p>— Input variables</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>wo</strong> (lm_max_old,n_r_max_old)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>zo</strong> (lm_max_old,n_r_max_old)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>po</strong> (lm_max_old,n_r_max_old)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>so</strong> (lm_max_old,n_r_max_old)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>xio</strong> (lm_max_old,n_r_max_old)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>r_old</strong> (*)<em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>lm2lmo</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>)<em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>n_r_max_old</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em></p></li>
-<li><p><strong>lm_max_old</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em></p></li>
-<li><p><strong>n_r_maxl</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>lbc1</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>lbc2</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>lbc3</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>lbc4</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>lbc5</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>w</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>z</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>p</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>s</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>xi</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/readcheckpoints/readstartfields_old" title="f/readcheckpoints/readstartfields_old"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields_old()</span></code></a></p>
-</dd>
-<dt class="field-odd">Call to<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/readcheckpoints/mapdatar" title="f/readcheckpoints/mapdatar"><code class="xref f f-func docutils literal notranslate"><span class="pre">mapdatar()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/readcheckpoints/mapdatamag">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">mapdatamag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">wo</span></em>, <em class="sig-param"><span class="pre">zo</span></em>, <em class="sig-param"><span class="pre">po</span></em>, <em class="sig-param"><span class="pre">so</span></em>, <em class="sig-param"><span class="pre">r_old</span></em>, <em class="sig-param"><span class="pre">n_rad_tot</span></em>, <em class="sig-param"><span class="pre">n_r_max_old</span></em>, <em class="sig-param"><span class="pre">lm_max_old</span></em>, <em class="sig-param"><span class="pre">n_r_maxl</span></em>, <em class="sig-param"><span class="pre">lm2lmo</span></em>, <em class="sig-param"><span class="pre">dim1</span></em>, <em class="sig-param"><span class="pre">l_ic</span></em>, <em class="sig-param"><span class="pre">w</span></em>, <em class="sig-param"><span class="pre">z</span></em>, <em class="sig-param"><span class="pre">p</span></em>, <em class="sig-param"><span class="pre">s</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/readcheckpoints/mapdatamag" title="Permalink to this definition">¶</a></dt>
-<dd><p>— Input variables</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>wo</strong> (lm_max_old,n_r_max_old)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>zo</strong> (lm_max_old,n_r_max_old)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>po</strong> (lm_max_old,n_r_max_old)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>so</strong> (lm_max_old,n_r_max_old)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>r_old</strong> (*)<em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>n_rad_tot</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>n_r_max_old</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em></p></li>
-<li><p><strong>lm_max_old</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em></p></li>
-<li><p><strong>n_r_maxl</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>lm2lmo</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_max" title="f/truncation/lm_max">lm_max</a>)<em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>dim1</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>l_ic</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>w</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_maxmag" title="f/truncation/lm_maxmag">lm_maxmag</a>,dim1)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>z</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_maxmag" title="f/truncation/lm_maxmag">lm_maxmag</a>,dim1)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>p</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_maxmag" title="f/truncation/lm_maxmag">lm_maxmag</a>,dim1)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>s</strong> (<a class="reference internal" href="baseModules.html#f/truncation/lm_maxmag" title="f/truncation/lm_maxmag">lm_maxmag</a>,dim1)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/readcheckpoints/readstartfields_old" title="f/readcheckpoints/readstartfields_old"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields_old()</span></code></a></p>
-</dd>
-<dt class="field-odd">Call to<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/readcheckpoints/mapdatar" title="f/readcheckpoints/mapdatar"><code class="xref f f-func docutils literal notranslate"><span class="pre">mapdatar()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/readcheckpoints/mapdatar">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">mapdatar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">datar</span></em>, <em class="sig-param"><span class="pre">r_old</span></em>, <em class="sig-param"><span class="pre">n_rad_tot</span></em>, <em class="sig-param"><span class="pre">n_r_max_old</span></em>, <em class="sig-param"><span class="pre">n_r_maxl</span></em>, <em class="sig-param"><span class="pre">lbc</span></em>, <em class="sig-param"><span class="pre">l_ic</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">chebt_ic_old</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#f/readcheckpoints/mapdatar" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Copy (interpolate) data (read from disc file) from old grid structure
-to new grid. Linear interploation is used in r if the radial grid
-structure differs.</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>datar</strong> (*)<em> [</em><em>complex </em><em>,</em><em>inout</em><em>]</em> :: old data</p></li>
-<li><p><strong>r_old</strong> (*)<em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>n_rad_tot</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>n_r_max_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>n_r_maxl</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>lbc</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>l_ic</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Options<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>chebt_ic_old</strong><em> [</em><em>costf_odd_t </em><em>,</em><em>in,</em><em>]</em></p>
-</dd>
-<dt class="field-odd">Called from<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/readcheckpoints/maponefield_mpi" title="f/readcheckpoints/maponefield_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">maponefield_mpi()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/maponefield" title="f/readcheckpoints/maponefield"><code class="xref f f-func docutils literal notranslate"><span class="pre">maponefield()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/mapdatahydro" title="f/readcheckpoints/mapdatahydro"><code class="xref f f-func docutils literal notranslate"><span class="pre">mapdatahydro()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/mapdatamag" title="f/readcheckpoints/mapdatamag"><code class="xref f f-func docutils literal notranslate"><span class="pre">mapdatamag()</span></code></a></p>
-</dd>
-<dt class="field-even">Call to<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="misc.html#f/useful/polynomial_interpolation" title="f/useful/polynomial_interpolation"><code class="xref f f-func docutils literal notranslate"><span class="pre">polynomial_interpolation()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/readcheckpoints/finish_start_fields">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">finish_start_fields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">time</span></em>, <em class="sig-param"><span class="pre">minc_old</span></em>, <em class="sig-param"><span class="pre">l_mag_old</span></em>, <em class="sig-param"><span class="pre">omega_ic1old</span></em>, <em class="sig-param"><span class="pre">omega_ma1old</span></em>, <em class="sig-param"><span class="pre">z</span></em>, <em class="sig-param"><span class="pre">s</span></em>, <em class="sig-param"><span class="pre">xi</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">omega_ic</span></em>, <em class="sig-param"><span class="pre">omega_ma</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/readcheckpoints/finish_start_fields" title="Permalink to this definition">¶</a></dt>
-<dd><p>– Input variables</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>time</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>minc_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>l_mag_old</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>omega_ic1old</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>omega_ma1old</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>z</strong> (1 - <a class="reference internal" href="blocking.html#f/blocking/llm" title="f/blocking/llm">llm</a> + <a class="reference internal" href="blocking.html#f/blocking/ulm" title="f/blocking/ulm">ulm</a>,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>s</strong> (1 - <a class="reference internal" href="blocking.html#f/blocking/llm" title="f/blocking/llm">llm</a> + <a class="reference internal" href="blocking.html#f/blocking/ulm" title="f/blocking/ulm">ulm</a>,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>xi</strong> (1 - <a class="reference internal" href="blocking.html#f/blocking/llm" title="f/blocking/llm">llm</a> + <a class="reference internal" href="blocking.html#f/blocking/ulm" title="f/blocking/ulm">ulm</a>,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>b</strong> (1 - <a class="reference internal" href="blocking.html#f/blocking/llmmag" title="f/blocking/llmmag">llmmag</a> + <a class="reference internal" href="blocking.html#f/blocking/ulmmag" title="f/blocking/ulmmag">ulmmag</a>,<a class="reference internal" href="baseModules.html#f/truncation/n_r_maxmag" title="f/truncation/n_r_maxmag">n_r_maxmag</a>)<em> [</em><em>complex </em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>omega_ic</strong><em> [</em><em>real </em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>omega_ma</strong><em> [</em><em>real </em><em>,</em><em>out</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/readcheckpoints/readstartfields_old" title="f/readcheckpoints/readstartfields_old"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields_old()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/readstartfields" title="f/readcheckpoints/readstartfields"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/readstartfields_mpi" title="f/readcheckpoints/readstartfields_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields_mpi()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/readcheckpoints/print_info">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">readcheckpoints/</span></span><span class="sig-name descname"><span class="pre">print_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ra_old</span></em>, <em class="sig-param"><span class="pre">ek_old</span></em>, <em class="sig-param"><span class="pre">pr_old</span></em>, <em class="sig-param"><span class="pre">sc_old</span></em>, <em class="sig-param"><span class="pre">raxi_old</span></em>, <em class="sig-param"><span class="pre">pm_old</span></em>, <em class="sig-param"><span class="pre">radratio_old</span></em>, <em class="sig-param"><span class="pre">sigma_ratio_old</span></em>, <em class="sig-param"><span class="pre">n_phi_tot_old</span></em>, <em class="sig-param"><span class="pre">nalias_old</span></em>, <em class="sig-param"><span class="pre">l_max_old</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/readcheckpoints/print_info" title="Permalink to this definition">¶</a></dt>
-<dd><p>– Input variables</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>ra_old</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>ek_old</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>pr_old</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>sc_old</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>raxi_old</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>pm_old</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>radratio_old</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>sigma_ratio_old</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>n_phi_tot_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>nalias_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>l_max_old</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-</ul>
+<dd class="field-odd"><p><a class="reference internal" href="parallelModules.html#f/parallel_mod/mpiio_setup" title="f/parallel_mod/mpiio_setup"><code class="xref f f-func docutils literal notranslate"><span class="pre">mpiio_setup()</span></code></a>, <a class="reference internal" href="misc.html#f/useful/abortrun" title="f/useful/abortrun"><code class="xref f f-func docutils literal notranslate"><span class="pre">abortrun()</span></code></a>, <a class="reference internal" href="#f/readcheckpoints/readstartfields" title="f/readcheckpoints/readstartfields"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/parallel_mod/getblocks" title="f/parallel_mod/getblocks"><code class="xref f f-func docutils literal notranslate"><span class="pre">getblocks()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/scatter_from_rank0_to_lo" title="f/communications/scatter_from_rank0_to_lo"><code class="xref f f-func docutils literal notranslate"><span class="pre">scatter_from_rank0_to_lo()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/get_single_rhs_imp" title="f/updatewps_mod/get_single_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_single_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_pol_rhs_imp" title="f/updatewp_mod/get_pol_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_pol_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/get_entropy_rhs_imp" title="f/updates_mod/get_entropy_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_entropy_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/get_tor_rhs_imp" title="f/updatez_mod/get_tor_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_tor_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/get_comp_rhs_imp" title="f/updatexi_mod/get_comp_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_comp_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_mag_rhs_imp" title="f/updateb_mod/get_mag_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_mag_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_mag_ic_rhs_imp" title="f/updateb_mod/get_mag_ic_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_mag_ic_rhs_imp()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
 </section>
-<section id="f/storecheckpoints">
-<span id="storecheckpoints-f90"></span><h2><code class="docutils literal notranslate"><span class="pre">storeCheckPoints.f90</span></code><a class="headerlink" href="#f/storecheckpoints" title="Permalink to this heading">¶</a></h2>
-<p class="rubric">Description</p>
+<section id="storecheckpoints-f90">
+<h2><code class="docutils literal notranslate"><span class="pre">storeCheckPoints.f90</span></code><a class="headerlink" href="#storecheckpoints-f90" title="Link to this heading">¶</a></h2>
+<p class="rubric" id="f/storecheckpoints">Description</p>
 <p>This module contains several subroutines that can be used to store the
 checkpoint_#.tag files</p>
 <p class="rubric">Quick access</p>
 <dl class="field-list simple">
-<dt class="field-odd">Routines<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/storecheckpoints/store" title="f/storecheckpoints/store"><code class="xref f f-func docutils literal notranslate"><span class="pre">store()</span></code></a>, <a class="reference internal" href="#f/storecheckpoints/store_mpi" title="f/storecheckpoints/store_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">store_mpi()</span></code></a>, <a class="reference internal" href="#f/storecheckpoints/write_one_field" title="f/storecheckpoints/write_one_field"><code class="xref f f-func docutils literal notranslate"><span class="pre">write_one_field()</span></code></a>, <a class="reference internal" href="#f/storecheckpoints/write_one_field_mpi" title="f/storecheckpoints/write_one_field_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">write_one_field_mpi()</span></code></a></p>
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#f/storecheckpoints/write_one_field" title="f/storecheckpoints/write_one_field"><code class="xref f f-var docutils literal notranslate"><span class="pre">write_one_field</span></code></a>, <a class="reference internal" href="#f/storecheckpoints/write_one_field_mpi" title="f/storecheckpoints/write_one_field_mpi"><code class="xref f f-var docutils literal notranslate"><span class="pre">write_one_field_mpi</span></code></a></p>
+</dd>
+<dt class="field-even">Routines<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/storecheckpoints/store" title="f/storecheckpoints/store"><code class="xref f f-func docutils literal notranslate"><span class="pre">store()</span></code></a>, <a class="reference internal" href="#f/storecheckpoints/store_mpi" title="f/storecheckpoints/store_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">store_mpi()</span></code></a></p>
 </dd>
 </dl>
 <p class="rubric">Needed modules</p>
@@ -764,10 +473,24 @@ checkpoint_#.tag files</p>
 <li><p><a class="reference internal" href="timeAdvance.html#f/time_array" title="f/time_array: This module defines two types that are defined to store the implicit/explicit terms at the different sub-stage/step."><code class="xref f f-mod docutils literal notranslate"><span class="pre">time_array</span></code></a> (<a class="reference internal" href="timeAdvance.html#f/time_array/type_tarray" title="f/time_array/type_tarray"><code class="xref f f-func docutils literal notranslate"><span class="pre">type_tarray()</span></code></a>, <a class="reference internal" href="timeAdvance.html#f/time_array/type_tscalar" title="f/time_array/type_tscalar"><code class="xref f f-func docutils literal notranslate"><span class="pre">type_tscalar()</span></code></a>): This module defines two types that are defined to store the implicit/explicit terms at the different sub-stage/step.</p></li>
 </ul>
 <p class="rubric">Variables</p>
+<ul>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/storecheckpoints/write_one_field">
+<span class="sig-prename descclassname"><span class="pre">storecheckpoints/</span></span><span class="sig-name descname"><span class="pre">write_one_field</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/storecheckpoints/write_one_field" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/storecheckpoints/write_one_field_mpi">
+<span class="sig-prename descclassname"><span class="pre">storecheckpoints/</span></span><span class="sig-name descname"><span class="pre">write_one_field_mpi</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/storecheckpoints/write_one_field_mpi" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
 <p class="rubric">Subroutines and functions</p>
 <dl>
 <dt class="sig sig-object f" id="f/storecheckpoints/store">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">storecheckpoints/</span></span><span class="sig-name descname"><span class="pre">store</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">time</span></em>, <em class="sig-param"><span class="pre">tscheme</span></em>, <em class="sig-param"><span class="pre">n_time_step</span></em>, <em class="sig-param"><span class="pre">l_stop_time</span></em>, <em class="sig-param"><span class="pre">l_new_rst_file</span></em>, <em class="sig-param"><span class="pre">l_ave_file</span></em>, <em class="sig-param"><span class="pre">w</span></em>, <em class="sig-param"><span class="pre">z</span></em>, <em class="sig-param"><span class="pre">p</span></em>, <em class="sig-param"><span class="pre">s</span></em>, <em class="sig-param"><span class="pre">xi</span></em>, <em class="sig-param"><span class="pre">phi</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">aj</span></em>, <em class="sig-param"><span class="pre">b_ic</span></em>, <em class="sig-param"><span class="pre">aj_ic</span></em>, <em class="sig-param"><span class="pre">dwdt</span></em>, <em class="sig-param"><span class="pre">dzdt</span></em>, <em class="sig-param"><span class="pre">dpdt</span></em>, <em class="sig-param"><span class="pre">dsdt</span></em>, <em class="sig-param"><span class="pre">dxidt</span></em>, <em class="sig-param"><span class="pre">dphidt</span></em>, <em class="sig-param"><span class="pre">dbdt</span></em>, <em class="sig-param"><span class="pre">djdt</span></em>, <em class="sig-param"><span class="pre">dbdt_ic</span></em>, <em class="sig-param"><span class="pre">djdt_ic</span></em>, <em class="sig-param"><span class="pre">domega_ma_dt</span></em>, <em class="sig-param"><span class="pre">domega_ic_dt</span></em>, <em class="sig-param"><span class="pre">lorentz_torque_ma_dt</span></em>, <em class="sig-param"><span class="pre">lorentz_torque_ic_dt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/storecheckpoints/store" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">storecheckpoints/</span></span><span class="sig-name descname"><span class="pre">store</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">time</span></em>, <em class="sig-param"><span class="pre">tscheme</span></em>, <em class="sig-param"><span class="pre">n_time_step</span></em>, <em class="sig-param"><span class="pre">l_stop_time</span></em>, <em class="sig-param"><span class="pre">l_new_rst_file</span></em>, <em class="sig-param"><span class="pre">l_ave_file</span></em>, <em class="sig-param"><span class="pre">w</span></em>, <em class="sig-param"><span class="pre">z</span></em>, <em class="sig-param"><span class="pre">p</span></em>, <em class="sig-param"><span class="pre">s</span></em>, <em class="sig-param"><span class="pre">xi</span></em>, <em class="sig-param"><span class="pre">phi</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">aj</span></em>, <em class="sig-param"><span class="pre">b_ic</span></em>, <em class="sig-param"><span class="pre">aj_ic</span></em>, <em class="sig-param"><span class="pre">dwdt</span></em>, <em class="sig-param"><span class="pre">dzdt</span></em>, <em class="sig-param"><span class="pre">dpdt</span></em>, <em class="sig-param"><span class="pre">dsdt</span></em>, <em class="sig-param"><span class="pre">dxidt</span></em>, <em class="sig-param"><span class="pre">dphidt</span></em>, <em class="sig-param"><span class="pre">dbdt</span></em>, <em class="sig-param"><span class="pre">djdt</span></em>, <em class="sig-param"><span class="pre">dbdt_ic</span></em>, <em class="sig-param"><span class="pre">djdt_ic</span></em>, <em class="sig-param"><span class="pre">domega_ma_dt</span></em>, <em class="sig-param"><span class="pre">domega_ic_dt</span></em>, <em class="sig-param"><span class="pre">lorentz_torque_ma_dt</span></em>, <em class="sig-param"><span class="pre">lorentz_torque_ic_dt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/storecheckpoints/store" title="Link to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>This subroutine stores the results in a checkpoint file.
 In addition to the magnetic field and velocity potentials
@@ -813,36 +536,14 @@ is required.</p>
 </ul>
 </dd>
 <dt class="field-even">Call to<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="misc.html#f/charmanip/dble2str" title="f/charmanip/dble2str"><code class="xref f f-func docutils literal notranslate"><span class="pre">dble2str()</span></code></a>, <a class="reference internal" href="#f/storecheckpoints/write_one_field" title="f/storecheckpoints/write_one_field"><code class="xref f f-func docutils literal notranslate"><span class="pre">write_one_field()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/gather_all_from_lo_to_rank0" title="f/communications/gather_all_from_lo_to_rank0"><code class="xref f f-func docutils literal notranslate"><span class="pre">gather_all_from_lo_to_rank0()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/storecheckpoints/write_one_field">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">storecheckpoints/</span></span><span class="sig-name descname"><span class="pre">write_one_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">fh</span></em>, <em class="sig-param"><span class="pre">tscheme</span></em>, <em class="sig-param"><span class="pre">w</span></em>, <em class="sig-param"><span class="pre">dwdt</span></em>, <em class="sig-param"><span class="pre">work</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/storecheckpoints/write_one_field" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fh</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: file unit</p></li>
-<li><p><strong>tscheme</strong><em> [</em><em>real </em><em>]</em> :: Time scheme</p></li>
-<li><p><strong>w</strong> (1 - <a class="reference internal" href="blocking.html#f/blocking/llm" title="f/blocking/llm">llm</a> + <a class="reference internal" href="blocking.html#f/blocking/ulm" title="f/blocking/ulm">ulm</a>,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em> :: field</p></li>
-<li><p><strong>dwdt</strong><em> [</em><em>type_tarray </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>work</strong> (*,*)<em> [</em><em>complex </em><em>,</em><em>inout</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="IOBinaryOutputs.html#f/graphout_mod/graphout_mpi" title="f/graphout_mod/graphout_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">graphout_mpi()</span></code></a>, <a class="reference internal" href="IOBinaryOutputs.html#f/graphout_mod/graphout_ic" title="f/graphout_mod/graphout_ic"><code class="xref f f-func docutils literal notranslate"><span class="pre">graphout_ic()</span></code></a>, <a class="reference internal" href="#f/storecheckpoints/store" title="f/storecheckpoints/store"><code class="xref f f-func docutils literal notranslate"><span class="pre">store()</span></code></a></p>
-</dd>
-<dt class="field-odd">Call to<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="parallelModules.html#f/communications/gather_all_from_lo_to_rank0" title="f/communications/gather_all_from_lo_to_rank0"><code class="xref f f-func docutils literal notranslate"><span class="pre">gather_all_from_lo_to_rank0()</span></code></a></p>
+<dd class="field-even"><p><a class="reference internal" href="misc.html#f/charmanip/dble2str" title="f/charmanip/dble2str"><code class="xref f f-func docutils literal notranslate"><span class="pre">dble2str()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/gather_all_from_lo_to_rank0" title="f/communications/gather_all_from_lo_to_rank0"><code class="xref f f-func docutils literal notranslate"><span class="pre">gather_all_from_lo_to_rank0()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl>
 <dt class="sig sig-object f" id="f/storecheckpoints/store_mpi">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">storecheckpoints/</span></span><span class="sig-name descname"><span class="pre">store_mpi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">time</span></em>, <em class="sig-param"><span class="pre">tscheme</span></em>, <em class="sig-param"><span class="pre">n_time_step</span></em>, <em class="sig-param"><span class="pre">l_stop_time</span></em>, <em class="sig-param"><span class="pre">l_new_rst_file</span></em>, <em class="sig-param"><span class="pre">l_ave_file</span></em>, <em class="sig-param"><span class="pre">w</span></em>, <em class="sig-param"><span class="pre">z</span></em>, <em class="sig-param"><span class="pre">p</span></em>, <em class="sig-param"><span class="pre">s</span></em>, <em class="sig-param"><span class="pre">xi</span></em>, <em class="sig-param"><span class="pre">phi</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">aj</span></em>, <em class="sig-param"><span class="pre">b_ic</span></em>, <em class="sig-param"><span class="pre">aj_ic</span></em>, <em class="sig-param"><span class="pre">dwdt</span></em>, <em class="sig-param"><span class="pre">dzdt</span></em>, <em class="sig-param"><span class="pre">dpdt</span></em>, <em class="sig-param"><span class="pre">dsdt</span></em>, <em class="sig-param"><span class="pre">dxidt</span></em>, <em class="sig-param"><span class="pre">dphidt</span></em>, <em class="sig-param"><span class="pre">dbdt</span></em>, <em class="sig-param"><span class="pre">djdt</span></em>, <em class="sig-param"><span class="pre">dbdt_ic</span></em>, <em class="sig-param"><span class="pre">djdt_ic</span></em>, <em class="sig-param"><span class="pre">domega_ma_dt</span></em>, <em class="sig-param"><span class="pre">domega_ic_dt</span></em>, <em class="sig-param"><span class="pre">lorentz_torque_ma_dt</span></em>, <em class="sig-param"><span class="pre">lorentz_torque_ic_dt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/storecheckpoints/store_mpi" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">storecheckpoints/</span></span><span class="sig-name descname"><span class="pre">store_mpi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">time</span></em>, <em class="sig-param"><span class="pre">tscheme</span></em>, <em class="sig-param"><span class="pre">n_time_step</span></em>, <em class="sig-param"><span class="pre">l_stop_time</span></em>, <em class="sig-param"><span class="pre">l_new_rst_file</span></em>, <em class="sig-param"><span class="pre">l_ave_file</span></em>, <em class="sig-param"><span class="pre">w</span></em>, <em class="sig-param"><span class="pre">z</span></em>, <em class="sig-param"><span class="pre">p</span></em>, <em class="sig-param"><span class="pre">s</span></em>, <em class="sig-param"><span class="pre">xi</span></em>, <em class="sig-param"><span class="pre">phi</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">aj</span></em>, <em class="sig-param"><span class="pre">b_ic</span></em>, <em class="sig-param"><span class="pre">aj_ic</span></em>, <em class="sig-param"><span class="pre">dwdt</span></em>, <em class="sig-param"><span class="pre">dzdt</span></em>, <em class="sig-param"><span class="pre">dpdt</span></em>, <em class="sig-param"><span class="pre">dsdt</span></em>, <em class="sig-param"><span class="pre">dxidt</span></em>, <em class="sig-param"><span class="pre">dphidt</span></em>, <em class="sig-param"><span class="pre">dbdt</span></em>, <em class="sig-param"><span class="pre">djdt</span></em>, <em class="sig-param"><span class="pre">dbdt_ic</span></em>, <em class="sig-param"><span class="pre">djdt_ic</span></em>, <em class="sig-param"><span class="pre">domega_ma_dt</span></em>, <em class="sig-param"><span class="pre">domega_ic_dt</span></em>, <em class="sig-param"><span class="pre">lorentz_torque_ma_dt</span></em>, <em class="sig-param"><span class="pre">lorentz_torque_ic_dt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/storecheckpoints/store_mpi" title="Link to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>This subroutine stores the results in a checkpoint file.
 In addition to the magnetic field and velocity potentials
@@ -891,36 +592,7 @@ is required.</p>
 <dd class="field-even"><p><a class="reference internal" href="IOBinaryOutputs.html#f/fields_average_mod/fields_average" title="f/fields_average_mod/fields_average"><code class="xref f f-func docutils literal notranslate"><span class="pre">fields_average()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/output_mod/output" title="f/output_mod/output"><code class="xref f f-func docutils literal notranslate"><span class="pre">output()</span></code></a></p>
 </dd>
 <dt class="field-odd">Call to<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="misc.html#f/charmanip/dble2str" title="f/charmanip/dble2str"><code class="xref f f-func docutils literal notranslate"><span class="pre">dble2str()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/parallel_mod/mpiio_setup" title="f/parallel_mod/mpiio_setup"><code class="xref f f-func docutils literal notranslate"><span class="pre">mpiio_setup()</span></code></a>, <a class="reference internal" href="#f/storecheckpoints/write_one_field_mpi" title="f/storecheckpoints/write_one_field_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">write_one_field_mpi()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/gather_from_lo_to_rank0" title="f/communications/gather_from_lo_to_rank0"><code class="xref f f-func docutils literal notranslate"><span class="pre">gather_from_lo_to_rank0()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/storecheckpoints/write_one_field_mpi">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">storecheckpoints/</span></span><span class="sig-name descname"><span class="pre">write_one_field_mpi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">fh</span></em>, <em class="sig-param"><span class="pre">info</span></em>, <em class="sig-param"><span class="pre">datatype</span></em>, <em class="sig-param"><span class="pre">tscheme</span></em>, <em class="sig-param"><span class="pre">w</span></em>, <em class="sig-param"><span class="pre">dwdt</span></em>, <em class="sig-param"><span class="pre">work</span></em>, <em class="sig-param"><span class="pre">size_tmp</span></em>, <em class="sig-param"><span class="pre">disp</span></em>, <em class="sig-param"><span class="pre">l_transp</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/storecheckpoints/write_one_field_mpi" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This subroutine is used to write one field and its associated possible
-help arrays (d?dt) which are required to time advance the solution.
-This is using MPI-IO with R-distributed arrays.</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fh</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: file unit</p></li>
-<li><p><strong>info</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: MPI file info</p></li>
-<li><p><strong>datatype</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: MPI file info</p></li>
-<li><p><strong>tscheme</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>w</strong> (1 - <a class="reference internal" href="blocking.html#f/blocking/llm" title="f/blocking/llm">llm</a> + <a class="reference internal" href="blocking.html#f/blocking/ulm" title="f/blocking/ulm">ulm</a>,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>dwdt</strong><em> [</em><em>type_tarray </em><em>,</em><em>in</em><em>]</em> :: time advance arrays</p></li>
-<li><p><strong>work</strong> (1 - <a class="reference internal" href="blocking.html#f/blocking/llm" title="f/blocking/llm">llm</a> + <a class="reference internal" href="blocking.html#f/blocking/ulm" title="f/blocking/ulm">ulm</a>,<a class="reference internal" href="baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max">n_r_max</a>)<em> [</em><em>complex </em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>size_tmp</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>disp</strong><em> [</em><em>integer </em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>l_transp</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em> :: Do we need to transpose anything?</p></li>
-</ul>
-</dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/storecheckpoints/store_mpi" title="f/storecheckpoints/store_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">store_mpi()</span></code></a></p>
+<dd class="field-odd"><p><a class="reference internal" href="misc.html#f/charmanip/dble2str" title="f/charmanip/dble2str"><code class="xref f f-func docutils literal notranslate"><span class="pre">dble2str()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/parallel_mod/mpiio_setup" title="f/parallel_mod/mpiio_setup"><code class="xref f f-func docutils literal notranslate"><span class="pre">mpiio_setup()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/gather_from_lo_to_rank0" title="f/communications/gather_from_lo_to_rank0"><code class="xref f f-func docutils literal notranslate"><span class="pre">gather_from_lo_to_rank0()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -939,8 +611,8 @@ This is using MPI-IO with R-distributed arrays.</p>
     <h3><a href="../contents.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Reading and storing check points (restart files)</a><ul>
-<li><a class="reference internal" href="#f/readcheckpoints"><code class="docutils literal notranslate"><span class="pre">readCheckPoints.f90</span></code></a></li>
-<li><a class="reference internal" href="#f/storecheckpoints"><code class="docutils literal notranslate"><span class="pre">storeCheckPoints.f90</span></code></a></li>
+<li><a class="reference internal" href="#readcheckpoints-f90"><code class="docutils literal notranslate"><span class="pre">readCheckPoints.f90</span></code></a></li>
+<li><a class="reference internal" href="#storecheckpoints-f90"><code class="docutils literal notranslate"><span class="pre">storeCheckPoints.f90</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1001,8 +673,8 @@ This is using MPI-IO with R-distributed arrays.</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
+    &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

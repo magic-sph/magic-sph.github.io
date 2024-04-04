@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Time stepping &#8212; Magic 6.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/magic.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/magic.css?v=a97dc138" />
     
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/documentation_options.js?v=ef7fcc1c"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
           title="Search within Magic 6.2 documentation"
@@ -106,13 +106,16 @@
           <div class="body" role="main">
             
   <section id="time-stepping">
-<span id="secfortrantimestep"></span><h1>Time stepping<a class="headerlink" href="#time-stepping" title="Permalink to this heading">¶</a></h1>
-<section id="f/step_time_mod">
-<span id="step-time-f90"></span><h2><code class="docutils literal notranslate"><span class="pre">step_time.f90</span></code><a class="headerlink" href="#f/step_time_mod" title="Permalink to this heading">¶</a></h2>
-<p class="rubric">Quick access</p>
+<span id="secfortrantimestep"></span><h1>Time stepping<a class="headerlink" href="#time-stepping" title="Link to this heading">¶</a></h1>
+<section id="step-time-f90">
+<h2><code class="docutils literal notranslate"><span class="pre">step_time.f90</span></code><a class="headerlink" href="#step-time-f90" title="Link to this heading">¶</a></h2>
+<p class="rubric" id="f/step_time_mod">Quick access</p>
 <dl class="field-list simple">
-<dt class="field-odd">Routines<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/step_time_mod/initialize_step_time" title="f/step_time_mod/initialize_step_time"><code class="xref f f-func docutils literal notranslate"><span class="pre">initialize_step_time()</span></code></a>, <a class="reference internal" href="#f/step_time_mod/start_from_another_scheme" title="f/step_time_mod/start_from_another_scheme"><code class="xref f f-func docutils literal notranslate"><span class="pre">start_from_another_scheme()</span></code></a>, <a class="reference internal" href="#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal notranslate"><span class="pre">step_time()</span></code></a>, <a class="reference internal" href="#f/step_time_mod/transp_lmloc_to_rloc" title="f/step_time_mod/transp_lmloc_to_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">transp_lmloc_to_rloc()</span></code></a>, <a class="reference internal" href="#f/step_time_mod/transp_rloc_to_lmloc" title="f/step_time_mod/transp_rloc_to_lmloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">transp_rloc_to_lmloc()</span></code></a>, <a class="reference internal" href="#f/step_time_mod/transp_rloc_to_lmloc_io" title="f/step_time_mod/transp_rloc_to_lmloc_io"><code class="xref f f-func docutils literal notranslate"><span class="pre">transp_rloc_to_lmloc_io()</span></code></a></p>
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#f/step_time_mod/start_from_another_scheme" title="f/step_time_mod/start_from_another_scheme"><code class="xref f f-var docutils literal notranslate"><span class="pre">start_from_another_scheme</span></code></a>, <a class="reference internal" href="#f/step_time_mod/transp_lmloc_to_rloc" title="f/step_time_mod/transp_lmloc_to_rloc"><code class="xref f f-var docutils literal notranslate"><span class="pre">transp_lmloc_to_rloc</span></code></a>, <a class="reference internal" href="#f/step_time_mod/transp_rloc_to_lmloc" title="f/step_time_mod/transp_rloc_to_lmloc"><code class="xref f f-var docutils literal notranslate"><span class="pre">transp_rloc_to_lmloc</span></code></a>, <a class="reference internal" href="#f/step_time_mod/transp_rloc_to_lmloc_io" title="f/step_time_mod/transp_rloc_to_lmloc_io"><code class="xref f f-var docutils literal notranslate"><span class="pre">transp_rloc_to_lmloc_io</span></code></a></p>
+</dd>
+<dt class="field-even">Routines<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/step_time_mod/initialize_step_time" title="f/step_time_mod/initialize_step_time"><code class="xref f f-func docutils literal notranslate"><span class="pre">initialize_step_time()</span></code></a>, <a class="reference internal" href="#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal notranslate"><span class="pre">step_time()</span></code></a></p>
 </dd>
 </dl>
 <p class="rubric">Needed modules</p>
@@ -152,10 +155,36 @@
 <li><p><a class="reference internal" href="IOAdd.html#f/probe_mod" title="f/probe_mod: Module for artificial sensors to compare time series of physical data with experiments. Probes are located in a radially symmetrical way"><code class="xref f f-mod docutils literal notranslate"><span class="pre">probe_mod</span></code></a>: Module for artificial sensors to compare time series of physical data with experiments. Probes are located in a radially symmetrical way</p></li>
 </ul>
 <p class="rubric">Variables</p>
+<ul>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/step_time_mod/start_from_another_scheme">
+<span class="sig-prename descclassname"><span class="pre">step_time_mod/</span></span><span class="sig-name descname"><span class="pre">start_from_another_scheme</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/step_time_mod/start_from_another_scheme" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/step_time_mod/transp_lmloc_to_rloc">
+<span class="sig-prename descclassname"><span class="pre">step_time_mod/</span></span><span class="sig-name descname"><span class="pre">transp_lmloc_to_rloc</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/step_time_mod/transp_lmloc_to_rloc" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/step_time_mod/transp_rloc_to_lmloc">
+<span class="sig-prename descclassname"><span class="pre">step_time_mod/</span></span><span class="sig-name descname"><span class="pre">transp_rloc_to_lmloc</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/step_time_mod/transp_rloc_to_lmloc" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/step_time_mod/transp_rloc_to_lmloc_io">
+<span class="sig-prename descclassname"><span class="pre">step_time_mod/</span></span><span class="sig-name descname"><span class="pre">transp_rloc_to_lmloc_io</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/step_time_mod/transp_rloc_to_lmloc_io" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
 <p class="rubric">Subroutines and functions</p>
 <dl>
 <dt class="sig sig-object f" id="f/step_time_mod/initialize_step_time">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">step_time_mod/</span></span><span class="sig-name descname"><span class="pre">initialize_step_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#f/step_time_mod/initialize_step_time" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">step_time_mod/</span></span><span class="sig-name descname"><span class="pre">initialize_step_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#f/step_time_mod/initialize_step_time" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Called from<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="magic.html#f/magic" title="f/magic"><code class="xref f f-prog docutils literal notranslate"><span class="pre">magic</span></code></a></p>
@@ -168,7 +197,7 @@
 
 <dl>
 <dt class="sig sig-object f" id="f/step_time_mod/step_time">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">step_time_mod/</span></span><span class="sig-name descname"><span class="pre">step_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">time</span></em>, <em class="sig-param"><span class="pre">tscheme</span></em>, <em class="sig-param"><span class="pre">n_time_step</span></em>, <em class="sig-param"><span class="pre">run_time_start</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/step_time_mod/step_time" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">step_time_mod/</span></span><span class="sig-name descname"><span class="pre">step_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">time</span></em>, <em class="sig-param"><span class="pre">tscheme</span></em>, <em class="sig-param"><span class="pre">n_time_step</span></em>, <em class="sig-param"><span class="pre">run_time_start</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/step_time_mod/step_time" title="Link to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>This subroutine performs the actual time-stepping.</p>
 </div></blockquote>
@@ -185,106 +214,15 @@
 <dd class="field-even"><p><a class="reference internal" href="magic.html#f/magic" title="f/magic"><code class="xref f f-prog docutils literal notranslate"><span class="pre">magic</span></code></a></p>
 </dd>
 <dt class="field-odd">Call to<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref f f-func docutils literal notranslate"><span class="pre">check_signals()</span></code>, <a class="reference internal" href="misc.html#f/useful/logwrite" title="f/useful/logwrite"><code class="xref f f-func docutils literal notranslate"><span class="pre">logwrite()</span></code></a>, <a class="reference internal" href="misc.html#f/useful/l_correct_step" title="f/useful/l_correct_step"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_correct_step()</span></code></a>, <a class="reference internal" href="IOBinaryOutputs.html#f/graphout_mod/open_graph_file" title="f/graphout_mod/open_graph_file"><code class="xref f f-func docutils literal notranslate"><span class="pre">open_graph_file()</span></code></a>, <a class="reference internal" href="#f/step_time_mod/transp_lmloc_to_rloc" title="f/step_time_mod/transp_lmloc_to_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">transp_lmloc_to_rloc()</span></code></a>, <a class="reference internal" href="timeAdvNonLinear.html#f/radialloop/radialloopg" title="f/radialloop/radialloopg"><code class="xref f f-func docutils literal notranslate"><span class="pre">radialloopg()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/lmloop_mod/finish_explicit_assembly_rdist" title="f/lmloop_mod/finish_explicit_assembly_rdist"><code class="xref f f-func docutils literal notranslate"><span class="pre">finish_explicit_assembly_rdist()</span></code></a>, <a class="reference internal" href="#f/step_time_mod/transp_rloc_to_lmloc" title="f/step_time_mod/transp_rloc_to_lmloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">transp_rloc_to_lmloc()</span></code></a>, <a class="reference internal" href="timeAdvNonLinear.html#f/nonlinear_bcs/get_b_nl_bcs" title="f/nonlinear_bcs/get_b_nl_bcs"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_b_nl_bcs()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/lmloop_mod/finish_explicit_assembly" title="f/lmloop_mod/finish_explicit_assembly"><code class="xref f f-func docutils literal notranslate"><span class="pre">finish_explicit_assembly()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/scatter_from_rank0_to_lo" title="f/communications/scatter_from_rank0_to_lo"><code class="xref f f-func docutils literal notranslate"><span class="pre">scatter_from_rank0_to_lo()</span></code></a>, <a class="reference internal" href="#f/step_time_mod/transp_rloc_to_lmloc_io" title="f/step_time_mod/transp_rloc_to_lmloc_io"><code class="xref f f-func docutils literal notranslate"><span class="pre">transp_rloc_to_lmloc_io()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/output_mod/output" title="f/output_mod/output"><code class="xref f f-func docutils literal notranslate"><span class="pre">output()</span></code></a>, <a class="reference internal" href="IOBinaryOutputs.html#f/graphout_mod/close_graph_file" title="f/graphout_mod/close_graph_file"><code class="xref f f-func docutils literal notranslate"><span class="pre">close_graph_file()</span></code></a>, <a class="reference internal" href="#f/courant_mod/dt_courant" title="f/courant_mod/dt_courant"><code class="xref f f-func docutils literal notranslate"><span class="pre">dt_courant()</span></code></a>, <a class="reference internal" href="#f/step_time_mod/start_from_another_scheme" title="f/step_time_mod/start_from_another_scheme"><code class="xref f f-func docutils literal notranslate"><span class="pre">start_from_another_scheme()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/lmloop_mod/lmloop_rdist" title="f/lmloop_mod/lmloop_rdist"><code class="xref f f-func docutils literal notranslate"><span class="pre">lmloop_rdist()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/lmloop_mod/lmloop" title="f/lmloop_mod/lmloop"><code class="xref f f-func docutils literal notranslate"><span class="pre">lmloop()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/lmloop_mod/assemble_stage_rdist" title="f/lmloop_mod/assemble_stage_rdist"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_stage_rdist()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/lmloop_mod/assemble_stage" title="f/lmloop_mod/assemble_stage"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_stage()</span></code></a>, <a class="reference internal" href="#f/timing/formattime" title="f/timing/formattime"><code class="xref f f-func docutils literal notranslate"><span class="pre">formattime()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/step_time_mod/start_from_another_scheme">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">step_time_mod/</span></span><span class="sig-name descname"><span class="pre">start_from_another_scheme</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">time</span></em>, <em class="sig-param"><span class="pre">l_bridge_step</span></em>, <em class="sig-param"><span class="pre">n_time_step</span></em>, <em class="sig-param"><span class="pre">tscheme</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/step_time_mod/start_from_another_scheme" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This subroutine is used to initialize multisteps schemes whenever previous
-steps are not known. In that case a CN/AB2 scheme is used to bridge the
-missing steps.</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>time</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>l_bridge_step</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>n_time_step</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>tscheme</strong><em> [</em><em>real </em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal notranslate"><span class="pre">step_time()</span></code></a></p>
-</dd>
-<dt class="field-odd">Call to<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="timeAdvLinear.html#f/updatewps_mod/get_single_rhs_imp" title="f/updatewps_mod/get_single_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_single_rhs_imp()</span></code></a>, <a class="reference internal" href="derInt.html#f/radial_der/bulk_to_ghost" title="f/radial_der/bulk_to_ghost"><code class="xref f f-func docutils literal notranslate"><span class="pre">bulk_to_ghost()</span></code></a>, <a class="reference internal" href="derInt.html#f/radial_der/exch_ghosts" title="f/radial_der/exch_ghosts"><code class="xref f f-func docutils literal notranslate"><span class="pre">exch_ghosts()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/fill_ghosts_w" title="f/updatewp_mod/fill_ghosts_w"><code class="xref f f-func docutils literal notranslate"><span class="pre">fill_ghosts_w()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_pol_rhs_imp_ghost" title="f/updatewp_mod/get_pol_rhs_imp_ghost"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_pol_rhs_imp_ghost()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatewp_mod/get_pol_rhs_imp" title="f/updatewp_mod/get_pol_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_pol_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/fill_ghosts_s" title="f/updates_mod/fill_ghosts_s"><code class="xref f f-func docutils literal notranslate"><span class="pre">fill_ghosts_s()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/get_entropy_rhs_imp_ghost" title="f/updates_mod/get_entropy_rhs_imp_ghost"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_entropy_rhs_imp_ghost()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updates_mod/get_entropy_rhs_imp" title="f/updates_mod/get_entropy_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_entropy_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/fill_ghosts_z" title="f/updatez_mod/fill_ghosts_z"><code class="xref f f-func docutils literal notranslate"><span class="pre">fill_ghosts_z()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/get_tor_rhs_imp_ghost" title="f/updatez_mod/get_tor_rhs_imp_ghost"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_tor_rhs_imp_ghost()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatez_mod/get_tor_rhs_imp" title="f/updatez_mod/get_tor_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_tor_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/fill_ghosts_xi" title="f/updatexi_mod/fill_ghosts_xi"><code class="xref f f-func docutils literal notranslate"><span class="pre">fill_ghosts_xi()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/get_comp_rhs_imp_ghost" title="f/updatexi_mod/get_comp_rhs_imp_ghost"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_comp_rhs_imp_ghost()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatexi_mod/get_comp_rhs_imp" title="f/updatexi_mod/get_comp_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_comp_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatephi_mod/fill_ghosts_phi" title="f/updatephi_mod/fill_ghosts_phi"><code class="xref f f-func docutils literal notranslate"><span class="pre">fill_ghosts_phi()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatephi_mod/get_phase_rhs_imp_ghost" title="f/updatephi_mod/get_phase_rhs_imp_ghost"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_phase_rhs_imp_ghost()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updatephi_mod/get_phase_rhs_imp" title="f/updatephi_mod/get_phase_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_phase_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/fill_ghosts_b" title="f/updateb_mod/fill_ghosts_b"><code class="xref f f-func docutils literal notranslate"><span class="pre">fill_ghosts_b()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_mag_rhs_imp_ghost" title="f/updateb_mod/get_mag_rhs_imp_ghost"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_mag_rhs_imp_ghost()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_mag_rhs_imp" title="f/updateb_mod/get_mag_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_mag_rhs_imp()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/updateb_mod/get_mag_ic_rhs_imp" title="f/updateb_mod/get_mag_ic_rhs_imp"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_mag_ic_rhs_imp()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/step_time_mod/transp_lmloc_to_rloc">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">step_time_mod/</span></span><span class="sig-name descname"><span class="pre">transp_lmloc_to_rloc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">comm_counter</span></em>, <em class="sig-param"><span class="pre">l_rloc</span></em>, <em class="sig-param"><span class="pre">lpresscalc</span></em>, <em class="sig-param"><span class="pre">lhtcalc</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/step_time_mod/transp_lmloc_to_rloc" title="Permalink to this definition">¶</a></dt>
-<dd><p>Here now comes the block where the LM distributed fields
-are redistributed to Rloc distribution which is needed for
-the radialLoop.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>comm_counter</strong><em> [</em><em>timer_type </em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>l_rloc</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>lpresscalc</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>lhtcalc</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal notranslate"><span class="pre">step_time()</span></code></a></p>
-</dd>
-<dt class="field-odd">Call to<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="derInt.html#f/radial_der/get_dr_rloc" title="f/radial_der/get_dr_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_dr_rloc()</span></code></a>, <a class="reference internal" href="derInt.html#f/radial_der/get_ddr_rloc" title="f/radial_der/get_ddr_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_ddr_rloc()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/step_time_mod/transp_rloc_to_lmloc">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">step_time_mod/</span></span><span class="sig-name descname"><span class="pre">transp_rloc_to_lmloc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">comm_counter</span></em>, <em class="sig-param"><span class="pre">istage</span></em>, <em class="sig-param"><span class="pre">lrloc</span></em>, <em class="sig-param"><span class="pre">lpressnext</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/step_time_mod/transp_rloc_to_lmloc" title="Permalink to this definition">¶</a></dt>
-<dd><ul class="simple">
-<li><p>MPI transposition from r-distributed to LM-distributed</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>comm_counter</strong><em> [</em><em>timer_type </em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>istage</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>lrloc</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>lpressnext</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal notranslate"><span class="pre">step_time()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/step_time_mod/transp_rloc_to_lmloc_io">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">step_time_mod/</span></span><span class="sig-name descname"><span class="pre">transp_rloc_to_lmloc_io</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">lpresscalc</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/step_time_mod/transp_rloc_to_lmloc_io" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>For now, most of the outputs use LM-distributed arrays as input. To handle
-that one has to transpose the missing fields.</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>lpresscalc</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p>
-</dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal notranslate"><span class="pre">step_time()</span></code></a></p>
-</dd>
-<dt class="field-odd">Call to<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="derInt.html#f/radial_der/get_dr_rloc" title="f/radial_der/get_dr_rloc"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_dr_rloc()</span></code></a></p>
+<dd class="field-odd"><p><code class="xref f f-func docutils literal notranslate"><span class="pre">check_signals()</span></code>, <a class="reference internal" href="misc.html#f/useful/logwrite" title="f/useful/logwrite"><code class="xref f f-func docutils literal notranslate"><span class="pre">logwrite()</span></code></a>, <a class="reference internal" href="misc.html#f/useful/l_correct_step" title="f/useful/l_correct_step"><code class="xref f f-func docutils literal notranslate"><span class="pre">l_correct_step()</span></code></a>, <a class="reference internal" href="IOBinaryOutputs.html#f/graphout_mod/open_graph_file" title="f/graphout_mod/open_graph_file"><code class="xref f f-func docutils literal notranslate"><span class="pre">open_graph_file()</span></code></a>, <a class="reference internal" href="timeAdvNonLinear.html#f/radialloop/radialloopg" title="f/radialloop/radialloopg"><code class="xref f f-func docutils literal notranslate"><span class="pre">radialloopg()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/lmloop_mod/finish_explicit_assembly_rdist" title="f/lmloop_mod/finish_explicit_assembly_rdist"><code class="xref f f-func docutils literal notranslate"><span class="pre">finish_explicit_assembly_rdist()</span></code></a>, <a class="reference internal" href="timeAdvNonLinear.html#f/nonlinear_bcs/get_b_nl_bcs" title="f/nonlinear_bcs/get_b_nl_bcs"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_b_nl_bcs()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/lmloop_mod/finish_explicit_assembly" title="f/lmloop_mod/finish_explicit_assembly"><code class="xref f f-func docutils literal notranslate"><span class="pre">finish_explicit_assembly()</span></code></a>, <a class="reference internal" href="parallelModules.html#f/communications/scatter_from_rank0_to_lo" title="f/communications/scatter_from_rank0_to_lo"><code class="xref f f-func docutils literal notranslate"><span class="pre">scatter_from_rank0_to_lo()</span></code></a>, <a class="reference internal" href="IOGeneral.html#f/output_mod/output" title="f/output_mod/output"><code class="xref f f-func docutils literal notranslate"><span class="pre">output()</span></code></a>, <a class="reference internal" href="IOBinaryOutputs.html#f/graphout_mod/close_graph_file" title="f/graphout_mod/close_graph_file"><code class="xref f f-func docutils literal notranslate"><span class="pre">close_graph_file()</span></code></a>, <a class="reference internal" href="#f/courant_mod/dt_courant" title="f/courant_mod/dt_courant"><code class="xref f f-func docutils literal notranslate"><span class="pre">dt_courant()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/lmloop_mod/lmloop_rdist" title="f/lmloop_mod/lmloop_rdist"><code class="xref f f-func docutils literal notranslate"><span class="pre">lmloop_rdist()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/lmloop_mod/lmloop" title="f/lmloop_mod/lmloop"><code class="xref f f-func docutils literal notranslate"><span class="pre">lmloop()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/lmloop_mod/assemble_stage_rdist" title="f/lmloop_mod/assemble_stage_rdist"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_stage_rdist()</span></code></a>, <a class="reference internal" href="timeAdvLinear.html#f/lmloop_mod/assemble_stage" title="f/lmloop_mod/assemble_stage"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_stage()</span></code></a>, <a class="reference internal" href="#f/timing/formattime" title="f/timing/formattime"><code class="xref f f-func docutils literal notranslate"><span class="pre">formattime()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
 </section>
-<section id="f/courant_mod">
-<span id="courant-f90"></span><h2><code class="docutils literal notranslate"><span class="pre">courant.f90</span></code><a class="headerlink" href="#f/courant_mod" title="Permalink to this heading">¶</a></h2>
-<p class="rubric">Description</p>
+<section id="courant-f90">
+<h2><code class="docutils literal notranslate"><span class="pre">courant.f90</span></code><a class="headerlink" href="#courant-f90" title="Link to this heading">¶</a></h2>
+<p class="rubric" id="f/courant_mod">Description</p>
 <p>This module handles the computation of Courant factors on grid space.
 It then checks whether the timestep size needs to be modified.</p>
 <p class="rubric">Quick access</p>
@@ -314,7 +252,7 @@ It then checks whether the timestep size needs to be modified.</p>
 <ul>
 <li><dl class="f variable">
 <dt class="sig sig-object f" id="f/courant_mod/file_handle">
-<span class="sig-prename descclassname"><span class="pre">courant_mod/</span></span><span class="sig-name descname"><span class="pre">file_handle</span></span><em> <span class="pre">[</span></em><em><span class="pre">integer</span></em><em><span class="pre">,</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/courant_mod/file_handle" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">courant_mod/</span></span><span class="sig-name descname"><span class="pre">file_handle</span></span><em> <span class="pre">[</span></em><em><span class="pre">integer</span></em><em><span class="pre">,</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/courant_mod/file_handle" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
@@ -322,7 +260,7 @@ It then checks whether the timestep size needs to be modified.</p>
 <p class="rubric">Subroutines and functions</p>
 <dl>
 <dt class="sig sig-object f" id="f/courant_mod/initialize_courant">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">courant_mod/</span></span><span class="sig-name descname"><span class="pre">initialize_courant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">time</span></em>, <em class="sig-param"><span class="pre">dt</span></em>, <em class="sig-param"><span class="pre">tag</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/courant_mod/initialize_courant" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">courant_mod/</span></span><span class="sig-name descname"><span class="pre">initialize_courant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">time</span></em>, <em class="sig-param"><span class="pre">dt</span></em>, <em class="sig-param"><span class="pre">tag</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/courant_mod/initialize_courant" title="Link to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>This subroutine opens the timestep.TAG file which stores the time step
 changes of MagIC.</p>
@@ -343,7 +281,7 @@ changes of MagIC.</p>
 
 <dl>
 <dt class="sig sig-object f" id="f/courant_mod/finalize_courant">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">courant_mod/</span></span><span class="sig-name descname"><span class="pre">finalize_courant</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#f/courant_mod/finalize_courant" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">courant_mod/</span></span><span class="sig-name descname"><span class="pre">finalize_courant</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#f/courant_mod/finalize_courant" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Called from<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="magic.html#f/magic" title="f/magic"><code class="xref f f-prog docutils literal notranslate"><span class="pre">magic</span></code></a></p>
@@ -353,7 +291,7 @@ changes of MagIC.</p>
 
 <dl>
 <dt class="sig sig-object f" id="f/courant_mod/courant">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">courant_mod/</span></span><span class="sig-name descname"><span class="pre">courant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">n_r</span></em>, <em class="sig-param"><span class="pre">dtrkc</span></em>, <em class="sig-param"><span class="pre">dthkc</span></em>, <em class="sig-param"><span class="pre">vr</span></em>, <em class="sig-param"><span class="pre">vt</span></em>, <em class="sig-param"><span class="pre">vp</span></em>, <em class="sig-param"><span class="pre">br</span></em>, <em class="sig-param"><span class="pre">bt</span></em>, <em class="sig-param"><span class="pre">bp</span></em>, <em class="sig-param"><span class="pre">courfac</span></em>, <em class="sig-param"><span class="pre">alffac</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/courant_mod/courant" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">courant_mod/</span></span><span class="sig-name descname"><span class="pre">courant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">n_r</span></em>, <em class="sig-param"><span class="pre">dtrkc</span></em>, <em class="sig-param"><span class="pre">dthkc</span></em>, <em class="sig-param"><span class="pre">vr</span></em>, <em class="sig-param"><span class="pre">vt</span></em>, <em class="sig-param"><span class="pre">vp</span></em>, <em class="sig-param"><span class="pre">br</span></em>, <em class="sig-param"><span class="pre">bt</span></em>, <em class="sig-param"><span class="pre">bp</span></em>, <em class="sig-param"><span class="pre">courfac</span></em>, <em class="sig-param"><span class="pre">alffac</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/courant_mod/courant" title="Link to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>courant condition check: calculates Courant
 advection lengths in radial direction dtrkc
@@ -383,15 +321,12 @@ the such modified Alfven velocity</p>
 <li><p><strong>alffac</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
 </ul>
 </dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="timeAdvNonLinear.html#f/radialloop" title="f/radialloop"><code class="xref f f-func docutils literal notranslate"><span class="pre">radialloop()</span></code></a></p>
-</dd>
 </dl>
 </dd></dl>
 
 <dl>
 <dt class="sig sig-object f" id="f/courant_mod/dt_courant">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">courant_mod/</span></span><span class="sig-name descname"><span class="pre">dt_courant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">l_new_dt</span></em>, <em class="sig-param"><span class="pre">dt</span></em>, <em class="sig-param"><span class="pre">dt_new</span></em>, <em class="sig-param"><span class="pre">dtmax</span></em>, <em class="sig-param"><span class="pre">dtrkc</span></em>, <em class="sig-param"><span class="pre">dthkc</span></em>, <em class="sig-param"><span class="pre">time</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/courant_mod/dt_courant" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">courant_mod/</span></span><span class="sig-name descname"><span class="pre">dt_courant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">l_new_dt</span></em>, <em class="sig-param"><span class="pre">dt</span></em>, <em class="sig-param"><span class="pre">dt_new</span></em>, <em class="sig-param"><span class="pre">dtmax</span></em>, <em class="sig-param"><span class="pre">dtrkc</span></em>, <em class="sig-param"><span class="pre">dthkc</span></em>, <em class="sig-param"><span class="pre">time</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/courant_mod/dt_courant" title="Link to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>This subroutine checks if the Courant criterion based on combined
 fluid and Alfven velocity is satisfied. It returns a new value for
@@ -420,17 +355,20 @@ the time step size.</p>
 </dd></dl>
 
 </section>
-<section id="f/timing">
-<span id="timing-f90"></span><h2><code class="docutils literal notranslate"><span class="pre">timing.f90</span></code><a class="headerlink" href="#f/timing" title="Permalink to this heading">¶</a></h2>
-<p class="rubric">Description</p>
+<section id="timing-f90">
+<h2><code class="docutils literal notranslate"><span class="pre">timing.f90</span></code><a class="headerlink" href="#timing-f90" title="Link to this heading">¶</a></h2>
+<p class="rubric" id="f/timing">Description</p>
 <p>This module contains functions that are used to measure the time spent.</p>
 <p class="rubric">Quick access</p>
 <dl class="field-list simple">
 <dt class="field-odd">Types<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#f/timing/timer_type" title="f/timing/timer_type"><code class="xref f f-type docutils literal notranslate"><span class="pre">timer_type</span></code></a></p>
 </dd>
-<dt class="field-even">Routines<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/timing/finalize" title="f/timing/finalize"><code class="xref f f-func docutils literal notranslate"><span class="pre">finalize()</span></code></a>, <a class="reference internal" href="#f/timing/formattime" title="f/timing/formattime"><code class="xref f f-func docutils literal notranslate"><span class="pre">formattime()</span></code></a>, <a class="reference internal" href="#f/timing/initialize" title="f/timing/initialize"><code class="xref f f-func docutils literal notranslate"><span class="pre">initialize()</span></code></a>, <a class="reference internal" href="#f/timing/start_count" title="f/timing/start_count"><code class="xref f f-func docutils literal notranslate"><span class="pre">start_count()</span></code></a>, <a class="reference internal" href="#f/timing/stop_count" title="f/timing/stop_count"><code class="xref f f-func docutils literal notranslate"><span class="pre">stop_count()</span></code></a></p>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/timing/finalize" title="f/timing/finalize"><code class="xref f f-var docutils literal notranslate"><span class="pre">finalize</span></code></a>, <a class="reference internal" href="#f/timing/initialize" title="f/timing/initialize"><code class="xref f f-var docutils literal notranslate"><span class="pre">initialize</span></code></a>, <a class="reference internal" href="#f/timing/start_count" title="f/timing/start_count"><code class="xref f f-var docutils literal notranslate"><span class="pre">start_count</span></code></a>, <a class="reference internal" href="#f/timing/stop_count" title="f/timing/stop_count"><code class="xref f f-var docutils literal notranslate"><span class="pre">stop_count</span></code></a></p>
+</dd>
+<dt class="field-odd">Routines<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#f/timing/formattime" title="f/timing/formattime"><code class="xref f f-func docutils literal notranslate"><span class="pre">formattime()</span></code></a></p>
 </dd>
 </dl>
 <p class="rubric">Needed modules</p>
@@ -444,7 +382,7 @@ the time step size.</p>
 <ul>
 <li><dl>
 <dt class="sig sig-object f" id="f/timing/timer_type">
-<em class="property"><span class="pre">type</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">timing/</span></span><span class="sig-name descname"><span class="pre">timer_type</span></span><a class="headerlink" href="#f/timing/timer_type" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">type</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">timing/</span></span><span class="sig-name descname"><span class="pre">timer_type</span></span><a class="headerlink" href="#f/timing/timer_type" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type fields<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -459,62 +397,36 @@ the time step size.</p>
 </li>
 </ul>
 <p class="rubric">Variables</p>
+<ul>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/timing/finalize">
+<span class="sig-prename descclassname"><span class="pre">timing/</span></span><span class="sig-name descname"><span class="pre">finalize</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/timing/finalize" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/timing/initialize">
+<span class="sig-prename descclassname"><span class="pre">timing/</span></span><span class="sig-name descname"><span class="pre">initialize</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/timing/initialize" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/timing/start_count">
+<span class="sig-prename descclassname"><span class="pre">timing/</span></span><span class="sig-name descname"><span class="pre">start_count</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/timing/start_count" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/timing/stop_count">
+<span class="sig-prename descclassname"><span class="pre">timing/</span></span><span class="sig-name descname"><span class="pre">stop_count</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/timing/stop_count" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
 <p class="rubric">Subroutines and functions</p>
 <dl>
-<dt class="sig sig-object f" id="f/timing/initialize">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">timing/</span></span><span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/timing/initialize" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/timing/finalize">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">timing/</span></span><span class="sig-name descname"><span class="pre">finalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">message</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">n_log_file</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#f/timing/finalize" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p>
-</dd>
-<dt class="field-even">Options<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>message</strong><em> [</em><em>character(len=*)</em><em>,</em><em>in,</em><em>]</em></p></li>
-<li><p><strong>n_log_file</strong><em> [</em><em>integer </em><em>,</em><em>in,</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-odd">Call to<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/timing/formattime" title="f/timing/formattime"><code class="xref f f-func docutils literal notranslate"><span class="pre">formattime()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/timing/start_count">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">timing/</span></span><span class="sig-name descname"><span class="pre">start_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/timing/start_count" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/timing/stop_count">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">timing/</span></span><span class="sig-name descname"><span class="pre">stop_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">l_increment</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#f/timing/stop_count" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p>
-</dd>
-<dt class="field-even">Options<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>l_increment</strong><em> [</em><em>logical </em><em>,</em><em>in,</em><em>]</em></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
 <dt class="sig sig-object f" id="f/timing/formattime">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">timing/</span></span><span class="sig-name descname"><span class="pre">formattime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">n_out</span></em>, <em class="sig-param"><span class="pre">message</span></em>, <em class="sig-param"><span class="pre">time_in_sec</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/timing/formattime" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">timing/</span></span><span class="sig-name descname"><span class="pre">formattime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">n_out</span></em>, <em class="sig-param"><span class="pre">message</span></em>, <em class="sig-param"><span class="pre">time_in_sec</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/timing/formattime" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -524,7 +436,7 @@ the time step size.</p>
 </ul>
 </dd>
 <dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/timing/finalize" title="f/timing/finalize"><code class="xref f f-func docutils literal notranslate"><span class="pre">finalize()</span></code></a>, <a class="reference internal" href="#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal notranslate"><span class="pre">step_time()</span></code></a></p>
+<dd class="field-even"><p><a class="reference internal" href="#f/step_time_mod/step_time" title="f/step_time_mod/step_time"><code class="xref f f-func docutils literal notranslate"><span class="pre">step_time()</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -532,10 +444,10 @@ the time step size.</p>
 </section>
 </section>
 <section id="time-schemes">
-<h1>Time schemes<a class="headerlink" href="#time-schemes" title="Permalink to this heading">¶</a></h1>
-<section id="f/time_schemes">
-<span id="time-schemes-f90"></span><h2><code class="docutils literal notranslate"><span class="pre">time_schemes.f90</span></code><a class="headerlink" href="#f/time_schemes" title="Permalink to this heading">¶</a></h2>
-<p class="rubric">Description</p>
+<h1>Time schemes<a class="headerlink" href="#time-schemes" title="Link to this heading">¶</a></h1>
+<section id="time-schemes-f90">
+<h2><code class="docutils literal notranslate"><span class="pre">time_schemes.f90</span></code><a class="headerlink" href="#time-schemes-f90" title="Link to this heading">¶</a></h2>
+<p class="rubric" id="f/time_schemes">Description</p>
 <p>This module defines an abstract class type_tscheme which is employed for
 the time advance of the code.</p>
 <p class="rubric">Quick access</p>
@@ -544,10 +456,7 @@ the time advance of the code.</p>
 <dd class="field-odd"><p><a class="reference internal" href="#f/time_schemes/type_tscheme" title="f/time_schemes/type_tscheme"><code class="xref f f-type docutils literal notranslate"><span class="pre">type_tscheme</span></code></a></p>
 </dd>
 <dt class="field-even">Variables<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/time_schemes/unknown_interface" title="f/time_schemes/unknown_interface"><code class="xref f f-var docutils literal notranslate"><span class="pre">unknown_interface</span></code></a></p>
-</dd>
-<dt class="field-odd">Routines<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#f/time_schemes/print_info" title="f/time_schemes/print_info"><code class="xref f f-func docutils literal notranslate"><span class="pre">print_info()</span></code></a></p>
+<dd class="field-even"><p><a class="reference internal" href="#f/time_schemes/print_info" title="f/time_schemes/print_info"><code class="xref f f-var docutils literal notranslate"><span class="pre">print_info</span></code></a>, <a class="reference internal" href="#f/time_schemes/unknown_interface" title="f/time_schemes/unknown_interface"><code class="xref f f-var docutils literal notranslate"><span class="pre">unknown_interface</span></code></a></p>
 </dd>
 </dl>
 <p class="rubric">Needed modules</p>
@@ -562,7 +471,7 @@ the time advance of the code.</p>
 <ul>
 <li><dl>
 <dt class="sig sig-object f" id="f/time_schemes/type_tscheme">
-<em class="property"><span class="pre">type</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">time_schemes/</span></span><span class="sig-name descname"><span class="pre">type_tscheme</span></span><a class="headerlink" href="#f/time_schemes/type_tscheme" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">type</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">time_schemes/</span></span><span class="sig-name descname"><span class="pre">type_tscheme</span></span><a class="headerlink" href="#f/time_schemes/type_tscheme" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type fields<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -591,36 +500,22 @@ the time advance of the code.</p>
 <p class="rubric">Variables</p>
 <ul>
 <li><dl class="f variable">
+<dt class="sig sig-object f" id="f/time_schemes/print_info">
+<span class="sig-prename descclassname"><span class="pre">time_schemes/</span></span><span class="sig-name descname"><span class="pre">print_info</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/time_schemes/print_info" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
 <dt class="sig sig-object f" id="f/time_schemes/unknown_interface">
-<span class="sig-prename descclassname"><span class="pre">time_schemes/</span></span><span class="sig-name descname"><span class="pre">unknown_interface</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/time_schemes/unknown_interface" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">time_schemes/</span></span><span class="sig-name descname"><span class="pre">unknown_interface</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/time_schemes/unknown_interface" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
 </ul>
-<p class="rubric">Subroutines and functions</p>
-<dl>
-<dt class="sig sig-object f" id="f/time_schemes/print_info">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">time_schemes/</span></span><span class="sig-name descname"><span class="pre">print_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">n_log_file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/time_schemes/print_info" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This subroutine prints some informations about the time stepping scheme</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>n_log_file</strong><em> [</em><em>integer </em><em>,</em><em>inout</em><em>]</em> :: File unit of the log.TAG file</p></li>
-</ul>
-</dd>
-<dt class="field-even">Called from<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="checkPoints.html#f/readcheckpoints/readstartfields" title="f/readcheckpoints/readstartfields"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields()</span></code></a>, <a class="reference internal" href="checkPoints.html#f/readcheckpoints/readstartfields_mpi" title="f/readcheckpoints/readstartfields_mpi"><code class="xref f f-func docutils literal notranslate"><span class="pre">readstartfields_mpi()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
 </section>
-<section id="f/multistep_schemes">
-<span id="multistep-schemes-f90"></span><h2><code class="docutils literal notranslate"><span class="pre">multistep_schemes.f90</span></code><a class="headerlink" href="#f/multistep_schemes" title="Permalink to this heading">¶</a></h2>
-<p class="rubric">Description</p>
+<section id="multistep-schemes-f90">
+<h2><code class="docutils literal notranslate"><span class="pre">multistep_schemes.f90</span></code><a class="headerlink" href="#multistep-schemes-f90" title="Link to this heading">¶</a></h2>
+<p class="rubric" id="f/multistep_schemes">Description</p>
 <p>This module defines the type_multistep which inherits from the
 abstract type_tscheme. It actually implements all the routine required
 to time-advance an IMEX multistep scheme such as CN/AB2, SBDF(2,3,4),
@@ -630,8 +525,8 @@ CNLF, …</p>
 <dt class="field-odd">Types<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#f/multistep_schemes/type_multistep" title="f/multistep_schemes/type_multistep"><code class="xref f f-type docutils literal notranslate"><span class="pre">type_multistep</span></code></a></p>
 </dd>
-<dt class="field-even">Routines<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/multistep_schemes/assemble_imex" title="f/multistep_schemes/assemble_imex"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_imex()</span></code></a>, <a class="reference internal" href="#f/multistep_schemes/assemble_imex_scalar" title="f/multistep_schemes/assemble_imex_scalar"><code class="xref f f-func docutils literal notranslate"><span class="pre">assemble_imex_scalar()</span></code></a>, <a class="reference internal" href="#f/multistep_schemes/bridge_with_cnab2" title="f/multistep_schemes/bridge_with_cnab2"><code class="xref f f-func docutils literal notranslate"><span class="pre">bridge_with_cnab2()</span></code></a>, <a class="reference internal" href="#f/multistep_schemes/get_time_stage" title="f/multistep_schemes/get_time_stage"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_time_stage()</span></code></a>, <a class="reference internal" href="#f/multistep_schemes/rotate_imex" title="f/multistep_schemes/rotate_imex"><code class="xref f f-func docutils literal notranslate"><span class="pre">rotate_imex()</span></code></a>, <a class="reference internal" href="#f/multistep_schemes/rotate_imex_scalar" title="f/multistep_schemes/rotate_imex_scalar"><code class="xref f f-func docutils literal notranslate"><span class="pre">rotate_imex_scalar()</span></code></a>, <a class="reference internal" href="#f/multistep_schemes/set_dt_array" title="f/multistep_schemes/set_dt_array"><code class="xref f f-func docutils literal notranslate"><span class="pre">set_dt_array()</span></code></a>, <a class="reference internal" href="#f/multistep_schemes/set_imex_rhs" title="f/multistep_schemes/set_imex_rhs"><code class="xref f f-func docutils literal notranslate"><span class="pre">set_imex_rhs()</span></code></a>, <a class="reference internal" href="#f/multistep_schemes/set_imex_rhs_ghost" title="f/multistep_schemes/set_imex_rhs_ghost"><code class="xref f f-func docutils literal notranslate"><span class="pre">set_imex_rhs_ghost()</span></code></a>, <a class="reference internal" href="#f/multistep_schemes/set_imex_rhs_scalar" title="f/multistep_schemes/set_imex_rhs_scalar"><code class="xref f f-func docutils literal notranslate"><span class="pre">set_imex_rhs_scalar()</span></code></a>, <a class="reference internal" href="#f/multistep_schemes/set_weights" title="f/multistep_schemes/set_weights"><code class="xref f f-func docutils literal notranslate"><span class="pre">set_weights()</span></code></a>, <a class="reference internal" href="#f/multistep_schemes/start_with_ab1" title="f/multistep_schemes/start_with_ab1"><code class="xref f f-func docutils literal notranslate"><span class="pre">start_with_ab1()</span></code></a></p>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/multistep_schemes/assemble_imex" title="f/multistep_schemes/assemble_imex"><code class="xref f f-var docutils literal notranslate"><span class="pre">assemble_imex</span></code></a>, <a class="reference internal" href="#f/multistep_schemes/assemble_imex_scalar" title="f/multistep_schemes/assemble_imex_scalar"><code class="xref f f-var docutils literal notranslate"><span class="pre">assemble_imex_scalar</span></code></a>, <a class="reference internal" href="#f/multistep_schemes/bridge_with_cnab2" title="f/multistep_schemes/bridge_with_cnab2"><code class="xref f f-var docutils literal notranslate"><span class="pre">bridge_with_cnab2</span></code></a>, <a class="reference internal" href="#f/multistep_schemes/get_time_stage" title="f/multistep_schemes/get_time_stage"><code class="xref f f-var docutils literal notranslate"><span class="pre">get_time_stage</span></code></a>, <a class="reference internal" href="#f/multistep_schemes/rotate_imex" title="f/multistep_schemes/rotate_imex"><code class="xref f f-var docutils literal notranslate"><span class="pre">rotate_imex</span></code></a>, <a class="reference internal" href="#f/multistep_schemes/rotate_imex_scalar" title="f/multistep_schemes/rotate_imex_scalar"><code class="xref f f-var docutils literal notranslate"><span class="pre">rotate_imex_scalar</span></code></a>, <a class="reference internal" href="#f/multistep_schemes/set_dt_array" title="f/multistep_schemes/set_dt_array"><code class="xref f f-var docutils literal notranslate"><span class="pre">set_dt_array</span></code></a>, <a class="reference internal" href="#f/multistep_schemes/set_imex_rhs" title="f/multistep_schemes/set_imex_rhs"><code class="xref f f-var docutils literal notranslate"><span class="pre">set_imex_rhs</span></code></a>, <a class="reference internal" href="#f/multistep_schemes/set_imex_rhs_ghost" title="f/multistep_schemes/set_imex_rhs_ghost"><code class="xref f f-var docutils literal notranslate"><span class="pre">set_imex_rhs_ghost</span></code></a>, <a class="reference internal" href="#f/multistep_schemes/set_imex_rhs_scalar" title="f/multistep_schemes/set_imex_rhs_scalar"><code class="xref f f-var docutils literal notranslate"><span class="pre">set_imex_rhs_scalar</span></code></a>, <a class="reference internal" href="#f/multistep_schemes/set_weights" title="f/multistep_schemes/set_weights"><code class="xref f f-var docutils literal notranslate"><span class="pre">set_weights</span></code></a>, <a class="reference internal" href="#f/multistep_schemes/start_with_ab1" title="f/multistep_schemes/start_with_ab1"><code class="xref f f-var docutils literal notranslate"><span class="pre">start_with_ab1</span></code></a></p>
 </dd>
 </dl>
 <p class="rubric">Needed modules</p>
@@ -652,7 +547,7 @@ CNLF, …</p>
 <ul>
 <li><dl>
 <dt class="sig sig-object f" id="f/multistep_schemes/type_multistep">
-<em class="property"><span class="pre">type</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">type_multistep</span></span><a class="headerlink" href="#f/multistep_schemes/type_multistep" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">type</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">type_multistep</span></span><a class="headerlink" href="#f/multistep_schemes/type_multistep" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type fields<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -666,249 +561,96 @@ CNLF, …</p>
 </li>
 </ul>
 <p class="rubric">Variables</p>
-<p class="rubric">Subroutines and functions</p>
-<dl>
-<dt class="sig sig-object f" id="f/multistep_schemes/initialize">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">time_scheme</span></em>, <em class="sig-param"><span class="pre">courfac_nml</span></em>, <em class="sig-param"><span class="pre">intfac_nml</span></em>, <em class="sig-param"><span class="pre">alffac_nml</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/multistep_schemes/initialize" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This subroutine allocates the arrays involved in the time advance of
-an IMEX multistep scheme.</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>time_scheme</strong><em> [</em><em>character(len=72)</em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>courfac_nml</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>intfac_nml</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>alffac_nml</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/multistep_schemes/finalize">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">finalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/multistep_schemes/finalize" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This subroutine deallocates the arrays involved in the time advance
-of an IMEX multistep scheme.</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/multistep_schemes/set_weights">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">set_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">lmatnext</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/multistep_schemes/set_weights" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This subroutine computes the weights involved in the time advance of
-an IMEX multistep scheme.</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>lmatnext</strong><em> [</em><em>logical </em><em>,</em><em>inout</em><em>]</em></p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/multistep_schemes/set_dt_array">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">set_dt_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">dt_new</span></em>, <em class="sig-param"><span class="pre">dt_min</span></em>, <em class="sig-param"><span class="pre">time</span></em>, <em class="sig-param"><span class="pre">n_log_file</span></em>, <em class="sig-param"><span class="pre">n_time_step</span></em>, <em class="sig-param"><span class="pre">l_new_dtnext</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/multistep_schemes/set_dt_array" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This subroutine adjusts the time step</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>dt_new</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em> :: New time step size</p></li>
-<li><p><strong>dt_min</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em> :: Minimum elligible time step before MagIC stops</p></li>
-<li><p><strong>time</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em> :: Time</p></li>
-<li><p><strong>n_log_file</strong><em> [</em><em>integer </em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>n_time_step</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>l_new_dtnext</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Call to<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="misc.html#f/useful/abortrun" title="f/useful/abortrun"><code class="xref f f-func docutils literal notranslate"><span class="pre">abortrun()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/multistep_schemes/set_imex_rhs">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">set_imex_rhs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">rhs</span></em>, <em class="sig-param"><span class="pre">dfdt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/multistep_schemes/set_imex_rhs" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This subroutine assembles the right-hand-side of an IMEX scheme</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>rhs</strong> (1 - dfdt%<a class="reference internal" href="blocking.html#f/blocking/llm" title="f/blocking/llm">llm</a> + dfdt%<a class="reference internal" href="blocking.html#f/blocking/ulm" title="f/blocking/ulm">ulm</a>,1 - dfdt%<a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + dfdt%<a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>dfdt</strong><em> [</em><em>type_tarray </em><em>,</em><em>in</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Call to<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="parallelModules.html#f/parallel_mod/get_openmp_blocks" title="f/parallel_mod/get_openmp_blocks"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_openmp_blocks()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/multistep_schemes/set_imex_rhs_ghost">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">set_imex_rhs_ghost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">rhs</span></em>, <em class="sig-param"><span class="pre">dfdt</span></em>, <em class="sig-param"><span class="pre">start_lm</span></em>, <em class="sig-param"><span class="pre">stop_lm</span></em>, <em class="sig-param"><span class="pre">ng</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/multistep_schemes/set_imex_rhs_ghost" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This subroutine assembles the right-hand-side of an IMEX scheme for
-R-distributed arrays (finite difference with parallel solvers).</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>rhs</strong> (1 - dfdt%<a class="reference internal" href="blocking.html#f/blocking/llm" title="f/blocking/llm">llm</a> + dfdt%<a class="reference internal" href="blocking.html#f/blocking/ulm" title="f/blocking/ulm">ulm</a>,1 - dfdt%<a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + dfdt%<a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a> + 2 * ng)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>dfdt</strong><em> [</em><em>type_tarray </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>start_lm</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: Starting lm index</p></li>
-<li><p><strong>stop_lm</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: Stopping lm index</p></li>
-<li><p><strong>ng</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: Number of ghosts zones</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/multistep_schemes/set_imex_rhs_scalar">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">set_imex_rhs_scalar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">rhs</span></em>, <em class="sig-param"><span class="pre">dfdt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/multistep_schemes/set_imex_rhs_scalar" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This subroutine assembles the right-hand-side of an IMEX scheme</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>rhs</strong><em> [</em><em>real </em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>dfdt</strong><em> [</em><em>type_tscalar </em><em>,</em><em>in</em><em>]</em></p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/multistep_schemes/rotate_imex">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">rotate_imex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">dfdt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/multistep_schemes/rotate_imex" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This subroutine is used to roll the time arrays from one time step</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>dfdt</strong><em> [</em><em>type_tarray </em><em>,</em><em>inout</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Call to<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="parallelModules.html#f/parallel_mod/get_openmp_blocks" title="f/parallel_mod/get_openmp_blocks"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_openmp_blocks()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/multistep_schemes/rotate_imex_scalar">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">rotate_imex_scalar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">dfdt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/multistep_schemes/rotate_imex_scalar" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This subroutine is used to roll the time arrays from one time step</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>dfdt</strong><em> [</em><em>type_tscalar </em><em>,</em><em>inout</em><em>]</em></p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/multistep_schemes/bridge_with_cnab2">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">bridge_with_cnab2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/multistep_schemes/bridge_with_cnab2" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This subroutine is used to run the first bridging steps of an IMEX
-multistep scheme using a CN/AB2 scheme.</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/multistep_schemes/start_with_ab1">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">start_with_ab1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/multistep_schemes/start_with_ab1" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This subroutine is used to compute the first explicit iteration with
-an explicit Euler (AB1) scheme.</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/multistep_schemes/get_time_stage">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">get_time_stage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">tlast</span></em>, <em class="sig-param"><span class="pre">tstage</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/multistep_schemes/get_time_stage" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>tlast</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>tstage</strong><em> [</em><em>real </em><em>,</em><em>out</em><em>]</em></p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
+<ul>
+<li><dl class="f variable">
 <dt class="sig sig-object f" id="f/multistep_schemes/assemble_imex">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">assemble_imex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">rhs</span></em>, <em class="sig-param"><span class="pre">dfdt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/multistep_schemes/assemble_imex" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>rhs</strong> (1 - dfdt%<a class="reference internal" href="blocking.html#f/blocking/llm" title="f/blocking/llm">llm</a> + dfdt%<a class="reference internal" href="blocking.html#f/blocking/ulm" title="f/blocking/ulm">ulm</a>,1 - dfdt%<a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + dfdt%<a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>dfdt</strong><em> [</em><em>type_tarray </em><em>,</em><em>in</em><em>]</em></p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
+<span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">assemble_imex</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/multistep_schemes/assemble_imex" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl>
+</li>
+<li><dl class="f variable">
 <dt class="sig sig-object f" id="f/multistep_schemes/assemble_imex_scalar">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">assemble_imex_scalar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">rhs</span></em>, <em class="sig-param"><span class="pre">dfdt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/multistep_schemes/assemble_imex_scalar" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>rhs</strong><em> [</em><em>real </em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>dfdt</strong><em> [</em><em>type_tscalar </em><em>,</em><em>in</em><em>]</em></p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
+<span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">assemble_imex_scalar</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/multistep_schemes/assemble_imex_scalar" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/multistep_schemes/bridge_with_cnab2">
+<span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">bridge_with_cnab2</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/multistep_schemes/bridge_with_cnab2" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/multistep_schemes/finalize">
+<span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">finalize</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/multistep_schemes/finalize" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/multistep_schemes/get_time_stage">
+<span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">get_time_stage</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/multistep_schemes/get_time_stage" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/multistep_schemes/initialize">
+<span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">initialize</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/multistep_schemes/initialize" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/multistep_schemes/rotate_imex">
+<span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">rotate_imex</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/multistep_schemes/rotate_imex" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/multistep_schemes/rotate_imex_scalar">
+<span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">rotate_imex_scalar</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/multistep_schemes/rotate_imex_scalar" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/multistep_schemes/set_dt_array">
+<span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">set_dt_array</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/multistep_schemes/set_dt_array" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/multistep_schemes/set_imex_rhs">
+<span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">set_imex_rhs</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/multistep_schemes/set_imex_rhs" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/multistep_schemes/set_imex_rhs_ghost">
+<span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">set_imex_rhs_ghost</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/multistep_schemes/set_imex_rhs_ghost" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/multistep_schemes/set_imex_rhs_scalar">
+<span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">set_imex_rhs_scalar</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/multistep_schemes/set_imex_rhs_scalar" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/multistep_schemes/set_weights">
+<span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">set_weights</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/multistep_schemes/set_weights" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/multistep_schemes/start_with_ab1">
+<span class="sig-prename descclassname"><span class="pre">multistep_schemes/</span></span><span class="sig-name descname"><span class="pre">start_with_ab1</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/multistep_schemes/start_with_ab1" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
 </section>
-<section id="f/dirk_schemes">
-<span id="dirk-schemes-f90"></span><h2><code class="docutils literal notranslate"><span class="pre">dirk_schemes.f90</span></code><a class="headerlink" href="#f/dirk_schemes" title="Permalink to this heading">¶</a></h2>
-<p class="rubric">Description</p>
+<section id="dirk-schemes-f90">
+<h2><code class="docutils literal notranslate"><span class="pre">dirk_schemes.f90</span></code><a class="headerlink" href="#dirk-schemes-f90" title="Link to this heading">¶</a></h2>
+<p class="rubric" id="f/dirk_schemes">Description</p>
 <p>This module defines the type_dirk which inherits from the
 abstract type_tscheme. It actually implements all the routine required
 to time-advance an diagonally implicit Runge-Kutta scheme. It makes use
@@ -937,7 +679,7 @@ of Butcher tables to construct the right-hand-sides.</p>
 <ul>
 <li><dl>
 <dt class="sig sig-object f" id="f/dirk_schemes/type_dirk">
-<em class="property"><span class="pre">type</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">type_dirk</span></span><a class="headerlink" href="#f/dirk_schemes/type_dirk" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">type</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">type_dirk</span></span><a class="headerlink" href="#f/dirk_schemes/type_dirk" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type fields<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -954,236 +696,96 @@ of Butcher tables to construct the right-hand-sides.</p>
 </li>
 </ul>
 <p class="rubric">Variables</p>
-<p class="rubric">Subroutines and functions</p>
-<dl>
-<dt class="sig sig-object f" id="f/dirk_schemes/initialize">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">time_scheme</span></em>, <em class="sig-param"><span class="pre">courfac_nml</span></em>, <em class="sig-param"><span class="pre">intfac_nml</span></em>, <em class="sig-param"><span class="pre">alffac_nml</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/dirk_schemes/initialize" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>time_scheme</strong><em> [</em><em>character(len=72)</em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>courfac_nml</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>intfac_nml</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>alffac_nml</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/dirk_schemes/finalize">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">finalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/dirk_schemes/finalize" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/dirk_schemes/set_weights">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">set_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">lmatnext</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/dirk_schemes/set_weights" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>lmatnext</strong><em> [</em><em>logical </em><em>,</em><em>inout</em><em>]</em></p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/dirk_schemes/set_dt_array">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">set_dt_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">dt_new</span></em>, <em class="sig-param"><span class="pre">dt_min</span></em>, <em class="sig-param"><span class="pre">time</span></em>, <em class="sig-param"><span class="pre">n_log_file</span></em>, <em class="sig-param"><span class="pre">n_time_step</span></em>, <em class="sig-param"><span class="pre">l_new_dtnext</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/dirk_schemes/set_dt_array" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This subroutine adjusts the time step</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>dt_new</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>dt_min</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>time</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>n_log_file</strong><em> [</em><em>integer </em><em>,</em><em>inout</em><em>]</em></p></li>
-<li><p><strong>n_time_step</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>l_new_dtnext</strong><em> [</em><em>logical </em><em>,</em><em>in</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Call to<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="misc.html#f/useful/abortrun" title="f/useful/abortrun"><code class="xref f f-func docutils literal notranslate"><span class="pre">abortrun()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/dirk_schemes/set_imex_rhs">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">set_imex_rhs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">rhs</span></em>, <em class="sig-param"><span class="pre">dfdt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/dirk_schemes/set_imex_rhs" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This subroutine assembles the right-hand-side of an IMEX scheme</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>rhs</strong> (1 - dfdt%<a class="reference internal" href="blocking.html#f/blocking/llm" title="f/blocking/llm">llm</a> + dfdt%<a class="reference internal" href="blocking.html#f/blocking/ulm" title="f/blocking/ulm">ulm</a>,1 - dfdt%<a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + dfdt%<a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>dfdt</strong><em> [</em><em>type_tarray </em><em>,</em><em>in</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Call to<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="parallelModules.html#f/parallel_mod/get_openmp_blocks" title="f/parallel_mod/get_openmp_blocks"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_openmp_blocks()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/dirk_schemes/set_imex_rhs_ghost">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">set_imex_rhs_ghost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">rhs</span></em>, <em class="sig-param"><span class="pre">dfdt</span></em>, <em class="sig-param"><span class="pre">start_lm</span></em>, <em class="sig-param"><span class="pre">stop_lm</span></em>, <em class="sig-param"><span class="pre">ng</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/dirk_schemes/set_imex_rhs_ghost" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This subroutine assembles the right-hand-side of an IMEX scheme in case
-an array with ghosts zones is provided</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>rhs</strong> (1 - dfdt%<a class="reference internal" href="blocking.html#f/blocking/llm" title="f/blocking/llm">llm</a> + dfdt%<a class="reference internal" href="blocking.html#f/blocking/ulm" title="f/blocking/ulm">ulm</a>,1 - dfdt%<a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + dfdt%<a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a> + 2 * ng)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>dfdt</strong><em> [</em><em>type_tarray </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>start_lm</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>stop_lm</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>ng</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
+<ul>
+<li><dl class="f variable">
 <dt class="sig sig-object f" id="f/dirk_schemes/assemble_imex">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">assemble_imex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">rhs</span></em>, <em class="sig-param"><span class="pre">dfdt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/dirk_schemes/assemble_imex" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This subroutine performs the assembly stage of an IMEX-RK scheme</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>rhs</strong> (1 - dfdt%<a class="reference internal" href="blocking.html#f/blocking/llm" title="f/blocking/llm">llm</a> + dfdt%<a class="reference internal" href="blocking.html#f/blocking/ulm" title="f/blocking/ulm">ulm</a>,1 - dfdt%<a class="reference internal" href="parallelModules.html#f/radial_data/nrstart" title="f/radial_data/nrstart">nrstart</a> + dfdt%<a class="reference internal" href="parallelModules.html#f/radial_data/nrstop" title="f/radial_data/nrstop">nrstop</a>)<em> [</em><em>complex </em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>dfdt</strong><em> [</em><em>type_tarray </em><em>,</em><em>in</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Call to<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="parallelModules.html#f/parallel_mod/get_openmp_blocks" title="f/parallel_mod/get_openmp_blocks"><code class="xref f f-func docutils literal notranslate"><span class="pre">get_openmp_blocks()</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
+<span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">assemble_imex</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/dirk_schemes/assemble_imex" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl>
-<dt class="sig sig-object f" id="f/dirk_schemes/set_imex_rhs_scalar">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">set_imex_rhs_scalar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">rhs</span></em>, <em class="sig-param"><span class="pre">dfdt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/dirk_schemes/set_imex_rhs_scalar" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This subroutine assembles the right-hand-side of an IMEX scheme</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>rhs</strong><em> [</em><em>real </em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>dfdt</strong><em> [</em><em>type_tscalar </em><em>,</em><em>in</em><em>]</em></p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
+</li>
+<li><dl class="f variable">
 <dt class="sig sig-object f" id="f/dirk_schemes/assemble_imex_scalar">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">assemble_imex_scalar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">rhs</span></em>, <em class="sig-param"><span class="pre">dfdt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/dirk_schemes/assemble_imex_scalar" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This subroutine performs the assembly stage of an IMEX-RK scheme
-for a scalar quantity</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>rhs</strong><em> [</em><em>real </em><em>,</em><em>out</em><em>]</em></p></li>
-<li><p><strong>dfdt</strong><em> [</em><em>type_tscalar </em><em>,</em><em>in</em><em>]</em></p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
+<span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">assemble_imex_scalar</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/dirk_schemes/assemble_imex_scalar" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl>
-<dt class="sig sig-object f" id="f/dirk_schemes/rotate_imex">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">rotate_imex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">dfdt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/dirk_schemes/rotate_imex" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This subroutine is used to roll the time arrays from one time step</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>dfdt</strong><em> [</em><em>type_tarray </em><em>,</em><em>inout</em><em>]</em></p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
-<dt class="sig sig-object f" id="f/dirk_schemes/rotate_imex_scalar">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">rotate_imex_scalar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">dfdt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/dirk_schemes/rotate_imex_scalar" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This subroutine is used to roll the time arrays from one time step</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>dfdt</strong><em> [</em><em>type_tscalar </em><em>,</em><em>inout</em><em>]</em></p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
+</li>
+<li><dl class="f variable">
 <dt class="sig sig-object f" id="f/dirk_schemes/bridge_with_cnab2">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">bridge_with_cnab2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/dirk_schemes/bridge_with_cnab2" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p>
-</dd>
-</dl>
-</dd></dl>
+<span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">bridge_with_cnab2</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/dirk_schemes/bridge_with_cnab2" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl>
-<dt class="sig sig-object f" id="f/dirk_schemes/start_with_ab1">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">start_with_ab1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/dirk_schemes/start_with_ab1" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p>
-</dd>
-</dl>
-</dd></dl>
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/dirk_schemes/finalize">
+<span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">finalize</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/dirk_schemes/finalize" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl>
+</li>
+<li><dl class="f variable">
 <dt class="sig sig-object f" id="f/dirk_schemes/get_time_stage">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">get_time_stage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">tlast</span></em>, <em class="sig-param"><span class="pre">tstage</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/dirk_schemes/get_time_stage" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>tlast</strong><em> [</em><em>real </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>tstage</strong><em> [</em><em>real </em><em>,</em><em>out</em><em>]</em></p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
+<span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">get_time_stage</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/dirk_schemes/get_time_stage" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/dirk_schemes/initialize">
+<span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">initialize</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/dirk_schemes/initialize" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/dirk_schemes/rotate_imex">
+<span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">rotate_imex</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/dirk_schemes/rotate_imex" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/dirk_schemes/rotate_imex_scalar">
+<span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">rotate_imex_scalar</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/dirk_schemes/rotate_imex_scalar" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/dirk_schemes/set_dt_array">
+<span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">set_dt_array</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/dirk_schemes/set_dt_array" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/dirk_schemes/set_imex_rhs">
+<span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">set_imex_rhs</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/dirk_schemes/set_imex_rhs" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/dirk_schemes/set_imex_rhs_ghost">
+<span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">set_imex_rhs_ghost</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/dirk_schemes/set_imex_rhs_ghost" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/dirk_schemes/set_imex_rhs_scalar">
+<span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">set_imex_rhs_scalar</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/dirk_schemes/set_imex_rhs_scalar" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/dirk_schemes/set_weights">
+<span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">set_weights</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/dirk_schemes/set_weights" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/dirk_schemes/start_with_ab1">
+<span class="sig-prename descclassname"><span class="pre">dirk_schemes/</span></span><span class="sig-name descname"><span class="pre">start_with_ab1</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/dirk_schemes/start_with_ab1" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
 </section>
-<section id="f/time_array">
-<span id="time-array-f90"></span><h2><code class="docutils literal notranslate"><span class="pre">time_array.f90</span></code><a class="headerlink" href="#f/time_array" title="Permalink to this heading">¶</a></h2>
-<p class="rubric">Description</p>
+<section id="time-array-f90">
+<h2><code class="docutils literal notranslate"><span class="pre">time_array.f90</span></code><a class="headerlink" href="#time-array-f90" title="Link to this heading">¶</a></h2>
+<p class="rubric" id="f/time_array">Description</p>
 <p>This module defines two types that are defined to store the implicit/explicit
 terms at the different sub-stage/step.</p>
 <p class="rubric">Quick access</p>
@@ -1191,8 +793,8 @@ terms at the different sub-stage/step.</p>
 <dt class="field-odd">Types<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#f/time_array/type_tarray" title="f/time_array/type_tarray"><code class="xref f f-type docutils literal notranslate"><span class="pre">type_tarray</span></code></a>, <a class="reference internal" href="#f/time_array/type_tscalar" title="f/time_array/type_tscalar"><code class="xref f f-type docutils literal notranslate"><span class="pre">type_tscalar</span></code></a></p>
 </dd>
-<dt class="field-even">Routines<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#f/time_array/finalize_scalar" title="f/time_array/finalize_scalar"><code class="xref f f-func docutils literal notranslate"><span class="pre">finalize_scalar()</span></code></a>, <a class="reference internal" href="#f/time_array/initialize_scalar" title="f/time_array/initialize_scalar"><code class="xref f f-func docutils literal notranslate"><span class="pre">initialize_scalar()</span></code></a></p>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/time_array/finalize_scalar" title="f/time_array/finalize_scalar"><code class="xref f f-var docutils literal notranslate"><span class="pre">finalize_scalar</span></code></a>, <a class="reference internal" href="#f/time_array/initialize_scalar" title="f/time_array/initialize_scalar"><code class="xref f f-var docutils literal notranslate"><span class="pre">initialize_scalar</span></code></a></p>
 </dd>
 </dl>
 <p class="rubric">Needed modules</p>
@@ -1205,7 +807,7 @@ terms at the different sub-stage/step.</p>
 <ul>
 <li><dl>
 <dt class="sig sig-object f" id="f/time_array/type_tarray">
-<em class="property"><span class="pre">type</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">time_array/</span></span><span class="sig-name descname"><span class="pre">type_tarray</span></span><a class="headerlink" href="#f/time_array/type_tarray" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">type</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">time_array/</span></span><span class="sig-name descname"><span class="pre">type_tarray</span></span><a class="headerlink" href="#f/time_array/type_tarray" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type fields<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1225,7 +827,7 @@ terms at the different sub-stage/step.</p>
 </li>
 <li><dl>
 <dt class="sig sig-object f" id="f/time_array/type_tscalar">
-<em class="property"><span class="pre">type</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">time_array/</span></span><span class="sig-name descname"><span class="pre">type_tscalar</span></span><a class="headerlink" href="#f/time_array/type_tscalar" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">type</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">time_array/</span></span><span class="sig-name descname"><span class="pre">type_tscalar</span></span><a class="headerlink" href="#f/time_array/type_tscalar" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type fields<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1240,76 +842,32 @@ terms at the different sub-stage/step.</p>
 </li>
 </ul>
 <p class="rubric">Variables</p>
-<p class="rubric">Subroutines and functions</p>
-<dl>
-<dt class="sig sig-object f" id="f/time_array/initialize">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">time_array/</span></span><span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">llm</span></em>, <em class="sig-param"><span class="pre">ulm</span></em>, <em class="sig-param"><span class="pre">nrstart</span></em>, <em class="sig-param"><span class="pre">nrstop</span></em>, <em class="sig-param"><span class="pre">nold</span></em>, <em class="sig-param"><span class="pre">nexp</span></em>, <em class="sig-param"><span class="pre">nimp</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">l_allocate_exp</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#f/time_array/initialize" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Memory allocation of the arrays and initial values set to zero</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>llm</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>ulm</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>nrstart</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>nrstop</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>nold</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>nexp</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-<li><p><strong>nimp</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Options<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>l_allocate_exp</strong><em> [</em><em>logical </em><em>,</em><em>in,</em><em>]</em></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
+<ul>
+<li><dl class="f variable">
 <dt class="sig sig-object f" id="f/time_array/finalize">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">time_array/</span></span><span class="sig-name descname"><span class="pre">finalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/time_array/finalize" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Memory deallocation</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p>
-</dd>
-</dl>
-</dd></dl>
+<span class="sig-prename descclassname"><span class="pre">time_array/</span></span><span class="sig-name descname"><span class="pre">finalize</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/time_array/finalize" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl>
-<dt class="sig sig-object f" id="f/time_array/initialize_scalar">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">time_array/</span></span><span class="sig-name descname"><span class="pre">initialize_scalar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em>, <em class="sig-param"><span class="pre">nold</span></em>, <em class="sig-param"><span class="pre">nexp</span></em>, <em class="sig-param"><span class="pre">nimp</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/time_array/initialize_scalar" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This routine initializes time stepper help arrays in case of a scalar</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p></li>
-<li><p><strong>nold</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: Number of old states</p></li>
-<li><p><strong>nexp</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: Number of explicit states</p></li>
-<li><p><strong>nimp</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em> :: Number of implicit states</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl>
+</li>
+<li><dl class="f variable">
 <dt class="sig sig-object f" id="f/time_array/finalize_scalar">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">time_array/</span></span><span class="sig-name descname"><span class="pre">finalize_scalar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">this</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/time_array/finalize_scalar" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Memory deallocation</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>this</strong><em> [</em><em>real </em><em>]</em></p>
-</dd>
-</dl>
-</dd></dl>
+<span class="sig-prename descclassname"><span class="pre">time_array/</span></span><span class="sig-name descname"><span class="pre">finalize_scalar</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/time_array/finalize_scalar" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/time_array/initialize">
+<span class="sig-prename descclassname"><span class="pre">time_array/</span></span><span class="sig-name descname"><span class="pre">initialize</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/time_array/initialize" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/time_array/initialize_scalar">
+<span class="sig-prename descclassname"><span class="pre">time_array/</span></span><span class="sig-name descname"><span class="pre">initialize_scalar</span></span><em> <span class="pre">[</span></em><em><span class="pre">private</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/time_array/initialize_scalar" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
 </section>
 </section>
 
@@ -1324,16 +882,16 @@ terms at the different sub-stage/step.</p>
     <h3><a href="../contents.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Time stepping</a><ul>
-<li><a class="reference internal" href="#f/step_time_mod"><code class="docutils literal notranslate"><span class="pre">step_time.f90</span></code></a></li>
-<li><a class="reference internal" href="#f/courant_mod"><code class="docutils literal notranslate"><span class="pre">courant.f90</span></code></a></li>
-<li><a class="reference internal" href="#f/timing"><code class="docutils literal notranslate"><span class="pre">timing.f90</span></code></a></li>
+<li><a class="reference internal" href="#step-time-f90"><code class="docutils literal notranslate"><span class="pre">step_time.f90</span></code></a></li>
+<li><a class="reference internal" href="#courant-f90"><code class="docutils literal notranslate"><span class="pre">courant.f90</span></code></a></li>
+<li><a class="reference internal" href="#timing-f90"><code class="docutils literal notranslate"><span class="pre">timing.f90</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#time-schemes">Time schemes</a><ul>
-<li><a class="reference internal" href="#f/time_schemes"><code class="docutils literal notranslate"><span class="pre">time_schemes.f90</span></code></a></li>
-<li><a class="reference internal" href="#f/multistep_schemes"><code class="docutils literal notranslate"><span class="pre">multistep_schemes.f90</span></code></a></li>
-<li><a class="reference internal" href="#f/dirk_schemes"><code class="docutils literal notranslate"><span class="pre">dirk_schemes.f90</span></code></a></li>
-<li><a class="reference internal" href="#f/time_array"><code class="docutils literal notranslate"><span class="pre">time_array.f90</span></code></a></li>
+<li><a class="reference internal" href="#time-schemes-f90"><code class="docutils literal notranslate"><span class="pre">time_schemes.f90</span></code></a></li>
+<li><a class="reference internal" href="#multistep-schemes-f90"><code class="docutils literal notranslate"><span class="pre">multistep_schemes.f90</span></code></a></li>
+<li><a class="reference internal" href="#dirk-schemes-f90"><code class="docutils literal notranslate"><span class="pre">dirk_schemes.f90</span></code></a></li>
+<li><a class="reference internal" href="#time-array-f90"><code class="docutils literal notranslate"><span class="pre">time_array.f90</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1394,8 +952,8 @@ terms at the different sub-stage/step.</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
+    &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

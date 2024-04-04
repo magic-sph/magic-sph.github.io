@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Start field namelist &#8212; Magic 6.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/magic.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/magic.css?v=a97dc138" />
     
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/documentation_options.js?v=ef7fcc1c"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
@@ -107,10 +107,10 @@
           <div class="body" role="main">
             
   <section id="start-field-namelist">
-<span id="secstartnml"></span><h1>Start field namelist<a class="headerlink" href="#start-field-namelist" title="Permalink to this heading">¶</a></h1>
+<span id="secstartnml"></span><h1>Start field namelist<a class="headerlink" href="#start-field-namelist" title="Link to this heading">¶</a></h1>
 <p>This namelist controls whether a start field from a previous solution should be used, or a specific field should be initialized.</p>
 <section id="reading-an-input-file-of-start-fields">
-<h2>Reading an input file of start fields<a class="headerlink" href="#reading-an-input-file-of-start-fields" title="Permalink to this heading">¶</a></h2>
+<h2>Reading an input file of start fields<a class="headerlink" href="#reading-an-input-file-of-start-fields" title="Link to this heading">¶</a></h2>
 <ul class="simple" id="varl-start">
 <li><p><strong>l_start_file</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/l_start_file" title="f/init_fields/l_start_file"><code class="xref f f-var docutils literal notranslate"><span class="pre">l_start_file=.false.</span></code></a>) is a logical that controls whether the code should to read a file named <code class="docutils literal notranslate"><span class="pre">start_file</span></code> or not.</p></li>
 </ul>
@@ -147,9 +147,9 @@
 </ul>
 </section>
 <section id="defining-the-starting-conditions">
-<h2>Defining the starting conditions<a class="headerlink" href="#defining-the-starting-conditions" title="Permalink to this heading">¶</a></h2>
+<h2>Defining the starting conditions<a class="headerlink" href="#defining-the-starting-conditions" title="Link to this heading">¶</a></h2>
 <section id="initialisation-of-entropy">
-<h3>Initialisation of entropy<a class="headerlink" href="#initialisation-of-entropy" title="Permalink to this heading">¶</a></h3>
+<h3>Initialisation of entropy<a class="headerlink" href="#initialisation-of-entropy" title="Link to this heading">¶</a></h3>
 <p>The heat equation with possible heat sources and sinks given by <a class="reference internal" href="physNamelist.html#varepsc0"><span class="std std-ref">epsc0</span></a> is solved for the spherically-symmetric term <span class="math notranslate nohighlight">\((\ell=0,m=0)\)</span> to get its radial dependence. In addition to this initial state, two other laterally varying terms can be initialized. Their radial dependence are assumed to follow:</p>
 <div class="math notranslate nohighlight">
 \[s(r) = 1-2\,x^2+3\,x^4-x^6,\]</div>
@@ -164,13 +164,13 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">init_s1&lt;100</span></code>: a random-noise of amplitude <code class="docutils literal notranslate"><span class="pre">amp_s1</span></code> is initialised. The subroutine <code class="docutils literal notranslate"><span class="pre">initS</span></code> in <code class="docutils literal notranslate"><span class="pre">init_fields.f90</span></code> gives the detail of this implementation.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">init_s1&gt;100</span></code>: initialisation of mode with  the spherical harmonic order <span class="math notranslate nohighlight">\(m\)</span> given by the last two (or three) digits of <code class="docutils literal notranslate"><span class="pre">init_s1</span></code> and the spherical harmonic degree <span class="math notranslate nohighlight">\(\ell\)</span> given by the first two (or three) digits. Here are two examples:</p>
 <blockquote>
-<div><div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="n">init_s1</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">0707</span><span class="p">,</span><span class="w"></span>
-<span class="n">amp_s1</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mf">0.05</span><span class="p">,</span><span class="w"></span>
+<div><div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="n">init_s1</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">0707</span><span class="p">,</span>
+<span class="n">amp_s1</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mf">0.05</span><span class="p">,</span>
 </pre></div>
 </div>
 <p>will introduce a perturbation on the mode <span class="math notranslate nohighlight">\((\ell=7,m=7)\)</span> with an amplitude of 0.05.</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="n">init_s1</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">121121</span><span class="p">,</span><span class="w"></span>
-<span class="n">amp_s1</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w"></span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="n">init_s1</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">121121</span><span class="p">,</span>
+<span class="n">amp_s1</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span>
 </pre></div>
 </div>
 <p>will introduce a perturbation on the mode <span class="math notranslate nohighlight">\((\ell=121,m=121)\)</span> with an amplitude of 0.01.</p>
@@ -184,7 +184,7 @@
 </ul>
 </section>
 <section id="initialisation-of-chemical-composition">
-<h3>Initialisation of chemical composition<a class="headerlink" href="#initialisation-of-chemical-composition" title="Permalink to this heading">¶</a></h3>
+<h3>Initialisation of chemical composition<a class="headerlink" href="#initialisation-of-chemical-composition" title="Link to this heading">¶</a></h3>
 <p>The chemical composition equation with possible volumetric sources and sinks
 given by <a class="reference internal" href="physNamelist.html#varepsc0"><span class="std std-ref">epscxi0</span></a> is solved for the spherically-symmetric
 term <span class="math notranslate nohighlight">\((\ell=0,m=0)\)</span> to get its radial dependence. In addition to this
@@ -204,13 +204,13 @@ radial dependence are assumed to follow:</p>
 </ul>
 </section>
 <section id="initialisation-of-phase-field">
-<h3>Initialisation of phase field<a class="headerlink" href="#initialisation-of-phase-field" title="Permalink to this heading">¶</a></h3>
+<h3>Initialisation of phase field<a class="headerlink" href="#initialisation-of-phase-field" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><strong>init_phi</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/init_phi" title="f/init_fields/init_phi"><code class="xref f f-var docutils literal notranslate"><span class="pre">init_phi=0</span></code></a>) is a integer used to specify the initial phase field. If <code class="docutils literal notranslate"><span class="pre">init_phi</span> <span class="pre">/=</span> <span class="pre">0</span></code> a tanh profile centered around the melting temperature is used.</p></li>
 </ul>
 </section>
 <section id="initialisation-of-magnetic-field">
-<h3>Initialisation of magnetic field<a class="headerlink" href="#initialisation-of-magnetic-field" title="Permalink to this heading">¶</a></h3>
+<h3>Initialisation of magnetic field<a class="headerlink" href="#initialisation-of-magnetic-field" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><strong>init_b1</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/init_b1" title="f/init_fields/init_b1"><code class="xref f f-var docutils literal notranslate"><span class="pre">init_b1=0</span></code></a>) is an integer that controls the initial magnetic field. The following values are possible:</p>
 <ul>
@@ -245,7 +245,7 @@ radial dependence are assumed to follow:</p>
 </ul>
 </section>
 <section id="initialisation-of-velocity-field">
-<h3>Initialisation of velocity field<a class="headerlink" href="#initialisation-of-velocity-field" title="Permalink to this heading">¶</a></h3>
+<h3>Initialisation of velocity field<a class="headerlink" href="#initialisation-of-velocity-field" title="Link to this heading">¶</a></h3>
 <ul>
 <li><p><strong>init_v1</strong> (default <a class="reference internal" href="../apiFortran/initModules.html#f/init_fields/init_v1" title="f/init_fields/init_v1"><code class="xref f f-var docutils literal notranslate"><span class="pre">init_v1=0</span></code></a>) is an integer that controls the initial velocity. The following values are possible:</p>
 <ul>
@@ -346,8 +346,8 @@ radial dependence are assumed to follow:</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
+    &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

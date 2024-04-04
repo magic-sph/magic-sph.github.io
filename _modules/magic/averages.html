@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="../../">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>magic.averages &#8212; Magic 6.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/magic.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/magic.css?v=a97dc138" />
     
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/documentation_options.js?v=ef7fcc1c"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
           title="Search within Magic 6.2 documentation"
@@ -108,6 +108,8 @@
 <span class="kn">from</span> <span class="nn">.log</span> <span class="kn">import</span> <span class="n">MagicSetup</span>
 <span class="kn">from</span> <span class="nn">.spectrum</span> <span class="kn">import</span> <span class="n">MagicSpectrum</span>
 <span class="kn">from</span> <span class="nn">.radial</span> <span class="kn">import</span> <span class="n">MagicRadial</span>
+<span class="kn">from</span> <span class="nn">.libmelt</span> <span class="kn">import</span> <span class="n">MagicMelt</span>
+<span class="kn">from</span> <span class="nn">.movie</span> <span class="kn">import</span> <span class="n">Movie</span>
 
 <span class="k">if</span> <span class="s1">&#39;MAGIC_HOME&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
     <span class="n">default_model</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;MAGIC_HOME&#39;</span><span class="p">],</span> <span class="s1">&#39;python/magic/model.json&#39;</span><span class="p">)</span>
@@ -118,7 +120,7 @@
 <span class="n">SPACE</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span>
 <span class="n">NEWLINE</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
 <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This is a manual JSON serializer function that makes the outputs look a little</span>
 <span class="sd">    bit better than default.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -166,8 +168,10 @@
     <span class="k">return</span> <span class="n">ret</span>
 
 
-<div class="viewcode-block" id="AvgField"><a class="viewcode-back" href="../../apiPython/timeSeries.html#magic.AvgField">[docs]</a><span class="k">class</span> <span class="nc">AvgField</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AvgField">
+<a class="viewcode-back" href="../../apiPython/timeSeries.html#magic.AvgField">[docs]</a>
+<span class="k">class</span> <span class="nc">AvgField</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class computes the time-average properties from time series, spectra</span>
 <span class="sd">    and radial profiles. It will store the input starting time in a small file</span>
 <span class="sd">    named ``tInitAvg``, such that the next time you use it you don&#39;t need to</span>
@@ -198,9 +202,11 @@
 <span class="sd">    &gt;&gt;&gt; a = AvgField(datadir=&#39;mydir&#39;, model=json_model)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="AvgField.__init__"><a class="viewcode-back" href="../../apiPython/timeSeries.html#magic.AvgField.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tstart</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">default_model</span><span class="p">,</span>
+<div class="viewcode-block" id="AvgField.__init__">
+<a class="viewcode-back" href="../../apiPython/timeSeries.html#magic.AvgField.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tstart</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">default_model</span><span class="p">,</span>
                  <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">write</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param tag: if you specify an input tag (generic regExp pattern),</span>
 <span class="sd">                    the averaging process will only happen on the time series</span>
 <span class="sd">                    that match this input pattern</span>
@@ -267,7 +273,8 @@
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;time_series&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
             <span class="n">ts</span> <span class="o">=</span> <span class="n">MagicTs</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="n">datadir</span><span class="p">,</span> <span class="nb">all</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
             <span class="c1"># Number of columns has been possibly modified for those files</span>
-            <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;par&#39;</span> <span class="ow">or</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;geos&#39;</span> <span class="ow">or</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;heat&#39;</span> <span class="ow">or</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;dtVrms&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;par&#39;</span> <span class="ow">or</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;geos&#39;</span> <span class="ow">or</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;heat&#39;</span> <span class="ow">or</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;dtVrms&#39;</span> \
+               <span class="ow">or</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;phase&#39;</span><span class="p">:</span>
                 <span class="n">fix</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">fix</span> <span class="o">=</span> <span class="kc">False</span>
@@ -364,17 +371,77 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="s1">&#39;radial_profiles&#39;</span><span class="p">][</span><span class="s1">&#39;radius&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">33</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;radial_profiles&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">]:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="s1">&#39;radial_profiles&#39;</span><span class="p">][</span><span class="n">field</span><span class="o">+</span><span class="s1">&#39;_av&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">33</span><span class="p">)</span>
-                    <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">+</span><span class="s1">&#39;R_av&#39;</span><span class="p">,</span> <span class="n">rr</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">field</span><span class="p">])</span>
-                    <span class="k">if</span> <span class="n">std</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span> <span class="n">field</span> <span class="o">+</span> <span class="s1">&#39;_SD&#39;</span><span class="p">):</span>
+                    <span class="c1">#setattr(self, field+&#39;R_av&#39;, rr.__dict__[field])</span>
+                    <span class="k">if</span> <span class="n">std</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="s1">&#39;radial_profiles&#39;</span><span class="p">][</span><span class="n">field</span><span class="o">+</span><span class="s1">&#39;_sd&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">33</span><span class="p">)</span>
-                        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">+</span><span class="s1">&#39;R_sd&#39;</span><span class="p">,</span> <span class="n">rr</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">field</span><span class="o">+</span><span class="s1">&#39;_SD&#39;</span><span class="p">])</span>
+                        <span class="c1">#setattr(self, field+&#39;R_sd&#39;, rr.__dict__[field+&#39;_SD&#39;])</span>
+
+        <span class="c1"># Handle theta profiles</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="s1">&#39;theta_profiles&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="s1">&#39;theta_profiles&#39;</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;theta_profiles&#39;</span><span class="p">]:</span>
+
+                <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;rmelt_theta&#39;</span><span class="p">:</span>
+                    <span class="n">files</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="s1">&#39;rmelt.*&#39;</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">rm</span> <span class="o">=</span> <span class="n">MagicMelt</span><span class="p">(</span><span class="nb">all</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="n">datadir</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">rm</span><span class="p">,</span> <span class="s1">&#39;colatitude&#39;</span><span class="p">):</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="s1">&#39;theta_profiles&#39;</span><span class="p">][</span><span class="s1">&#39;colatitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rm</span><span class="o">.</span><span class="n">colatitude</span>
+                            <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">rm</span><span class="o">.</span><span class="n">time</span><span class="o">-</span><span class="n">tstart</span><span class="p">)</span> <span class="o">==</span> \
+                                            <span class="nb">min</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">rm</span><span class="o">.</span><span class="n">time</span><span class="o">-</span><span class="n">tstart</span><span class="p">)),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                            <span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+                            <span class="k">if</span> <span class="n">std</span><span class="p">:</span>
+                                <span class="n">xmean</span><span class="p">,</span> <span class="n">xstd</span> <span class="o">=</span> <span class="n">avgField</span><span class="p">(</span><span class="n">rm</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">ind</span><span class="p">:],</span>
+                                                       <span class="n">rm</span><span class="o">.</span><span class="n">rmelt</span><span class="p">[</span><span class="n">ind</span><span class="p">:,</span> <span class="p">:],</span>
+                                                       <span class="n">std</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="s1">&#39;theta_profiles&#39;</span><span class="p">][</span><span class="s1">&#39;rmelt_theta_av&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xmean</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="s1">&#39;theta_profiles&#39;</span><span class="p">][</span><span class="s1">&#39;rmelt_theta_sd&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xstd</span>
+                                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;rmelt_theta_av&#39;</span><span class="p">,</span> <span class="n">xmean</span><span class="p">)</span>
+                                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;rmelt_theta_sd&#39;</span><span class="p">,</span> <span class="n">xstd</span><span class="p">)</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">xmean</span><span class="p">,</span> <span class="n">xstd</span> <span class="o">=</span> <span class="n">avgField</span><span class="p">(</span><span class="n">rm</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">ind</span><span class="p">:],</span>
+                                                       <span class="n">rm</span><span class="o">.</span><span class="n">rmelt</span><span class="p">[</span><span class="n">ind</span><span class="p">:,</span> <span class="p">:])</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="s1">&#39;theta_profiles&#39;</span><span class="p">][</span><span class="s1">&#39;rmelt_theta_av&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xmean</span>
+                                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;rmelt_theta_av&#39;</span><span class="p">,</span> <span class="n">xmean</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;heatf_theta&#39;</span><span class="p">:</span>
+                    <span class="n">files</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="s1">&#39;AHF_mov.*&#39;</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">file</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
+                            <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                                <span class="n">m</span> <span class="o">=</span> <span class="n">Movie</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">file</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="n">datadir</span><span class="p">)</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">m</span> <span class="o">+=</span> <span class="n">Movie</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">file</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="n">datadir</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="s1">&#39;theta&#39;</span><span class="p">):</span>
+                            <span class="n">data</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># dT/dr at outer boundary</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="s1">&#39;theta_profiles&#39;</span><span class="p">][</span><span class="s1">&#39;colatitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">theta</span>
+                            <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">time</span><span class="o">-</span><span class="n">tstart</span><span class="p">)</span> <span class="o">==</span> \
+                                            <span class="nb">min</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">time</span><span class="o">-</span><span class="n">tstart</span><span class="p">)),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                            <span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+                            <span class="k">if</span> <span class="n">std</span><span class="p">:</span>
+                                <span class="n">xmean</span><span class="p">,</span> <span class="n">xstd</span> <span class="o">=</span> <span class="n">avgField</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">ind</span><span class="p">:],</span>
+                                                       <span class="n">data</span><span class="p">[</span><span class="n">ind</span><span class="p">:,</span> <span class="p">:],</span>
+                                                       <span class="n">std</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="s1">&#39;theta_profiles&#39;</span><span class="p">][</span><span class="s1">&#39;heatf_theta_av&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xmean</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="s1">&#39;theta_profiles&#39;</span><span class="p">][</span><span class="s1">&#39;heatf_theta_sd&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xstd</span>
+                                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;heatf_theta_av&#39;</span><span class="p">,</span> <span class="n">xmean</span><span class="p">)</span>
+                                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;heatf_theta_sd&#39;</span><span class="p">,</span> <span class="n">xstd</span><span class="p">)</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">xmean</span><span class="p">,</span> <span class="n">xstd</span> <span class="o">=</span> <span class="n">avgField</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">ind</span><span class="p">:],</span>
+                                                       <span class="n">data</span><span class="p">[</span><span class="n">ind</span><span class="p">:,</span> <span class="p">:])</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="s1">&#39;theta_profiles&#39;</span><span class="p">][</span><span class="s1">&#39;heatf_theta_av&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xmean</span>
+                                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;heatf_theta_av&#39;</span><span class="p">,</span> <span class="n">xmean</span><span class="p">)</span>
 
         <span class="c1"># Write a json file</span>
         <span class="k">if</span> <span class="n">write</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">write_json</span><span class="p">(</span><span class="n">datadir</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AvgField.write_header"><a class="viewcode-back" href="../../apiPython/timeSeries.html#magic.AvgField.write_header">[docs]</a>    <span class="k">def</span> <span class="nf">write_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AvgField.write_header">
+<a class="viewcode-back" href="../../apiPython/timeSeries.html#magic.AvgField.write_header">[docs]</a>
+    <span class="k">def</span> <span class="nf">write_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Write header in case an ascii output is requested</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">st</span> <span class="o">=</span> <span class="s1">&#39;#&#39;</span>
@@ -392,8 +459,11 @@
 
         <span class="k">return</span> <span class="n">st</span></div>
 
-<div class="viewcode-block" id="AvgField.__str__"><a class="viewcode-back" href="../../apiPython/timeSeries.html#magic.AvgField.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AvgField.__str__">
+<a class="viewcode-back" href="../../apiPython/timeSeries.html#magic.AvgField.__str__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Formatted output</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">st</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span>
@@ -410,8 +480,11 @@
 
         <span class="k">return</span> <span class="n">st</span></div>
 
-<div class="viewcode-block" id="AvgField.get_tags"><a class="viewcode-back" href="../../apiPython/timeSeries.html#magic.AvgField.get_tags">[docs]</a>    <span class="k">def</span> <span class="nf">get_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tstart</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AvgField.get_tags">
+<a class="viewcode-back" href="../../apiPython/timeSeries.html#magic.AvgField.get_tags">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tstart</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This routine returns a list of tags which have been generated after tstart</span>
 
 <span class="sd">        :param tstart: starting averaging time</span>
@@ -428,8 +501,11 @@
 
         <span class="k">return</span> <span class="n">tags</span></div>
 
-<div class="viewcode-block" id="AvgField.write_json"><a class="viewcode-back" href="../../apiPython/timeSeries.html#magic.AvgField.write_json">[docs]</a>    <span class="k">def</span> <span class="nf">write_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AvgField.write_json">
+<a class="viewcode-back" href="../../apiPython/timeSeries.html#magic.AvgField.write_json">[docs]</a>
+    <span class="k">def</span> <span class="nf">write_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This function writes the averages as a simple JSON file stored in the</span>
 <span class="sd">        directory &#39;avg.json&#39;</span>
 
@@ -438,11 +514,13 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="s1">&#39;avg.json&#39;</span><span class="p">),</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">st</span> <span class="o">=</span> <span class="n">to_json</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">)</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">st</span><span class="p">)</span></div></div>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">st</span><span class="p">)</span></div>
+</div>
+
 
 
 <span class="k">class</span> <span class="nc">AvgStack</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class is made to go through a list of directories and gather all the local</span>
 <span class="sd">    avg files to compute a global output which summarises all the outputs in one</span>
 <span class="sd">    single file</span>
@@ -457,7 +535,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dirList</span><span class="o">=</span><span class="s1">&#39;runs.txt&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;avg.json&#39;</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span>
                  <span class="n">recompute</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">default_model</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param dirList: the filename of the list of directories, lines starting with</span>
 <span class="sd">                        a hash are omitted by the reader</span>
 <span class="sd">        :type dirList: str</span>
@@ -495,10 +573,11 @@
                         <span class="n">a</span> <span class="o">=</span> <span class="n">AvgField</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">std</span><span class="p">)</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;lut&#39;</span><span class="p">):</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">lut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-                        <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;spectra&#39;</span><span class="p">,</span> <span class="s1">&#39;radial_profiles&#39;</span><span class="p">]</span>
+                        <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;spectra&#39;</span><span class="p">,</span> <span class="s1">&#39;radial_profiles&#39;</span><span class="p">,</span> <span class="s1">&#39;theta_profiles&#39;</span><span class="p">]</span>
                         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
-                            <span class="k">for</span> <span class="n">key1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                                <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">key1</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">key1</span><span class="p">])]</span>
+                            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                                <span class="k">for</span> <span class="n">key1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">key1</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">key1</span><span class="p">])]</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">lut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">lut</span><span class="p">)</span>
@@ -512,7 +591,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">simple_namespace</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This routine is used to add two AvgStack objects.</span>
 
 <span class="sd">        :param new: the lookup table which needs to be added</span>
@@ -527,7 +606,7 @@
                         <span class="n">arr1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">new</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">key1</span><span class="p">])</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">key1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">arr</span><span class="p">,</span> <span class="n">arr1</span><span class="p">))</span>
 
-        <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;spectra&#39;</span><span class="p">,</span> <span class="s1">&#39;radial_profiles&#39;</span><span class="p">]</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;spectra&#39;</span><span class="p">,</span> <span class="s1">&#39;radial_profiles&#39;</span><span class="p">,</span> <span class="s1">&#39;theta_profiles&#39;</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">new</span><span class="o">.</span><span class="n">lut</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                 <span class="k">for</span> <span class="n">key1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
@@ -541,7 +620,7 @@
         <span class="k">return</span> <span class="bp">self</span>
 
     <span class="k">def</span> <span class="nf">simple_namespace</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This routine creates a simpler namespace from the lookup table</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;phys_params&#39;</span><span class="p">,</span> <span class="s1">&#39;num_params&#39;</span><span class="p">,</span> <span class="s1">&#39;time_series&#39;</span><span class="p">]</span>
@@ -550,7 +629,7 @@
                 <span class="k">for</span> <span class="n">key1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                     <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">key1</span><span class="p">]))</span>
 
-        <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;spectra&#39;</span><span class="p">,</span> <span class="s1">&#39;radial_profiles&#39;</span><span class="p">]</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;spectra&#39;</span><span class="p">,</span> <span class="s1">&#39;radial_profiles&#39;</span><span class="p">,</span> <span class="s1">&#39;theta_profiles&#39;</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                 <span class="k">for</span> <span class="n">key1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
@@ -560,7 +639,7 @@
                     <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key1</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newlut</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This routine is used to merge two lookup tables.</span>
 
 <span class="sd">        :param newlut: the lookup table which needs to be added</span>
@@ -575,7 +654,7 @@
                         <span class="n">arr1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">newlut</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">key1</span><span class="p">])</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">key1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">arr</span><span class="p">,</span> <span class="n">arr1</span><span class="p">))</span>
 
-        <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;spectra&#39;</span><span class="p">,</span> <span class="s1">&#39;radial_profiles&#39;</span><span class="p">]</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;spectra&#39;</span><span class="p">,</span> <span class="s1">&#39;radial_profiles&#39;</span><span class="p">,</span> <span class="s1">&#39;theta_profiles&#39;</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">newlut</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                 <span class="k">for</span> <span class="n">key1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
@@ -587,7 +666,7 @@
                         <span class="bp">self</span><span class="o">.</span><span class="n">lut</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">key1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arr1</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This routine reads the avg.json file stored in one local directory which</span>
 <span class="sd">        contains a numerical simulation. It returns the corresponding lookup table.</span>
 
@@ -645,8 +724,8 @@
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
+    &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>
