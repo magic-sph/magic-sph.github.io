@@ -4,16 +4,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>magic.libmagic &#8212; Magic 6.2 documentation</title>
+    <title>magic.libmagic &#8212; Magic 6.3 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../_static/magic.css?v=a97dc138" />
     
-    <script src="../../_static/documentation_options.js?v=ef7fcc1c"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/documentation_options.js?v=4b074805"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Magic 6.2 documentation"
+          title="Search within Magic 6.3 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -85,7 +85,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">magic.libmagic</a></li> 
       </ul>
@@ -99,6 +99,7 @@
   <h1>Source code for magic.libmagic</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="kn">import</span> <span class="nn">scipy.interpolate</span> <span class="k">as</span> <span class="nn">S</span>
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">simps</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">glob</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">.npfile</span> <span class="kn">import</span> <span class="o">*</span>
@@ -346,7 +347,8 @@
 
 <div class="viewcode-block" id="avgField">
 <a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.avgField">[docs]</a>
-<span class="k">def</span> <span class="nf">avgField</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">tstart</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fix_missing_series</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">avgField</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">tstart</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fix_missing_series</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+             <span class="n">tstop</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This subroutine computes the time-average (and the std) of a time series</span>
 
@@ -360,6 +362,8 @@
 <span class="sd">    :type field: numpy.ndarray</span>
 <span class="sd">    :param tstart: the starting time of the averaging</span>
 <span class="sd">    :type tstart: float</span>
+<span class="sd">    :param tstart: the stopping time of the averaging</span>
+<span class="sd">    :type tstart: float</span>
 <span class="sd">    :param std: when set to True, the standard deviation is also calculated</span>
 <span class="sd">    :type std: bool</span>
 <span class="sd">    :param fix_missing_series: when set to True, data equal to zero are ignored,</span>
@@ -371,30 +375,36 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">tstart</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">time</span><span class="o">-</span><span class="n">tstart</span><span class="p">)</span> <span class="o">==</span> <span class="nb">min</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">time</span><span class="o">-</span><span class="n">tstart</span><span class="p">)),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">ind1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span> <span class="c1"># the whole input array is taken!</span>
-        <span class="n">ind</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">ind1</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="n">tstop</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">time</span><span class="o">-</span><span class="n">tstop</span><span class="p">)</span> <span class="o">==</span> <span class="nb">min</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">time</span><span class="o">-</span><span class="n">tstop</span><span class="p">)),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">ind2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span> <span class="c1"># the whole input array is taken!</span>
+        <span class="n">ind2</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
     <span class="c1"># Now suppose data were not stored in the first part of the run</span>
     <span class="c1"># then the time series could look like 0,0,0,...,data,data,data</span>
     <span class="c1"># In that case starting index needs to be overwritten</span>
-    <span class="k">if</span> <span class="n">fix_missing_series</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>  <span class="ow">and</span> <span class="n">field</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">fix_missing_series</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>  <span class="ow">and</span> <span class="n">field</span><span class="p">[</span><span class="n">ind1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">field</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">ind1</span> <span class="o">=</span> <span class="n">mask</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">ind1</span> <span class="o">&gt;</span> <span class="n">ind</span><span class="p">:</span>
-                <span class="n">ind</span> <span class="o">=</span> <span class="n">ind1</span>
+            <span class="n">ind_tmp</span> <span class="o">=</span> <span class="n">mask</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">ind_tmp</span> <span class="o">&gt;</span> <span class="n">ind1</span><span class="p">:</span>
+                <span class="n">ind1</span> <span class="o">=</span> <span class="n">ind_tmp</span>
 
-    <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="n">ind</span><span class="p">:]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># Only one entry in the array</span>
+    <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="n">ind1</span><span class="p">:</span><span class="n">ind2</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># Only one entry in the array</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">avgField</span> <span class="o">=</span> <span class="n">field</span><span class="p">[</span><span class="n">ind</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+            <span class="n">avgField</span> <span class="o">=</span> <span class="n">field</span><span class="p">[</span><span class="n">ind1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
             <span class="n">stdField</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">avgField</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">avgField</span> <span class="o">=</span> <span class="n">field</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
+            <span class="n">avgField</span> <span class="o">=</span> <span class="n">field</span><span class="p">[</span><span class="n">ind1</span><span class="p">]</span>
             <span class="n">stdField</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">time</span><span class="p">[</span><span class="n">ind</span><span class="p">]:</span> <span class="c1"># Same time: this can happen for timestep.TAG</span>
+        <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="n">ind1</span><span class="p">]</span> <span class="o">==</span> <span class="n">time</span><span class="p">[</span><span class="n">ind2</span><span class="p">]:</span> <span class="c1"># Same time: this can happen for timestep.TAG</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">avgField</span> <span class="o">=</span> <span class="n">field</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
                 <span class="n">stdField</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">avgField</span><span class="p">)</span>
@@ -402,11 +412,11 @@
                 <span class="n">avgField</span> <span class="o">=</span> <span class="n">field</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
                 <span class="n">stdField</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">fac</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="n">time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">time</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span>
-            <span class="n">avgField</span> <span class="o">=</span> <span class="n">fac</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">field</span><span class="p">[</span><span class="n">ind</span><span class="p">:,</span> <span class="o">...</span><span class="p">],</span> <span class="n">time</span><span class="p">[</span><span class="n">ind</span><span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">fac</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="n">time</span><span class="p">[</span><span class="n">ind2</span><span class="p">]</span><span class="o">-</span><span class="n">time</span><span class="p">[</span><span class="n">ind1</span><span class="p">])</span>
+            <span class="n">avgField</span> <span class="o">=</span> <span class="n">fac</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">field</span><span class="p">[</span><span class="n">ind1</span><span class="p">:</span><span class="n">ind2</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">time</span><span class="p">[</span><span class="n">ind1</span><span class="p">:</span><span class="n">ind2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">std</span><span class="p">:</span>
-                <span class="n">stdField</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">fac</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">((</span><span class="n">field</span><span class="p">[</span><span class="n">ind</span><span class="p">:,</span> <span class="o">...</span><span class="p">]</span><span class="o">-</span><span class="n">avgField</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span>
-                                   <span class="n">time</span><span class="p">[</span><span class="n">ind</span><span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+                <span class="n">stdField</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">fac</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">((</span><span class="n">field</span><span class="p">[</span><span class="n">ind1</span><span class="p">:</span><span class="n">ind2</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">-</span><span class="n">avgField</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span>
+                                   <span class="n">time</span><span class="p">[</span><span class="n">ind1</span><span class="p">:</span><span class="n">ind2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
 
     <span class="k">if</span> <span class="n">std</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">avgField</span><span class="p">,</span> <span class="n">stdField</span>
@@ -859,15 +869,19 @@
 
 <div class="viewcode-block" id="timeder">
 <a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.timeder">[docs]</a>
-<span class="k">def</span> <span class="nf">timeder</span><span class="p">(</span><span class="n">time</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">timeder</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    time derivative of an input array</span>
-
-<span class="sd">    computed with central differences (numpy.gradient)</span>
+<span class="sd">    This routine computes the time derivative of an input array</span>
 
 <span class="sd">    &gt;&gt;&gt; ts = MagicTs(field=&#39;e_kin&#39;)</span>
-<span class="sd">    &gt;&gt;&gt; dt_ekinpol = timeder(ts,field=&#39;ekin_pol&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; dEkdt = timeder(ts, ts.ekin_pol)</span>
 
+<span class="sd">    :param time: an array that contains time</span>
+<span class="sd">    :type time: numpy.ndarray</span>
+<span class="sd">    :param y: an array which contains the field to be differentiated</span>
+<span class="sd">    :type y: numpy.ndarray</span>
+<span class="sd">    :returns: an array that contains the time derivative</span>
+<span class="sd">    :rtype: numpy.ndarray</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">edge_order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
@@ -876,18 +890,23 @@
 
 <div class="viewcode-block" id="secondtimeder">
 <a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.secondtimeder">[docs]</a>
-<span class="k">def</span> <span class="nf">secondtimeder</span><span class="p">(</span><span class="n">time</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">secondtimeder</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    second time derivative of an input array</span>
-
-<span class="sd">    computed with central differences (numpy.gradient)</span>
+<span class="sd">    This routine computes the second time derivative of an input array</span>
 
 <span class="sd">    &gt;&gt;&gt; ts = MagicTs(field=&#39;e_kin&#39;)</span>
-<span class="sd">    &gt;&gt;&gt; dt_ekinpol = secondtimeder(ts,field=&#39;ekin_pol&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; d2Ekdt2 = secondtimeder(ts, ts.ekin_pol)</span>
 
+<span class="sd">    :param time: an array that contains time</span>
+<span class="sd">    :type time: numpy.ndarray</span>
+<span class="sd">    :param y: an array which contains the field to be differentiated two times</span>
+<span class="sd">    :type y: numpy.ndarray</span>
+<span class="sd">    :returns: an array that contains the second time derivative</span>
+<span class="sd">    :rtype: numpy.ndarray</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">edge_order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">edge_order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
     <span class="k">return</span> <span class="n">out</span></div>
 
 
@@ -1335,6 +1354,36 @@
 
     <span class="k">return</span> <span class="n">factors</span></div>
 
+
+<div class="viewcode-block" id="horizontal_mean">
+<a class="viewcode-back" href="../../apiPython/libs.html#magic.libmagic.horizontal_mean">[docs]</a>
+<span class="k">def</span> <span class="nf">horizontal_mean</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">colat</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function computes the horizontal mean (and the standard deviation)</span>
+<span class="sd">    of an input array of size (nphi,ntheta) or (nphi,ntheta,nr)</span>
+
+<span class="sd">    :param field: the input array</span>
+<span class="sd">    :type field: numpy.ndarray</span>
+<span class="sd">    :param colat: an array that contains the colatitudes</span>
+<span class="sd">    :type colat: numpy.ndarray</span>
+<span class="sd">    :param std: a boolean if one also wants to compute the standard deviation</span>
+<span class="sd">    :type std: bool</span>
+<span class="sd">    :returns: the average value or radial profile</span>
+<span class="sd">    :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">field_m</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># Azimuthal average</span>
+    <span class="n">field_mean</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">simps</span><span class="p">(</span><span class="n">field_m</span><span class="o">.</span><span class="n">T</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">colat</span><span class="p">),</span> <span class="n">colat</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">std</span><span class="p">:</span>
+        <span class="n">dat</span> <span class="o">=</span> <span class="p">(</span><span class="n">field</span><span class="o">-</span><span class="n">field_mean</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">dat_m</span> <span class="o">=</span> <span class="n">dat</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">dat_mean</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">simps</span><span class="p">(</span><span class="n">dat_m</span><span class="o">.</span><span class="n">T</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">colat</span><span class="p">),</span> <span class="n">colat</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">field_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dat_mean</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">field_mean</span><span class="p">,</span> <span class="n">field_std</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">field_mean</span></div>
+
 </pre></div>
 
             <div class="clearer"></div>
@@ -1343,7 +1392,7 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
@@ -1351,7 +1400,7 @@
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
@@ -1369,14 +1418,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">magic.libmagic</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
     &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
     </div>
   </body>
 </html>
