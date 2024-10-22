@@ -1,23 +1,22 @@
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>magic.spectralTransforms &#8212; Magic 6.1 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/magic.css" />
+    <title>magic.spectralTransforms &#8212; Magic 6.3 documentation</title>
+    <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Magic 6.1 documentation"
+          title="Search within Magic 6.3 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -89,9 +88,8 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.1 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">magic.spectralTransforms</a></li> 
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -115,20 +113,18 @@
 <span class="sd">    from spectral to physical space. It works in two steps: one first needs</span>
 <span class="sd">    to initialize the transform</span>
 
-<span class="sd">    &gt;&gt;&gt; sh = SpectralTransforms( l_max=256, lm_max=33153, n_theta_max=384)</span>
+<span class="sd">    &gt;&gt;&gt; sh = SpectralTransforms( l_max=256, n_theta_max=384)</span>
 <span class="sd">    &gt;&gt;&gt; print(Tlm[:, 10].shape) # lm_max (Temperature at ir=10)</span>
 <span class="sd">    &gt;&gt;&gt; T = sh.spec_spat(Tlm) # T[n_phi_max, n_theta_max]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l_max</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">lm_max</span><span class="o">=</span><span class="mi">561</span><span class="p">,</span> <span class="n">n_theta_max</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">m_max</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l_max</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_theta_max</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">m_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param l_max: maximum spherical harmonic degree</span>
 <span class="sd">        :type l_max: int</span>
 <span class="sd">        :param minc: azimuthal symmetry</span>
 <span class="sd">        :type minc: int</span>
-<span class="sd">        :param lm_max: maximum l,m combination</span>
-<span class="sd">        :type lm_max: int</span>
 <span class="sd">        :param n_theta_max: number of grid points in the latitudinal direction</span>
 <span class="sd">        :type n_theta_max: int</span>
 <span class="sd">        :param verbose: some info about the SHT layout</span>
@@ -141,7 +137,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">m_max</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">m_max</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_legF90</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">l_max</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> <span class="n">lm_max</span><span class="p">,</span> <span class="n">n_theta_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">m_max</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_legF90</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">l_max</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> <span class="n">n_theta_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">m_max</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">l_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_legF90</span><span class="o">.</span><span class="n">l_max</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">minc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_legF90</span><span class="o">.</span><span class="n">minc</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lm_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_legF90</span><span class="o">.</span><span class="n">lm_max</span>
@@ -335,7 +331,6 @@
     <span class="nb">print</span><span class="p">(</span> <span class="n">a</span><span class="o">.</span><span class="n">lm_max</span> <span class="p">)</span>
 </pre></div>
 
-            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -345,12 +340,12 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>document.getElementById('searchbox').style.display = "block"</script>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -367,14 +362,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.1 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">magic.spectralTransforms</a></li> 
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2021, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+        &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
     </div>
   </body>
 </html>

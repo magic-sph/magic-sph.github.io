@@ -1,23 +1,22 @@
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>magic.checker &#8212; Magic 6.1 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/magic.css" />
+    <title>magic.checker &#8212; Magic 6.3 documentation</title>
+    <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Magic 6.1 documentation"
+          title="Search within Magic 6.3 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -89,9 +88,8 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.1 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">magic.checker</a></li> 
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -125,7 +123,7 @@
 <span class="sd">    if the power.TAG and some spectra have been produced in the current directory.</span>
 <span class="sd">    If in addition the tInitAvg file is also there in the directory it averages</span>
 <span class="sd">    only from this starting time.</span>
-<span class="sd">    </span>
+
 <span class="sd">    &gt;&gt;&gt; MagicCheck(tstart=10.)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -143,16 +141,20 @@
     <span class="c1"># Not super accurate if n_log_step changed but better that nothing</span>
     <span class="n">n_steps</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span> <span class="o">*</span> <span class="n">ts</span><span class="o">.</span><span class="n">n_log_step</span>
 
-    <span class="n">dEdt</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">buoPower</span><span class="o">+</span><span class="n">ts</span><span class="o">.</span><span class="n">buoPower_chem</span><span class="o">+</span><span class="n">ts</span><span class="o">.</span><span class="n">ohmDiss</span><span class="o">+</span><span class="n">ts</span><span class="o">.</span><span class="n">viscDiss</span>
+    <span class="n">dEdt</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">buoPower</span><span class="o">+</span><span class="n">ts</span><span class="o">.</span><span class="n">buoPower_chem</span><span class="o">+</span><span class="n">ts</span><span class="o">.</span><span class="n">ohmDiss</span><span class="o">+</span><span class="n">ts</span><span class="o">.</span><span class="n">viscDiss</span><span class="o">+</span><span class="n">ts</span><span class="o">.</span><span class="n">icrotPower</span><span class="o">+</span><span class="n">ts</span><span class="o">.</span><span class="n">marotPower</span>
 
     <span class="c1"># Power balance:</span>
     <span class="n">buoPower_avg</span> <span class="o">=</span> <span class="n">avgField</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">ts</span><span class="o">.</span><span class="n">buoPower</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
     <span class="n">buoPower_chem_avg</span> <span class="o">=</span> <span class="n">avgField</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">ts</span><span class="o">.</span><span class="n">buoPower_chem</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
     <span class="n">ohmDiss_avg</span> <span class="o">=</span> <span class="n">avgField</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">ts</span><span class="o">.</span><span class="n">ohmDiss</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
     <span class="n">viscDiss_avg</span> <span class="o">=</span> <span class="n">avgField</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">ts</span><span class="o">.</span><span class="n">viscDiss</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
-    <span class="n">ratio</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">buoPower_avg</span><span class="o">+</span><span class="n">buoPower_chem_avg</span><span class="o">+</span><span class="n">ohmDiss_avg</span><span class="o">+</span><span class="n">viscDiss_avg</span><span class="p">)</span> <span class="o">/</span> \
-            <span class="p">(</span><span class="n">buoPower_avg</span><span class="o">+</span><span class="n">buoPower_chem_avg</span><span class="p">)</span> 
-
+    <span class="n">icrotPower_avg</span> <span class="o">=</span> <span class="n">avgField</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">ts</span><span class="o">.</span><span class="n">icrotPower</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+    <span class="n">marotPower_avg</span> <span class="o">=</span> <span class="n">avgField</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">ts</span><span class="o">.</span><span class="n">marotPower</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+    <span class="n">ratio</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="p">(</span>
+                <span class="nb">abs</span><span class="p">(</span><span class="n">buoPower_avg</span><span class="o">+</span><span class="n">buoPower_chem_avg</span><span class="o">+</span><span class="n">icrotPower_avg</span><span class="o">+</span><span class="n">marotPower_avg</span>
+                    <span class="o">+</span><span class="n">ohmDiss_avg</span><span class="o">+</span><span class="n">viscDiss_avg</span><span class="p">)</span> <span class="o">/</span>
+            <span class="p">(</span><span class="n">buoPower_avg</span><span class="o">+</span><span class="n">buoPower_chem_avg</span><span class="o">+</span><span class="n">icrotPower_avg</span><span class="o">+</span><span class="n">marotPower_avg</span><span class="p">)</span>
+                <span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">BOLD</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">UNDERLINE</span> <span class="o">+</span> <span class="s1">&#39;Power balance:&#39;</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Power injected   : </span><span class="si">{:.5e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">buoPower_avg</span><span class="o">+</span><span class="n">buoPower_chem_avg</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Power dissipated : </span><span class="si">{:.5e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">-</span><span class="n">ohmDiss_avg</span><span class="o">-</span><span class="n">viscDiss_avg</span><span class="p">))</span>
@@ -369,7 +371,6 @@
             <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">WARNING</span> <span class="o">+</span> <span class="n">st_bot</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span></div>
 </pre></div>
 
-            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -379,12 +380,12 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>document.getElementById('searchbox').style.display = "block"</script>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -401,14 +402,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.1 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">magic.checker</a></li> 
+        <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2021, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+        &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
     </div>
   </body>
 </html>

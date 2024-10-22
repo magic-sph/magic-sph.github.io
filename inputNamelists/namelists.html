@@ -1,23 +1,24 @@
+
 <!DOCTYPE html>
 
-<html lang="en" data-content_root="../">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
     <title>Input parameters &#8212; Magic 6.3 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/magic.css?v=a97dc138" />
+    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
-    <script src="../_static/documentation_options.js?v=4b074805"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
           title="Search within Magic 6.3 documentation"
           href="../_static/opensearch.xml"/>
-    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Grid namelist" href="gridNamelist.html" />
@@ -95,8 +96,7 @@
         <li class="right" >
           <a href="../contribute.html" title="Contributing to the code"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 6.3 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Input parameters</a></li> 
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 6.3 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -105,8 +105,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="input-parameters">
-<span id="secnamelists"></span><h1>Input parameters<a class="headerlink" href="#input-parameters" title="Link to this heading">¶</a></h1>
+  <div class="section" id="input-parameters">
+<span id="secnamelists"></span><h1>Input parameters<a class="headerlink" href="#input-parameters" title="Permalink to this headline">¶</a></h1>
 <p>True runtime input parameters are read from STDIN as namelists, a Fortran
 feature. A namelist is identified by its unique name <cite>&amp;name</cite>. The
 name-statement is followed by the parameters that are part of the namelist in
@@ -116,14 +116,14 @@ value for each parameter. Only the parameters whose value should differ from
 its default have to be stated in the namelist.</p>
 <p>An example for the short namelist defining inner core parameters is</p>
 <div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="p">&amp;</span><span class="n">inner_core</span>
-<span class="w">  </span><span class="n">sigma_ratio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
-<span class="w">  </span><span class="n">nRotIc</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+  <span class="n">sigma_ratio</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+  <span class="n">nRotIc</span>      <span class="o">=</span> <span class="mi">1</span>
 </pre></div>
 </div>
 <p>Comas can be used to seperate namelist entries since they are not interpreted by the code.</p>
 <p>Magic uses the following <strong>eight namelists</strong> :</p>
-<aside class="topic">
-<p class="topic-title">Namelists</p>
+<div class="topic">
+<p class="topic-title first">Namelists</p>
 <ol class="arabic simple">
 <li><p><a class="reference internal" href="gridNamelist.html#secgridnml"><span class="std std-ref">&amp;grid</span></a> for resolution</p></li>
 <li><p><a class="reference internal" href="controlNamelist.html#seccontrolnml"><span class="std std-ref">&amp;control</span></a> for control parameters and numerical parameters.</p></li>
@@ -134,7 +134,7 @@ its default have to be stated in the namelist.</p>
 <li><p><a class="reference internal" href="mantle_icNamelist.html#secmantle"><span class="std std-ref">&amp;mantle</span></a> for setting mantle parameters.</p></li>
 <li><p><a class="reference internal" href="mantle_icNamelist.html#secinnercore"><span class="std std-ref">&amp;inner_core</span></a> for setting inner core parameters.</p></li>
 </ol>
-</aside>
+</div>
 <p>The number of possible input parameters has grown to more than 100/150. <strong>Don’t be confused
 by all the possible options though, since all parameters are internally set to a useful
 default value!</strong></p>
@@ -142,84 +142,79 @@ default value!</strong></p>
 to adjust is thus much smaller. As an example, the following namelist shows you how
 to initiate and quickly run one of the anelastic benchmarks by (<a class="reference external" href="http://dx.doi.org/10.1016/j.icarus.2011.08.014">Jones et al., 2011</a>):</p>
 <div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="p">&amp;</span><span class="n">grid</span>
-<span class="w"> </span><span class="n">n_r_max</span><span class="w">     </span><span class="o">=</span><span class="mi">97</span><span class="p">,</span><span class="w">           </span><span class="c">! 97 radial grid points</span>
-<span class="w"> </span><span class="n">n_cheb_max</span><span class="w">  </span><span class="o">=</span><span class="mi">95</span><span class="p">,</span>
-<span class="w"> </span><span class="n">n_phi_tot</span><span class="w">   </span><span class="o">=</span><span class="mi">288</span><span class="p">,</span><span class="w">          </span><span class="c">! 288 points in the azimuthal direction</span>
-<span class="w"> </span><span class="n">n_r_ic_max</span><span class="w">  </span><span class="o">=</span><span class="mi">17</span><span class="p">,</span>
+ <span class="n">n_r_max</span>     <span class="o">=</span><span class="mi">97</span><span class="p">,</span>           <span class="c">! 97 radial grid points</span>
+ <span class="n">n_cheb_max</span>  <span class="o">=</span><span class="mi">95</span><span class="p">,</span>
+ <span class="n">n_phi_tot</span>   <span class="o">=</span><span class="mi">288</span><span class="p">,</span>          <span class="c">! 288 points in the azimuthal direction</span>
+ <span class="n">n_r_ic_max</span>  <span class="o">=</span><span class="mi">17</span><span class="p">,</span>
 <span class="n">n_cheb_ic_max</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
-<span class="w"> </span><span class="n">minc</span><span class="w">        </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w">            </span><span class="c">! No azimuthal symmetry</span>
+ <span class="n">minc</span>        <span class="o">=</span><span class="mi">1</span><span class="p">,</span>            <span class="c">! No azimuthal symmetry</span>
 <span class="o">/</span>
 <span class="p">&amp;</span><span class="n">control</span>
-<span class="w"> </span><span class="n">mode</span><span class="w">        </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w">            </span><span class="c">! This is a non-magnetic case</span>
-<span class="w"> </span><span class="n">tag</span><span class="w">         </span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">,</span><span class="w">       </span><span class="c">! Trailing name of the outputs produced by the code</span>
-<span class="w"> </span><span class="n">n_time_steps</span><span class="o">=</span><span class="mi">50000</span><span class="p">,</span><span class="w">        </span><span class="c">! Number of time steps</span>
-<span class="w"> </span><span class="n">courfac</span><span class="w">     </span><span class="o">=</span><span class="mf">2.5D0</span><span class="p">,</span><span class="w">        </span><span class="c">! Courant factor (flow)</span>
-<span class="w"> </span><span class="n">alffac</span><span class="w">      </span><span class="o">=</span><span class="mf">1.0D0</span><span class="p">,</span><span class="w">        </span><span class="c">! Courant factor (magnetic field)</span>
-<span class="w"> </span><span class="n">dtmax</span><span class="w">       </span><span class="o">=</span><span class="mf">1.0D-4</span><span class="p">,</span><span class="w">       </span><span class="c">! Maximum allowed time-step</span>
-<span class="w"> </span><span class="n">alpha</span><span class="w">       </span><span class="o">=</span><span class="mf">0.6D0</span><span class="p">,</span>
-<span class="w"> </span><span class="n">runHours</span><span class="w">    </span><span class="o">=</span><span class="mi">23</span><span class="p">,</span><span class="w">           </span><span class="c">! Run time (hours)</span>
-<span class="w"> </span><span class="n">runMinutes</span><span class="w">  </span><span class="o">=</span><span class="mi">30</span><span class="p">,</span><span class="w">           </span><span class="c">! Run time (minutes)</span>
-<span class="w"> </span><span class="n">time_scheme</span><span class="w"> </span><span class="o">=</span><span class="s1">&#39;CNAB2&#39;</span><span class="p">,</span><span class="w">      </span><span class="c">! Name of the time stepper</span>
+ <span class="n">mode</span>        <span class="o">=</span><span class="mi">1</span><span class="p">,</span>            <span class="c">! This is a non-magnetic case</span>
+ <span class="n">tag</span>         <span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">,</span>       <span class="c">! Trailing name of the outputs produced by the code</span>
+ <span class="n">n_time_steps</span><span class="o">=</span><span class="mi">50000</span><span class="p">,</span>        <span class="c">! Number of time steps</span>
+ <span class="n">courfac</span>     <span class="o">=</span><span class="mf">2.5D0</span><span class="p">,</span>        <span class="c">! Courant factor (flow)</span>
+ <span class="n">alffac</span>      <span class="o">=</span><span class="mf">1.0D0</span><span class="p">,</span>        <span class="c">! Courant factor (magnetic field)</span>
+ <span class="n">dtmax</span>       <span class="o">=</span><span class="mf">1.0D-4</span><span class="p">,</span>       <span class="c">! Maximum allowed time-step</span>
+ <span class="n">alpha</span>       <span class="o">=</span><span class="mf">0.6D0</span><span class="p">,</span>
+ <span class="n">runHours</span>    <span class="o">=</span><span class="mi">23</span><span class="p">,</span>           <span class="c">! Run time (hours)</span>
+ <span class="n">runMinutes</span>  <span class="o">=</span><span class="mi">30</span><span class="p">,</span>           <span class="c">! Run time (minutes)</span>
+ <span class="n">time_scheme</span> <span class="o">=</span><span class="s1">&#39;CNAB2&#39;</span><span class="p">,</span>      <span class="c">! Name of the time stepper</span>
 <span class="o">/</span>
 <span class="p">&amp;</span><span class="n">phys_param</span>
-<span class="w"> </span><span class="n">ra</span><span class="w">          </span><span class="o">=</span><span class="mf">1.48638035D5</span><span class="p">,</span><span class="w"> </span><span class="c">! Rayleigh number</span>
-<span class="w"> </span><span class="n">ek</span><span class="w">          </span><span class="o">=</span><span class="mf">1.0D-3</span><span class="p">,</span><span class="w">       </span><span class="c">! Ekman number</span>
-<span class="w"> </span><span class="n">pr</span><span class="w">          </span><span class="o">=</span><span class="mf">1.0D0</span><span class="p">,</span><span class="w">        </span><span class="c">! Prandtl number</span>
-<span class="w"> </span><span class="n">strat</span><span class="w">       </span><span class="o">=</span><span class="mf">5.D0</span><span class="p">,</span><span class="w">         </span><span class="c">! Density contrast</span>
-<span class="w"> </span><span class="n">polind</span><span class="w">      </span><span class="o">=</span><span class="mf">2.0D0</span><span class="p">,</span><span class="w">        </span><span class="c">! Polytropic index</span>
-<span class="w"> </span><span class="n">radratio</span><span class="w">    </span><span class="o">=</span><span class="mf">0.35D0</span><span class="p">,</span><span class="w">       </span><span class="c">! Aspect ratio of the spherical shell</span>
-<span class="w"> </span><span class="n">g0</span><span class="w">          </span><span class="o">=</span><span class="mf">0.D0</span><span class="p">,</span><span class="w">         </span><span class="c">! Gravity profile</span>
-<span class="w"> </span><span class="n">g1</span><span class="w">          </span><span class="o">=</span><span class="mf">0.D0</span><span class="p">,</span>
-<span class="w"> </span><span class="n">g2</span><span class="w">          </span><span class="o">=</span><span class="mf">1.D0</span><span class="p">,</span>
-<span class="w"> </span><span class="n">ktops</span><span class="w">       </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w">            </span><span class="c">! Entropy boundary condition</span>
-<span class="w"> </span><span class="n">kbots</span><span class="w">       </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-<span class="w"> </span><span class="n">ktopv</span><span class="w">       </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w">            </span><span class="c">! Mechanical boundary condition</span>
-<span class="w"> </span><span class="n">kbotv</span><span class="w">       </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+ <span class="n">ra</span>          <span class="o">=</span><span class="mf">1.48638035D5</span><span class="p">,</span> <span class="c">! Rayleigh number</span>
+ <span class="n">ek</span>          <span class="o">=</span><span class="mf">1.0D-3</span><span class="p">,</span>       <span class="c">! Ekman number</span>
+ <span class="n">pr</span>          <span class="o">=</span><span class="mf">1.0D0</span><span class="p">,</span>        <span class="c">! Prandtl number</span>
+ <span class="n">strat</span>       <span class="o">=</span><span class="mf">5.D0</span><span class="p">,</span>         <span class="c">! Density contrast</span>
+ <span class="n">polind</span>      <span class="o">=</span><span class="mf">2.0D0</span><span class="p">,</span>        <span class="c">! Polytropic index</span>
+ <span class="n">radratio</span>    <span class="o">=</span><span class="mf">0.35D0</span><span class="p">,</span>       <span class="c">! Aspect ratio of the spherical shell</span>
+ <span class="n">g0</span>          <span class="o">=</span><span class="mf">0.D0</span><span class="p">,</span>         <span class="c">! Gravity profile</span>
+ <span class="n">g1</span>          <span class="o">=</span><span class="mf">0.D0</span><span class="p">,</span>
+ <span class="n">g2</span>          <span class="o">=</span><span class="mf">1.D0</span><span class="p">,</span>
+ <span class="n">ktops</span>       <span class="o">=</span><span class="mi">1</span><span class="p">,</span>            <span class="c">! Entropy boundary condition</span>
+ <span class="n">kbots</span>       <span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+ <span class="n">ktopv</span>       <span class="o">=</span><span class="mi">1</span><span class="p">,</span>            <span class="c">! Mechanical boundary condition</span>
+ <span class="n">kbotv</span>       <span class="o">=</span><span class="mi">1</span><span class="p">,</span>
 <span class="o">/</span>
 <span class="p">&amp;</span><span class="n">start_field</span>
-<span class="w"> </span><span class="n">l_start_file</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.,</span>
-<span class="w"> </span><span class="n">start_file</span><span class="w">  </span><span class="o">=</span><span class="s2">&quot;checkpoint_end.CJ3&quot;</span><span class="p">,</span>
-<span class="w"> </span><span class="n">init_s1</span><span class="w">     </span><span class="o">=</span><span class="mi">1919</span><span class="p">,</span><span class="w">         </span><span class="c">! Initial entropy perturbation pattern</span>
-<span class="w"> </span><span class="n">amp_s1</span><span class="w">      </span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span><span class="w">         </span><span class="c">! Amplitude of the initial perturbation</span>
+ <span class="n">l_start_file</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.,</span>
+ <span class="n">start_file</span>  <span class="o">=</span><span class="s2">&quot;checkpoint_end.CJ3&quot;</span><span class="p">,</span>
+ <span class="n">init_s1</span>     <span class="o">=</span><span class="mi">1919</span><span class="p">,</span>         <span class="c">! Initial entropy perturbation pattern</span>
+ <span class="n">amp_s1</span>      <span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>         <span class="c">! Amplitude of the initial perturbation</span>
 <span class="o">/</span>
 <span class="p">&amp;</span><span class="n">output_control</span>
-<span class="w"> </span><span class="n">n_log_step</span><span class="w">  </span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="w">           </span><span class="c">! Store time series every 50 time steps</span>
-<span class="w"> </span><span class="n">n_graphs</span><span class="w">    </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w">            </span><span class="c">! 1 G_#.TAG file produced at the end of the run</span>
-<span class="w"> </span><span class="n">n_specs</span><span class="w">     </span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="w">            </span><span class="c">! 5 spectra produced during the run</span>
-<span class="w"> </span><span class="n">n_rsts</span><span class="w">      </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w">            </span><span class="c">! 1 checkpoint_end.TAG file produced at the end of the run</span>
-<span class="w"> </span><span class="n">runid</span><span class="w">       </span><span class="o">=</span><span class="s2">&quot;C.Jones bench&quot;</span><span class="p">,</span>
+ <span class="n">n_log_step</span>  <span class="o">=</span><span class="mi">50</span><span class="p">,</span>           <span class="c">! Store time series every 50 time steps</span>
+ <span class="n">n_graphs</span>    <span class="o">=</span><span class="mi">1</span><span class="p">,</span>            <span class="c">! 1 G_#.TAG file produced at the end of the run</span>
+ <span class="n">n_specs</span>     <span class="o">=</span><span class="mi">5</span><span class="p">,</span>            <span class="c">! 5 spectra produced during the run</span>
+ <span class="n">n_rsts</span>      <span class="o">=</span><span class="mi">1</span><span class="p">,</span>            <span class="c">! 1 checkpoint_end.TAG file produced at the end of the run</span>
+ <span class="n">runid</span>       <span class="o">=</span><span class="s2">&quot;C.Jones bench&quot;</span><span class="p">,</span>
 <span class="o">/</span>
 <span class="p">&amp;</span><span class="n">mantle</span>
-<span class="w"> </span><span class="n">nRotMa</span><span class="w">      </span><span class="o">=</span><span class="mi">0</span><span class="w">             </span><span class="c">! Non-rotating mantle</span>
+ <span class="n">nRotMa</span>      <span class="o">=</span><span class="mi">0</span>             <span class="c">! Non-rotating mantle</span>
 <span class="o">/</span>
 <span class="p">&amp;</span><span class="n">inner_core</span>
-<span class="w"> </span><span class="n">sigma_ratio</span><span class="w"> </span><span class="o">=</span><span class="mf">0.d0</span><span class="p">,</span><span class="w">         </span><span class="c">! Non-conducting inner core</span>
-<span class="w"> </span><span class="n">nRotIC</span><span class="w">      </span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="w">            </span><span class="c">! Non-rotating inner core</span>
+ <span class="n">sigma_ratio</span> <span class="o">=</span><span class="mf">0.d0</span><span class="p">,</span>         <span class="c">! Non-conducting inner core</span>
+ <span class="n">nRotIC</span>      <span class="o">=</span><span class="mi">0</span><span class="p">,</span>            <span class="c">! Non-rotating inner core</span>
 <span class="o">/</span>
 </pre></div>
 </div>
 <p>This example might then be easily adapted to your desired configuration.</p>
 <div class="toctree-wrapper compound">
 </div>
-</section>
+</div>
 
 
-            <div class="clearer"></div>
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <div>
-    <h4>Previous topic</h4>
-    <p class="topless"><a href="../contribute.html"
-                          title="previous chapter">Contributing to the code</a></p>
-  </div>
-  <div>
-    <h4>Next topic</h4>
-    <p class="topless"><a href="gridNamelist.html"
-                          title="next chapter">Grid namelist</a></p>
-  </div>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../contribute.html"
+                        title="previous chapter">Contributing to the code</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="gridNamelist.html"
+                        title="next chapter">Grid namelist</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -227,16 +222,16 @@ to initiate and quickly run one of the anelastic benchmarks by (<a class="refere
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
-<search id="searchbox" style="display: none" role="search">
+<div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
-</search>
-<script>document.getElementById('searchbox').style.display = "block"</script>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -259,13 +254,12 @@ to initiate and quickly run one of the anelastic benchmarks by (<a class="refere
         <li class="right" >
           <a href="../contribute.html" title="Contributing to the code"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 6.3 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Input parameters</a></li> 
+        <li class="nav-item nav-item-0"><a href="../contents.html">Magic 6.3 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+        &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
     </div>
   </body>
 </html>
