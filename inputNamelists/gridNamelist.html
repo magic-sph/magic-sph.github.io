@@ -1,24 +1,23 @@
-
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Grid namelist &#8212; Magic 6.3 documentation</title>
-    <link rel="stylesheet" href="../_static/magic.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/magic.css?v=a97dc138" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/documentation_options.js?v=4b074805"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
           title="Search within Magic 6.3 documentation"
           href="../_static/opensearch.xml"/>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Control namelist" href="controlNamelist.html" />
@@ -78,7 +77,7 @@
   </div>
 </div>
 
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -97,7 +96,8 @@
           <a href="namelists.html" title="Input parameters"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../contents.html">Magic 6.3 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="namelists.html" accesskey="U">Input parameters</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="namelists.html" accesskey="U">Input parameters</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Grid namelist</a></li> 
       </ul>
     </div>  
 
@@ -106,11 +106,11 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="grid-namelist">
-<span id="secgridnml"></span><h1>Grid namelist<a class="headerlink" href="#grid-namelist" title="Permalink to this headline">¶</a></h1>
+  <section id="grid-namelist">
+<span id="secgridnml"></span><h1>Grid namelist<a class="headerlink" href="#grid-namelist" title="Link to this heading">¶</a></h1>
 <p>This namelist defines the resolution of the computations. Keep in mind that <strong>MagIC</strong> is a 3D pseudo-spectral spherical shell code using Chebyshev polynomial expansions in the radial and spherical harmonic expansions in the angular directions.</p>
-<div class="section" id="outer-core">
-<h2>Outer Core<a class="headerlink" href="#outer-core" title="Permalink to this headline">¶</a></h2>
+<section id="outer-core">
+<h2>Outer Core<a class="headerlink" href="#outer-core" title="Link to this heading">¶</a></h2>
 <ul id="varn-r-max">
 <li><p><strong>n_r_max</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_r_max" title="f/truncation/n_r_max"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_r_max=33</span></code></a>) is an integer which gives the number of grid points in the radial direction in the outer core (<span class="math notranslate nohighlight">\([r_i,r_o]\)</span>). If Chebyshev polynomials are used for the radial integration scheme, there are some constraints on the value of <cite>n_r_max</cite>: first of all it must be of the form <code class="docutils literal notranslate"><span class="pre">4*n+1</span></code>, where <code class="docutils literal notranslate"><span class="pre">n</span></code> is an integer; and second the prime decomposition of <cite>n_r_max-1</cite> should only contain multiple of 3, 4 and 5 (this second condition comes from the limitations of the built-in discrete cosine transforms). This constraint is released when finite differences are used.</p>
 <div class="admonition note">
@@ -160,37 +160,39 @@
 <ul class="simple">
 <li><p><strong>rcut_l</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/rcut_l" title="f/truncation/rcut_l"><code class="xref f f-var docutils literal notranslate"><span class="pre">rcut_l=0.1</span></code></a>) is a real. This corresponds to <span class="math notranslate nohighlight">\(\alpha_r\)</span> in the above equation.</p></li>
 </ul>
-</div>
-<div class="section" id="inner-core">
-<h2>Inner Core<a class="headerlink" href="#inner-core" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="inner-core">
+<h2>Inner Core<a class="headerlink" href="#inner-core" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>n_r_ic_max</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_r_ic_max" title="f/truncation/n_r_ic_max"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_r_ic_max=17</span></code></a>) is an integer which gives the number of grid points in the radial direction in the inner core (<span class="math notranslate nohighlight">\([0,r_i]\)</span>). It too, must be of the form <code class="docutils literal notranslate"><span class="pre">4*n+1</span></code>, where <code class="docutils literal notranslate"><span class="pre">n</span></code> is an integer.</p></li>
 <li><p><strong>n_cheb_ic_max</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_cheb_ic_max" title="f/truncation/n_cheb_ic_max"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_cheb_ic_max=15</span></code></a>) is the number of terms in the Chebyshev polynomial expansion in the radial direction in the inner core. Only Chebyshev polynomials of even degrees are used in the expansion giving the highest degree used to be <code class="docutils literal notranslate"><span class="pre">2*n_cheb_ic_max-2</span></code>. Note that here too, <code class="docutils literal notranslate"><span class="pre">n_cheb_ic_max</span> <span class="pre">&lt;=</span> <span class="pre">n_r_max</span></code>.</p></li>
 </ul>
-</div>
-<div class="section" id="symmetry-and-aliasing">
-<h2>Symmetry and aliasing<a class="headerlink" href="#symmetry-and-aliasing" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="symmetry-and-aliasing">
+<h2>Symmetry and aliasing<a class="headerlink" href="#symmetry-and-aliasing" title="Link to this heading">¶</a></h2>
 <ul class="simple" id="varminc">
 <li><p><strong>minc</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/minc" title="f/truncation/minc"><code class="xref f f-var docutils literal notranslate"><span class="pre">minc=1</span></code></a>) is an integer which gives the longitudinal symmetry. e.g: <code class="docutils literal notranslate"><span class="pre">minc=n</span></code> would give an n-fold rotational symmetry in the azimuthal direction. One can use this to reduce computational costs when the symmetry of the solution is known. The orders of the spherical harmonic expansion (<code class="docutils literal notranslate"><span class="pre">m</span></code>) are multiples of <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/minc" title="f/truncation/minc"><code class="xref f f-var docutils literal notranslate"><span class="pre">minc</span></code></a>.</p></li>
 <li><p><strong>nalias</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/nalias" title="f/truncation/nalias"><code class="xref f f-var docutils literal notranslate"><span class="pre">nalias=20</span></code></a>) is an integer which determines antialiasing used in the spherical harmonic representation. Note that <code class="docutils literal notranslate"><span class="pre">20</span> <span class="pre">&lt;=</span> <span class="pre">nalias</span> <span class="pre">&lt;=</span> <span class="pre">30</span></code>.</p></li>
 </ul>
 <p>The number of grid points in latitude <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/n_theta_max" title="f/truncation/n_theta_max"><code class="xref f f-var docutils literal notranslate"><span class="pre">n_theta_max</span> <span class="pre">=</span> <span class="pre">n_phi_tot/2</span></code></a>. The maximum degree (<a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/l_max" title="f/truncation/l_max"><code class="xref f f-var docutils literal notranslate"><span class="pre">l_max</span></code></a>) and maximum order (<a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/m_max" title="f/truncation/m_max"><code class="xref f f-var docutils literal notranslate"><span class="pre">m_max</span></code></a>) of the spherical harmonic expansion are determined by <a class="reference internal" href="../apiFortran/baseModules.html#f/truncation/nalias" title="f/truncation/nalias"><code class="xref f f-var docutils literal notranslate"><span class="pre">nalias</span></code></a>:</p>
 <blockquote>
-<div><div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="n">l_max</span> <span class="o">=</span> <span class="p">(</span><span class="n">nalias</span> <span class="o">*</span> <span class="n">n_theta_max</span><span class="p">)</span><span class="o">/</span><span class="mi">30</span>
+<div><div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="n">l_max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">nalias</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n_theta_max</span><span class="p">)</span><span class="o">/</span><span class="mi">30</span>
 </pre></div>
 </div>
 </div></blockquote>
-</div>
-</div>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../contents.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Grid namelist</a><ul>
 <li><a class="reference internal" href="#outer-core">Outer Core</a></li>
 <li><a class="reference internal" href="#inner-core">Inner Core</a></li>
@@ -199,12 +201,17 @@
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="namelists.html"
-                        title="previous chapter">Input parameters</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="controlNamelist.html"
-                        title="next chapter">Control namelist</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="namelists.html"
+                          title="previous chapter">Input parameters</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="controlNamelist.html"
+                          title="next chapter">Control namelist</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -212,21 +219,21 @@
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -245,12 +252,13 @@
           <a href="namelists.html" title="Input parameters"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../contents.html">Magic 6.3 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="namelists.html" >Input parameters</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="namelists.html" >Input parameters</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Grid namelist</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
+    &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
     </div>
   </body>
 </html>
