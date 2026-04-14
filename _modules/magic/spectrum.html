@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>magic.spectrum &#8212; Magic 6.3 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/magic.css?v=a97dc138" />
     
     <script src="../../_static/documentation_options.js?v=4b074805"></script>
@@ -98,20 +98,20 @@
             
   <h1>Source code for magic.spectrum</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">.log</span> <span class="kn">import</span> <span class="n">MagicSetup</span>
-<span class="kn">from</span> <span class="nn">.libmagic</span> <span class="kn">import</span> <span class="n">scanDir</span><span class="p">,</span> <span class="n">fast_read</span>
-<span class="kn">from</span> <span class="nn">.npfile</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">magic.setup</span> <span class="kn">import</span> <span class="n">labTex</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.log</span><span class="w"> </span><span class="kn">import</span> <span class="n">MagicSetup</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.libmagic</span><span class="w"> </span><span class="kn">import</span> <span class="n">scanDir</span><span class="p">,</span> <span class="n">fast_read</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.npfile</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">magic.setup</span><span class="w"> </span><span class="kn">import</span> <span class="n">labTex</span>
 
 
 <div class="viewcode-block" id="MagicSpectrum">
 <a class="viewcode-back" href="../../apiPython/spectra.html#magic.MagicSpectrum">[docs]</a>
-<span class="k">class</span> <span class="nc">MagicSpectrum</span><span class="p">(</span><span class="n">MagicSetup</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MagicSpectrum</span><span class="p">(</span><span class="n">MagicSetup</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class can be used to read and display the spectra:</span>
 
@@ -130,7 +130,7 @@
 
 <div class="viewcode-block" id="MagicSpectrum.__init__">
 <a class="viewcode-back" href="../../apiPython/spectra.html#magic.MagicSpectrum.__init__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;e_kin&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ispec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;e_kin&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ispec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">ave</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param field: the spectrum you want to plot, &#39;e_kin&#39; for kinetic</span>
@@ -215,7 +215,7 @@
 
 <div class="viewcode-block" id="MagicSpectrum.get_file">
 <a class="viewcode-back" href="../../apiPython/spectra.html#magic.MagicSpectrum.get_file">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ispec</span><span class="p">,</span> <span class="n">datadir</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">tags</span><span class="p">,</span> <span class="n">quiet</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ispec</span><span class="p">,</span> <span class="n">datadir</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">tags</span><span class="p">,</span> <span class="n">quiet</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This routine is used to determine which files need do be read</span>
 <span class="sd">        or stacked. The outputs are stored in a look-up table.</span>
@@ -322,6 +322,11 @@
                                                        <span class="n">nml</span><span class="o">.</span><span class="n">stop_time</span><span class="p">)</span>
                         <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
 
+                <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">quiet</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No corresponding file found&#39;</span><span class="p">)</span>
+                    <span class="k">return</span>
+
 
         <span class="k">else</span><span class="p">:</span> <span class="c1"># Snapshot spectra</span>
 
@@ -378,6 +383,15 @@
                 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;reading </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;stop_time&#39;</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">stop_time</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">skipLines</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
+                    <span class="n">st</span> <span class="o">=</span> <span class="n">fi</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;.*spectra at time: (.*)&#39;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">st</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">pattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">st</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span>
+
             <span class="n">data</span> <span class="o">=</span> <span class="n">fast_read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">skiplines</span><span class="o">=</span><span class="n">skipLines</span><span class="p">)</span>
             <span class="n">speclut</span> <span class="o">=</span> <span class="n">SpecLookUpTable</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">,</span>
                                       <span class="bp">self</span><span class="o">.</span><span class="n">stop_time</span><span class="p">)</span>
@@ -387,7 +401,7 @@
 
 <div class="viewcode-block" id="MagicSpectrum.plot">
 <a class="viewcode-back" href="../../apiPython/spectra.html#magic.MagicSpectrum.plot">[docs]</a>
-    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plotting function</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -775,14 +789,14 @@
 </div>
 
 
-<span class="k">class</span> <span class="nc">SpecLookUpTable</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SpecLookUpTable</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The purpose of this class is to create a lookup table between the numpy</span>
 <span class="sd">    array that comes from the reading of the spec files and the corresponding</span>
 <span class="sd">    columns.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">tstart</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tstop</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">tstart</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tstop</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param data: numpy array that contains the data</span>
 <span class="sd">        :type data: numpy.ndarray</span>
@@ -1045,7 +1059,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">Phase_l_SD</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">Phase_m_SD</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is a python built-in method to stack two look-up tables.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1053,12 +1067,12 @@
         <span class="n">out</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">new</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">fac_old</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_time</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">start_time</span>
-            <span class="n">out</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">,</span> <span class="n">out</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">fac_old</span> <span class="o">=</span> <span class="mf">0.</span>
         <span class="k">if</span> <span class="n">new</span><span class="o">.</span><span class="n">stop_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">fac_new</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">stop_time</span><span class="o">-</span><span class="n">new</span><span class="o">.</span><span class="n">start_time</span>
-            <span class="n">out</span><span class="o">.</span><span class="n">stop_time</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">stop_time</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">stop_time</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_time</span><span class="p">,</span> <span class="n">new</span><span class="o">.</span><span class="n">stop_time</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">fac_new</span> <span class="o">=</span> <span class="mf">0.</span>
         <span class="k">if</span> <span class="n">fac_old</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">fac_new</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
@@ -1120,7 +1134,7 @@
 
 <div class="viewcode-block" id="MagicSpectrum2D">
 <a class="viewcode-back" href="../../apiPython/spectra.html#magic.MagicSpectrum2D">[docs]</a>
-<span class="k">class</span> <span class="nc">MagicSpectrum2D</span><span class="p">(</span><span class="n">MagicSetup</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MagicSpectrum2D</span><span class="p">(</span><span class="n">MagicSetup</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class can be used to read and display 2-D spectra in the :math:`(r,\ell)`</span>
 <span class="sd">    and in the :math:`(r,m)` planes</span>
@@ -1137,7 +1151,7 @@
 
 <div class="viewcode-block" id="MagicSpectrum2D.__init__">
 <a class="viewcode-back" href="../../apiPython/spectra.html#magic.MagicSpectrum2D.__init__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;e_mag&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ispec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;e_mag&#39;</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ispec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;magma&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">33</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span>
                  <span class="n">ave</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -1343,7 +1357,7 @@
 
 <div class="viewcode-block" id="MagicSpectrum2D.plot">
 <a class="viewcode-back" href="../../apiPython/spectra.html#magic.MagicSpectrum2D.plot">[docs]</a>
-    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">levels</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">cut</span><span class="o">=</span><span class="mf">1.</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">levels</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">cut</span><span class="o">=</span><span class="mf">1.</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plotting function</span>
 
@@ -1551,8 +1565,8 @@
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    &#169; Copyright 2025, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     </div>
   </body>
 </html>

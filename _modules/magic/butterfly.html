@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>magic.butterfly &#8212; Magic 6.3 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/magic.css?v=a97dc138" />
     
     <script src="../../_static/documentation_options.js?v=4b074805"></script>
@@ -98,25 +98,25 @@
             
   <h1>Source code for magic.butterfly</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="kn">import</span> <span class="nn">glob</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">scipy.interpolate</span> <span class="k">as</span> <span class="nn">S</span>
-<span class="kn">from</span> <span class="nn">magic.plotlib</span> <span class="kn">import</span> <span class="n">cut</span>
-<span class="kn">from</span> <span class="nn">magic.setup</span> <span class="kn">import</span> <span class="n">labTex</span>
-<span class="kn">from</span> <span class="nn">.npfile</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.interpolate</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">S</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">magic.plotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">cut</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">magic.setup</span><span class="w"> </span><span class="kn">import</span> <span class="n">labTex</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.npfile</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">simps</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">simps</span>
 <span class="k">except</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">simpson</span> <span class="k">as</span> <span class="n">simps</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">simpson</span> <span class="k">as</span> <span class="n">simps</span>
 
 
 <div class="viewcode-block" id="Butterfly">
 <a class="viewcode-back" href="../../apiPython/misc.html#magic.Butterfly">[docs]</a>
-<span class="k">class</span> <span class="nc">Butterfly</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Butterfly</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class can be used to display the time evolution of the magnetic field for</span>
 <span class="sd">    various latitudes (i.e. the well-known butterfly diagrams). These diagrams are</span>
@@ -132,7 +132,7 @@
 
 <div class="viewcode-block" id="Butterfly.__init__">
 <a class="viewcode-back" href="../../apiPython/misc.html#magic.Butterfly.__init__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">rad</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">rad</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
                  <span class="n">lastvar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nvar</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">,</span>
                  <span class="n">precision</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">cut</span><span class="o">=</span><span class="mf">0.8</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -278,7 +278,7 @@
 
 <div class="viewcode-block" id="Butterfly.__add__">
 <a class="viewcode-back" href="../../apiPython/misc.html#magic.Butterfly.__add__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overload of the addition operator</span>
 
@@ -297,7 +297,7 @@
 
 <div class="viewcode-block" id="Butterfly.plot">
 <a class="viewcode-back" href="../../apiPython/misc.html#magic.Butterfly.plot">[docs]</a>
-    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">contour</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">renorm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">cut</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">mesh</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">contour</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">renorm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">cut</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">mesh</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
              <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;RdYlBu_R&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plotting function</span>
@@ -360,7 +360,7 @@
 
 <div class="viewcode-block" id="Butterfly.fourier2D">
 <a class="viewcode-back" href="../../apiPython/misc.html#magic.Butterfly.fourier2D">[docs]</a>
-    <span class="k">def</span> <span class="nf">fourier2D</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">renorm</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fourier2D</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">renorm</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This function allows to conduct some basic Fourier analysis on the</span>
 <span class="sd">        data. It displays two figures: the first one is a contour levels</span>
@@ -460,8 +460,8 @@
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    &#169; Copyright 2025, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     </div>
   </body>
 </html>

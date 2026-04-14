@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>magic.graph &#8212; Magic 6.3 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/magic.css?v=a97dc138" />
     
     <script src="../../_static/documentation_options.js?v=4b074805"></script>
@@ -98,18 +98,18 @@
             
   <h1>Source code for magic.graph</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">from</span> <span class="nn">.log</span> <span class="kn">import</span> <span class="n">MagicSetup</span>
-<span class="kn">from</span> <span class="nn">.libmagic</span> <span class="kn">import</span> <span class="n">scanDir</span>
-<span class="kn">from</span> <span class="nn">magic.setup</span> <span class="kn">import</span> <span class="n">buildSo</span>
-<span class="kn">from</span> <span class="nn">.npfile</span> <span class="kn">import</span> <span class="n">npfile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.log</span><span class="w"> </span><span class="kn">import</span> <span class="n">MagicSetup</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.libmagic</span><span class="w"> </span><span class="kn">import</span> <span class="n">scanDir</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">magic.setup</span><span class="w"> </span><span class="kn">import</span> <span class="n">buildSo</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.npfile</span><span class="w"> </span><span class="kn">import</span> <span class="n">npfile</span>
 
 <span class="k">if</span> <span class="n">buildSo</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">import</span> <span class="nn">magic.greader_single</span> <span class="k">as</span> <span class="nn">Gsngl</span>
-        <span class="kn">import</span> <span class="nn">magic.greader_double</span> <span class="k">as</span> <span class="nn">Gdble</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">magic.greader_single</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">Gsngl</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">magic.greader_double</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">Gdble</span>
         <span class="n">readingMode</span> <span class="o">=</span> <span class="s1">&#39;f2py&#39;</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
         <span class="n">readingMode</span> <span class="o">=</span> <span class="s1">&#39;python&#39;</span>
@@ -120,7 +120,7 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">readingMode</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">getGraphEndianness</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">getGraphEndianness</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function determines the endianness of the graphic files and</span>
 <span class="sd">    also tries to detect wheter there record markers or not.</span>
@@ -160,7 +160,7 @@
 
 <div class="viewcode-block" id="MagicGraph">
 <a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicGraph">[docs]</a>
-<span class="k">class</span> <span class="nc">MagicGraph</span><span class="p">(</span><span class="n">MagicSetup</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MagicGraph</span><span class="p">(</span><span class="n">MagicSetup</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class allows to read the 3-D graphic outputs of the MagIC code</span>
 <span class="sd">    (:ref:`G_#.TAG &lt;secGraphFile&gt;` and G_ave.TAG) files. Those are</span>
@@ -183,7 +183,7 @@
 
 <div class="viewcode-block" id="MagicGraph.__init__">
 <a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicGraph.__init__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ivar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ivar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                  <span class="n">ave</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param ave: when set to True, it tries to find an average</span>
@@ -307,7 +307,7 @@
 
 <div class="viewcode-block" id="MagicGraph.read_stream">
 <a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicGraph.read_stream">[docs]</a>
-    <span class="k">def</span> <span class="nf">read_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This function is used to read a Graphic file that has no record marker.</span>
 
@@ -422,7 +422,7 @@
 
 <div class="viewcode-block" id="MagicGraph.read_record_marker">
 <a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicGraph.read_record_marker">[docs]</a>
-    <span class="k">def</span> <span class="nf">read_record_marker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_record_marker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This function is used to read a Graphic file that contains record markers.</span>
 
@@ -714,7 +714,7 @@
 
 <div class="viewcode-block" id="MagicGraph.rearangeLat">
 <a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicGraph.rearangeLat">[docs]</a>
-    <span class="k">def</span> <span class="nf">rearangeLat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rearangeLat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This function is used to unfold the colatitudes</span>
 
@@ -771,8 +771,8 @@
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    &#169; Copyright 2025, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     </div>
   </body>
 </html>

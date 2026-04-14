@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>magic.TOreaders &#8212; Magic 6.3 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/magic.css?v=a97dc138" />
     
     <script src="../../_static/documentation_options.js?v=4b074805"></script>
@@ -98,21 +98,21 @@
             
   <h1>Source code for magic.TOreaders</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="kn">import</span> <span class="nn">glob</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">.npfile</span> <span class="kn">import</span> <span class="n">npfile</span>
-<span class="kn">from</span> <span class="nn">.movie</span> <span class="kn">import</span> <span class="n">Movie</span>
-<span class="kn">from</span> <span class="nn">.log</span> <span class="kn">import</span> <span class="n">MagicSetup</span>
-<span class="kn">from</span> <span class="nn">.libmagic</span> <span class="kn">import</span> <span class="n">scanDir</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.npfile</span><span class="w"> </span><span class="kn">import</span> <span class="n">npfile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.movie</span><span class="w"> </span><span class="kn">import</span> <span class="n">Movie</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.log</span><span class="w"> </span><span class="kn">import</span> <span class="n">MagicSetup</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.libmagic</span><span class="w"> </span><span class="kn">import</span> <span class="n">scanDir</span>
 
 
 <div class="viewcode-block" id="TOMovie">
 <a class="viewcode-back" href="../../apiPython/outTO.html#magic.TOMovie">[docs]</a>
-<span class="k">class</span> <span class="nc">TOMovie</span><span class="p">(</span><span class="n">Movie</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TOMovie</span><span class="p">(</span><span class="n">Movie</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class allows to read and display the :ref:`TO_mov.TAG &lt;secTO_movieFile&gt;`</span>
 <span class="sd">    generated when :ref:`l_TOmovie=.true. &lt;varl_TOmovie&gt;` is True.</span>
@@ -126,7 +126,7 @@
 
 <div class="viewcode-block" id="TOMovie.__init__">
 <a class="viewcode-back" href="../../apiPython/outTO.html#magic.TOMovie.__init__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;seismic&#39;</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">iplot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="s1">&#39;seismic&#39;</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span>
                  <span class="n">cut</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">33</span><span class="p">,</span> <span class="n">avg</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
                  <span class="n">lastvar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nvar</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -247,7 +247,7 @@
 
 <div class="viewcode-block" id="TOMovie.__add__">
 <a class="viewcode-back" href="../../apiPython/outTO.html#magic.TOMovie.__add__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Built-in function to sum two TO movies</span>
 
@@ -291,7 +291,7 @@
 
 <div class="viewcode-block" id="TOMovie.plot">
 <a class="viewcode-back" href="../../apiPython/outTO.html#magic.TOMovie.plot">[docs]</a>
-    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cut</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">levs</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">avg</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cut</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">levs</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">avg</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plotting function</span>
 
@@ -515,7 +515,7 @@
 
 
 
-<span class="k">class</span> <span class="nc">MagicTOZ</span><span class="p">(</span><span class="n">MagicSetup</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MagicTOZ</span><span class="p">(</span><span class="n">MagicSetup</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class can be used to read the TOZ.TAG files produced by the TO outputs</span>
 
@@ -526,7 +526,7 @@
 <span class="sd">    &gt;&gt;&gt; toz = MagicTOZ(tag=&#39;test&#39;, ave=True)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">itoz</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">itoz</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
                  <span class="n">ave</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param datadir: current working directory</span>
@@ -636,7 +636,7 @@
 
 <div class="viewcode-block" id="MagicTOHemi">
 <a class="viewcode-back" href="../../apiPython/outTO.html#magic.MagicTOHemi">[docs]</a>
-<span class="k">class</span> <span class="nc">MagicTOHemi</span><span class="p">(</span><span class="n">MagicSetup</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MagicTOHemi</span><span class="p">(</span><span class="n">MagicSetup</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class can be used to read and display z-integrated quantities</span>
 <span class="sd">    produced by the TO outputs. Those are basically the TO[s|n]hn.TAG files</span>
@@ -646,7 +646,7 @@
 
 <div class="viewcode-block" id="MagicTOHemi.__init__">
 <a class="viewcode-back" href="../../apiPython/outTO.html#magic.MagicTOHemi.__init__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">hemi</span><span class="o">=</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">hemi</span><span class="o">=</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
                  <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param datadir: current working directory</span>
@@ -762,7 +762,7 @@
 
 <div class="viewcode-block" id="MagicTOHemi.__add__">
 <a class="viewcode-back" href="../../apiPython/outTO.html#magic.MagicTOHemi.__add__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is an intrinsic &#39;+&#39; method to stack to TO[n|s]hs.TAG files</span>
 
@@ -797,7 +797,7 @@
 
 <div class="viewcode-block" id="MagicTOHemi.plot">
 <a class="viewcode-back" href="../../apiPython/outTO.html#magic.MagicTOHemi.plot">[docs]</a>
-    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plotting function</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -824,7 +824,7 @@
         <span class="c1">#ax.set_xlim(self.cylRad[0], self.cylRad[-1])</span>
 
 
-<span class="k">class</span> <span class="nc">MagicTaySphere</span><span class="p">(</span><span class="n">MagicSetup</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MagicTaySphere</span><span class="p">(</span><span class="n">MagicSetup</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class can be used to read and display quantities</span>
 <span class="sd">    produced by the TO outputs. Those are basically the TaySphere.TAG files</span>
@@ -833,7 +833,7 @@
 <span class="sd">    &gt;&gt;&gt; print(to.time, to.e_kin)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
                  <span class="n">iplot</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param datadir: current working directory</span>
@@ -933,7 +933,7 @@
         <span class="k">if</span> <span class="n">iplot</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plotting function</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1006,8 +1006,8 @@
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    &#169; Copyright 2025, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     </div>
   </body>
 </html>

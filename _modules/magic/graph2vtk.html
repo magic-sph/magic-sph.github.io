@@ -1,24 +1,21 @@
-
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html lang="en" data-content_root="../../">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>magic.graph2vtk &#8212; Magic 6.3 documentation</title>
-    <link rel="stylesheet" href="../../_static/magic.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/magic.css?v=a97dc138" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../_static/documentation_options.js?v=4b074805"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
           title="Search within Magic 6.3 documentation"
           href="../../_static/opensearch.xml"/>
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'
@@ -76,7 +73,7 @@
   </div>
 </div>
 
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -89,7 +86,8 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.3 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">magic.graph2vtk</a></li> 
       </ul>
     </div>  
 
@@ -100,17 +98,19 @@
             
   <h1>Source code for magic.graph2vtk</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">map_coordinates</span>
-<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">interp1d</span>
-<span class="kn">from</span> <span class="nn">magic</span> <span class="kn">import</span> <span class="n">MagicGraph</span><span class="p">,</span> <span class="n">BLayers</span><span class="p">,</span> <span class="n">ExtraPot</span>
-<span class="kn">from</span> <span class="nn">.setup</span> <span class="kn">import</span> <span class="n">labTex</span>
-<span class="kn">from</span> <span class="nn">.libmagic</span> <span class="kn">import</span> <span class="n">symmetrize</span><span class="p">,</span> <span class="n">thetaderavg</span><span class="p">,</span> <span class="n">rderavg</span><span class="p">,</span> <span class="n">phideravg</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">.vtklib</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.ndimage</span><span class="w"> </span><span class="kn">import</span> <span class="n">map_coordinates</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.interpolate</span><span class="w"> </span><span class="kn">import</span> <span class="n">interp1d</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">magic</span><span class="w"> </span><span class="kn">import</span> <span class="n">MagicGraph</span><span class="p">,</span> <span class="n">BLayers</span><span class="p">,</span> <span class="n">ExtraPot</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.setup</span><span class="w"> </span><span class="kn">import</span> <span class="n">labTex</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.libmagic</span><span class="w"> </span><span class="kn">import</span> <span class="n">symmetrize</span><span class="p">,</span> <span class="n">thetaderavg</span><span class="p">,</span> <span class="n">rderavg</span><span class="p">,</span> <span class="n">phideravg</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.vtklib</span><span class="w"> </span><span class="kn">import</span> <span class="n">vtklib</span> <span class="k">as</span> <span class="n">vtk</span>
 
-<div class="viewcode-block" id="sph2cart_scal"><a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.sph2cart_scal">[docs]</a><span class="k">def</span> <span class="nf">sph2cart_scal</span><span class="p">(</span><span class="n">scals</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="sph2cart_scal">
+<a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.sph2cart_scal">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">sph2cart_scal</span><span class="p">(</span><span class="n">scals</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function interpolates a series of scalar fields from the spherical</span>
 <span class="sd">    coordinates to the cartesian coordinates.</span>
 
@@ -170,8 +170,11 @@
 
     <span class="k">return</span> <span class="n">scals_cart</span><span class="p">,</span><span class="n">gridMax</span><span class="p">,</span><span class="n">spacing</span></div>
 
-<div class="viewcode-block" id="sph2cart_vec"><a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.sph2cart_vec">[docs]</a><span class="k">def</span> <span class="nf">sph2cart_vec</span><span class="p">(</span><span class="n">vecr</span><span class="p">,</span> <span class="n">vect</span><span class="p">,</span> <span class="n">vecp</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="sph2cart_vec">
+<a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.sph2cart_vec">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">sph2cart_vec</span><span class="p">(</span><span class="n">vecr</span><span class="p">,</span> <span class="n">vect</span><span class="p">,</span> <span class="n">vecp</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function interpolates a series of vector fields from the spherical</span>
 <span class="sd">    coordinates to the cartesian coordinates.</span>
 
@@ -247,8 +250,11 @@
 
     <span class="k">return</span> <span class="n">vecx</span><span class="p">,</span><span class="n">vecy</span><span class="p">,</span><span class="n">vecz</span></div>
 
-<div class="viewcode-block" id="Graph2Vtk"><a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.Graph2Vtk">[docs]</a><span class="k">class</span> <span class="nc">Graph2Vtk</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Graph2Vtk">
+<a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.Graph2Vtk">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Graph2Vtk</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class allows to transform an input graphic file to a file format</span>
 <span class="sd">    readable by paraview/visit or mayavi. It also allows to compute a possible</span>
 <span class="sd">    potential extrapolation of the field lines in an arbitrary outer</span>
@@ -268,11 +274,13 @@
 <span class="sd">    &gt;&gt;&gt; Graph2Vtk(gr, outType=&#39;vti&#39;, nx=128, ny=128, nz=128)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Graph2Vtk.__init__"><a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.Graph2Vtk.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gr</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">,</span> <span class="n">scals</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;vr&#39;</span><span class="p">,</span> <span class="s1">&#39;emag&#39;</span><span class="p">,</span> <span class="s1">&#39;tfluct&#39;</span><span class="p">],</span>
+<div class="viewcode-block" id="Graph2Vtk.__init__">
+<a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.Graph2Vtk.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gr</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">,</span> <span class="n">scals</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;vr&#39;</span><span class="p">,</span> <span class="s1">&#39;emag&#39;</span><span class="p">,</span> <span class="s1">&#39;tfluct&#39;</span><span class="p">],</span>
                  <span class="n">vecs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">],</span> <span class="n">potExtra</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ratio_out</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nrout</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
                  <span class="n">deminc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">outType</span><span class="o">=</span><span class="s1">&#39;vts&#39;</span><span class="p">,</span> <span class="n">nFiles</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span>
                  <span class="n">labFrame</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param filename: the file name of the output (without extension)</span>
 <span class="sd">        :type filename: str</span>
 <span class="sd">        :param gr: the input graphic file one wants to transform to vts/vti</span>
@@ -468,14 +476,10 @@
                                                         <span class="n">gr</span><span class="o">.</span><span class="n">Btheta</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span>\
                                                         <span class="n">gr</span><span class="o">.</span><span class="n">Bphi</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">or</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span> <span class="c1"># z-vorticity</span>
-                <span class="n">th3D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="p">)</span>
-                <span class="n">rr3D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">):</span>
-                    <span class="n">th3D</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">colatitude</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">):</span>
-                    <span class="n">rr3D</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">th3D</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">colatitude</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">]</span>
+                <span class="n">rr3D</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
                 <span class="n">s3D</span> <span class="o">=</span> <span class="n">rr3D</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span>
-                <span class="n">dtheta</span> <span class="o">=</span> <span class="n">thetaderavg</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="o">*</span><span class="n">s3D</span><span class="p">)</span>
+                <span class="n">dtheta</span> <span class="o">=</span> <span class="n">thetaderavg</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="o">*</span><span class="n">s3D</span><span class="p">,</span> <span class="n">colat</span><span class="o">=</span><span class="n">gr</span><span class="o">.</span><span class="n">colatitude</span><span class="p">)</span>
                 <span class="n">dr</span> <span class="o">=</span> <span class="n">rderavg</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="o">*</span><span class="n">s3D</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
                 <span class="n">vs</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">vr</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span> <span class="o">+</span> <span class="n">gr</span><span class="o">.</span><span class="n">vtheta</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span> <span class="c1"># &#39;vs&#39;</span>
                 <span class="n">ds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span><span class="o">*</span><span class="n">dr</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span><span class="o">/</span><span class="n">rr3D</span><span class="o">*</span><span class="n">dtheta</span>
@@ -509,15 +513,11 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">-</span>\
                                      <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span> <span class="c1"># r-vorticity</span>
-                <span class="n">th3D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="p">)</span>
-                <span class="n">rr3D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">):</span>
-                    <span class="n">th3D</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">colatitude</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">):</span>
-                    <span class="n">rr3D</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">th3D</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+                <span class="n">rr3D</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">colatitude</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">]</span>
                 <span class="n">s3D</span> <span class="o">=</span> <span class="n">rr3D</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span>
-                <span class="n">vortr</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">s3D</span><span class="o">*</span><span class="p">(</span><span class="n">thetaderavg</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="p">)</span><span class="o">-</span>\
-                        <span class="n">phideravg</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vtheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">))</span>
+                <span class="n">vortr</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">s3D</span><span class="o">*</span><span class="p">(</span><span class="n">thetaderavg</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="p">,</span> <span class="n">colat</span><span class="o">=</span><span class="n">gr</span><span class="o">.</span><span class="n">colatitude</span><span class="p">)</span><span class="o">-</span>\
+                                <span class="n">phideravg</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vtheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">))</span>
                 <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">(</span><span class="n">vortr</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
                                                               <span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
@@ -698,8 +698,11 @@
         <span class="k">elif</span> <span class="n">outType</span> <span class="o">==</span> <span class="s1">&#39;vti&#39;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">writeVTI</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Graph2Vtk.writeVTS"><a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.Graph2Vtk.writeVTS">[docs]</a>    <span class="k">def</span> <span class="nf">writeVTS</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">nFiles</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Graph2Vtk.writeVTS">
+<a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.Graph2Vtk.writeVTS">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">writeVTS</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">nFiles</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This function stores the output on a structured-grid vts file.</span>
 
 <span class="sd">        :param filename: the file name of the output (without extension)</span>
@@ -709,28 +712,31 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nvecs</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">nFiles</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">)</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">512</span><span class="o">**</span><span class="mi">3</span><span class="p">:</span>
-                <span class="n">vts_scal</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span>
-                         <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                <span class="n">vtk</span><span class="o">.</span><span class="n">vts_scal</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span>
+                             <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">nFiles</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">pvts_scal</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span>
-                          <span class="n">nFiles</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                <span class="n">vtk</span><span class="o">.</span><span class="n">pvts_scal</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span>
+                              <span class="n">nFiles</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
 
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">pvts_scal</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span>
-                          <span class="mi">8</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                <span class="n">vtk</span><span class="o">.</span><span class="n">pvts_scal</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span>
+                              <span class="mi">8</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">nFiles</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">)</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">512</span><span class="o">**</span><span class="mi">3</span><span class="p">:</span>
-                <span class="n">vts</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">,</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                <span class="n">vtk</span><span class="o">.</span><span class="n">vts</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">nFiles</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">pvts</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">,</span>
-                     <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span><span class="p">,</span> <span class="n">nFiles</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
+                <span class="n">vtk</span><span class="o">.</span><span class="n">pvts</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">,</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span><span class="p">,</span> <span class="n">nFiles</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">pvts</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">,</span>
-                     <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span></div>
+                <span class="n">vtk</span><span class="o">.</span><span class="n">pvts</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">,</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Graph2Vtk.writeVTI"><a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.Graph2Vtk.writeVTI">[docs]</a>    <span class="k">def</span> <span class="nf">writeVTI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="mi">96</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Graph2Vtk.writeVTI">
+<a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.Graph2Vtk.writeVTI">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">writeVTI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="mi">96</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        In this case, the output is extrapolated on a cartesian grid</span>
 <span class="sd">        and then written in a vti file.</span>
 
@@ -747,13 +753,15 @@
                                                      <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span><span class="p">,</span>
                                                      <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nvecs</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">vti_scal</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">scals_cart</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">,</span> \
+            <span class="n">vti_scal</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">scals_cart</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span> \
                      <span class="n">gridMax</span><span class="p">,</span> <span class="n">spacing</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">vecx</span><span class="p">,</span> <span class="n">vecy</span><span class="p">,</span> <span class="n">vecz</span> <span class="o">=</span> <span class="n">sph2cart_vec</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">,</span> \
                                         <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
             <span class="n">vti</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">vecx</span><span class="p">,</span> <span class="n">vecy</span><span class="p">,</span> <span class="n">vecz</span><span class="p">,</span> <span class="n">scals_cart</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">,</span> <span class="n">gridMax</span><span class="p">,</span> <span class="n">spacing</span><span class="p">)</span></div></div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span><span class="p">,</span> <span class="n">gridMax</span><span class="p">,</span> <span class="n">spacing</span><span class="p">)</span></div>
+</div>
+
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
@@ -762,26 +770,27 @@
     <span class="n">Graph2Vtk</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">scals</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;tfluct&#39;</span><span class="p">,</span> <span class="s1">&#39;emag&#39;</span><span class="p">],</span> <span class="n">vecs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">],</span> <span class="n">potExtra</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -794,12 +803,13 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../contents.html">Magic 6.3 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">magic.graph2vtk</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
+    &#169; Copyright 2025, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     </div>
   </body>
 </html>

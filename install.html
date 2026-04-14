@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Get MagIC and run it &#8212; Magic 6.3 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/magic.css?v=a97dc138" />
     
     <script src="_static/documentation_options.js?v=4b074805"></script>
@@ -125,12 +125,12 @@ post-processing <a class="reference internal" href="postProc.html#secpythonpostp
 <a class="reference internal" href="contribute.html#secautotest"><span class="std std-ref">auto-test suite</span></a>.  To do that, just go to the root directory of
 the MagIC code (<code class="docutils literal notranslate"><span class="pre">magic</span></code>) and source <code class="docutils literal notranslate"><span class="pre">sourceme</span></code> file that corresponds to your
 <code class="docutils literal notranslate"><span class="pre">$SHELL</span></code> environment variable.</p>
-<p>In case you use <a class="reference external" href="http://tiswww.case.edu/php/chet/bash/bashtop.html">bash</a>,
-<a class="reference external" href="http://www.kornshell.com/">ksh</a> or <a class="reference external" href="http://www.zsh.org/">zsh</a>, just use:</p>
+<p>In case you use <a class="reference external" href="https://tiswww.case.edu/php/chet/bash/bashtop.html">bash</a>,
+<a class="reference external" href="https://www.kornshell.com/">ksh</a> or <a class="reference external" href="https://www.zsh.org/">zsh</a>, just use:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>sourceme.sh
 </pre></div>
 </div>
-<p>In case you use <a class="reference external" href="http://www.tcsh.org/Home">csh</a> or <a class="reference external" href="http://www.tcsh.org/Home">tcsh</a>,
+<p>In case you use <a class="reference external" href="https://www.tcsh.org/Home">csh</a> or <a class="reference external" href="https://www.tcsh.org/Home">tcsh</a>,
 rather use</p>
 <div class="highlight-csh notranslate"><div class="highlight"><pre><span></span><span class="nv">$ </span><span class="nb">source </span>sourceme.csh
 </pre></div>
@@ -149,7 +149,7 @@ into your <code class="docutils literal notranslate"><span class="pre">.bash_pro
 </section>
 <section id="install-shtns-recommended">
 <h2>Install SHTns (<strong>recommended</strong>)<a class="headerlink" href="#install-shtns-recommended" title="Link to this heading">¶</a></h2>
-<p><a class="reference external" href="https://bitbucket.org/nschaeff/shtns">SHTns</a> is a an open-source library for the Spherical Harmonics transforms. It is significantly faster than the native transforms implemented in MagIC, and it is hence <strong>recommended</strong> (though not mandatory) to install it. To install the library, first define a C compiler</p>
+<p><a class="reference external" href="https://gricad-gitlab.univ-grenoble-alpes.fr/schaeffn/shtns/">SHTns</a> is a an open-source library for the Spherical Harmonics transforms. It is significantly faster than the native transforms implemented in MagIC, and it is hence <strong>recommended</strong> (though not mandatory) to install it. To install the library, first define a C compiler</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">CC</span><span class="o">=</span><span class="w"> </span>gcc
 </pre></div>
 </div>
@@ -162,7 +162,7 @@ into your <code class="docutils literal notranslate"><span class="pre">.bash_pro
 ./install-shtns.sh
 </pre></div>
 </div>
-<p>or install it manually after downloading and extracting the latest version <a class="reference external" href="https://bitbucket.org/nschaeff/shtns/downloads/">here</a></p>
+<p>or install it manually after downloading and extracting the latest version <a class="reference external" href="https://gricad-gitlab.univ-grenoble-alpes.fr/schaeffn/shtns/-/tags">here</a></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./configure<span class="w"> </span>--enable-openmp<span class="w"> </span>--enable-ishioka<span class="w"> </span>--enable-magic-layout<span class="w"> </span>--prefix<span class="o">=</span><span class="nv">$HOME</span>/local
 </pre></div>
 </div>
@@ -191,10 +191,10 @@ the following available options:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">USE_MPI</span></code> Set to <code class="docutils literal notranslate"><span class="pre">yes</span></code> to use MPI, set it to <code class="docutils literal notranslate"><span class="pre">no</span></code> if you want a serial version of the code .</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">USE_OMP</span></code>  Set it to <code class="docutils literal notranslate"><span class="pre">yes</span></code> to use the hybrid version of the code, or to <code class="docutils literal notranslate"><span class="pre">no</span></code> for a pure MPI (or serial) version.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">USE_PRECOND</span></code> Set to <code class="docutils literal notranslate"><span class="pre">yes</span></code> to perform some pre-conditioning of the matrices.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">USE_FFTLIB</span></code> This option lets you select the library you want to use for Fast Fourier Transforms. This can be set to ‘JW’, ‘FFTW’ or ‘MKL’. ‘JW’ refers to the built-in library by <strong>J</strong> ohannes <strong>W</strong> icht, FFTW refers to the <a class="reference external" href="http://www.fftw.org/">Fastest Fourier Transform in the West</a>,  while ‘MKL’ refers to the <a class="reference external" href="https://software.intel.com/en-us/intel-mkl">Intel Math Kernel Library</a>. Use ‘JW’ if you don’t have Intel MKL installed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">USE_FFTLIB</span></code> This option lets you select the library you want to use for Fast Fourier Transforms. This can be set to ‘JW’, ‘FFTW’ or ‘MKL’. ‘JW’ refers to the built-in library by <strong>J</strong> ohannes <strong>W</strong> icht, FFTW refers to the <a class="reference external" href="https://www.fftw.org/">Fastest Fourier Transform in the West</a>,  while ‘MKL’ refers to the <a class="reference external" href="https://software.intel.com/en-us/intel-mkl">Intel Math Kernel Library</a>. Use ‘JW’ if you don’t have Intel MKL installed.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">USE_DCTLIB</span></code> This option lets you select the library you want to use for Discrete Cosine Transforms. This can be set to ‘JW’, ‘FFTW’ or ‘MKL’.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">USE_LAPACKLIB</span></code> This option allows you to select the library you want to use for LU factorisation. This can be set to ‘JW’, ‘MKL’, ‘LIBFLAME’ or ‘LAPACK’. ‘LIBFLAME’ refers to the AMD dense matrix solvers <a class="reference external" href="https://github.com/amd/libflame">libflame</a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">USE_SHTNS</span></code> Set to <code class="docutils literal notranslate"><span class="pre">yes</span></code> to use <a class="reference external" href="https://bitbucket.org/nschaeff/shtns">SHTns</a> library for spherical harmonics transforms. The helper script <code class="docutils literal notranslate"><span class="pre">install-shtns.sh</span></code> is available in the <code class="docutils literal notranslate"><span class="pre">bin</span></code> directory to help installing SHTns.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">USE_SHTNS</span></code> Set to <code class="docutils literal notranslate"><span class="pre">yes</span></code> to use <a class="reference external" href="https://gricad-gitlab.univ-grenoble-alpes.fr/schaeffn/shtns/">SHTns</a> library for spherical harmonics transforms. The helper script <code class="docutils literal notranslate"><span class="pre">install-shtns.sh</span></code> is available in the <code class="docutils literal notranslate"><span class="pre">bin</span></code> directory to help installing SHTns.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CMAKE_BUILD_TYPE</span></code>   Set to <code class="docutils literal notranslate"><span class="pre">Debug</span></code> to enable the full debug flags.</p></li>
 </ul>
 <div class="admonition warning">
@@ -356,9 +356,6 @@ $<span class="w"> </span>mpiexec<span class="w"> </span>-n<span class="w"> </spa
 </div>
 </li>
 </ul>
-<p>Note that the <a class="reference internal" href="inputNamelists/gridNamelist.html#varn-r-max"><span class="std std-ref">n_r_max-1</span></a> must be a multiple of <code class="docutils literal notranslate"><span class="pre">&lt;n_mpi&gt;</span></code>,
-where <a class="reference internal" href="inputNamelists/gridNamelist.html#varn-r-max"><span class="std std-ref">n_r_max</span></a> is the number of radial grid points (see
-<a class="reference internal" href="inputNamelists/gridNamelist.html#secgridnml"><span class="std std-ref">here</span></a>).</p>
 </section>
 </section>
 
@@ -442,8 +439,8 @@ where <a class="reference internal" href="inputNamelists/gridNamelist.html#varn-
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; Copyright 2023, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    &#169; Copyright 2025, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     </div>
   </body>
 </html>
