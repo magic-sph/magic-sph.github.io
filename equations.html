@@ -169,7 +169,7 @@ displacement current) and Ohm’s law (neglecting Hall effect):</p>
 the commonly used form</p>
 <div class="math notranslate nohighlight" id="equation-eqinduction2">
 <span class="eqno">(7)<a class="headerlink" href="#equation-eqinduction2" title="Link to this equation">¶</a></span>\[\dfrac{\partial \vec{B}}{\partial t} = \vec{\nabla} \times \left( \vec{u}\times\vec{B} \right)
-+ \lambda\,\vec{\Delta}\vec{B}.\]</div>
++ \lambda\,\vec{\nabla}^2\vec{B}.\]</div>
 <p>The physical properties determining above equations are rotation rate
 <span class="math notranslate nohighlight">\(\Omega\)</span>, the kinematic viscosity <span class="math notranslate nohighlight">\(\nu\)</span>, the magnetic permeability
 <span class="math notranslate nohighlight">\(\mu_0\)</span>, gravity <span class="math notranslate nohighlight">\(\vec{g}\)</span>, thermal conductivity <span class="math notranslate nohighlight">\(k\)</span>, Fick’s
@@ -186,11 +186,11 @@ the thermal expansivity at constant pressure (and composition)</p>
 density on composition:</p>
 <div class="math notranslate nohighlight" id="equation-delta">
 <span class="eqno">(9)<a class="headerlink" href="#equation-delta" title="Link to this equation">¶</a></span>\[\delta = -\dfrac{1}{\rho}\left(\dfrac{\partial\rho}{\partial \xi}\right)_{p,T},\]</div>
-<figure class="align-center" id="id1">
+<figure class="align-center" id="id3">
 <a class="reference internal image-reference" href="_images/shell.png"><img alt="caption" height="322" src="_images/shell.png" width="312" />
 </a>
 <figcaption>
-<p><span class="caption-text">Sketch of the spherical shell model and its system of coordinate.</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
+<p><span class="caption-text">Sketch of the spherical shell model and its system of coordinate.</span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <section id="the-reference-state">
@@ -272,7 +272,7 @@ The first order Navier-Stokes equation (after to zero order hydrostatic referenc
 + \alpha \tilde{g}_o T' \dfrac{\vec{r}}{r_o}
 + \delta \tilde{g}_o \xi' \dfrac{\vec{r}}{r_o}
 + \dfrac{1}{\mu_0}(\vec{\nabla}\times\vec{B})\times\vec{B}
-+ \tilde{\rho} \nu \Delta \vec{u}.\]</div>
++ \tilde{\rho} \nu \vec{nabla}^2 \vec{u}.\]</div>
 <p>Here <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are understood as first order disturbances and
 <span class="math notranslate nohighlight">\(p'\)</span> is the first order non-hydrostatic pressure and <span class="math notranslate nohighlight">\(T'\)</span> the
 super-adiabatic temperature and <span class="math notranslate nohighlight">\(\xi\)</span> the super-adiabatic chemical
@@ -287,7 +287,7 @@ radius <span class="math notranslate nohighlight">\(r_o\)</span> as reference.</
 <p>The first order energy equation becomes</p>
 <div class="math notranslate nohighlight" id="equation-eqentropyb">
 <span class="eqno">(17)<a class="headerlink" href="#equation-eqentropyb" title="Link to this equation">¶</a></span>\[\tilde{\rho}\left(\dfrac{\partial T'}{\partial t}+\vec{u}\cdot \vec{\nabla} T' \right) =
-\kappa \Delta T'  + \epsilon,\]</div>
+\kappa \nabla^2 T'  + \epsilon,\]</div>
 <p>where we have assumed a homogeneous <span class="math notranslate nohighlight">\(k\)</span> and neglected viscous and Ohmic
 heating which can be shown to scale with <span class="math notranslate nohighlight">\(Di\)</span> as we discuss below.
 Furthermore, we have used the simple relation</p>
@@ -300,7 +300,7 @@ Furthermore, we have used the simple relation</p>
 for chemical composition becomes</p>
 <div class="math notranslate nohighlight" id="equation-eqcompb">
 <span class="eqno">(18)<a class="headerlink" href="#equation-eqcompb" title="Link to this equation">¶</a></span>\[\tilde{\rho}\left(\dfrac{\partial \xi'}{\partial t}+\vec{u}\cdot \vec{\nabla} \xi' \right) =
-\kappa_\xi \Delta \xi'  + \epsilon_\xi,\]</div>
+\kappa_\xi \nabla^2 \xi'  + \epsilon_\xi,\]</div>
 <p>where we have assumed a homogeneous <span class="math notranslate nohighlight">\(k_\xi\)</span> and adjusted the definition of <span class="math notranslate nohighlight">\(\epsilon_\xi\)</span>.</p>
 <p>MagIC solves a dimensionless form of the differential equations. Time is scaled
 in units of the viscous diffusion time <span class="math notranslate nohighlight">\(d^2/\nu\)</span>, length in units of the
@@ -324,7 +324,7 @@ form:</p>
 + \dfrac{Ra}{Pr} T' \dfrac{\vec{r}}{r_o}
 + \dfrac{Ra_\xi}{Sc} \xi' \dfrac{\vec{r}}{r_o}
 + \dfrac{1}{E Pm}(\vec{\nabla}\times\vec{B})\times\vec{B}
-+ \Delta \vec{u},\]</div>
++ \vec{\nabla}^2 \vec{u},\]</div>
 <p>where <span class="math notranslate nohighlight">\(\vec{e}_z\)</span> is the unit vector in the direction of the rotation
 axis and the meaning of the pressure disturbance <span class="math notranslate nohighlight">\(p'\)</span> has been adjusted
 to the new dimensionless equation form.</p>
@@ -466,31 +466,83 @@ terms can be neglected compared to entropy changes due to advection, an limit
 that is used in the Boussinesq approximation.</p>
 </section>
 </section>
+<section id="equation-for-phase-field-model">
+<h2>Equation for phase field model<a class="headerlink" href="#equation-for-phase-field-model" title="Link to this heading">¶</a></h2>
+<p>To explore the uneven generation of topography associated with  the
+freezing and melting which occurs at the fluid-solid interface, MagIC can consider
+the evolution of motionless solid phase. To model the phase changes, MagIC relies
+on the phase field
+formulation by <a class="reference external" href="https://doi.org/10.1006/jcph.1999.6323">Beckermann et al. (1999)</a>
+combined with a volume penalization technique
+(<a class="reference external" href="https://doi.org/10.1016/j.jcp.2020.110043">Hester et al. 2021</a>).
+Practically, this method involves the
+time integration of a continuous scalar quantity <span class="math notranslate nohighlight">\(\phi\)</span> which
+continuously varies from 0 in the liquid phase to 1 in the solid
+phase. A small dimensionless parameter <span class="math notranslate nohighlight">\(\epsilon\)</span>, usually
+termed the Cahn number, then defines the ratio between
+the microscopic thickness of the transition between the two
+phases and the macroscopic domain size which is here
+the shell gap. Phase field methods represent a smoothed
+formulation of phase changes which are easier to implement
+numerically, especially when using pseudo-spectral methods,
+and converge to the exact moving boundary formulation
+in the limit of vanishing <span class="math notranslate nohighlight">\(\epsilon\)</span>. The governing equation
+for the phase field reads</p>
+<div class="math notranslate nohighlight" id="equation-eqphasefield">
+<span class="eqno">(27)<a class="headerlink" href="#equation-eqphasefield" title="Link to this equation">¶</a></span>\[\frac{5}{6} St Pr \frac{\partial \phi}{\partial t} = a\nabla^2  \phi
+-\frac{1}{\epsilon^2}\phi(1-\phi)[a(1-2\phi)+T-T_M],\]</div>
+<p>In the above equation, <span class="math notranslate nohighlight">\(T_M\)</span> denotes the melting temperature, while <span class="math notranslate nohighlight">\(a\)</span>
+is an order one parameter of the phase field model which expresses the curvature
+dependence of the melting temperature <a class="reference external" href="https://doi.org/10.1006/jcph.1999.6323">Beckermann et al. (1999)</a>.</p>
+<p>To account for the latent heat release during melting/freezing, an additional term
+needs to be added in the temperature equation. In the Boussinesq limit, this would
+yield (in absence of volumetric source terms)</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial T}{\partial t}+\vec{u}\cdot\vec{\nabla} T = \frac{1}{Pr}\nabla^2 T
++ St \dfrac{\partial \phi}{\partial t}.\]</div>
+<p>A penalty term of the form <span class="math notranslate nohighlight">\(-\phi\vec{u}/(\epsilon^2\tau_p)\)</span> is also
+added to the r.h.s. of the Navier-Stokes equations <a class="reference internal" href="#equation-eqnsnd">(20)</a> to ensure that
+no flow is creeping into the solid. Practically, this term attenuates the
+velocity inside the solid phase, effectively treating it as a porous medium
+using a Darcy-Brinkman model.</p>
+<p>Although an optimal value for the parameter <span class="math notranslate nohighlight">\(\tau_p\)</span> can be derived
+in simple configurations
+(<a class="reference external" href="https://doi.org/10.1016/j.jcp.2020.110043">Hester et al. 2021</a>),
+the value of <span class="math notranslate nohighlight">\(\tau_p\)</span> needs to be
+adjusted for each simulation to ensure that the kinetic energy
+density of the solid phase remains smaller than that of the
+fluid phase.</p>
+</section>
 <section id="dimensionless-control-parameters">
 <h2>Dimensionless control parameters<a class="headerlink" href="#dimensionless-control-parameters" title="Link to this heading">¶</a></h2>
 <p>The equations <a class="reference internal" href="#equation-eqnsnd">(20)</a>-<a class="reference internal" href="#equation-eqentropynd">(26)</a> are governed by four dimensionless numbers: the
 Ekman number</p>
 <div class="math notranslate nohighlight" id="equation-eqekman">
-<span class="eqno">(27)<a class="headerlink" href="#equation-eqekman" title="Link to this equation">¶</a></span>\[E = \frac{\nu}{\Omega d^2},\]</div>
+<span class="eqno">(28)<a class="headerlink" href="#equation-eqekman" title="Link to this equation">¶</a></span>\[E = \frac{\nu}{\Omega d^2},\]</div>
 <p>the thermal Rayleigh number</p>
 <div class="math notranslate nohighlight" id="equation-eqrayleigh">
-<span class="eqno">(28)<a class="headerlink" href="#equation-eqrayleigh" title="Link to this equation">¶</a></span>\[Ra = \frac{\alpha_o g_o T_o d^3 \Delta s}{c_p \kappa_o \nu_o},\]</div>
+<span class="eqno">(29)<a class="headerlink" href="#equation-eqrayleigh" title="Link to this equation">¶</a></span>\[Ra = \frac{\alpha_o g_o T_o d^3 \Delta s}{c_p \kappa_o \nu_o},\]</div>
 <p>the compositional Rayleigh number</p>
 <div class="math notranslate nohighlight" id="equation-eqrayleighxi">
-<span class="eqno">(29)<a class="headerlink" href="#equation-eqrayleighxi" title="Link to this equation">¶</a></span>\[Ra_\xi = \frac{\delta_o g_o d^3 \Delta \xi}{\kappa_\xi \nu_o},\]</div>
+<span class="eqno">(30)<a class="headerlink" href="#equation-eqrayleighxi" title="Link to this equation">¶</a></span>\[Ra_\xi = \frac{\delta_o g_o d^3 \Delta \xi}{\kappa_\xi \nu_o},\]</div>
 <p>the Prandtl number</p>
 <div class="math notranslate nohighlight" id="equation-eqprandtl">
-<span class="eqno">(30)<a class="headerlink" href="#equation-eqprandtl" title="Link to this equation">¶</a></span>\[Pr = \frac{\nu_o}{\kappa_o},\]</div>
+<span class="eqno">(31)<a class="headerlink" href="#equation-eqprandtl" title="Link to this equation">¶</a></span>\[Pr = \frac{\nu_o}{\kappa_o},\]</div>
 <p>the Schmidt number</p>
 <div class="math notranslate nohighlight" id="equation-eqschmidt">
-<span class="eqno">(31)<a class="headerlink" href="#equation-eqschmidt" title="Link to this equation">¶</a></span>\[Sc = \frac{\nu_o}{\kappa_\xi},\]</div>
+<span class="eqno">(32)<a class="headerlink" href="#equation-eqschmidt" title="Link to this equation">¶</a></span>\[Sc = \frac{\nu_o}{\kappa_\xi},\]</div>
 <p>and the magnetic Prandtl number</p>
 <div class="math notranslate nohighlight" id="equation-eqmaprandtl">
-<span class="eqno">(32)<a class="headerlink" href="#equation-eqmaprandtl" title="Link to this equation">¶</a></span>\[Pm = \frac{\nu_o}{\lambda_i}.\]</div>
-<p>In addition to these four numbers, the reference state is controlled by the geometry of
+<span class="eqno">(33)<a class="headerlink" href="#equation-eqmaprandtl" title="Link to this equation">¶</a></span>\[Pm = \frac{\nu_o}{\lambda_i}.\]</div>
+<p>In case, the phase field model is used, the Stefan number becomes also a control parameter defined by</p>
+<div class="math notranslate nohighlight">
+\[St = \frac{{\cal L}}{c_p \Delta T},\]</div>
+<p>where <span class="math notranslate nohighlight">\({\cal L}\)</span> is the latent heat per unit mass associated with the solid-liquid
+transition.</p>
+<p>In addition to these numbers, the reference state is controlled by the geometry of
 the spherical shell given by its radius ratio</p>
 <div class="math notranslate nohighlight" id="equation-eqradratio">
-<span class="eqno">(33)<a class="headerlink" href="#equation-eqradratio" title="Link to this equation">¶</a></span>\[\eta = \frac{r_i}{r_o},\]</div>
+<span class="eqno">(34)<a class="headerlink" href="#equation-eqradratio" title="Link to this equation">¶</a></span>\[\eta = \frac{r_i}{r_o},\]</div>
 <p>and the background density and temperature profiles, either controlled by <span class="math notranslate nohighlight">\(Di\)</span> or
 by <span class="math notranslate nohighlight">\(N_\rho\)</span> and <span class="math notranslate nohighlight">\(m\)</span>.</p>
 <p>In the Boussinesq approximation all physical properties are assumed to
@@ -499,7 +551,7 @@ except for gravity.
 Moreover, the Rayleigh number can be expressed in terms of the temperature
 jump across the shell:</p>
 <div class="math notranslate nohighlight" id="equation-eqrayleighboussinesq">
-<span class="eqno">(34)<a class="headerlink" href="#equation-eqrayleighboussinesq" title="Link to this equation">¶</a></span>\[Ra = \frac{\alpha g_o d^3 \Delta T}{\kappa \nu}.\]</div>
+<span class="eqno">(35)<a class="headerlink" href="#equation-eqrayleighboussinesq" title="Link to this equation">¶</a></span>\[Ra = \frac{\alpha g_o d^3 \Delta T}{\kappa \nu}.\]</div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p>In MagIC, those control parameters can be adjusted in the
@@ -653,6 +705,7 @@ in the <a class="reference internal" href="inputNamelists/physNamelist.html#secp
 <li><a class="reference internal" href="#entropy-equation-and-turbulent-diffusion">Entropy equation and turbulent diffusion</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#equation-for-phase-field-model">Equation for phase field model</a></li>
 <li><a class="reference internal" href="#dimensionless-control-parameters">Dimensionless control parameters</a><ul>
 <li><a class="reference internal" href="#usual-diagnostic-quantities">Usual diagnostic quantities</a></li>
 </ul>

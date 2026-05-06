@@ -207,7 +207,7 @@ no magnetic field, no Lorentz force and no advection</p></td>
 <li><p><strong>l_update_b</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/logic/l_update_b" title="f/logic/l_update_b"><code class="xref f f-var docutils literal notranslate"><span class="pre">l_update_b=.true.</span></code></a>) is a logical that specifies whether the magnetic field should be time-stepped or not.</p></li>
 <li><p><strong>l_update_s</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/logic/l_update_s" title="f/logic/l_update_s"><code class="xref f f-var docutils literal notranslate"><span class="pre">l_update_s=.true.</span></code></a>) is a logical that specifies whether the entropy/temperature should be time-stepped or not.</p></li>
 <li><p><strong>l_update_xi</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/logic/l_update_xi" title="f/logic/l_update_xi"><code class="xref f f-var docutils literal notranslate"><span class="pre">l_update_xi=.true.</span></code></a>) is a logical that specifies whether the chemical composition should be time-stepped or not.</p></li>
-<li><p><strong>l_update_phi</strong> (default <code class="xref f f-var docutils literal notranslate"><span class="pre">l_update_phi=.true.</span></code>) is a logical that specifies whether the phase field should be time-stepped or not.</p></li>
+<li><p><strong>l_update_phi</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/logic/l_update_phi" title="f/logic/l_update_phi"><code class="xref f f-var docutils literal notranslate"><span class="pre">l_update_phi=.true.</span></code></a>) is a logical that specifies whether the phase field should be time-stepped or not.</p></li>
 </ul>
 </section>
 <section id="time-step-control">
@@ -224,6 +224,12 @@ the timestep size is controlled as follows</p>
 <div class="math notranslate nohighlight">
 \[{|u_r|}=c_F{|u_{F,r}|}+c_A\dfrac{u_{A,r}^2}{\left[u_{A,r}^2+\left(\frac{1+Pm^{-1}}{2\delta r}\right)^2\right]^{1/2}}\,,\]</div>
 <p>where <span class="math notranslate nohighlight">\(u_{F,r}\)</span> is the radial component of the fluid velocity and <span class="math notranslate nohighlight">\(u_{A,r}=Br/\sqrt{E\,Pm}\)</span> is the radial Alven velocity. The denominator of the rightmost term accounts for the damping of the Alven waves.</p>
+<p>In case the phase field model is employed, the explicit treatment of the additional volume
+penalization term entering the Navier-Stokes equations yields an extra constraint
+on the time step size <span class="math notranslate nohighlight">\(\delta t\)</span> compared to classical convection problems, such that</p>
+<div class="math notranslate nohighlight">
+\[\delta t &lt;   C \tau_p \epsilon^2,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\epsilon\)</span> is the Cahn number.</p>
 <ul>
 <li><p><strong>dtMax</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/num_param/dtmax" title="f/num_param/dtmax"><code class="xref f f-var docutils literal notranslate"><span class="pre">dtMax=1e-4</span></code></a>) is a  real. This is the maximum allowed time step <span class="math notranslate nohighlight">\(\delta t\)</span>. If <span class="math notranslate nohighlight">\(\delta t &gt; \hbox{dtmax}\)</span>, the time step is decreased to at least dtMax (See routine <cite>dt_courant</cite>). Run is stopped if <span class="math notranslate nohighlight">\(\delta t &lt; \hbox{dtmin}\)</span> and <span class="math notranslate nohighlight">\(\hbox{dtmin}=10^{-6}\,\hbox{dtmax}\)</span>.</p></li>
 <li><p><strong>courfac</strong> (default <a class="reference internal" href="../apiFortran/baseModules.html#f/num_param/courfac" title="f/num_param/courfac"><code class="xref f f-var docutils literal notranslate"><span class="pre">courfac=2.5</span></code></a>) is a real used to scale velocity in Courant criteria. This parameter corresponds to <span class="math notranslate nohighlight">\(c_F\)</span> in the above equation.</p></li>
@@ -378,10 +384,10 @@ domain.</p>
 <td><p>Use an arcsin mapping  (see <a class="reference external" href="https://doi.org/10.1006/jcph.1993.1044">Kosloff and Tal-Ezer 1993</a>)</p></td>
 </tr>
 <tr class="row-odd"><td><p>map_function=’TT’</p></td>
-<td><p>Use the mapping by <a class="reference external" href="https://doi.org/10.1137/050641296">Tee and Trefethen 2006</a></p></td>
+<td><p>Use the mapping by <a class="reference external" href="https://doi.org/10.1137/050641296">Tee and Trefethen (2006)</a></p></td>
 </tr>
 <tr class="row-even"><td><p>map_function=’JAFARI’</p></td>
-<td><p>Use the mapping by <a class="reference external" href="https://doi.org/10.1007/s11075-014-9883-3">Jafari-Varzaneh and Hosseini 2014</a></p></td>
+<td><p>Use the mapping by <a class="reference external" href="https://doi.org/10.1007/s11075-014-9883-3">Jafari-Varzaneh and Hosseini (2014)</a></p></td>
 </tr>
 </tbody>
 </table>

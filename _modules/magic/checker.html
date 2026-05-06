@@ -101,8 +101,12 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">magic</span><span class="w"> </span><span class="kn">import</span> <span class="n">MagicTs</span><span class="p">,</span> <span class="n">avgField</span><span class="p">,</span> <span class="n">MagicSpectrum</span><span class="p">,</span> <span class="n">MagicRadial</span><span class="p">,</span> <span class="n">scanDir</span><span class="p">,</span> <span class="n">MagicSetup</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.signal</span><span class="w"> </span><span class="kn">import</span> <span class="n">argrelextrema</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">trapz</span> <span class="k">as</span> <span class="n">trapz</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">trapezoid</span> <span class="k">as</span> <span class="n">trapz</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">bcolors</span><span class="p">:</span>
     <span class="n">HEADER</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[95m&#39;</span>
@@ -177,7 +181,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">MODERATE</span> <span class="o">+</span> <span class="s1">&#39;Sudden variations detected in power balance!&#39;</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span><span class="p">)</span>
         <span class="n">ones</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
         <span class="n">ones</span><span class="p">[</span><span class="o">~</span><span class="n">mask_spike</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.</span>
-        <span class="n">ttot_spikes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">ones</span><span class="p">,</span> <span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+        <span class="n">ttot_spikes</span> <span class="o">=</span> <span class="n">trapz</span><span class="p">(</span><span class="n">ones</span><span class="p">,</span> <span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
         <span class="n">ttot</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">ratio</span> <span class="o">=</span> <span class="n">ttot_spikes</span><span class="o">/</span><span class="n">ttot</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;    -Time fraction with spikes: </span><span class="si">{:.3f}</span><span class="s1"> %&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mf">100.</span><span class="o">*</span><span class="n">ratio</span><span class="p">))</span>
