@@ -1,0 +1,127 @@
+name: docs
+
+# Rebuilds this website from the Sphinx documentation of magic-sph/magic
+# (doc/sphinx). The Fortran and Python API pages are generated from the
+# comments in src/*.f90 and python/magic, so changes there count as
+# documentation changes too.
+#
+# A workflow cannot be triggered by pushes to another repository without a
+# secret, so this one runs once a month (on the 1st). It first compares the last magic commit
+# that touched the documentation with the one the website was last built from
+# (recorded in the commit message, "Built from magic-sph/magic@<sha>"), and
+# only builds and publishes when they differ. It can also be started by hand
+# (Actions > docs > Run workflow), with "force" to rebuild in any case.
+#
+# It pushes with the built-in GITHUB_TOKEN, so no key or secret is needed.
+
+on:
+  schedule:
+    - cron: '30 3 1 * *' # 03:30 UTC on the 1st of every month
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Rebuild even if the documentation did not change'
+        type: boolean
+        default: false
+
+# Never run two builds at the same time, and never cancel one halfway
+concurrency:
+  group: docs
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out this website
+        uses: actions/checkout@v4
+        with:
+          path: site
+          fetch-depth: 50
+
+      - name: Check out magic
+        uses: actions/checkout@v4
+        with:
+          repository: magic-sph/magic
+          ref: master
+          path: magic
+          fetch-depth: 0
+
+      - name: Did the documentation change?
+        id: check
+        run: |
+          # Sources of the documentation in magic-sph/magic
+          src=$(git -C magic log -1 --format=%H -- doc 'src/*.f90' python/magic)
+          built=$(git -C site log --format=%B | \
+                  grep -m1 -oE 'magic-sph/magic@[0-9a-f]{40}' | cut -d@ -f2 || true)
+          echo "Last documentation change in magic: $src"
+          echo "Website built from:                 ${built:-unknown}"
+          echo "sha=$src" >> "$GITHUB_OUTPUT"
+          if [ "$src" = "$built" ] && [ "${{ inputs.force }}" != "true" ]; then
+            echo "Nothing to do."
+            echo "build=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "build=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up Python
+        if: steps.check.outputs.build == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+
+      - name: Install pre-requisites
+        if: steps.check.outputs.build == 'true'
+        run: |
+          sudo apt-get update
+          # cpp strips the preprocessor flags of src/*.f90 (cleanPreProc.sh),
+          # gfortran builds the f2py libraries needed by some python modules
+          sudo apt-get -y install cpp gfortran rsync
+          # Latest versions. meson and ninja are needed by f2py to build the
+          # python libraries (python >= 3.12).
+          pip install Sphinx docutils six future numpy scipy matplotlib \
+                      meson ninja
+
+      - name: Build the documentation
+        if: steps.check.outputs.build == 'true'
+        working-directory: magic
+        env:
+          MPLBACKEND: Agg
+        run: |
+          # Build the f2py libraries
+          sed -e 's/^buildLib *=.*/buildLib = True/' \
+              -e 's/^fcompiler *=.*/fcompiler = gnu95/' \
+              python/magic/magic.cfg.default > python/magic/magic.cfg
+          source sourceme.sh
+          cd doc/sphinx
+          make html 2>&1 | tee build.log
+          # Check if python modules are being correctly imported
+          if grep -q "failed to import" build.log; then
+            echo "::error::Some python modules could not be imported, see the log above"
+            exit 1
+          fi
+          rm -f .build/html/.buildinfo
+
+      - name: Publish
+        if: steps.check.outputs.build == 'true'
+        run: |
+          # Mirror the build, so that pages and files that no longer exist are
+          # removed.
+          rsync -a --delete \
+                --exclude '.git' --exclude '.github' --exclude '.nojekyll' \
+                --exclude 'LICENSE' --exclude 'CNAME' \
+                magic/doc/sphinx/.build/html/ site/
+          touch site/.nojekyll
+          cd site
+          git add -A
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Record the source commit even if the pages did not change, so that
+          # the next run does not rebuild them again
+          git commit --allow-empty -m "Update documentation" \
+                     -m "Built from magic-sph/magic@${{ steps.check.outputs.sha }}"
+          git push
