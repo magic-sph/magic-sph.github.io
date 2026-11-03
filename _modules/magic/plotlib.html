@@ -9,8 +9,8 @@
     <link rel="stylesheet" type="text/css" href="../../_static/magic.css?v=a97dc138" />
     
     <script src="../../_static/documentation_options.js?v=4b074805"></script>
-    <script src="../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
           title="Search within Magic 6.3 documentation"
@@ -103,12 +103,12 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span>
 
-<span class="n">mplMaj</span><span class="p">,</span><span class="n">mplMin</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">(</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">__version__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">))</span>
+<span class="n">mplMaj</span><span class="p">,</span><span class="n">mplMin</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">(</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">__version__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">))</span>
 
 <div class="viewcode-block" id="default_cmap">
 <a class="viewcode-back" href="../../apiPython/libs.html#magic.plotlib.default_cmap">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">default_cmap</span><span class="p">(</span><span class="n">field</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    This function selects a default colormap for an input field. This allows</span>
 <span class="sd">    to have different colormaps depending on the quantity one wants to plot.</span>
 <span class="sd">    This can make use of cmocean colormaps, whenever installed.</span>
@@ -117,68 +117,68 @@
 <span class="sd">    :type field: str</span>
 <span class="sd">    :returns cm: the name of the matplotlib colormap</span>
 <span class="sd">    :rtype cm: str</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;Bp&#39;</span><span class="p">,</span> <span class="s1">&#39;bp&#39;</span><span class="p">,</span> <span class="s1">&#39;bphi&#39;</span><span class="p">,</span> <span class="s1">&#39;Bphi&#39;</span><span class="p">,</span> <span class="s1">&#39;Bt&#39;</span><span class="p">,</span> <span class="s1">&#39;bt&#39;</span><span class="p">,</span> <span class="s1">&#39;btheta&#39;</span><span class="p">,</span> <span class="s1">&#39;Btheta&#39;</span><span class="p">,</span>
-                 <span class="s1">&#39;Br&#39;</span><span class="p">,</span> <span class="s1">&#39;br&#39;</span><span class="p">,</span> <span class="s1">&#39;bpfluct&#39;</span><span class="p">,</span> <span class="s1">&#39;brfluct&#39;</span><span class="p">):</span>
-        <span class="n">cm</span> <span class="o">=</span> <span class="s1">&#39;PuOr&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;Vr&#39;</span><span class="p">,</span> <span class="s1">&#39;vr&#39;</span><span class="p">,</span> <span class="s1">&#39;Ur&#39;</span><span class="p">,</span> <span class="s1">&#39;ur&#39;</span><span class="p">,</span> <span class="s1">&#39;Vtheta&#39;</span><span class="p">,</span> <span class="s1">&#39;vtheta&#39;</span><span class="p">,</span> <span class="s1">&#39;Utheta&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;utheta&#39;</span><span class="p">,</span> <span class="s1">&#39;vt&#39;</span><span class="p">,</span> <span class="s1">&#39;Vt&#39;</span><span class="p">,</span> <span class="s1">&#39;Ut&#39;</span><span class="p">,</span> <span class="s1">&#39;ut&#39;</span><span class="p">,</span> <span class="s1">&#39;Vphi&#39;</span><span class="p">,</span> <span class="s1">&#39;vphi&#39;</span><span class="p">,</span> <span class="s1">&#39;Uphi&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;uphi&#39;</span><span class="p">,</span> <span class="s1">&#39;up&#39;</span><span class="p">,</span> <span class="s1">&#39;Up&#39;</span><span class="p">,</span> <span class="s1">&#39;Vp&#39;</span><span class="p">,</span> <span class="s1">&#39;vp&#39;</span><span class="p">,</span> <span class="s1">&#39;vpconv&#39;</span><span class="p">,</span> <span class="s1">&#39;vpc&#39;</span><span class="p">,</span> <span class="s1">&#39;vrea&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;vra&#39;</span><span class="p">,</span> <span class="s1">&#39;vpea&#39;</span><span class="p">,</span> <span class="s1">&#39;vpa&#39;</span><span class="p">,</span> <span class="s1">&#39;Us&#39;</span><span class="p">,</span> <span class="s1">&#39;us&#39;</span><span class="p">,</span> <span class="s1">&#39;Vs&#39;</span><span class="p">,</span> <span class="s1">&#39;vs&#39;</span><span class="p">,</span> <span class="s1">&#39;Uz&#39;</span><span class="p">,</span> <span class="s1">&#39;uz&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;vz&#39;</span><span class="p">,</span> <span class="s1">&#39;Vz&#39;</span><span class="p">):</span>
-        <span class="n">cm</span> <span class="o">=</span> <span class="s1">&#39;seismic&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;entropy&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;tea&#39;</span><span class="p">,</span> <span class="s1">&#39;temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="s1">&#39;temp&#39;</span><span class="p">):</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'Bp'</span><span class="p">,</span> <span class="s1">'bp'</span><span class="p">,</span> <span class="s1">'bphi'</span><span class="p">,</span> <span class="s1">'Bphi'</span><span class="p">,</span> <span class="s1">'Bt'</span><span class="p">,</span> <span class="s1">'bt'</span><span class="p">,</span> <span class="s1">'btheta'</span><span class="p">,</span> <span class="s1">'Btheta'</span><span class="p">,</span>
+                 <span class="s1">'Br'</span><span class="p">,</span> <span class="s1">'br'</span><span class="p">,</span> <span class="s1">'bpfluct'</span><span class="p">,</span> <span class="s1">'brfluct'</span><span class="p">):</span>
+        <span class="n">cm</span> <span class="o">=</span> <span class="s1">'PuOr'</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'Vr'</span><span class="p">,</span> <span class="s1">'vr'</span><span class="p">,</span> <span class="s1">'Ur'</span><span class="p">,</span> <span class="s1">'ur'</span><span class="p">,</span> <span class="s1">'Vtheta'</span><span class="p">,</span> <span class="s1">'vtheta'</span><span class="p">,</span> <span class="s1">'Utheta'</span><span class="p">,</span>
+                   <span class="s1">'utheta'</span><span class="p">,</span> <span class="s1">'vt'</span><span class="p">,</span> <span class="s1">'Vt'</span><span class="p">,</span> <span class="s1">'Ut'</span><span class="p">,</span> <span class="s1">'ut'</span><span class="p">,</span> <span class="s1">'Vphi'</span><span class="p">,</span> <span class="s1">'vphi'</span><span class="p">,</span> <span class="s1">'Uphi'</span><span class="p">,</span>
+                   <span class="s1">'uphi'</span><span class="p">,</span> <span class="s1">'up'</span><span class="p">,</span> <span class="s1">'Up'</span><span class="p">,</span> <span class="s1">'Vp'</span><span class="p">,</span> <span class="s1">'vp'</span><span class="p">,</span> <span class="s1">'vpconv'</span><span class="p">,</span> <span class="s1">'vpc'</span><span class="p">,</span> <span class="s1">'vrea'</span><span class="p">,</span>
+                   <span class="s1">'vra'</span><span class="p">,</span> <span class="s1">'vpea'</span><span class="p">,</span> <span class="s1">'vpa'</span><span class="p">,</span> <span class="s1">'Us'</span><span class="p">,</span> <span class="s1">'us'</span><span class="p">,</span> <span class="s1">'Vs'</span><span class="p">,</span> <span class="s1">'vs'</span><span class="p">,</span> <span class="s1">'Uz'</span><span class="p">,</span> <span class="s1">'uz'</span><span class="p">,</span>
+                   <span class="s1">'vz'</span><span class="p">,</span> <span class="s1">'Vz'</span><span class="p">):</span>
+        <span class="n">cm</span> <span class="o">=</span> <span class="s1">'seismic'</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'entropy'</span><span class="p">,</span> <span class="s1">'s'</span><span class="p">,</span> <span class="s1">'S'</span><span class="p">,</span> <span class="s1">'tea'</span><span class="p">,</span> <span class="s1">'temperature'</span><span class="p">,</span> <span class="s1">'t'</span><span class="p">,</span> <span class="s1">'T'</span><span class="p">,</span> <span class="s1">'temp'</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="kn">import</span><span class="w"> </span><span class="nn">cmocean.cm</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmo</span>
             <span class="n">cm</span> <span class="o">=</span> <span class="n">cmo</span><span class="o">.</span><span class="n">thermal</span>
         <span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
-            <span class="n">cm</span> <span class="o">=</span> <span class="s1">&#39;magma&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;entropyfluct&#39;</span><span class="p">,</span> <span class="s1">&#39;tempfluct&#39;</span><span class="p">,</span> <span class="s1">&#39;tfluct&#39;</span><span class="p">):</span>
-        <span class="n">cm</span> <span class="o">=</span> <span class="s1">&#39;coolwarm&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="o">==</span> <span class="s1">&#39;xifluct&#39;</span><span class="p">:</span>
-        <span class="n">cm</span> <span class="o">=</span> <span class="s1">&#39;PiYG&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="o">==</span> <span class="s1">&#39;prefluct&#39;</span><span class="p">:</span>
-        <span class="n">cm</span> <span class="o">=</span> <span class="s1">&#39;RdGy&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;composition&#39;</span><span class="p">,</span> <span class="s1">&#39;xi&#39;</span><span class="p">,</span> <span class="s1">&#39;Xi&#39;</span><span class="p">,</span> <span class="s1">&#39;Comp&#39;</span><span class="p">,</span> <span class="s1">&#39;comp&#39;</span><span class="p">,</span> <span class="s1">&#39;chem&#39;</span><span class="p">,</span> <span class="s1">&#39;Chem&#39;</span><span class="p">):</span>
+            <span class="n">cm</span> <span class="o">=</span> <span class="s1">'magma'</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'entropyfluct'</span><span class="p">,</span> <span class="s1">'tempfluct'</span><span class="p">,</span> <span class="s1">'tfluct'</span><span class="p">):</span>
+        <span class="n">cm</span> <span class="o">=</span> <span class="s1">'coolwarm'</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="o">==</span> <span class="s1">'xifluct'</span><span class="p">:</span>
+        <span class="n">cm</span> <span class="o">=</span> <span class="s1">'PiYG'</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="o">==</span> <span class="s1">'prefluct'</span><span class="p">:</span>
+        <span class="n">cm</span> <span class="o">=</span> <span class="s1">'RdGy'</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'composition'</span><span class="p">,</span> <span class="s1">'xi'</span><span class="p">,</span> <span class="s1">'Xi'</span><span class="p">,</span> <span class="s1">'Comp'</span><span class="p">,</span> <span class="s1">'comp'</span><span class="p">,</span> <span class="s1">'chem'</span><span class="p">,</span> <span class="s1">'Chem'</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="kn">import</span><span class="w"> </span><span class="nn">cmocean.cm</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmo</span>
             <span class="n">cm</span> <span class="o">=</span> <span class="n">cmo</span><span class="o">.</span><span class="n">haline</span>
         <span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
-            <span class="n">cm</span> <span class="o">=</span> <span class="s1">&#39;viridis&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;jphi&#39;</span><span class="p">,</span> <span class="s1">&#39;jr&#39;</span><span class="p">):</span>
+            <span class="n">cm</span> <span class="o">=</span> <span class="s1">'viridis'</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'jphi'</span><span class="p">,</span> <span class="s1">'jr'</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="kn">import</span><span class="w"> </span><span class="nn">cmocean.cm</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmo</span>
             <span class="n">cm</span> <span class="o">=</span> <span class="n">cmo</span><span class="o">.</span><span class="n">delta</span>
         <span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
-            <span class="n">cm</span> <span class="o">=</span> <span class="s1">&#39;BrBG&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;phase&#39;</span><span class="p">,</span> <span class="s1">&#39;Phase&#39;</span><span class="p">):</span>
+            <span class="n">cm</span> <span class="o">=</span> <span class="s1">'BrBG'</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'phase'</span><span class="p">,</span> <span class="s1">'Phase'</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="kn">import</span><span class="w"> </span><span class="nn">cmocean.cm</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmo</span>
             <span class="n">cm</span> <span class="o">=</span> <span class="n">cmo</span><span class="o">.</span><span class="n">tempo</span>
         <span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
-            <span class="n">cm</span> <span class="o">=</span> <span class="s1">&#39;binary&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;vortz&#39;</span><span class="p">,</span> <span class="s1">&#39;vortzfluct&#39;</span><span class="p">):</span>
+            <span class="n">cm</span> <span class="o">=</span> <span class="s1">'binary'</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'vortz'</span><span class="p">,</span> <span class="s1">'vortzfluct'</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="kn">import</span><span class="w"> </span><span class="nn">cmocean.cm</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmo</span>
             <span class="n">cm</span> <span class="o">=</span> <span class="n">cmo</span><span class="o">.</span><span class="n">curl</span>
         <span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
-            <span class="n">cm</span> <span class="o">=</span> <span class="s1">&#39;Spectral_r&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;pressure&#39;</span><span class="p">,</span> <span class="s1">&#39;pre&#39;</span><span class="p">,</span> <span class="s1">&#39;Pre&#39;</span><span class="p">,</span> <span class="s1">&#39;Pressure&#39;</span><span class="p">,</span> <span class="s1">&#39;press&#39;</span><span class="p">,</span> <span class="s1">&#39;Press&#39;</span><span class="p">):</span>
-        <span class="n">cm</span> <span class="o">=</span> <span class="s1">&#39;plasma&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;u2&#39;</span><span class="p">,</span> <span class="s1">&#39;nrj&#39;</span><span class="p">,</span> <span class="s1">&#39;Ekin&#39;</span><span class="p">,</span> <span class="s1">&#39;ek&#39;</span><span class="p">,</span> <span class="s1">&#39;Ek&#39;</span><span class="p">,</span> <span class="s1">&#39;ekin&#39;</span><span class="p">):</span>
+            <span class="n">cm</span> <span class="o">=</span> <span class="s1">'Spectral_r'</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'pressure'</span><span class="p">,</span> <span class="s1">'pre'</span><span class="p">,</span> <span class="s1">'Pre'</span><span class="p">,</span> <span class="s1">'Pressure'</span><span class="p">,</span> <span class="s1">'press'</span><span class="p">,</span> <span class="s1">'Press'</span><span class="p">):</span>
+        <span class="n">cm</span> <span class="o">=</span> <span class="s1">'plasma'</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'u2'</span><span class="p">,</span> <span class="s1">'nrj'</span><span class="p">,</span> <span class="s1">'Ekin'</span><span class="p">,</span> <span class="s1">'ek'</span><span class="p">,</span> <span class="s1">'Ek'</span><span class="p">,</span> <span class="s1">'ekin'</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="kn">import</span><span class="w"> </span><span class="nn">cmocean.cm</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmo</span>
             <span class="n">cm</span> <span class="o">=</span> <span class="n">cmo</span><span class="o">.</span><span class="n">rain</span>
         <span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
-            <span class="n">cm</span> <span class="o">=</span> <span class="s1">&#39;Blues&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;b2&#39;</span><span class="p">,</span> <span class="s1">&#39;B2&#39;</span><span class="p">,</span> <span class="s1">&#39;Emag&#39;</span><span class="p">,</span> <span class="s1">&#39;em&#39;</span><span class="p">,</span> <span class="s1">&#39;Em&#39;</span><span class="p">,</span> <span class="s1">&#39;emag&#39;</span><span class="p">):</span>
+            <span class="n">cm</span> <span class="o">=</span> <span class="s1">'Blues'</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'b2'</span><span class="p">,</span> <span class="s1">'B2'</span><span class="p">,</span> <span class="s1">'Emag'</span><span class="p">,</span> <span class="s1">'em'</span><span class="p">,</span> <span class="s1">'Em'</span><span class="p">,</span> <span class="s1">'emag'</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="kn">import</span><span class="w"> </span><span class="nn">cmocean.cm</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmo</span>
             <span class="n">cm</span> <span class="o">=</span> <span class="n">cmo</span><span class="o">.</span><span class="n">amp</span>
         <span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
-            <span class="n">cm</span> <span class="o">=</span> <span class="s1">&#39;Reds&#39;</span>
-    <span class="k">elif</span> <span class="n">field</span> <span class="o">==</span> <span class="s1">&#39;ohm&#39;</span><span class="p">:</span>
-        <span class="n">cm</span> <span class="o">=</span> <span class="s1">&#39;magma_r&#39;</span>
+            <span class="n">cm</span> <span class="o">=</span> <span class="s1">'Reds'</span>
+    <span class="k">elif</span> <span class="n">field</span> <span class="o">==</span> <span class="s1">'ohm'</span><span class="p">:</span>
+        <span class="n">cm</span> <span class="o">=</span> <span class="s1">'magma_r'</span>
     <span class="k">else</span><span class="p">:</span>  <span class="c1"># In case nothing is found</span>
         <span class="n">cm</span> <span class="o">=</span> <span class="n">defaultCm</span>
 
@@ -188,7 +188,7 @@
 <div class="viewcode-block" id="diverging_cmap">
 <a class="viewcode-back" href="../../apiPython/libs.html#magic.plotlib.diverging_cmap">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">diverging_cmap</span><span class="p">(</span><span class="n">field</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    This function determines whether the data are sequential or diverging (i.e.</span>
 <span class="sd">    centered around zero). In the latter, colormaps will be by default centered.</span>
 
@@ -196,13 +196,13 @@
 <span class="sd">    :type field: str</span>
 <span class="sd">    :returns diverging: a boolean to say whether the colormap will be centered or not</span>
 <span class="sd">    :rtype cm: bool</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
-    <span class="k">if</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;entropy&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;u2&#39;</span><span class="p">,</span> <span class="s1">&#39;b2&#39;</span><span class="p">,</span> <span class="s1">&#39;nrj&#39;</span><span class="p">,</span> <span class="s1">&#39;temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span>
-                 <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="s1">&#39;Ekin&#39;</span><span class="p">,</span> <span class="s1">&#39;ek&#39;</span><span class="p">,</span> <span class="s1">&#39;ekin&#39;</span><span class="p">,</span> <span class="s1">&#39;Ek&#39;</span><span class="p">,</span> <span class="s1">&#39;B2&#39;</span><span class="p">,</span> <span class="s1">&#39;Emag&#39;</span><span class="p">,</span> <span class="s1">&#39;emag&#39;</span><span class="p">,</span> <span class="s1">&#39;tea&#39;</span><span class="p">,</span>
-                 <span class="s1">&#39;em&#39;</span><span class="p">,</span> <span class="s1">&#39;Em&#39;</span><span class="p">,</span> <span class="s1">&#39;temp&#39;</span><span class="p">,</span> <span class="s1">&#39;pressure&#39;</span><span class="p">,</span> <span class="s1">&#39;pre&#39;</span><span class="p">,</span> <span class="s1">&#39;Pre&#39;</span><span class="p">,</span> <span class="s1">&#39;Pressure&#39;</span><span class="p">,</span>
-                 <span class="s1">&#39;press&#39;</span><span class="p">,</span> <span class="s1">&#39;Press&#39;</span><span class="p">,</span> <span class="s1">&#39;phase&#39;</span><span class="p">,</span> <span class="s1">&#39;Phase&#39;</span><span class="p">,</span> <span class="s1">&#39;composition&#39;</span><span class="p">,</span> <span class="s1">&#39;xi&#39;</span><span class="p">,</span>
-                 <span class="s1">&#39;Xi&#39;</span><span class="p">,</span> <span class="s1">&#39;Comp&#39;</span><span class="p">,</span> <span class="s1">&#39;comp&#39;</span><span class="p">,</span> <span class="s1">&#39;chem&#39;</span><span class="p">,</span> <span class="s1">&#39;Chem&#39;</span><span class="p">,</span> <span class="s1">&#39;ohm&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'entropy'</span><span class="p">,</span> <span class="s1">'s'</span><span class="p">,</span> <span class="s1">'S'</span><span class="p">,</span> <span class="s1">'u2'</span><span class="p">,</span> <span class="s1">'b2'</span><span class="p">,</span> <span class="s1">'nrj'</span><span class="p">,</span> <span class="s1">'temperature'</span><span class="p">,</span> <span class="s1">'t'</span><span class="p">,</span>
+                 <span class="s1">'T'</span><span class="p">,</span> <span class="s1">'Ekin'</span><span class="p">,</span> <span class="s1">'ek'</span><span class="p">,</span> <span class="s1">'ekin'</span><span class="p">,</span> <span class="s1">'Ek'</span><span class="p">,</span> <span class="s1">'B2'</span><span class="p">,</span> <span class="s1">'Emag'</span><span class="p">,</span> <span class="s1">'emag'</span><span class="p">,</span> <span class="s1">'tea'</span><span class="p">,</span>
+                 <span class="s1">'em'</span><span class="p">,</span> <span class="s1">'Em'</span><span class="p">,</span> <span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'pressure'</span><span class="p">,</span> <span class="s1">'pre'</span><span class="p">,</span> <span class="s1">'Pre'</span><span class="p">,</span> <span class="s1">'Pressure'</span><span class="p">,</span>
+                 <span class="s1">'press'</span><span class="p">,</span> <span class="s1">'Press'</span><span class="p">,</span> <span class="s1">'phase'</span><span class="p">,</span> <span class="s1">'Phase'</span><span class="p">,</span> <span class="s1">'composition'</span><span class="p">,</span> <span class="s1">'xi'</span><span class="p">,</span>
+                 <span class="s1">'Xi'</span><span class="p">,</span> <span class="s1">'Comp'</span><span class="p">,</span> <span class="s1">'comp'</span><span class="p">,</span> <span class="s1">'chem'</span><span class="p">,</span> <span class="s1">'Chem'</span><span class="p">,</span> <span class="s1">'ohm'</span><span class="p">):</span>
         <span class="n">diverging</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">diverging</span> <span class="o">=</span> <span class="kc">True</span>
@@ -213,7 +213,7 @@
 <div class="viewcode-block" id="hammer2cart">
 <a class="viewcode-back" href="../../apiPython/libs.html#magic.plotlib.hammer2cart">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">hammer2cart</span><span class="p">(</span><span class="n">ttheta</span><span class="p">,</span> <span class="n">pphi</span><span class="p">,</span> <span class="n">colat</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    This function is used to define the Hammer projection used when</span>
 <span class="sd">    plotting surface contours in :py:class:`magic.Surf`</span>
 
@@ -233,7 +233,7 @@
 <span class="sd">    :returns: a tuple that contains two [nphi, ntheta] arrays: the x, y meshgrid</span>
 <span class="sd">              used in contour plots</span>
 <span class="sd">    :rtype: (numpy.ndarray, numpy.ndarray)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">colat</span><span class="p">:</span> <span class="c1"># for lat and phi \in [-pi, pi]</span>
         <span class="n">xx</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ttheta</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">pphi</span><span class="o">/</span><span class="mf">2.</span><span class="p">)</span>\
@@ -253,7 +253,7 @@
 <div class="viewcode-block" id="cut">
 <a class="viewcode-back" href="../../apiPython/libs.html#magic.plotlib.cut">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">cut</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    This functions truncates the values of an input array that are beyond</span>
 <span class="sd">    vmax or below vmin and replace them by vmax and vmin, respectively.</span>
 
@@ -269,7 +269,7 @@
 <span class="sd">    :returns: an array where the values &gt;=vmax have been replaced by vmax</span>
 <span class="sd">              and the values &lt;=vmin have been replaced by vmin</span>
 <span class="sd">    :rtype: numpy.ndarray</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">vmax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dat</span><span class="o">&gt;=</span><span class="n">vmax</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="n">dat</span> <span class="o">=</span> <span class="n">dat</span><span class="o">*</span><span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">vmax</span><span class="o">*</span><span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
@@ -290,7 +290,7 @@
                  <span class="n">title</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">normRad</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">deminc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">pcolor</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">rasterized</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Plot the equatorial cut of a given field</span>
 
 <span class="sd">    :param data: the input data (an array of size (nphi,nr))</span>
@@ -307,7 +307,7 @@
 <span class="sd">    :type normRad: bool</span>
 <span class="sd">    :param levels: the number of levels in the contour</span>
 <span class="sd">    :type levels: int</span>
-<span class="sd">    :param cm: name of the colormap (&#39;jet&#39;, &#39;seismic&#39;, &#39;RdYlBu_r&#39;, etc.)</span>
+<span class="sd">    :param cm: name of the colormap ('jet', 'seismic', 'RdYlBu_r', etc.)</span>
 <span class="sd">    :type cm: str</span>
 <span class="sd">    :param title: display the title of the figure when set to True</span>
 <span class="sd">    :type title: bool</span>
@@ -340,7 +340,7 @@
 <span class="sd">    :param rasterized: when set to True, the rasterization for vector graphics</span>
 <span class="sd">                       is turned on</span>
 <span class="sd">    :type rasterized: bool</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="n">nphi</span><span class="p">,</span> <span class="n">ntheta</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
 
@@ -389,7 +389,7 @@
                 <span class="n">normed</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">cm</span> <span class="o">==</span> <span class="n">defaultCm</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">normed</span><span class="p">:</span>
-            <span class="n">cm</span> <span class="o">=</span> <span class="s1">&#39;viridis&#39;</span>
+            <span class="n">cm</span> <span class="o">=</span> <span class="s1">'viridis'</span>
 
     <span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">cm</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">vmax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">vmin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -397,13 +397,13 @@
         <span class="n">cs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">levels</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">pcolor</span><span class="p">:</span>
             <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">antialiased</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                               <span class="n">shading</span><span class="o">=</span><span class="s1">&#39;gouraud&#39;</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span>
+                               <span class="n">shading</span><span class="o">=</span><span class="s1">'gouraud'</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span>
                                <span class="n">rasterized</span><span class="o">=</span><span class="n">rasterized</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
+            <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s1">'both'</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">lines</span><span class="p">:</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">],</span> <span class="n">linewidths</span><span class="o">=</span><span class="n">linewidths</span><span class="p">,</span>
-                       <span class="n">extend</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">])</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s1">'k'</span><span class="p">],</span> <span class="n">linewidths</span><span class="o">=</span><span class="n">linewidths</span><span class="p">,</span>
+                       <span class="n">extend</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="p">[</span><span class="s1">'-'</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">normed</span><span class="p">:</span>
             <span class="n">cs</span> <span class="o">=</span> <span class="n">levels</span>
@@ -414,31 +414,31 @@
         <span class="k">if</span> <span class="n">pcolor</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">normed</span><span class="p">:</span>
                 <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">antialiased</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                   <span class="n">shading</span><span class="o">=</span><span class="s1">&#39;gouraud&#39;</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span>
+                                   <span class="n">shading</span><span class="o">=</span><span class="s1">'gouraud'</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span>
                                    <span class="n">rasterized</span><span class="o">=</span><span class="n">rasterized</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">antialiased</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                   <span class="n">shading</span><span class="o">=</span><span class="s1">&#39;gouraud&#39;</span><span class="p">,</span> <span class="n">rasterized</span><span class="o">=</span><span class="n">rasterized</span><span class="p">)</span>
+                                   <span class="n">shading</span><span class="o">=</span><span class="s1">'gouraud'</span><span class="p">,</span> <span class="n">rasterized</span><span class="o">=</span><span class="n">rasterized</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">lines</span><span class="p">:</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">],</span> <span class="n">linewidths</span><span class="o">=</span><span class="n">linewidths</span><span class="p">,</span>
-                       <span class="n">linestyles</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">])</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s1">'k'</span><span class="p">],</span> <span class="n">linewidths</span><span class="o">=</span><span class="n">linewidths</span><span class="p">,</span>
+                       <span class="n">linestyles</span><span class="o">=</span><span class="p">[</span><span class="s1">'-'</span><span class="p">])</span>
 
     <span class="k">if</span> <span class="n">bounds</span><span class="p">:</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="s1">'k-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mf">1e-8</span><span class="p">:</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="s1">'k-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">deminc</span> <span class="ow">and</span> <span class="n">minc</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">radius</span><span class="p">),</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">radius</span><span class="p">),</span> <span class="s1">'k-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
             <span class="n">xa</span> <span class="o">=</span> <span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">minc</span><span class="p">)</span>
             <span class="n">ya</span> <span class="o">=</span> <span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">minc</span><span class="p">)</span>
             <span class="n">xb</span> <span class="o">=</span> <span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">minc</span><span class="p">)</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xa</span><span class="p">,</span> <span class="n">xb</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
             <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">minc</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">xa</span><span class="p">)</span><span class="o">+</span><span class="n">ya</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">radius</span><span class="p">),</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">'k-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">radius</span><span class="p">),</span> <span class="s1">'k-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
 
     <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-4</span>
     <span class="k">if</span> <span class="n">xx</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">eps</span><span class="p">:</span>
@@ -453,7 +453,7 @@
         <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">yy</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">1.01</span><span class="o">*</span><span class="n">yy</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">0.99</span><span class="o">*</span><span class="n">yy</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="mf">1.01</span><span class="o">*</span><span class="n">yy</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">'off'</span><span class="p">)</span>
 
     <span class="c1"># Add the colorbar at the right place</span>
     <span class="n">pos</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_position</span><span class="p">()</span>
@@ -469,12 +469,12 @@
     <span class="c1">#To avoid white lines on pdfs</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">pcolor</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">mplMaj</span> <span class="o">&gt;=</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">mplMin</span> <span class="o">&gt;=</span> <span class="mi">8</span><span class="p">:</span>
-            <span class="n">im</span><span class="o">.</span><span class="n">set_edgecolor</span><span class="p">(</span><span class="s1">&#39;face&#39;</span><span class="p">)</span>
+            <span class="n">im</span><span class="o">.</span><span class="n">set_edgecolor</span><span class="p">(</span><span class="s1">'face'</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">rasterized</span><span class="p">:</span>
                 <span class="n">im</span><span class="o">.</span><span class="n">set_rasterized</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">im</span><span class="o">.</span><span class="n">collections</span><span class="p">:</span>
-                <span class="n">c</span><span class="o">.</span><span class="n">set_edgecolor</span><span class="p">(</span><span class="s1">&#39;face&#39;</span><span class="p">)</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">set_edgecolor</span><span class="p">(</span><span class="s1">'face'</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">rasterized</span><span class="p">:</span>
                     <span class="n">c</span><span class="o">.</span><span class="n">set_rasterized</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
@@ -488,7 +488,7 @@
                <span class="n">normed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pcolor</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">rasterized</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Plot a meridional cut of a given field</span>
 
 <span class="sd">    :param data: the input data (an array of size (ntheta,nr))</span>
@@ -500,7 +500,7 @@
 <span class="sd">    :type label: str</span>
 <span class="sd">    :param levels: the number of levels in the contour</span>
 <span class="sd">    :type levels: int</span>
-<span class="sd">    :param cm: name of the colormap (&#39;jet&#39;, &#39;seismic&#39;, &#39;RdYlBu_r&#39;, etc.)</span>
+<span class="sd">    :param cm: name of the colormap ('jet', 'seismic', 'RdYlBu_r', etc.)</span>
 <span class="sd">    :type cm: str</span>
 <span class="sd">    :param title: display the title of the figure when set to True</span>
 <span class="sd">    :type title: bool</span>
@@ -530,7 +530,7 @@
 <span class="sd">    :param rasterized: when set to True, the rasterization for vector graphics</span>
 <span class="sd">                       is turned on</span>
 <span class="sd">    :type rasterized: bool</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">ntheta</span><span class="p">,</span> <span class="n">nr</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
 
     <span class="n">th</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">ntheta</span><span class="p">)</span>
@@ -571,7 +571,7 @@
                 <span class="n">normed</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">cm</span> <span class="o">==</span> <span class="n">defaultCm</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">normed</span><span class="p">:</span>
-            <span class="n">cm</span> <span class="o">=</span> <span class="s1">&#39;viridis&#39;</span>
+            <span class="n">cm</span> <span class="o">=</span> <span class="s1">'viridis'</span>
 
     <span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">cm</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">vmax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">vmin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -579,13 +579,13 @@
         <span class="n">cs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">levels</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">pcolor</span><span class="p">:</span>
             <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">antialiased</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                               <span class="n">shading</span><span class="o">=</span><span class="s1">&#39;gouraud&#39;</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span>
+                               <span class="n">shading</span><span class="o">=</span><span class="s1">'gouraud'</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span>
                                <span class="n">rasterized</span><span class="o">=</span><span class="n">rasterized</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
+            <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s1">'both'</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">lines</span><span class="p">:</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">],</span> <span class="n">linewidths</span><span class="o">=</span><span class="n">linewidths</span><span class="p">,</span>
-                       <span class="n">extend</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">])</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s1">'k'</span><span class="p">],</span> <span class="n">linewidths</span><span class="o">=</span><span class="n">linewidths</span><span class="p">,</span>
+                       <span class="n">extend</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="p">[</span><span class="s1">'-'</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">normed</span><span class="p">:</span>
             <span class="n">cs</span> <span class="o">=</span> <span class="n">levels</span>
@@ -596,35 +596,35 @@
         <span class="k">if</span> <span class="n">pcolor</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">normed</span><span class="p">:</span>
                 <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">antialiased</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                   <span class="n">shading</span><span class="o">=</span><span class="s1">&#39;gouraud&#39;</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span>
+                                   <span class="n">shading</span><span class="o">=</span><span class="s1">'gouraud'</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span>
                                    <span class="n">rasterized</span><span class="o">=</span><span class="n">rasterized</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">antialiased</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                   <span class="n">shading</span><span class="o">=</span><span class="s1">&#39;gouraud&#39;</span><span class="p">,</span> <span class="n">rasterized</span><span class="o">=</span><span class="n">rasterized</span><span class="p">)</span>
+                                   <span class="n">shading</span><span class="o">=</span><span class="s1">'gouraud'</span><span class="p">,</span> <span class="n">rasterized</span><span class="o">=</span><span class="n">rasterized</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">lines</span><span class="p">:</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">],</span> <span class="n">linewidths</span><span class="o">=</span><span class="n">linewidths</span><span class="p">,</span>
-                       <span class="n">linestyles</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">])</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s1">'k'</span><span class="p">],</span> <span class="n">linewidths</span><span class="o">=</span><span class="n">linewidths</span><span class="p">,</span>
+                       <span class="n">linestyles</span><span class="o">=</span><span class="p">[</span><span class="s1">'-'</span><span class="p">])</span>
 
     <span class="c1"># To avoid white lines on pdfs</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">pcolor</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">mplMaj</span> <span class="o">&gt;=</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">mplMin</span> <span class="o">&gt;=</span> <span class="mi">8</span><span class="p">:</span>
-            <span class="n">im</span><span class="o">.</span><span class="n">set_edgecolor</span><span class="p">(</span><span class="s1">&#39;face&#39;</span><span class="p">)</span>
+            <span class="n">im</span><span class="o">.</span><span class="n">set_edgecolor</span><span class="p">(</span><span class="s1">'face'</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">rasterized</span><span class="p">:</span>
                 <span class="n">im</span><span class="o">.</span><span class="n">set_rasterized</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">im</span><span class="o">.</span><span class="n">collections</span><span class="p">:</span>
-                <span class="n">c</span><span class="o">.</span><span class="n">set_edgecolor</span><span class="p">(</span><span class="s1">&#39;face&#39;</span><span class="p">)</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">set_edgecolor</span><span class="p">(</span><span class="s1">'face'</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">rasterized</span><span class="p">:</span>
                     <span class="n">c</span><span class="o">.</span><span class="n">set_rasterized</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">bounds</span><span class="p">:</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">),</span> <span class="p">(</span><span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">),</span> <span class="s1">&#39;k-&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">),</span> <span class="p">(</span><span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">),</span> <span class="s1">'k-'</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mf">1e-8</span><span class="p">:</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">),</span> <span class="p">(</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">),</span> <span class="s1">&#39;k-&#39;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span> <span class="p">[</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="s1">&#39;k-&#39;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="s1">&#39;k-&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">),</span> <span class="p">(</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">),</span> <span class="s1">'k-'</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span> <span class="p">[</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="s1">'k-'</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">radius</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="s1">'k-'</span><span class="p">)</span>
 
     <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-4</span>
     <span class="k">if</span> <span class="n">xx</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">eps</span><span class="p">:</span>
@@ -639,7 +639,7 @@
         <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">yy</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">1.01</span><span class="o">*</span><span class="n">yy</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">0.99</span><span class="o">*</span><span class="n">yy</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="mf">1.01</span><span class="o">*</span><span class="n">yy</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">'off'</span><span class="p">)</span>
 
     <span class="c1"># Add the colorbar at the right place</span>
     <span class="n">pos</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_position</span><span class="p">()</span>
@@ -657,12 +657,12 @@
 
 <div class="viewcode-block" id="radialContour">
 <a class="viewcode-back" href="../../apiPython/libs.html#magic.plotlib.radialContour">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">radialContour</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">rad</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">proj</span><span class="o">=</span><span class="s1">&#39;hammer&#39;</span><span class="p">,</span> <span class="n">lon_0</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">radialContour</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">rad</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">proj</span><span class="o">=</span><span class="s1">'hammer'</span><span class="p">,</span> <span class="n">lon_0</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                   <span class="n">vmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lat_0</span><span class="o">=</span><span class="mf">30.</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">defaultLevels</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="n">defaultCm</span><span class="p">,</span>
                   <span class="n">normed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                   <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">pcolor</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rasterized</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                  <span class="n">gridLineStyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">gridColor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">gridLineWidth</span><span class="o">=</span><span class="mf">0.7</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+                  <span class="n">gridLineStyle</span><span class="o">=</span><span class="s1">':'</span><span class="p">,</span> <span class="n">gridColor</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span> <span class="n">gridLineWidth</span><span class="o">=</span><span class="mf">0.7</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Plot the radial cut of a given field</span>
 
 <span class="sd">    :param data: the input data (an array of size (nphi,ntheta))</span>
@@ -673,12 +673,12 @@
 <span class="sd">                  display</span>
 <span class="sd">    :type label: str</span>
 <span class="sd">    :param proj: the type of projection. Default is Hammer, in case</span>
-<span class="sd">                 you want to use &#39;ortho&#39; or &#39;moll&#39;, then Basemap is</span>
+<span class="sd">                 you want to use 'ortho' or 'moll', then Basemap is</span>
 <span class="sd">                 required.</span>
 <span class="sd">    :type proj: str</span>
 <span class="sd">    :param levels: the number of levels in the contour</span>
 <span class="sd">    :type levels: int</span>
-<span class="sd">    :param cm: name of the colormap (&#39;jet&#39;, &#39;seismic&#39;, &#39;RdYlBu_r&#39;, etc.)</span>
+<span class="sd">    :param cm: name of the colormap ('jet', 'seismic', 'RdYlBu_r', etc.)</span>
 <span class="sd">    :type cm: str</span>
 <span class="sd">    :param title: display the title of the figure when set to True</span>
 <span class="sd">    :type title: bool</span>
@@ -708,12 +708,12 @@
 <span class="sd">    :param gridColor: this is used to set the color of the grid</span>
 <span class="sd">    :type gridColor: str</span>
 <span class="sd">    :param gridLineStyle: this allows to set the line style of the grid</span>
-<span class="sd">                          (&#39;:&#39;, &#39;-&#39;, &#39;--&#39;)</span>
+<span class="sd">                          (':', '-', '--')</span>
 <span class="sd">    :type gridLineStyle: str</span>
 <span class="sd">    :param gridLineWidth: this is used to tune the thickness of the lines used</span>
 <span class="sd">                          in the grid</span>
 <span class="sd">    :type gridLineWidth: float</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="n">nphi</span><span class="p">,</span> <span class="n">ntheta</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
 
@@ -728,7 +728,7 @@
     <span class="n">meridians</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">180</span><span class="o">+</span><span class="n">delon</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="n">delon</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">fig</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">proj</span> <span class="o">==</span> <span class="s1">&#39;moll&#39;</span> <span class="ow">or</span> <span class="n">proj</span> <span class="o">==</span> <span class="s1">&#39;hammer&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">proj</span> <span class="o">==</span> <span class="s1">'moll'</span> <span class="ow">or</span> <span class="n">proj</span> <span class="o">==</span> <span class="s1">'hammer'</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">title</span> <span class="ow">and</span> <span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">cbar</span><span class="p">:</span>
                     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">9.1</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
@@ -736,7 +736,7 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
                     <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.98</span><span class="p">,</span> <span class="mf">0.87</span><span class="p">])</span>
-                <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: r/ro = </span><span class="si">{:.3f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">rad</span><span class="p">),</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'</span><span class="si">{}</span><span class="s1">: r/ro = </span><span class="si">{:.3f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">rad</span><span class="p">),</span>
                              <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">cbar</span><span class="p">:</span>
@@ -745,10 +745,10 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">8.</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
                     <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.98</span><span class="p">,</span> <span class="mf">0.98</span><span class="p">])</span>
-                <span class="c1">#tit1 = r&#39;{:.2f} Ro&#39;.format(rad)</span>
+                <span class="c1">#tit1 = r'{:.2f} Ro'.format(rad)</span>
                 <span class="c1">#ax.text(0.12, 0.9, tit1, fontsize=16,</span>
-                      <span class="c1">#horizontalalignment=&#39;right&#39;,</span>
-                      <span class="c1">#verticalalignment=&#39;center&#39;,</span>
+                      <span class="c1">#horizontalalignment='right',</span>
+                      <span class="c1">#verticalalignment='center',</span>
                       <span class="c1">#transform = ax.transAxes)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">title</span> <span class="ow">and</span> <span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -758,7 +758,7 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mf">5.5</span><span class="p">))</span>
                     <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.98</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">])</span>
-                <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: r/ro = </span><span class="si">{:.3f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">rad</span><span class="p">),</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'</span><span class="si">{}</span><span class="s1">: r/ro = </span><span class="si">{:.3f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">rad</span><span class="p">),</span>
                              <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">cbar</span><span class="p">:</span>
@@ -767,16 +767,16 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
                     <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.98</span><span class="p">,</span> <span class="mf">0.98</span><span class="p">])</span>
-                <span class="n">tit1</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;</span><span class="si">{:.2f}</span><span class="s1"> Ro&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rad</span><span class="p">)</span>
+                <span class="n">tit1</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">'</span><span class="si">{:.2f}</span><span class="s1"> Ro'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rad</span><span class="p">)</span>
                 <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.12</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="n">tit1</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
-                      <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span>
-                      <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
+                      <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">'right'</span><span class="p">,</span>
+                      <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">'center'</span><span class="p">,</span>
                       <span class="n">transform</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">proj</span> <span class="o">!=</span> <span class="s1">&#39;hammer&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">proj</span> <span class="o">!=</span> <span class="s1">'hammer'</span><span class="p">:</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.basemap</span><span class="w"> </span><span class="kn">import</span> <span class="n">Basemap</span>
         <span class="nb">map</span> <span class="o">=</span> <span class="n">Basemap</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">proj</span><span class="p">,</span> <span class="n">lon_0</span><span class="o">=</span><span class="n">lon_0</span><span class="p">,</span> <span class="n">lat_0</span><span class="o">=</span><span class="n">lat_0</span><span class="p">,</span>
-                      <span class="n">resolution</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
+                      <span class="n">resolution</span><span class="o">=</span><span class="s1">'c'</span><span class="p">)</span>
         <span class="nb">map</span><span class="o">.</span><span class="n">drawparallels</span><span class="p">([</span><span class="mf">0.</span><span class="p">],</span> <span class="n">dashes</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="n">gridLineWidth</span><span class="p">,</span>
                           <span class="n">color</span><span class="o">=</span><span class="n">gridColor</span><span class="p">)</span>
         <span class="nb">map</span><span class="o">.</span><span class="n">drawparallels</span><span class="p">(</span><span class="n">circles</span><span class="p">,</span> <span class="n">dashes</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="n">gridLineWidth</span><span class="p">,</span>
@@ -800,9 +800,9 @@
                     <span class="n">linewidth</span><span class="o">=</span><span class="n">gridLineWidth</span><span class="p">)</span>
         <span class="n">xxout</span><span class="p">,</span> <span class="n">yyout</span>  <span class="o">=</span> <span class="n">hammer2cart</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="c1">#-1e-3)</span>
         <span class="n">xxin</span><span class="p">,</span> <span class="n">yyin</span>  <span class="o">=</span> <span class="n">hammer2cart</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="c1">#+1e-3)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxin</span><span class="p">,</span> <span class="n">yyin</span><span class="p">,</span> <span class="s1">&#39;k-&#39;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxout</span><span class="p">,</span> <span class="n">yyout</span><span class="p">,</span> <span class="s1">&#39;k-&#39;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxin</span><span class="p">,</span> <span class="n">yyin</span><span class="p">,</span> <span class="s1">'k-'</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xxout</span><span class="p">,</span> <span class="n">yyout</span><span class="p">,</span> <span class="s1">'k-'</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">'off'</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.01</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.</span><span class="p">),</span> <span class="mf">1.01</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.</span><span class="p">))</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">2.02</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.</span><span class="p">),</span> <span class="mf">2.02</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.</span><span class="p">))</span>
 
@@ -816,11 +816,11 @@
                 <span class="n">normed</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">cm</span> <span class="o">==</span> <span class="n">defaultCm</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">normed</span><span class="p">:</span>
-            <span class="n">cm</span> <span class="o">=</span> <span class="s1">&#39;viridis&#39;</span>
+            <span class="n">cm</span> <span class="o">=</span> <span class="s1">'viridis'</span>
 
     <span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">cm</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">proj</span> <span class="o">==</span> <span class="s1">&#39;ortho&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">proj</span> <span class="o">==</span> <span class="s1">'ortho'</span><span class="p">:</span>
         <span class="n">lats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">90.</span><span class="p">,</span> <span class="mf">90.</span><span class="p">,</span> <span class="n">ntheta</span><span class="p">)</span>
         <span class="n">dat</span> <span class="o">=</span> <span class="nb">map</span><span class="o">.</span><span class="n">transform_scalar</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">phi</span><span class="o">*</span><span class="mi">180</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">lats</span><span class="p">,</span>
                                    <span class="n">nphi</span><span class="p">,</span> <span class="n">ntheta</span><span class="p">,</span> <span class="n">masked</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -831,15 +831,15 @@
             <span class="n">cs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">levels</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">pcolor</span><span class="p">:</span>
                 <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">antialiased</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                   <span class="n">shading</span><span class="o">=</span><span class="s1">&#39;gouraud&#39;</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span>
+                                   <span class="n">shading</span><span class="o">=</span><span class="s1">'gouraud'</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span>
                                    <span class="n">rasterized</span><span class="o">=</span><span class="n">rasterized</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span>
+                <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span>
                                  <span class="n">rasterized</span><span class="o">=</span><span class="n">rasterized</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">lines</span><span class="p">:</span>
-                <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">],</span> <span class="n">linewidths</span><span class="o">=</span><span class="n">linewidths</span><span class="p">,</span>
-                           <span class="n">extend</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">])</span>
-                <span class="c1">#ax.contour(x, y, data, 1, colors=[&#39;k&#39;])</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s1">'k'</span><span class="p">],</span> <span class="n">linewidths</span><span class="o">=</span><span class="n">linewidths</span><span class="p">,</span>
+                           <span class="n">extend</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="p">[</span><span class="s1">'-'</span><span class="p">])</span>
+                <span class="c1">#ax.contour(x, y, data, 1, colors=['k'])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">normed</span><span class="p">:</span>
                 <span class="n">cs</span> <span class="o">=</span> <span class="n">levels</span>
@@ -850,16 +850,16 @@
             <span class="k">if</span> <span class="n">pcolor</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">normed</span><span class="p">:</span>
                     <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">antialiased</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                       <span class="n">shading</span><span class="o">=</span><span class="s1">&#39;gouraud&#39;</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span>
+                                       <span class="n">shading</span><span class="o">=</span><span class="s1">'gouraud'</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span>
                                        <span class="n">rasterized</span><span class="o">=</span><span class="n">rasterized</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">antialiased</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                       <span class="n">shading</span><span class="o">=</span><span class="s1">&#39;gouraud&#39;</span><span class="p">,</span> <span class="n">rasterized</span><span class="o">=</span><span class="n">rasterized</span><span class="p">)</span>
+                                       <span class="n">shading</span><span class="o">=</span><span class="s1">'gouraud'</span><span class="p">,</span> <span class="n">rasterized</span><span class="o">=</span><span class="n">rasterized</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">lines</span><span class="p">:</span>
-                <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">],</span> <span class="n">linewidths</span><span class="o">=</span><span class="n">linewidths</span><span class="p">,</span>
-                           <span class="n">linestyles</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">])</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s1">'k'</span><span class="p">],</span> <span class="n">linewidths</span><span class="o">=</span><span class="n">linewidths</span><span class="p">,</span>
+                           <span class="n">linestyles</span><span class="o">=</span><span class="p">[</span><span class="s1">'-'</span><span class="p">])</span>
 
 
     <span class="c1"># Add the colorbar at the right place</span>
@@ -875,12 +875,12 @@
     <span class="c1"># To avoid white lines on pdfs</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">pcolor</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">mplMaj</span> <span class="o">&gt;=</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">mplMin</span> <span class="o">&gt;=</span> <span class="mi">8</span><span class="p">:</span>
-            <span class="n">im</span><span class="o">.</span><span class="n">set_edgecolor</span><span class="p">(</span><span class="s1">&#39;face&#39;</span><span class="p">)</span>
+            <span class="n">im</span><span class="o">.</span><span class="n">set_edgecolor</span><span class="p">(</span><span class="s1">'face'</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">rasterized</span><span class="p">:</span>
                 <span class="n">im</span><span class="o">.</span><span class="n">set_rasterized</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">im</span><span class="o">.</span><span class="n">collections</span><span class="p">:</span>
-                <span class="n">c</span><span class="o">.</span><span class="n">set_edgecolor</span><span class="p">(</span><span class="s1">&#39;face&#39;</span><span class="p">)</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">set_edgecolor</span><span class="p">(</span><span class="s1">'face'</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">rasterized</span><span class="p">:</span>
                     <span class="n">c</span><span class="o">.</span><span class="n">set_rasterized</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
@@ -927,7 +927,7 @@
     </div>
     <div class="footer" role="contentinfo">
     &#169; Copyright 2025, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.2.0.
     </div>
   </body>
 </html>

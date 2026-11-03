@@ -9,8 +9,8 @@
     <link rel="stylesheet" type="text/css" href="../../_static/magic.css?v=a97dc138" />
     
     <script src="../../_static/documentation_options.js?v=4b074805"></script>
-    <script src="../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
           title="Search within Magic 6.3 documentation"
@@ -110,49 +110,49 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">magic.greader_single</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">Gsngl</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">magic.greader_double</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">Gdble</span>
-        <span class="n">readingMode</span> <span class="o">=</span> <span class="s1">&#39;f2py&#39;</span>
+        <span class="n">readingMode</span> <span class="o">=</span> <span class="s1">'f2py'</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-        <span class="n">readingMode</span> <span class="o">=</span> <span class="s1">&#39;python&#39;</span>
-    <span class="c1"># print(&#39;read with {}&#39;.format(readingMode))</span>
+        <span class="n">readingMode</span> <span class="o">=</span> <span class="s1">'python'</span>
+    <span class="c1"># print('read with {}'.format(readingMode))</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="n">readingMode</span> <span class="o">=</span> <span class="s1">&#39;python&#39;</span>
+    <span class="n">readingMode</span> <span class="o">=</span> <span class="s1">'python'</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">readingMode</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">getGraphEndianness</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    This function determines the endianness of the graphic files and</span>
 <span class="sd">    also tries to detect wheter there record markers or not.</span>
 
 <span class="sd">    :param filename: input of the filename</span>
 <span class="sd">    :type filename: str</span>
-<span class="sd">    :returns: the endianness of the file (&#39;B&#39;=&#39;big_endian&#39; or</span>
-<span class="sd">              &#39;l&#39;=&#39;little_endian&#39;) and the presence of record</span>
+<span class="sd">    :returns: the endianness of the file ('B'='big_endian' or</span>
+<span class="sd">              'l'='little_endian') and the presence of record</span>
 <span class="sd">              markers</span>
 <span class="sd">    :rtype: list</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="n">npfile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">npfile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s1">'B'</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">st</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="s1">&#39;S20&#39;</span><span class="p">)</span>
+            <span class="n">st</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="s1">'S20'</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">st</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span>
-            <span class="n">endian</span> <span class="o">=</span> <span class="s1">&#39;B&#39;</span>
+            <span class="n">endian</span> <span class="o">=</span> <span class="s1">'B'</span>
         <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-            <span class="n">endian</span> <span class="o">=</span> <span class="s1">&#39;l&#39;</span>
-        <span class="n">access</span> <span class="o">=</span> <span class="s1">&#39;rm&#39;</span>
+            <span class="n">endian</span> <span class="o">=</span> <span class="s1">'l'</span>
+        <span class="n">access</span> <span class="o">=</span> <span class="s1">'rm'</span>
     <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'rb'</span><span class="p">)</span>
         <span class="c1"># Little endian</span>
         <span class="n">version</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">endian</span> <span class="o">=</span> <span class="s1">&#39;l&#39;</span>
+        <span class="n">endian</span> <span class="o">=</span> <span class="s1">'l'</span>
         <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">version</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
-            <span class="n">version</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;&gt;i4&#39;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">endian</span> <span class="o">=</span> <span class="s1">&#39;B&#39;</span>
-        <span class="n">access</span> <span class="o">=</span> <span class="s1">&#39;st&#39;</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'rb'</span><span class="p">)</span>
+            <span class="n">version</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">'&gt;i4'</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">endian</span> <span class="o">=</span> <span class="s1">'B'</span>
+        <span class="n">access</span> <span class="o">=</span> <span class="s1">'st'</span>
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
     <span class="k">return</span> <span class="n">endian</span><span class="p">,</span> <span class="n">access</span>
@@ -161,7 +161,7 @@
 <div class="viewcode-block" id="MagicGraph">
 <a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicGraph">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">MagicGraph</span><span class="p">(</span><span class="n">MagicSetup</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    This class allows to read the 3-D graphic outputs of the MagIC code</span>
 <span class="sd">    (:ref:`G_#.TAG &lt;secGraphFile&gt;` and G_ave.TAG) files. Those are</span>
 <span class="sd">    binary unformatted outputs, there are therefore two ways to load them:</span>
@@ -173,19 +173,19 @@
 <span class="sd">         files.</span>
 
 <span class="sd">    &gt;&gt;&gt; # Regular G files</span>
-<span class="sd">    &gt;&gt;&gt; gr = MagicGraph(ivar=1, tag=&#39;N0m2a&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; gr = MagicGraph(ivar=1, tag='N0m2a')</span>
 <span class="sd">    &gt;&gt;&gt; print(gr.vr.shape) # shape of vr</span>
 <span class="sd">    &gt;&gt;&gt; print(gr.ek) # print ekman number</span>
 <span class="sd">    &gt;&gt;&gt; print(gr.minc) # azimuthal symmetry</span>
 <span class="sd">    &gt;&gt;&gt; # Averaged G file with double precision</span>
-<span class="sd">    &gt;&gt;&gt; gr = MagicGraph(ave=True, tag=&#39;N0m2&#39;, precision=np.float64)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    &gt;&gt;&gt; gr = MagicGraph(ave=True, tag='N0m2', precision=np.float64)</span>
+<span class="sd">    """</span>
 
 <div class="viewcode-block" id="MagicGraph.__init__">
 <a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicGraph.__init__">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ivar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ivar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">'.'</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                  <span class="n">ave</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        :param ave: when set to True, it tries to find an average</span>
 <span class="sd">                    G file (G_ave.TAG)</span>
 <span class="sd">        :type ave: bool</span>
@@ -201,66 +201,66 @@
 <span class="sd">        :type datadir: str</span>
 <span class="sd">        :param precision: single or double precision (default np.float32)</span>
 <span class="sd">        :type precision: str</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">=</span> <span class="n">precision</span>
 
         <span class="k">if</span> <span class="n">ave</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;G_ave&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">'G_ave'</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;G_&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">'G_'</span>
 
         <span class="k">if</span> <span class="n">tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">ivar</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">file</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">ivar</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+                <span class="n">file</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{}{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">ivar</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
                 <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">pattern</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">*</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">tag</span><span class="p">))</span>
+                <span class="n">pattern</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="s1">'</span><span class="si">{}</span><span class="s1">*</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">tag</span><span class="p">))</span>
                 <span class="n">files</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="n">filename</span> <span class="o">=</span> <span class="n">files</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No such tag... try again&#39;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">'No such tag... try again'</span><span class="p">)</span>
                     <span class="k">return</span>
 
-            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;log.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">'log.</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">)):</span>
                 <span class="n">MagicSetup</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="n">datadir</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                    <span class="n">nml</span><span class="o">=</span><span class="s1">&#39;log.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">))</span>
+                                    <span class="n">nml</span><span class="o">=</span><span class="s1">'log.</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">ivar</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">pattern</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}{}</span><span class="s1">*&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">ivar</span><span class="p">))</span>
+                <span class="n">pattern</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="s1">'</span><span class="si">{}{}</span><span class="s1">*'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">ivar</span><span class="p">))</span>
                 <span class="n">files</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
                 <span class="n">filename</span> <span class="o">=</span> <span class="n">files</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">pattern</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">*&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                <span class="n">pattern</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="s1">'</span><span class="si">{}</span><span class="s1">*'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
                 <span class="n">files</span> <span class="o">=</span> <span class="n">scanDir</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
                 <span class="n">filename</span> <span class="o">=</span> <span class="n">files</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="c1"># Determine the setup</span>
-            <span class="n">mask</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;.*\.(.*)&#39;</span><span class="p">)</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">'.*\.(.*)'</span><span class="p">)</span>
             <span class="n">ending</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">groups</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;log.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ending</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">'log.</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ending</span><span class="p">)):</span>
                 <span class="n">MagicSetup</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="n">datadir</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                    <span class="n">nml</span><span class="o">=</span><span class="s1">&#39;log.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ending</span><span class="p">))</span>
+                                    <span class="n">nml</span><span class="o">=</span><span class="s1">'log.</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ending</span><span class="p">))</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No such file&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">'No such file'</span><span class="p">)</span>
             <span class="k">return</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">quiet</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Reading </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">'Reading </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
 
         <span class="c1"># Get file endianness</span>
         <span class="n">endian</span><span class="p">,</span> <span class="n">access</span> <span class="o">=</span> <span class="n">getGraphEndianness</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">readingMode</span> <span class="o">!=</span> <span class="s1">&#39;python&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">readingMode</span> <span class="o">!=</span> <span class="s1">'python'</span><span class="p">:</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">:</span>
                 <span class="n">G</span> <span class="o">=</span> <span class="n">Gsngl</span><span class="o">.</span><span class="n">greader_single</span>
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">:</span>
                 <span class="n">G</span> <span class="o">=</span> <span class="n">Gdble</span><span class="o">.</span><span class="n">greader_double</span>
 
-            <span class="k">if</span> <span class="n">access</span> <span class="o">==</span> <span class="s1">&#39;st&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">access</span> <span class="o">==</span> <span class="s1">'st'</span><span class="p">:</span>
                 <span class="n">G</span><span class="o">.</span><span class="n">readg_stream</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="n">endian</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">access</span> <span class="o">==</span> <span class="s1">&#39;rm&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">access</span> <span class="o">==</span> <span class="s1">'rm'</span><span class="p">:</span>
                 <span class="n">G</span><span class="o">.</span><span class="n">readg</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="n">endian</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">nr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nr</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">n_r_ic_max</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nric</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
@@ -299,39 +299,39 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">Btheta_ic</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">bt_ic</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">Bphi_ic</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">bp_ic</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">access</span> <span class="o">==</span> <span class="s1">&#39;rm&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">access</span> <span class="o">==</span> <span class="s1">'rm'</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">read_record_marker</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="n">quiet</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">access</span> <span class="o">==</span> <span class="s1">&#39;st&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">access</span> <span class="o">==</span> <span class="s1">'st'</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">read_stream</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="MagicGraph.read_stream">
 <a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicGraph.read_stream">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">read_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        This function is used to read a Graphic file that has no record marker.</span>
 
 <span class="sd">        :param filename: name of the graphic file</span>
 <span class="sd">        :type filename: str</span>
 <span class="sd">        :param endian: endianness of the file</span>
 <span class="sd">        :type endian: str</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">endian</span> <span class="o">==</span> <span class="s1">&#39;B&#39;</span><span class="p">:</span>
-            <span class="n">prefix</span> <span class="o">=</span> <span class="s1">&#39;&gt;&#39;</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">endian</span> <span class="o">==</span> <span class="s1">'B'</span><span class="p">:</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="s1">'&gt;'</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">prefix</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="s1">''</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">:</span>
             <span class="n">suffix</span> <span class="o">=</span> <span class="mi">4</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">suffix</span> <span class="o">=</span> <span class="mi">8</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'rb'</span><span class="p">)</span>
 
         <span class="c1"># Header</span>
-        <span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">i</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="n">fmt</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{}</span><span class="s1">i</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
         <span class="n">version</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">fmt</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">S64&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+        <span class="n">fmt</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{}</span><span class="s1">S64'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
         <span class="n">runID</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">fmt</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">f</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="n">fmt</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{}</span><span class="s1">f</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">fmt</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">version</span> <span class="o">&gt;</span> <span class="mi">13</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">raxi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ek</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stef</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prmag</span><span class="p">,</span> \
@@ -340,7 +340,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">raxi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ek</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prmag</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> \
                 <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">fmt</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">stef</span> <span class="o">=</span> <span class="mf">0.</span>
-        <span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">i</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="n">fmt</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{}</span><span class="s1">i</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_r_ic_max</span> <span class="o">=</span> \
             <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">fmt</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">npI</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntheta</span><span class="o">*</span><span class="mi">2</span><span class="p">:</span>
@@ -352,7 +352,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">l_heat</span><span class="p">,</span> <span class="n">l_chem</span><span class="p">,</span> <span class="n">l_mag</span><span class="p">,</span> <span class="n">l_press</span><span class="p">,</span> <span class="n">l_cond_ic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">fmt</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
             <span class="n">l_phase</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">f</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="n">fmt</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{}</span><span class="s1">f</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">colatitude</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">fmt</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ntheta</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">fmt</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nr</span><span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span> <span class="n">l_mag</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_r_ic_max</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="p">):</span>
@@ -423,7 +423,7 @@
 <div class="viewcode-block" id="MagicGraph.read_record_marker">
 <a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicGraph.read_record_marker">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">read_record_marker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        This function is used to read a Graphic file that contains record markers.</span>
 
 <span class="sd">        :param filename: name of the graphic file</span>
@@ -432,14 +432,14 @@
 <span class="sd">        :type endian: str</span>
 <span class="sd">        :param quiet: when set to True, makes the output silent</span>
 <span class="sd">        :type quiet: bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Read data</span>
         <span class="n">inline</span> <span class="o">=</span> <span class="n">npfile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="n">endian</span><span class="p">)</span>
 
         <span class="c1"># Read the header</span>
-        <span class="n">version</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="s1">&#39;|S20&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="s1">'|S20'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">version</span> <span class="o">=</span> <span class="n">version</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
-        <span class="n">runID</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="s1">&#39;|S64&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">runID</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="s1">'|S64'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">n_r_max</span><span class="p">,</span> <span class="n">n_theta_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">,</span> <span class="n">n_r_ic_max</span><span class="p">,</span> <span class="n">minc</span><span class="p">,</span> \
             <span class="n">nThetaBs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ek</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prmag</span><span class="p">,</span> \
             <span class="bp">self</span><span class="o">.</span><span class="n">radratio</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">)</span>
@@ -455,10 +455,10 @@
         <span class="n">nThetaBs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">nThetaBs</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">quiet</span><span class="p">:</span>
-            <span class="n">st</span> <span class="o">=</span> <span class="s1">&#39;Rayleigh = </span><span class="si">{:.1e}</span><span class="s1">, Ekman = </span><span class="si">{:.1e}</span><span class="s1">, Prandtl = </span><span class="si">{:.1e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">st</span> <span class="o">=</span> <span class="s1">'Rayleigh = </span><span class="si">{:.1e}</span><span class="s1">, Ekman = </span><span class="si">{:.1e}</span><span class="s1">, Prandtl = </span><span class="si">{:.1e}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ek</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">st</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;nr = </span><span class="si">{}</span><span class="s1">, nth = </span><span class="si">{}</span><span class="s1">, nphi = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">'nr = </span><span class="si">{}</span><span class="s1">, nth = </span><span class="si">{}</span><span class="s1">, nphi = </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                   <span class="bp">self</span><span class="o">.</span><span class="n">nr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">colatitude</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">)</span>
@@ -481,12 +481,12 @@
                                  <span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">)</span>
                 <span class="n">Btheta_ic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">Br_ic</span><span class="p">)</span>
                 <span class="n">Bphi_ic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">Br_ic</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_8&#39;</span> <span class="ow">or</span> \
-           <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_10&#39;</span> <span class="ow">or</span> \
-           <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_12&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_8'</span> <span class="ow">or</span> \
+           <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_10'</span> <span class="ow">or</span> \
+           <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_12'</span><span class="p">:</span>
             <span class="n">pressure</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">entropy</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_11&#39;</span> <span class="ow">or</span> \
-           <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_12&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_11'</span> <span class="ow">or</span> \
+           <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_12'</span><span class="p">:</span>
             <span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">entropy</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nr</span><span class="o">*</span><span class="n">nThetaBs</span><span class="p">):</span>
@@ -498,10 +498,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">rad</span>
             <span class="n">nth_loc</span> <span class="o">=</span> <span class="n">ilat2</span> <span class="o">-</span> <span class="n">ilat1</span> <span class="o">+</span> <span class="mi">1</span>
 
-            <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_9&#39;</span> <span class="ow">or</span> \
-               <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_10&#39;</span> <span class="ow">or</span> \
-               <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_11&#39;</span> <span class="ow">or</span> \
-               <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_12&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_9'</span> <span class="ow">or</span> \
+               <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_10'</span> <span class="ow">or</span> \
+               <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_11'</span> <span class="ow">or</span> \
+               <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_12'</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prmag</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span>
                                             <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nth_loc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">))</span>
@@ -515,13 +515,13 @@
                     <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span>
                                             <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nth_loc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">))</span>
                     <span class="n">vphi</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">T</span>
-                    <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_11&#39;</span> <span class="ow">or</span> \
-                       <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_12&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_11'</span> <span class="ow">or</span> \
+                       <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_12'</span><span class="p">:</span>
                         <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span>
                                                 <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nth_loc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">))</span>
                         <span class="n">xi</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">T</span>
-                    <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_10&#39;</span> <span class="ow">or</span> \
-                       <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_12&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_10'</span> <span class="ow">or</span> \
+                       <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_12'</span><span class="p">:</span>
                         <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span>
                                                 <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nth_loc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">))</span>
                         <span class="n">pressure</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">T</span>
@@ -549,13 +549,13 @@
                     <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span>
                                             <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nth_loc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">))</span>
                     <span class="n">vphi</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">T</span>
-                    <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_11&#39;</span> <span class="ow">or</span> \
-                       <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_12&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_11'</span> <span class="ow">or</span> \
+                       <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_12'</span><span class="p">:</span>
                         <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span>
                                                 <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nth_loc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">))</span>
                         <span class="n">xi</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">T</span>
-                    <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_10&#39;</span> <span class="ow">or</span> \
-                       <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_12&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_10'</span> <span class="ow">or</span> \
+                       <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_12'</span><span class="p">:</span>
                         <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span>
                                                 <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nth_loc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">))</span>
                         <span class="n">pressure</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">T</span>
@@ -565,7 +565,7 @@
                     <span class="c1"># symbol that accounts for 2 additionnal floats</span>
                     <span class="c1"># For the last line of the chunk, we should not</span>
                     <span class="c1"># read the last symbol</span>
-                    <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_8&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_8'</span><span class="p">:</span>
                         <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span>
                             <span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span>
                             <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">nth_loc</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span>
@@ -585,7 +585,7 @@
                     <span class="n">vr</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
                     <span class="n">vtheta</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
                     <span class="n">vphi</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
-                    <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_8&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_8'</span><span class="p">:</span>
                         <span class="n">pressure</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
                         <span class="n">Br</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
                         <span class="n">Btheta</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
@@ -595,7 +595,7 @@
                         <span class="n">Btheta</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
                         <span class="n">Bphi</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_8&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_8'</span><span class="p">:</span>
                         <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span>
                             <span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span>
                             <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">nth_loc</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span>
@@ -616,7 +616,7 @@
                     <span class="n">vr</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
                     <span class="n">vtheta</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
                     <span class="n">vphi</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
-                    <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_8&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_8'</span><span class="p">:</span>
                         <span class="n">pressure</span><span class="p">[:,</span> <span class="n">ilat1</span><span class="p">:</span><span class="n">ilat2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prmag</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_r_ic_max</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -630,10 +630,10 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">radius_ic</span><span class="p">[</span><span class="n">ir</span><span class="p">]</span> <span class="o">=</span> <span class="n">rad</span>
                 <span class="n">nth_loc</span> <span class="o">=</span> <span class="n">ilat2</span> <span class="o">-</span> <span class="n">ilat1</span> <span class="o">+</span> <span class="mi">1</span>
 
-                <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_9&#39;</span> <span class="ow">or</span> \
-                   <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_10&#39;</span> <span class="ow">or</span> \
-                   <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_11&#39;</span> <span class="ow">or</span> \
-                   <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_12&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_9'</span> <span class="ow">or</span> \
+                   <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_10'</span> <span class="ow">or</span> \
+                   <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_11'</span> <span class="ow">or</span> \
+                   <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_12'</span><span class="p">:</span>
 
                     <span class="n">data</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">fort_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span>
                                             <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nth_loc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">npI</span><span class="p">))</span>
@@ -675,12 +675,12 @@
                 <span class="n">Br_ic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rearangeLat</span><span class="p">(</span><span class="n">Br_ic</span><span class="p">)</span>
                 <span class="n">Btheta_ic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rearangeLat</span><span class="p">(</span><span class="n">Btheta_ic</span><span class="p">)</span>
                 <span class="n">Bphi_ic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rearangeLat</span><span class="p">(</span><span class="n">Bphi_ic</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_11&#39;</span> <span class="ow">or</span> \
-           <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_12&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_11'</span> <span class="ow">or</span> \
+           <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_12'</span><span class="p">:</span>
             <span class="n">xi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rearangeLat</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_8&#39;</span> <span class="ow">or</span> \
-           <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_10&#39;</span> <span class="ow">or</span> \
-           <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_12&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_8'</span> <span class="ow">or</span> \
+           <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_10'</span> <span class="ow">or</span> \
+           <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_12'</span><span class="p">:</span>
             <span class="n">pressure</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rearangeLat</span><span class="p">(</span><span class="n">pressure</span><span class="p">)</span>
 
         <span class="c1"># Normalise r</span>
@@ -703,19 +703,19 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">Btheta_ic</span> <span class="o">=</span> <span class="n">Btheta_ic</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">Bphi_ic</span> <span class="o">=</span> <span class="n">Bphi_ic</span>
 
-        <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_11&#39;</span> <span class="ow">or</span> \
-           <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_12&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_11'</span> <span class="ow">or</span> \
+           <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_12'</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">xi</span> <span class="o">=</span> <span class="n">xi</span>
-        <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_8&#39;</span> <span class="ow">or</span> \
-           <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_10&#39;</span> <span class="ow">or</span> \
-           <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;Graphout_Version_12&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_8'</span> <span class="ow">or</span> \
+           <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_10'</span> <span class="ow">or</span> \
+           <span class="n">version</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">'Graphout_Version_12'</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pre</span> <span class="o">=</span> <span class="n">pressure</span></div>
 
 
 <div class="viewcode-block" id="MagicGraph.rearangeLat">
 <a class="viewcode-back" href="../../apiPython/graphMovCoeff.html#magic.MagicGraph.rearangeLat">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">rearangeLat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        This function is used to unfold the colatitudes</span>
 
 <span class="sd">        :param field: input array with MagIC ordering of colatitudes (i.e.</span>
@@ -724,7 +724,7 @@
 <span class="sd">        :type field: numpy.ndarray</span>
 <span class="sd">        :return: an array with the regular ordering of the colatitudes</span>
 <span class="sd">        :rtype: numpy.ndarray</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">even</span> <span class="o">=</span> <span class="n">field</span><span class="p">[:,</span> <span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="p">:]</span>
         <span class="n">odd</span> <span class="o">=</span> <span class="n">field</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="p">:]</span>
 
@@ -772,7 +772,7 @@
     </div>
     <div class="footer" role="contentinfo">
     &#169; Copyright 2025, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.2.0.
     </div>
   </body>
 </html>

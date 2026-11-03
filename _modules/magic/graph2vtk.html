@@ -9,8 +9,8 @@
     <link rel="stylesheet" type="text/css" href="../../_static/magic.css?v=a97dc138" />
     
     <script src="../../_static/documentation_options.js?v=4b074805"></script>
-    <script src="../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
           title="Search within Magic 6.3 documentation"
@@ -110,7 +110,7 @@
 <div class="viewcode-block" id="sph2cart_scal">
 <a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.sph2cart_scal">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">sph2cart_scal</span><span class="p">(</span><span class="n">scals</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    This function interpolates a series of scalar fields from the spherical</span>
 <span class="sd">    coordinates to the cartesian coordinates.</span>
 
@@ -129,7 +129,7 @@
 <span class="sd">    :returns: a tuple that contains the scalars, the max of the grid</span>
 <span class="sd">              and the grid spacing</span>
 <span class="sd">    :rtype: (numpy.ndarray[nscals,nz,ny,nx],float,float)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">nscals</span><span class="p">,</span> <span class="n">nphi</span><span class="p">,</span> <span class="n">nt</span><span class="p">,</span> <span class="n">nr</span> <span class="o">=</span> <span class="n">scals</span><span class="o">.</span><span class="n">shape</span>
     <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">minc</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">minc</span><span class="p">,</span> <span class="n">nphi</span><span class="p">)</span>
     <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">nt</span><span class="p">)</span>
@@ -156,7 +156,7 @@
 
     <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">new_ip</span><span class="p">,</span> <span class="n">new_it</span><span class="p">,</span> <span class="n">new_ir</span><span class="p">])</span>
 
-    <span class="n">scals_cart</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nscals</span><span class="p">,</span> <span class="n">nz</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nx</span><span class="p">),</span> <span class="s1">&#39;f&#39;</span><span class="p">)</span>
+    <span class="n">scals_cart</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nscals</span><span class="p">,</span> <span class="n">nz</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nx</span><span class="p">),</span> <span class="s1">'f'</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">iscal</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nscals</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">iscal</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># radius has been already calculated</span>
             <span class="n">scals_cart</span><span class="p">[</span><span class="n">iscal</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_r</span>
@@ -174,7 +174,7 @@
 <div class="viewcode-block" id="sph2cart_vec">
 <a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.sph2cart_vec">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">sph2cart_vec</span><span class="p">(</span><span class="n">vecr</span><span class="p">,</span> <span class="n">vect</span><span class="p">,</span> <span class="n">vecp</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    This function interpolates a series of vector fields from the spherical</span>
 <span class="sd">    coordinates to the cartesian coordinates.</span>
 
@@ -196,7 +196,7 @@
 <span class="sd">    :type minc: int</span>
 <span class="sd">    :returns: a tuple that contains the three vectors components</span>
 <span class="sd">    :rtype: (numpy.ndarray[nvecs,nz,ny,nx],...)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">nvecs</span><span class="p">,</span> <span class="n">nphi</span><span class="p">,</span> <span class="n">nt</span><span class="p">,</span> <span class="n">nr</span> <span class="o">=</span> <span class="n">vecr</span><span class="o">.</span><span class="n">shape</span>
     <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">minc</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">minc</span><span class="p">,</span> <span class="n">nphi</span><span class="p">)</span>
     <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">nt</span><span class="p">)</span>
@@ -223,7 +223,7 @@
 
     <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">new_ip</span><span class="p">,</span> <span class="n">new_it</span><span class="p">,</span> <span class="n">new_ir</span><span class="p">])</span>
 
-    <span class="n">vecx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nvecs</span><span class="p">,</span> <span class="n">nz</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nx</span><span class="p">),</span> <span class="s1">&#39;f&#39;</span><span class="p">)</span>
+    <span class="n">vecx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nvecs</span><span class="p">,</span> <span class="n">nz</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nx</span><span class="p">),</span> <span class="s1">'f'</span><span class="p">)</span>
     <span class="n">vecy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">vecx</span><span class="p">)</span>
     <span class="n">vecz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">vecx</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">ivec</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nvecs</span><span class="p">):</span>
@@ -254,7 +254,7 @@
 <div class="viewcode-block" id="Graph2Vtk">
 <a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.Graph2Vtk">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Graph2Vtk</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    This class allows to transform an input graphic file to a file format</span>
 <span class="sd">    readable by paraview/visit or mayavi. It also allows to compute a possible</span>
 <span class="sd">    potential extrapolation of the field lines in an arbitrary outer</span>
@@ -263,34 +263,34 @@
 <span class="sd">    &gt;&gt;&gt; # Load a graphic file</span>
 <span class="sd">    &gt;&gt;&gt; gr = MagicGraph(ivar=1)</span>
 <span class="sd">    &gt;&gt;&gt; # store myOut.vts</span>
-<span class="sd">    &gt;&gt;&gt; Graph2Vtk(gr, &#39;myOut&#39;, outType=&#39;vts&#39;)</span>
-<span class="sd">    &gt;&gt;&gt; # store u&#39; and B for the vector fields and vortz and T for the scalars</span>
-<span class="sd">    &gt;&gt;&gt; Graph2Vtk(gr, scals=[&#39;temp&#39;, &#39;vortz&#39;], vecs=[&#39;ufluct&#39;, &#39;B&#39;])</span>
-<span class="sd">    &gt;&gt;&gt; # store only T&#39;</span>
-<span class="sd">    &gt;&gt;&gt; Graph2Vtk(gr, scals=[&#39;tempfluct&#39;], vecs=[])</span>
+<span class="sd">    &gt;&gt;&gt; Graph2Vtk(gr, 'myOut', outType='vts')</span>
+<span class="sd">    &gt;&gt;&gt; # store u' and B for the vector fields and vortz and T for the scalars</span>
+<span class="sd">    &gt;&gt;&gt; Graph2Vtk(gr, scals=['temp', 'vortz'], vecs=['ufluct', 'B'])</span>
+<span class="sd">    &gt;&gt;&gt; # store only T'</span>
+<span class="sd">    &gt;&gt;&gt; Graph2Vtk(gr, scals=['tempfluct'], vecs=[])</span>
 <span class="sd">    &gt;&gt;&gt; # store only B with its potential extrapolation up to 3*r_cmb</span>
-<span class="sd">    &gt;&gt;&gt; Graph2Vtk(gr, scals=[], vecs=[&#39;B&#39;], potExtra=True, ratio_out=3)</span>
+<span class="sd">    &gt;&gt;&gt; Graph2Vtk(gr, scals=[], vecs=['B'], potExtra=True, ratio_out=3)</span>
 <span class="sd">    &gt;&gt;&gt; # Extrapolate on a cartesian grid of size 128^3</span>
-<span class="sd">    &gt;&gt;&gt; Graph2Vtk(gr, outType=&#39;vti&#39;, nx=128, ny=128, nz=128)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    &gt;&gt;&gt; Graph2Vtk(gr, outType='vti', nx=128, ny=128, nz=128)</span>
+<span class="sd">    """</span>
 
 <div class="viewcode-block" id="Graph2Vtk.__init__">
 <a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.Graph2Vtk.__init__">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gr</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">,</span> <span class="n">scals</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;vr&#39;</span><span class="p">,</span> <span class="s1">&#39;emag&#39;</span><span class="p">,</span> <span class="s1">&#39;tfluct&#39;</span><span class="p">],</span>
-                 <span class="n">vecs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">],</span> <span class="n">potExtra</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ratio_out</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nrout</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
-                 <span class="n">deminc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">outType</span><span class="o">=</span><span class="s1">&#39;vts&#39;</span><span class="p">,</span> <span class="n">nFiles</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gr</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">'out'</span><span class="p">,</span> <span class="n">scals</span><span class="o">=</span><span class="p">[</span><span class="s1">'vr'</span><span class="p">,</span> <span class="s1">'emag'</span><span class="p">,</span> <span class="s1">'tfluct'</span><span class="p">],</span>
+                 <span class="n">vecs</span><span class="o">=</span><span class="p">[</span><span class="s1">'u'</span><span class="p">,</span> <span class="s1">'B'</span><span class="p">],</span> <span class="n">potExtra</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ratio_out</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nrout</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+                 <span class="n">deminc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">outType</span><span class="o">=</span><span class="s1">'vts'</span><span class="p">,</span> <span class="n">nFiles</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span>
                  <span class="n">labFrame</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        :param filename: the file name of the output (without extension)</span>
 <span class="sd">        :type filename: str</span>
 <span class="sd">        :param gr: the input graphic file one wants to transform to vts/vti</span>
 <span class="sd">        :type gr: magic.MagicGraph</span>
-<span class="sd">        :param scals: a list that contains the possible input scalars: &#39;entropy&#39;,</span>
-<span class="sd">                      &#39;vr&#39;, &#39;vp&#39;, &#39;tfluct&#39;, &#39;vortz&#39;, &#39;vortzfluct&#39;, &#39;ekin&#39;,</span>
-<span class="sd">                      &#39;emag&#39;, &#39;vortr&#39;, &#39;colat&#39;</span>
+<span class="sd">        :param scals: a list that contains the possible input scalars: 'entropy',</span>
+<span class="sd">                      'vr', 'vp', 'tfluct', 'vortz', 'vortzfluct', 'ekin',</span>
+<span class="sd">                      'emag', 'vortr', 'colat'</span>
 <span class="sd">        :type scals: list(str)</span>
-<span class="sd">        :param vecs: a list that contains the possible input vectors: &#39;u&#39;,</span>
-<span class="sd">                     &#39;b&#39;, &#39;ufluct&#39;, &#39;bfluct&#39;</span>
+<span class="sd">        :param vecs: a list that contains the possible input vectors: 'u',</span>
+<span class="sd">                     'b', 'ufluct', 'bfluct'</span>
 <span class="sd">        :type vecs: list(str)</span>
 <span class="sd">        :param potExtra: when set to True, calculates the potential extrapolation</span>
 <span class="sd">                         of the magnetic field up to ratio_out*r_cmb</span>
@@ -306,7 +306,7 @@
 <span class="sd">                       possible azimuthal symmetry</span>
 <span class="sd">        :type deminc: bool</span>
 <span class="sd">        :param outType: nature of the VTK file produced. This can be either</span>
-<span class="sd">                        &#39;vts&#39; for the spherical grid or &#39;vti&#39; for an extrapolation</span>
+<span class="sd">                        'vts' for the spherical grid or 'vti' for an extrapolation</span>
 <span class="sd">                        on a cartesian grid</span>
 <span class="sd">        :type outType: str</span>
 <span class="sd">        :param nFiles: number of output chunks in case of parallel vts file format</span>
@@ -320,7 +320,7 @@
 <span class="sd">        :type nz: int</span>
 <span class="sd">        :param labFrame: when set to True, transform the velocity to the lab frame</span>
 <span class="sd">        :type labFrame: bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
 
         <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
@@ -339,53 +339,53 @@
             <span class="n">gr</span><span class="o">.</span><span class="n">vphi</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="o">+</span><span class="n">s3D</span><span class="o">/</span><span class="n">gr</span><span class="o">.</span><span class="n">ek</span>
 
         <span class="n">keyScal</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;radius&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;entropy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;s&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;T&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;S&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;emag&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;vortz&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;vr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;ur&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;vp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;vphi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;uphi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;vphi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;tfluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;entropyfluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;tempfluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;vortzfluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">7</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;vortr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;flucttemp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">9</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;ekin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;br&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">11</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;Br&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">11</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;vs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;Vs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;us&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;colat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">13</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;theta&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">13</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;xi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">14</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;Xi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">14</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;xifluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">15</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;Xifluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">15</span>
-        <span class="n">keyScal</span><span class="p">[</span><span class="s1">&#39;phase&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'radius'</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'entropy'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'temperature'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'temp'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'s'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'t'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'T'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'S'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'emag'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'vortz'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'vr'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'ur'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'vp'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'vphi'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'uphi'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'vphi'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'tfluct'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'entropyfluct'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'tempfluct'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'vortzfluct'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">7</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'vortr'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'flucttemp'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">9</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'ekin'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'br'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">11</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'Br'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">11</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'vs'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'Vs'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'us'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'colat'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">13</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'theta'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">13</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'xi'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">14</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'Xi'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">14</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'xifluct'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">15</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'Xifluct'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">15</span>
+        <span class="n">keyScal</span><span class="p">[</span><span class="s1">'phase'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16</span>
 
         <span class="c1"># Change default scalars and vectors in non-magnetic cases</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="s1">&#39;mode&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="s1">'mode'</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">7</span> <span class="ow">or</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
-                <span class="k">if</span> <span class="s1">&#39;emag&#39;</span> <span class="ow">in</span> <span class="n">keyScal</span><span class="p">:</span>
-                    <span class="n">keyScal</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">&#39;emag&#39;</span><span class="p">)</span>
-                <span class="k">if</span> <span class="s1">&#39;br&#39;</span> <span class="ow">in</span> <span class="n">keyScal</span><span class="p">:</span>
-                    <span class="n">keyScal</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">&#39;br&#39;</span><span class="p">)</span>
-                <span class="k">if</span> <span class="s1">&#39;Br&#39;</span> <span class="ow">in</span> <span class="n">keyScal</span><span class="p">:</span>
-                    <span class="n">keyScal</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">&#39;Br&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">'emag'</span> <span class="ow">in</span> <span class="n">keyScal</span><span class="p">:</span>
+                    <span class="n">keyScal</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">'emag'</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">'br'</span> <span class="ow">in</span> <span class="n">keyScal</span><span class="p">:</span>
+                    <span class="n">keyScal</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">'br'</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">'Br'</span> <span class="ow">in</span> <span class="n">keyScal</span><span class="p">:</span>
+                    <span class="n">keyScal</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">'Br'</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scals</span><span class="p">),</span> <span class="s1">&#39;i&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scals</span><span class="p">),</span> <span class="s1">'i'</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">scal</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">scals</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">scal</span> <span class="ow">in</span> <span class="n">keyScal</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">keyScal</span><span class="p">[</span><span class="n">scal</span><span class="p">]</span>
@@ -398,33 +398,33 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">nscals</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">)</span>
 
         <span class="n">keyVec</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">keyVec</span><span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">keyVec</span><span class="p">[</span><span class="s1">&#39;U&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">keyVec</span><span class="p">[</span><span class="s1">&#39;v&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">keyVec</span><span class="p">[</span><span class="s1">&#39;vel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">keyVec</span><span class="p">[</span><span class="s1">&#39;V&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">keyVec</span><span class="p">[</span><span class="s1">&#39;ufluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
-        <span class="n">keyVec</span><span class="p">[</span><span class="s1">&#39;vfluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
-        <span class="n">keyVec</span><span class="p">[</span><span class="s1">&#39;Ufluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
-        <span class="n">keyVec</span><span class="p">[</span><span class="s1">&#39;Vfluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
-        <span class="n">keyVec</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
-        <span class="n">keyVec</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
-        <span class="n">keyVec</span><span class="p">[</span><span class="s1">&#39;mag&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
-        <span class="n">keyVec</span><span class="p">[</span><span class="s1">&#39;bfluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
-        <span class="n">keyVec</span><span class="p">[</span><span class="s1">&#39;Bfluct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s1">'u'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s1">'U'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s1">'v'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s1">'vel'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s1">'V'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s1">'ufluct'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s1">'vfluct'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s1">'Ufluct'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s1">'Vfluct'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s1">'b'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s1">'B'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s1">'mag'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s1">'bfluct'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+        <span class="n">keyVec</span><span class="p">[</span><span class="s1">'Bfluct'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
 
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="s1">&#39;mode&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="s1">'mode'</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">7</span> <span class="ow">or</span> <span class="n">gr</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
-                <span class="k">if</span> <span class="s1">&#39;bfluc&#39;</span> <span class="ow">in</span> <span class="n">keyVec</span><span class="p">:</span>
-                    <span class="n">keyVec</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">&#39;bfluct&#39;</span><span class="p">)</span>
-                <span class="k">if</span> <span class="s1">&#39;Bfluct&#39;</span> <span class="ow">in</span> <span class="n">keyVec</span><span class="p">:</span>
-                    <span class="n">keyVec</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">&#39;Bfluct&#39;</span><span class="p">)</span>
-                <span class="k">if</span> <span class="s1">&#39;b&#39;</span> <span class="ow">in</span> <span class="n">keyVec</span><span class="p">:</span>
-                    <span class="n">keyVec</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
-                <span class="k">if</span> <span class="s1">&#39;B&#39;</span> <span class="ow">in</span> <span class="n">keyVec</span><span class="p">:</span>
-                    <span class="n">keyVec</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">'bfluc'</span> <span class="ow">in</span> <span class="n">keyVec</span><span class="p">:</span>
+                    <span class="n">keyVec</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">'bfluct'</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">'Bfluct'</span> <span class="ow">in</span> <span class="n">keyVec</span><span class="p">:</span>
+                    <span class="n">keyVec</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">'Bfluct'</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">'b'</span> <span class="ow">in</span> <span class="n">keyVec</span><span class="p">:</span>
+                    <span class="n">keyVec</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">'b'</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">'B'</span> <span class="ow">in</span> <span class="n">keyVec</span><span class="p">:</span>
+                    <span class="n">keyVec</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="s1">'B'</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vecs</span><span class="p">),</span> <span class="s1">&#39;i&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vecs</span><span class="p">),</span> <span class="s1">'i'</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">vec</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vecs</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">vec</span> <span class="ow">in</span> <span class="n">keyVec</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">vecNames</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">keyVec</span><span class="p">[</span><span class="n">vec</span><span class="p">]</span>
@@ -448,14 +448,14 @@
         <span class="c1">#----------------------------------------</span>
         <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">potExtra</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">scals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nscals</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nphi</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="o">+</span><span class="n">nrout</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;f&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nscals</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nphi</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="o">+</span><span class="n">nrout</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="s1">'f'</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">scals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nscals</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nphi</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">),</span> <span class="s1">&#39;f&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nscals</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nphi</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">),</span> <span class="s1">'f'</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">potExtra</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">scals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nscals</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">npI</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="o">+</span><span class="n">nrout</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;f&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nscals</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">npI</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="o">+</span><span class="n">nrout</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="s1">'f'</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">scals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nscals</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">npI</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">),</span> <span class="s1">&#39;f&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nscals</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">npI</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">),</span> <span class="s1">'f'</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="c1"># radius</span>
@@ -481,7 +481,7 @@
                 <span class="n">s3D</span> <span class="o">=</span> <span class="n">rr3D</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span>
                 <span class="n">dtheta</span> <span class="o">=</span> <span class="n">thetaderavg</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="o">*</span><span class="n">s3D</span><span class="p">,</span> <span class="n">colat</span><span class="o">=</span><span class="n">gr</span><span class="o">.</span><span class="n">colatitude</span><span class="p">)</span>
                 <span class="n">dr</span> <span class="o">=</span> <span class="n">rderavg</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">vphi</span><span class="o">*</span><span class="n">s3D</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
-                <span class="n">vs</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">vr</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span> <span class="o">+</span> <span class="n">gr</span><span class="o">.</span><span class="n">vtheta</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span> <span class="c1"># &#39;vs&#39;</span>
+                <span class="n">vs</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">vr</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span> <span class="o">+</span> <span class="n">gr</span><span class="o">.</span><span class="n">vtheta</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span> <span class="c1"># 'vs'</span>
                 <span class="n">ds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span><span class="o">*</span><span class="n">dr</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th3D</span><span class="p">)</span><span class="o">/</span><span class="n">rr3D</span><span class="o">*</span><span class="n">dtheta</span>
                 <span class="n">vortz</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span><span class="o">/</span><span class="n">s3D</span><span class="o">*</span><span class="n">phideravg</span><span class="p">(</span><span class="n">vs</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="n">gr</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span><span class="o">+</span><span class="n">ds</span><span class="o">/</span><span class="n">s3D</span>
                 <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
@@ -605,20 +605,20 @@
         <span class="c1">#----------------------------------------</span>
         <span class="k">if</span> <span class="n">deminc</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">potExtra</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nvecs</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nphi</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="o">+</span><span class="n">nrout</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;f&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nvecs</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nphi</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="o">+</span><span class="n">nrout</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="s1">'f'</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">vect</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nvecs</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nphi</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">),</span> <span class="s1">&#39;f&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nvecs</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nphi</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">),</span> <span class="s1">'f'</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">vect</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">potExtra</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nvecs</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">npI</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="o">+</span><span class="n">nrout</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;f&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nvecs</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">npI</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="o">+</span><span class="n">nrout</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="s1">'f'</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">vect</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nvecs</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">npI</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">),</span> <span class="s1">&#39;f&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vecr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nvecs</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">npI</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ntheta</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">),</span> <span class="s1">'f'</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">vect</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">)</span>
 
@@ -692,24 +692,24 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">:]</span> <span class="o">=</span> <span class="n">pot</span><span class="o">.</span><span class="n">btout</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">vecp</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nr</span><span class="p">:]</span> <span class="o">=</span> <span class="n">pot</span><span class="o">.</span><span class="n">bpout</span>
 
-        <span class="k">if</span> <span class="n">outType</span> <span class="o">==</span> <span class="s1">&#39;vts&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">outType</span> <span class="o">==</span> <span class="s1">'vts'</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">writeVTS</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">nFiles</span><span class="p">)</span>
 
-        <span class="k">elif</span> <span class="n">outType</span> <span class="o">==</span> <span class="s1">&#39;vti&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">outType</span> <span class="o">==</span> <span class="s1">'vti'</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">writeVTI</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Graph2Vtk.writeVTS">
 <a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.Graph2Vtk.writeVTS">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">writeVTS</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">nFiles</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        This function stores the output on a structured-grid vts file.</span>
 
 <span class="sd">        :param filename: the file name of the output (without extension)</span>
 <span class="sd">        :type filename: str</span>
 <span class="sd">        :param nFiles: number of outpute files (in case of pvts)</span>
 <span class="sd">        :type nFiles: int</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nvecs</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">nFiles</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">)</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vecr</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">512</span><span class="o">**</span><span class="mi">3</span><span class="p">:</span>
                 <span class="n">vtk</span><span class="o">.</span><span class="n">vts_scal</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalNames</span><span class="p">,</span>
@@ -736,7 +736,7 @@
 <div class="viewcode-block" id="Graph2Vtk.writeVTI">
 <a class="viewcode-back" href="../../apiPython/toParaview.html#magic.graph2vtk.Graph2Vtk.writeVTI">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">writeVTI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="mi">96</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        In this case, the output is extrapolated on a cartesian grid</span>
 <span class="sd">        and then written in a vti file.</span>
 
@@ -748,7 +748,7 @@
 <span class="sd">        :type ny: int</span>
 <span class="sd">        :param nz: number of grid points in the x direction</span>
 <span class="sd">        :type nz: int</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">scals_cart</span><span class="p">,</span> <span class="n">gridMax</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">=</span> <span class="n">sph2cart_scal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scals</span><span class="p">,</span> \
                                                      <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span><span class="p">,</span>
                                                      <span class="bp">self</span><span class="o">.</span><span class="n">minc</span><span class="p">)</span>
@@ -764,10 +764,10 @@
 
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
     <span class="n">ivar</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">g</span> <span class="o">=</span> <span class="n">MagicGraph</span><span class="p">(</span><span class="n">ivar</span><span class="o">=</span><span class="n">ivar</span><span class="p">)</span>
-    <span class="n">Graph2Vtk</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">scals</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;tfluct&#39;</span><span class="p">,</span> <span class="s1">&#39;emag&#39;</span><span class="p">],</span> <span class="n">vecs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">],</span> <span class="n">potExtra</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">Graph2Vtk</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">scals</span><span class="o">=</span><span class="p">[</span><span class="s1">'tfluct'</span><span class="p">,</span> <span class="s1">'emag'</span><span class="p">],</span> <span class="n">vecs</span><span class="o">=</span><span class="p">[</span><span class="s1">'b'</span><span class="p">],</span> <span class="n">potExtra</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
             <div class="clearer"></div>
@@ -809,7 +809,7 @@
     </div>
     <div class="footer" role="contentinfo">
     &#169; Copyright 2025, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.2.0.
     </div>
   </body>
 </html>

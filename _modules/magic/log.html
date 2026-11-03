@@ -9,8 +9,8 @@
     <link rel="stylesheet" type="text/css" href="../../_static/magic.css?v=a97dc138" />
     
     <script src="../../_static/documentation_options.js?v=4b074805"></script>
-    <script src="../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
           title="Search within Magic 6.3 documentation"
@@ -105,54 +105,54 @@
 <div class="viewcode-block" id="MagicSetup">
 <a class="viewcode-back" href="../../apiPython/timeSeries.html#magic.MagicSetup">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">MagicSetup</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    This class allows to read the input namelist or the log file of a current job</span>
 <span class="sd">    and creates an object that contains all the parameters found in the</span>
 <span class="sd">    namelist/log file.</span>
 
-<span class="sd">    &gt;&gt;&gt; stp = MagicSetup(nml=&#39;log.test&#39;, quiet=True)</span>
+<span class="sd">    &gt;&gt;&gt; stp = MagicSetup(nml='log.test', quiet=True)</span>
 <span class="sd">    &gt;&gt;&gt; print(stp.ra) # print the Rayleigh number</span>
 <span class="sd">    &gt;&gt;&gt; print(stp.n_r_max) # print n_r_max</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
 <div class="viewcode-block" id="MagicSetup.__init__">
 <a class="viewcode-back" href="../../apiPython/timeSeries.html#magic.MagicSetup.__init__">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">nml</span><span class="o">=</span><span class="s1">&#39;input.nml&#39;</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="s1">'.'</span><span class="p">,</span> <span class="n">nml</span><span class="o">=</span><span class="s1">'input.nml'</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        :param datadir: the working directory</span>
 <span class="sd">        :type datadir: str</span>
 <span class="sd">        :param nml: name of the input namelist/ log file</span>
 <span class="sd">        :type nml: str</span>
 <span class="sd">        :param quiet: when set to True, makes the output silent (default False)</span>
 <span class="sd">        :type quiet: bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">logFile</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;log\.(.*)&#39;</span><span class="p">)</span>
-        <span class="n">valueInt</span>  <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^([0-9]+)$&#39;</span><span class="p">)</span>
-        <span class="n">valueReal</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[+-]?([0-9]+\.[0-9]*|[0-9]*\.[0-9]+)&#39;</span><span class="p">)</span>
-        <span class="n">valueNumber</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\b(([\+\-]?[0-9]+)?\.)?[0-9]*([eE][-+]?[0-9]+)?&#39;</span><span class="p">)</span>
-        <span class="n">valueFalse</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(\.(true|false|t|f)\.)&quot;</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
-        <span class="n">valueTrue</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(\.(true|t)\.)&quot;</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
-        <span class="n">valueNone</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(NONE)&quot;</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+<span class="sd">        """</span>
+        <span class="n">logFile</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">'log\.(.*)'</span><span class="p">)</span>
+        <span class="n">valueInt</span>  <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">'^([0-9]+)$'</span><span class="p">)</span>
+        <span class="n">valueReal</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">'[+-]?([0-9]+\.[0-9]*|[0-9]*\.[0-9]+)'</span><span class="p">)</span>
+        <span class="n">valueNumber</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">'\b(([\+\-]?[0-9]+)?\.)?[0-9]*([eE][-+]?[0-9]+)?'</span><span class="p">)</span>
+        <span class="n">valueFalse</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(\.(true|false|t|f)\.)"</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+        <span class="n">valueTrue</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(\.(true|t)\.)"</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+        <span class="n">valueNone</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(NONE)"</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="n">nml</span><span class="p">)</span>
-        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s1">'r'</span><span class="p">)</span>
         <span class="n">tab</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
         <span class="n">tab2</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tab</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">st</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
-                <span class="n">st</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">st</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39; !&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">'='</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">st</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">','</span><span class="p">,</span> <span class="s1">' '</span><span class="p">)</span>
+                <span class="n">st</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">st</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">' !'</span><span class="p">):</span>
                     <span class="n">tab2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">st</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tab2</span><span class="p">:</span>
-            <span class="n">val</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'='</span><span class="p">)</span>
             <span class="n">lhs</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-            <span class="n">lhs</span> <span class="o">=</span> <span class="n">lhs</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span>
+            <span class="n">lhs</span> <span class="o">=</span> <span class="n">lhs</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">' '</span><span class="p">,</span> <span class="s1">'_'</span><span class="p">)</span>
             <span class="n">rhs</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-            <span class="n">rhs</span> <span class="o">=</span> <span class="n">rhs</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
+            <span class="n">rhs</span> <span class="o">=</span> <span class="n">rhs</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">'"'</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">valueReal</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">rhs</span><span class="p">):</span>
-                <span class="n">rhs</span> <span class="o">=</span> <span class="n">rhs</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">)</span>
-                <span class="n">rhs</span> <span class="o">=</span> <span class="n">rhs</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">)</span>
+                <span class="n">rhs</span> <span class="o">=</span> <span class="n">rhs</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'D'</span><span class="p">,</span> <span class="s1">'e'</span><span class="p">)</span>
+                <span class="n">rhs</span> <span class="o">=</span> <span class="n">rhs</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'d'</span><span class="p">,</span> <span class="s1">'e'</span><span class="p">)</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">rhs</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
@@ -166,9 +166,9 @@
             <span class="k">elif</span> <span class="n">valueInt</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">rhs</span><span class="p">):</span>
                 <span class="n">rhs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span>
             <span class="c1"># Catch T and F for booleans</span>
-            <span class="k">if</span> <span class="n">rhs</span> <span class="o">==</span> <span class="s1">&#39;T&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">rhs</span> <span class="o">==</span> <span class="s1">'T'</span><span class="p">:</span>
                 <span class="n">rhs</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">elif</span> <span class="n">rhs</span> <span class="o">==</span> <span class="s1">&#39;F&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">rhs</span> <span class="o">==</span> <span class="s1">'F'</span><span class="p">:</span>
                 <span class="n">rhs</span> <span class="o">=</span> <span class="kc">False</span>
 
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span>
@@ -192,22 +192,22 @@
 
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nVarEntropyGrad</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">ampStrat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ampStrat_arr</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;  &quot;</span><span class="p">))</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">rStrat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rStrat_arr</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;  &quot;</span><span class="p">))</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">thickStrat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">thickStrat_arr</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;  &quot;</span><span class="p">))</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">slopeStrat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slopeStrat_arr</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;  &quot;</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ampStrat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ampStrat_arr</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"  "</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">rStrat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rStrat_arr</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"  "</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">thickStrat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">thickStrat_arr</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"  "</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">slopeStrat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slopeStrat_arr</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"  "</span><span class="p">))</span>
         <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">quiet</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
 </div>
 
     <span class="c1">#def __repr__(self):</span>
-        <span class="c1">#st = &#39;Welcome in the run {}\n&#39;.format(self.tag)</span>
-        <span class="c1">#st += &#39; ---- Params ---- \n&#39;</span>
-        <span class="c1">#st += &#39;Rayleigh = {:.2e}\n&#39;.format(self.ra)</span>
-        <span class="c1">#st += &#39;Ekman = {:.2e}\n&#39;.format(self.ek)</span>
-        <span class="c1">#st += &#39;Prandtl = {:.2e}\n&#39;.format(self.pr)</span>
-        <span class="c1">#st += &#39;Magnetic Prandtl = {:.2e}&#39;.format(self.prmag)</span>
+        <span class="c1">#st = 'Welcome in the run {}\n'.format(self.tag)</span>
+        <span class="c1">#st += ' ---- Params ---- \n'</span>
+        <span class="c1">#st += 'Rayleigh = {:.2e}\n'.format(self.ra)</span>
+        <span class="c1">#st += 'Ekman = {:.2e}\n'.format(self.ek)</span>
+        <span class="c1">#st += 'Prandtl = {:.2e}\n'.format(self.pr)</span>
+        <span class="c1">#st += 'Magnetic Prandtl = {:.2e}'.format(self.prmag)</span>
         <span class="c1">#return st</span>
 </pre></div>
 
@@ -250,7 +250,7 @@
     </div>
     <div class="footer" role="contentinfo">
     &#169; Copyright 2025, Thomas Gastine, Johannes Wicht, Ankit Barik, Lùcia Duarte.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.2.0.
     </div>
   </body>
 </html>
